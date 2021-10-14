@@ -38,18 +38,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "RotateRight",
-                    "type": "Value",
-                    "id": "b75fd76a-66b5-4b99-a4f2-7f1effd5233a",
-                    "expectedControlType": "Digital",
+                    "name": "DashRight",
+                    "type": "Button",
+                    "id": "e32f6233-b5f6-4453-b857-000711039108",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "RotateLeft",
-                    "type": "Value",
-                    "id": "8771ebd5-25d2-4c72-adab-43e5d782d97b",
-                    "expectedControlType": "Digital",
+                    "name": "DashLeft",
+                    "type": "Button",
+                    "id": "1cdeb7d6-cab1-485d-bf7e-de9eab6945ce",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -69,7 +69,7 @@
                 {
                     "name": "",
                     "id": "4073af91-45cc-4274-8ff9-7eacfdb3817b",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/#(s)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -91,7 +91,7 @@
                 {
                     "name": "",
                     "id": "9224f9ff-0e2b-48be-89f3-08a7599002fe",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/#(q)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -113,7 +113,7 @@
                 {
                     "name": "",
                     "id": "7f54feb0-79ec-40be-848b-d31ba8423af8",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/#(d)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -135,7 +135,7 @@
                 {
                     "name": "",
                     "id": "3b939132-324b-4c2c-aabe-e38e139073b2",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/#(z)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -145,45 +145,45 @@
                 },
                 {
                     "name": "",
-                    "id": "29d5679b-fac3-4ca0-b4df-c3082b9a40dd",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "4fd7fb8c-9fab-4ff9-b1f0-6c7517f6aaed",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "RotateRight",
+                    "action": "DashRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "fd6d23bd-a0ec-48ea-8e05-9feca185a858",
-                    "path": "<Keyboard>/#(\")",
+                    "id": "f9e8f721-e425-444e-9ce3-9e725b2c5da2",
+                    "path": "<Keyboard>/#(e)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "RotateRight",
+                    "action": "DashRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "139db800-d23e-4521-838d-fa47e5adb1d3",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "428e910d-816e-4de9-92bc-748c98fd51f2",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "RotateLeft",
+                    "action": "DashLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "be4a7a7e-1925-4cef-a410-b515e5838947",
-                    "path": "<Keyboard>/#(&)",
+                    "id": "bb89ce3b-ff13-4c44-8ec5-f1ccb7cf8ac2",
+                    "path": "<Keyboard>/#(a)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "RotateLeft",
+                    "action": "DashLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -616,35 +616,35 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 874089401}
-        m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
-        m_MethodName: RotateRight
-        m_Mode: 0
+        m_TargetAssemblyTypeName: DashBehaviour, Assembly-CSharp
+        m_MethodName: DashRight
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: b75fd76a-66b5-4b99-a4f2-7f1effd5233a
-    m_ActionName: BaseControls/RotateRight[/Keyboard/3]
+    m_ActionId: e32f6233-b5f6-4453-b857-000711039108
+    m_ActionName: BaseControls/DashRight[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 874089401}
-        m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
-        m_MethodName: RotateLeft
-        m_Mode: 0
+        m_TargetAssemblyTypeName: DashBehaviour, Assembly-CSharp
+        m_MethodName: DashLeft
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 8771ebd5-25d2-4c72-adab-43e5d782d97b
-    m_ActionName: BaseControls/RotateLeft[/Keyboard/1]
+    m_ActionId: 1cdeb7d6-cab1-485d-bf7e-de9eab6945ce
+    m_ActionName: BaseControls/DashLeft[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: BaseControls
@@ -775,9 +775,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 874089392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa4e93741e4349f4aa08aa9b329de76, type: 3}
+  m_Script: {fileID: 11500000, guid: 4909c7b27f3124be0bfd66d2deb1cd2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashDistance: 1
 --- !u!1001 &1102400296
 PrefabInstance:
   m_ObjectHideFlags: 0
