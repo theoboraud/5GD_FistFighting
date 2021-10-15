@@ -20,16 +20,28 @@ public class ArmBehavior : MonoBehaviour
     public UnityEvent OnCollision;
     public UnityEvent OnUnextended;
 
+
+    public Sprite JetSprite;
+    private Sprite armSprite;
+
+    private SpriteRenderer spriteRenderer;
+
     private float curScale;
 
     private bool extended = false;
+    private bool grounded = false;
+    private bool jeted = false;
 
-    private bool Grounded = false;
-
+    private void Awake()
+    {
+        spriteRenderer = transform.GetComponent<SpriteRenderer>();
+        armSprite = spriteRenderer.sprite;
+    }
     public void ExtensionStart()
     {
         actif = true;
         extended = false;
+        spriteRenderer.sprite = armSprite;
     }
 
     private void Update()
@@ -56,10 +68,18 @@ public class ArmBehavior : MonoBehaviour
         if(curScale >= StartScaleEndScale.y)
         {
             OnExtended.Invoke();
-            if (Grounded) {
+            if (grounded) {
                 Debug.Log("LESSSS GOOOOO!");
                 Face.rb.AddForce(this.transform.up * force, ForceMode2D.Impulse);
-                Grounded = false;
+                grounded = false;
+
+            }
+            else if (!jeted)
+            {
+                spriteRenderer.sprite = JetSprite;
+                Face.rb.AddForce(this.transform.up * force*2f, ForceMode2D.Impulse);
+                jeted = true;
+                Invoke("ReCharge", 2f);
             }
             extended = true;
         }
@@ -83,7 +103,7 @@ public class ArmBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("StaticGround"))
         {
-            Grounded = true;
+            grounded = true;
             OnCollision.Invoke();
             Face.OnCollision.Invoke();
         }
@@ -91,6 +111,10 @@ public class ArmBehavior : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Grounded = false;
+        grounded = false;
+    }
+    private void ReCharge()
+    {
+        jeted = false;
     }
 }
