@@ -160,8 +160,9 @@ public class ArmBehavior : MonoBehaviour
     /// <summary>
     ///     Change the variable hitGround to false if leaving a collision with the ground, and hitPlayer to false if leaving a collision with a player
     /// </summary>
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D _collision)
     {
+        GameObject _GO = _collision.gameObject;
         if (_GO.CompareTag("StaticGround"))
         {
             hitGround = false;

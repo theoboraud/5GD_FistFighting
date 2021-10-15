@@ -126,10 +126,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 10
   Face: {fileID: 5796460706983378298}
-  actif: 1
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
+  active: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -320,10 +320,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 10
   Face: {fileID: 5796460706983378298}
-  actif: 1
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
+  active: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -514,10 +514,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 10
   Face: {fileID: 5796460706983378298}
-  actif: 1
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
+  active: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -708,10 +708,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 10
   Face: {fileID: 5796460706983378298}
-  actif: 1
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
+  active: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -1208,4 +1208,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4909c7b27f3124be0bfd66d2deb1cd2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashCooldown: 1

@@ -9,8 +9,9 @@ public class DashBehaviour : MonoBehaviour
 
     // #region ==================== CLASS VARIABLES ====================
 
-    private const float CONSTANT_dashSpeed = 10f;          // Player speed during the dash
-    private const float CONSTANT_dashTime = 0.1f;          // How much time the dash takes
+    private const float CONSTANT_dashSpeed = 30f;          // Player speed during the dash
+    private const float CONSTANT_dashTime = 0.08f;          // How much time the dash takes
+    private const float CONSTANT_dashGravity = 0.1f;       // Gravity value during the dash
 
     private const float CONSTANT_endOfDashSpeed = 5f;      // Player speed set at the end of a dash
     private const float CONSTANT_dashCooldown = 1f;        // How much time the dash is not available for after using it
@@ -43,7 +44,7 @@ public class DashBehaviour : MonoBehaviour
     {
         if(isDashing)
         {
-            rb.velocity = dashDirection * dashSpeed;
+            rb.velocity = dashDirection * CONSTANT_dashSpeed;
         }
     }
 
@@ -86,13 +87,13 @@ public class DashBehaviour : MonoBehaviour
     {
         isDashing = true;
         float _gravity = rb.gravityScale;
-        rb.gravityScale = 0.1f;
+        rb.gravityScale = CONSTANT_dashGravity;
 
-        yield return new WaitForSeconds(dashTime);
+        yield return new WaitForSeconds(CONSTANT_dashTime);
 
         isDashing = false;
         rb.gravityScale = _gravity;
-        rb.velocity = dashDirection * endOfDashSpeed;
+        rb.velocity = dashDirection * CONSTANT_endOfDashSpeed;
         dashDirection = Vector2.zero;
 
         // Call the cooldown coroutine
@@ -106,7 +107,7 @@ public class DashBehaviour : MonoBehaviour
     private IEnumerator DashCooldown()
     {
         canDash = false;
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSeconds(CONSTANT_dashCooldown);
         canDash = true;
     }
 

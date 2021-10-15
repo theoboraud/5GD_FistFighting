@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class RotateBehaviour : MonoBehaviour
 {
-    
+
     // #region ==================== CLASS VARIABLES ====================
 
     private Rigidbody2D rb;
@@ -106,7 +106,7 @@ public class RotateBehaviour : MonoBehaviour
     {
         cooldownRoutineRunning = true;
 
-        yield return new WaitForSeconds(rotateCooldown);
+        yield return new WaitForSeconds(CONSTANT_rotateCooldown);
 
         cooldownRoutineRunning = false;
         onCooldown = false;
