@@ -3,41 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+///     Class used by each arm for physics behaviours
+/// </summary>
 public class ArmBehavior : MonoBehaviour
 {
+    // #region ==================== CLASS VARIABLES ====================
+
     [Header("Stats")]
-    [SerializeField] float force;
+    [SerializeField] float force;                   // Push force value for physics interactions
+
     [Header("Refs")]
-    public PlayerArmExtender Face;
+    public PlayerArmExtender Face;                  // Face reference from which the arm extends
+
     [Header("Extension Variables")]
-    public bool actif = false;
-    [SerializeField] Vector2 StartScaleEndScale;
-    [SerializeField] float speedExtension;
-    [SerializeField] float speedUnextension;
+    [SerializeField] Vector2 StartScaleEndScale;    //
+    [SerializeField] float speedExtension;          //
+    [SerializeField] float speedUnextension;        //
+    public bool active = false;                     //
+
     [Header("Arm Behaviour Events")]
-    public UnityEvent OnAppear;
-    public UnityEvent OnExtended;
-    public UnityEvent OnCollision;
-    public UnityEvent OnUnextended;
+    public UnityEvent OnAppear;                     //
+    public UnityEvent OnExtended;                   //
+    public UnityEvent OnCollision;                  //
+    public UnityEvent OnUnextended;                 //
 
-    private float curScale;
+    private float curScale;                         //
 
-    private bool extended = false;
+    private bool isExtended = false;                // Indicates whether or not the arm is extended at maximum
 
-    private bool Grounded = false;
+    private bool hitGround = false;                 // Indicates whether or not the player is hitting the ground
+    private bool hitPlayer = false;                 // Indicates whether or note the player is hitting another player
+    private Rigidbody2D hitPlayer_RB;               // Rigidbody reference of hit player (if any)
 
-    public void ExtensionStart()
-    {
-        actif = true;
-        extended = false;
-    }
+    // #endregion
 
+
+
+    // #region ==================== UNITY FUNCTIONS ====================
+
+    /// <summary>
+    ///     Modify every frame the arm physic (scale, position...) depending on whether or not it is active
+    /// </summary>
     private void Update()
     {
-        if(actif)
+        if(active)
         {
-            if (!extended)
+            if (!isExtended)
+            {
                 UpdateScale();
+            }
             else
             {
                 UnextendArm();
@@ -45,30 +60,61 @@ public class ArmBehavior : MonoBehaviour
         }
     }
 
-    private void OnStopExtension()
+    // #endregion
+
+
+
+    // #region ================ ARM EXTENSION FUNCTIONS ================
+
+    /// <summary>
+    ///     Start the extension by activating it
+    /// </summary>
+    public void ExtensionStart()
     {
-        actif = false;
-        OnUnextended.Invoke();
+        active = true;
+        isExtended = false;
     }
 
-    void UpdateScale()
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void UpdateScale()
     {
         if(curScale >= StartScaleEndScale.y)
         {
+            // FMOD event
             OnExtended.Invoke();
-            if (Grounded) {
-                Debug.Log("LESSSS GOOOOO!");
+
+            // If hitting the ground, use force impulsion to move to the opposite side
+            if (hitGround)
+            {
                 Face.rb.AddForce(this.transform.up * force, ForceMode2D.Impulse);
-                Grounded = false;
+                hitGround = false;
             }
-            extended = true;
+
+            // If hitting a player, that player will receive a force impulsion
+            if (hitPlayer)
+            {
+                if (hitPlayer_RB != null)
+                {
+                    hitPlayer_RB.AddForce(-this.transform.up * force, ForceMode2D.Impulse);
+                    hitPlayer = false;
+                    hitPlayer_RB = null;
+                }
+            }
+            isExtended = true;
         }
         this.transform.localScale = new Vector3(1f, curScale, 1f);
 
         curScale += speedExtension * Time.deltaTime;
     }
 
-    void UnextendArm()
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void UnextendArm()
     {
         if(curScale <= StartScaleEndScale.x)
         {
@@ -79,18 +125,52 @@ public class ArmBehavior : MonoBehaviour
         curScale -= speedUnextension * Time.deltaTime;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    /// <summary>
+    ///     When the arm retracts, set active to false for this arm
+    /// </summary>
+    private void OnStopExtension()
     {
-        if (collision.gameObject.CompareTag("StaticGround"))
+        active = false;
+        // FMOD event
+        OnUnextended.Invoke();
+    }
+
+
+    /// <summary>
+    ///     When entering a collision with the ground of another player
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D _collision)
+    {
+        GameObject _GO = _collision.gameObject;
+        if (_GO.CompareTag("StaticGround"))
         {
-            Grounded = true;
+            hitGround = true;
             OnCollision.Invoke();
             Face.OnCollision.Invoke();
         }
+        if(_GO.CompareTag("Player"))
+        {
+            hitPlayer = true;
+            hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
+        }
     }
 
+
+    /// <summary>
+    ///     Change the variable hitGround to false if leaving a collision with the ground, and hitPlayer to false if leaving a collision with a player
+    /// </summary>
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Grounded = false;
+        if (_GO.CompareTag("StaticGround"))
+        {
+            hitGround = false;
+        }
+        else if (_GO.CompareTag("Player"))
+        {
+            hitPlayer = false;
+        }
     }
+
+    // #endregion
 }

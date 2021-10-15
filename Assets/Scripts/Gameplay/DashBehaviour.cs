@@ -7,23 +7,38 @@ using UnityEngine.Events;
 public class DashBehaviour : MonoBehaviour
 {
 
-    private Rigidbody2D rb;
-    private Vector2 dashDirection;
+    // #region ==================== CLASS VARIABLES ====================
 
-    private bool isDashing = false;
-    private bool canDash = true;
+    private const float CONSTANT_dashSpeed = 10f;          // Player speed during the dash
+    private const float CONSTANT_dashTime = 0.1f;          // How much time the dash takes
 
-    private float dashSpeed = 10f;
-    private float endOfDashSpeed = 5f;
+    private const float CONSTANT_endOfDashSpeed = 5f;      // Player speed set at the end of a dash
+    private const float CONSTANT_dashCooldown = 1f;        // How much time the dash is not available for after using it
 
-    private float dashTime = 0.1f;
-    public float dashCooldown = 1f;
+    private Rigidbody2D rb;                 // Rigidbody reference
 
+    private Vector2 dashDirection;          // Vector containing the dash direction (right or left)
+    private bool isDashing = false;         // Boolean telling whether or not the player is dashing right now
+    private bool canDash = true;            // Boolean telling whether or not the player can dash
+
+    // #endregion
+
+
+
+    // #region ==================== UNITY FUNCTIONS ====================
+
+    /// <summary>
+    ///     Get initial references
+    /// </summary>
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
     }
 
+
+    /// <summary>
+    ///     Each frame, if dashing, the velocity is set using dash speed (not affected by physics)
+    /// </summary>
     private void FixedUpdate()
     {
         if(isDashing)
@@ -32,6 +47,15 @@ public class DashBehaviour : MonoBehaviour
         }
     }
 
+    // #endregion
+
+
+
+    // #region ===================== DASH FUNCTIONS ====================
+
+    /// <summary>
+    ///     When dashing right, set the dashDirection to right and start the Dash coroutine
+    /// </summary>
     public void DashRight()
     {
         if(!isDashing && canDash)
@@ -41,6 +65,10 @@ public class DashBehaviour : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///     When dashing left, set the dashDirection to left and start the Dash coroutine
+    /// </summary>
     public void DashLeft()
     {
         if(!isDashing && canDash)
@@ -50,9 +78,12 @@ public class DashBehaviour : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///     When dashing, change the gravity during the dash, wait for dashTime, and set back gravity and velocity at the end of the dash
+    /// </summary>
     private IEnumerator Dash()
     {
-        print("Dashing!");
         isDashing = true;
         float _gravity = rb.gravityScale;
         rb.gravityScale = 0.1f;
@@ -63,15 +94,21 @@ public class DashBehaviour : MonoBehaviour
         rb.gravityScale = _gravity;
         rb.velocity = dashDirection * endOfDashSpeed;
         dashDirection = Vector2.zero;
+
+        // Call the cooldown coroutine
         StartCoroutine("DashCooldown");
     }
 
+
+    /// <summary>
+    ///     The player cannot dash while the dash cooldown is running
+    /// </summary>
     private IEnumerator DashCooldown()
     {
-        print("DashCooldown started");
         canDash = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
-        print("DashCooldown over");
     }
+
+    // #endregion
 }
