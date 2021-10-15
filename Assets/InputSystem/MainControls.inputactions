@@ -43,7 +43,7 @@
                     "id": "e32f6233-b5f6-4453-b857-000711039108",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "DashLeft",
@@ -51,7 +51,7 @@
                     "id": "1cdeb7d6-cab1-485d-bf7e-de9eab6945ce",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "RotateRight",
@@ -59,7 +59,7 @@
                     "id": "383de03f-5403-40bb-8fbb-264947cd250e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "RotateLeft",
@@ -67,7 +67,7 @@
                     "id": "adcf3d95-d6e4-41ec-a541-f475dda383cf",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
