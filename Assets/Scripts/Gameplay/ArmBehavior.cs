@@ -36,11 +36,23 @@ public class ArmBehavior : MonoBehaviour
     private bool hitPlayer = false;                 // Indicates whether or note the player is hitting another player
     private Rigidbody2D hitPlayer_RB;               // Rigidbody reference of hit player (if any)
 
+    public Sprite JetSprite;
+    private Sprite armSprite;
+    private SpriteRenderer spriteRenderer;
+    private bool jeted = false;
+
     // #endregion
 
 
 
     // #region ==================== UNITY FUNCTIONS ====================
+
+    private void Awake()
+    {
+        spriteRenderer = transform.GetComponent<SpriteRenderer>();
+        armSprite = spriteRenderer.sprite;
+    }
+
 
     /// <summary>
     ///     Modify every frame the arm physic (scale, position...) depending on whether or not it is active
@@ -92,6 +104,13 @@ public class ArmBehavior : MonoBehaviour
                 Face.rb.AddForce(this.transform.up * force, ForceMode2D.Impulse);
                 hitGround = false;
             }
+            else if (!jeted)
+            {
+                spriteRenderer.sprite = JetSprite;
+                Face.rb.AddForce(this.transform.up * force / 2, ForceMode2D.Impulse);
+                jeted = true;
+                Invoke("ReCharge", 2f);
+            }
 
             // If hitting a player, that player will receive a force impulsion
             if (hitPlayer)
@@ -103,6 +122,8 @@ public class ArmBehavior : MonoBehaviour
                     hitPlayer_RB = null;
                 }
             }
+
+
             isExtended = true;
         }
         this.transform.localScale = new Vector3(1f, curScale, 1f);
@@ -171,6 +192,11 @@ public class ArmBehavior : MonoBehaviour
         {
             hitPlayer = false;
         }
+    }
+
+    private void ReCharge()
+    {
+        jeted = false;
     }
 
     // #endregion
