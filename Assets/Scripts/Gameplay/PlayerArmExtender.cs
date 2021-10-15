@@ -27,7 +27,4 @@ public class PlayerArmExtender : MonoBehaviour
             Arms[i].ExtensionStart();
         }
     }
-
-
-    
 }
