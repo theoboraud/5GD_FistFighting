@@ -7,8 +7,12 @@ using UnityEngine.Events;
 public class RotateBehaviour : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private float rotateDir = 0;
-    private float rotateSpeed = 3f;
+
+    private const float CONSTANT_rotateValue = 90f;      // How much the character turns when using rotation
+    private const float CONSTANT_rotateSpeed = 30f;                     //
+
+    private int rotateDir = 0;                          // Variable containing the trigonometric direction (1 for left, -1 for right)
+    private float rotateValue = 0;                      // Variable containing the value of rotation to apply left
 
     private void Start()
     {
@@ -17,19 +21,33 @@ public class RotateBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(rotateDir != 0)
+        if(rotateValue > 0)
         {
-            rb.rotation += rotateDir * rotateSpeed;
+            rb.rotation += rotateDir * CONSTANT_rotateSpeed;
+            rotateValue -= CONSTANT_rotateSpeed;
+        }
+        else
+        {
+            rotateDir = 0;
+            rotateValue = 0;
         }
     }
 
     public void RotateRight(InputAction.CallbackContext _value)
     {
-        rotateDir = -1 * _value.ReadValue<float>();
+        if(rotateValue == 0)
+        {
+            rotateDir = -1;
+            rotateValue = CONSTANT_rotateValue;
+        }
     }
 
     public void RotateLeft(InputAction.CallbackContext _value)
     {
-        rotateDir = _value.ReadValue<float>();
+        if(rotateValue == 0)
+        {
+            rotateDir = 1;
+            rotateValue = CONSTANT_rotateValue;
+        }
     }
 }

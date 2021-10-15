@@ -55,17 +55,17 @@
                 },
                 {
                     "name": "RotateRight",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "383de03f-5403-40bb-8fbb-264947cd250e",
-                    "expectedControlType": "Digital",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
                     "name": "RotateLeft",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "adcf3d95-d6e4-41ec-a541-f475dda383cf",
-                    "expectedControlType": "Digital",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
