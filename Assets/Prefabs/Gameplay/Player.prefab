@@ -124,7 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
@@ -142,6 +145,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  IsExtended: 0
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
 --- !u!61 &6108265605736228717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -318,7 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
@@ -336,6 +347,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  IsExtended: 0
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
 --- !u!61 &6108265605862454128
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -512,7 +528,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
@@ -530,6 +549,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  IsExtended: 0
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
 --- !u!61 &6108265606138303117
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -706,7 +730,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
@@ -724,6 +751,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  IsExtended: 0
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
 --- !u!61 &6108265606756007934
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1044,7 +1076,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6108265605568746725}
         m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
         m_MethodName: RotateRight
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1060,7 +1092,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6108265605568746725}
         m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
         m_MethodName: RotateLeft
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1071,6 +1103,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: adcf3d95-d6e4-41ec-a541-f475dda383cf
     m_ActionName: BaseControls/RotateLeft[/XboxOneGampadMacOSWireless/leftShoulder,/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
+        m_MethodName: StartGrabArm
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4eda40f9-7188-4b68-9017-00efe51dad8d
+    m_ActionName: BaseControls/DownGrab[/XboxOneGampadMacOSWireless/buttonSouth,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
+        m_MethodName: StartGrabArm
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 81dd9660-5ea7-4494-bbf9-a60682f7c5cd
+    m_ActionName: BaseControls/LeftGrab[/XboxOneGampadMacOSWireless/buttonWest,/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
+        m_MethodName: StartGrabArm
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 38ff1b48-40d9-4020-886b-5e2b6698d127
+    m_ActionName: BaseControls/RightGrab[/XboxOneGampadMacOSWireless/buttonEast,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
+        m_MethodName: StartGrabArm
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d2063420-ba4a-47cc-ad3f-a8995a49b73a
+    m_ActionName: BaseControls/UpGrab[/XboxOneGampadMacOSWireless/buttonNorth,/Keyboard/w]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: BaseControls

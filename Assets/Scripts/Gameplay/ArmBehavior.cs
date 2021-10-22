@@ -33,7 +33,7 @@ public class ArmBehavior : MonoBehaviour
 
     private float curScale;                                 //
 
-    private bool isExtended = false;                        // Indicates whether or not the arm is extended at maximum
+    public bool IsExtended = false;                        // Indicates whether or not the arm is extended at maximum
 
     private bool hitGround = false;                         // Indicates whether or not the player is hitting the ground
     private bool hitPlayer = false;                         // Indicates whether or note the player is hitting another player
@@ -47,6 +47,9 @@ public class ArmBehavior : MonoBehaviour
     private bool airPushing = false;
     [SerializeField] float cooldownAirPush = 0f;
     [SerializeField] float airPushAnimationTime = 0f;
+
+    public bool IsGrabbing = false;
+
 
     // #endregion
 
@@ -68,11 +71,11 @@ public class ArmBehavior : MonoBehaviour
     {
         if(active)
         {
-            if (!isExtended)
+            if (!IsExtended)
             {
                 UpdateScale();
             }
-            else
+            else if (!IsGrabbing)
             {
                 UnextendArm();
             }
@@ -91,7 +94,7 @@ public class ArmBehavior : MonoBehaviour
     public void ExtensionStart()
     {
         active = true;
-        isExtended = false;
+        IsExtended = false;
     }
 
 
@@ -131,7 +134,7 @@ public class ArmBehavior : MonoBehaviour
                 }
             }
 
-            isExtended = true;
+            IsExtended = true;
         }
         this.transform.localScale = new Vector3(1f, curScale, 1f);
 
@@ -218,6 +221,34 @@ public class ArmBehavior : MonoBehaviour
     private void ResetAirPush()
     {
         airPushing = false;
+    }
+
+    // #endregion
+
+
+    // #region ================== ARM GRAB FUNCTIONS ===================
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void StartGrab()
+    {
+        if (!IsGrabbing)
+        {
+            IsGrabbing = true;
+        }
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void EndGrab()
+    {
+        if (IsGrabbing)
+        {
+            IsGrabbing = false;
+        }
     }
 
     // #endregion

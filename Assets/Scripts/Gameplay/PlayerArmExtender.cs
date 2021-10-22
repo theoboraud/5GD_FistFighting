@@ -33,10 +33,21 @@ public class PlayerArmExtender : MonoBehaviour
     ///     int _arm: arm index
     /// </param>
     /// </summary>
-    public void ExtendArm(int _arm)
+    public void ExtendArm(int _armNb)
     {
-        OnExtendArm.Invoke();
-        CreateArm(_arm);
+        ArmBehavior _arm = Arms[_armNb];
+        if (!_arm.active)
+        {
+            OnExtendArm.Invoke();
+            CreateArm(_arm);
+        }
+        else
+        {
+            if (_arm.IsGrabbing)
+            {
+                _arm.EndGrab();
+            }
+        }
     }
 
 
@@ -46,11 +57,11 @@ public class PlayerArmExtender : MonoBehaviour
     ///     int _arm: arm index
     /// </param>
     /// </summary>
-    private void CreateArm(int _arm)
+    private void CreateArm(ArmBehavior _arm)
     {
-        if(Arms[_arm].active == false)
+        if (!_arm.active)
         {
-            Arms[_arm].ExtensionStart();
+            _arm.ExtensionStart();
         }
     }
 
