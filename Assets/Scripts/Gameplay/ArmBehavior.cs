@@ -45,8 +45,8 @@ public class ArmBehavior : MonoBehaviour
     [Header("AirPush Variables")]
     public Sprite airPushSprite;
     private bool airPushing = false;
-    [SerializeField] float cooldownAirPush = 1f;
-    [SerializeField] float airPushAnimationTime = 0.2f;
+    [SerializeField] float cooldownAirPush = 0f;
+    [SerializeField] float airPushAnimationTime = 0f;
 
     // #endregion
 

@@ -124,12 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 0}
-  actif: 0
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
+  active: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -142,7 +145,9 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
-  JetSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
+  airPushSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0.2
 --- !u!61 &6591023740121162971
 BoxCollider2D:
   m_ObjectHideFlags: 0
