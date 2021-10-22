@@ -28,13 +28,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6683747768370366094}
-  m_LocalRotation: {x: 0, y: 0, z: 0.004162634, w: 0.99999136}
-  m_LocalPosition: {x: 4.04, y: -2, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.477}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6683747768370366083
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.62, y: 1.03}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -104,7 +104,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.62, y: 1.03}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -124,12 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 0}
-  actif: 0
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
+  active: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -142,6 +145,9 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0.2
 --- !u!61 &6591023740121162971
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -160,7 +166,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.62, y: 1.03}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -186,7 +192,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.62, y: 1.03}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

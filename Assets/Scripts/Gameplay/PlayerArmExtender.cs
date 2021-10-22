@@ -9,7 +9,7 @@ using UnityEngine.Events;
 /// </summary>
 public class PlayerArmExtender : MonoBehaviour
 {
-    
+
     // #region ==================== CLASS VARIABLES ====================
 
     [Header("Refs")]
