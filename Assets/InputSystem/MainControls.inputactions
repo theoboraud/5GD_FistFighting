@@ -11,7 +11,7 @@
                     "id": "1f4c73e5-a746-46f9-8637-62cf654bf789",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap,Hold"
                 },
                 {
                     "name": "LeftArm",
@@ -19,7 +19,7 @@
                     "id": "c155569e-ed1f-4db0-b151-a5ddfb2bbdb6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap,Hold"
                 },
                 {
                     "name": "RightArm",
@@ -27,7 +27,7 @@
                     "id": "f5a59a6b-d516-487f-9f63-03abca681aa4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap,Hold"
                 },
                 {
                     "name": "UpArm",
@@ -35,7 +35,7 @@
                     "id": "fcab80f8-4ef8-436a-b9ac-47bdb9f0940f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap,Hold"
                 },
                 {
                     "name": "DashRight",
@@ -77,7 +77,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "DownArm",
                     "isComposite": false,
                     "isPartOfComposite": false

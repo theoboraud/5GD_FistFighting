@@ -72,7 +72,7 @@ public class RotateBehaviour : MonoBehaviour
     /// <summary>
     ///     When rotating right, set rotateDir to right and initialize the rotate value and the state booleans
     /// </summary>
-    public void RotateRight(InputAction.CallbackContext _value)
+    public void RotateRight()
     {
         if (CanRotate())
         {
@@ -87,7 +87,7 @@ public class RotateBehaviour : MonoBehaviour
     /// <summary>
     ///     When rotating left, set rotateDir to left and initialize the rotate value and the state booleans
     /// </summary>
-    public void RotateLeft(InputAction.CallbackContext _value)
+    public void RotateLeft()
     {
         if (CanRotate())
         {

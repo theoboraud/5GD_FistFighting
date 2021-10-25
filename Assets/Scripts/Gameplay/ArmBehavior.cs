@@ -20,10 +20,12 @@ public class ArmBehavior : MonoBehaviour
     public PlayerArmExtender Face;                          // Face reference from which the arm extends
 
     [Header("Extension Variables")]
-    [SerializeField] Vector2 StartScaleEndScale;            //
-    [SerializeField] float speedExtension;                  //
-    [SerializeField] float speedUnextension;                //
-    public bool active = false;                             //
+    [SerializeField] private Vector2 StartScaleEndScale;            //
+    [SerializeField] private float speedExtension;                  //
+    [SerializeField] private float speedUnextension;                //
+    public bool IsExtending = false;                             //
+    public bool IsUnextending = false;
+    public bool IsExtended = false;                         // Indicates whether or not the arm is extended at maximum
 
     [Header("Arm Behaviour Events")]
     public UnityEvent OnAppear;                             //
@@ -33,10 +35,8 @@ public class ArmBehavior : MonoBehaviour
 
     private float curScale;                                 //
 
-    private bool isExtended = false;                        // Indicates whether or not the arm is extended at maximum
-
-    private bool hitGround = false;                         // Indicates whether or not the player is hitting the ground
-    private bool hitPlayer = false;                         // Indicates whether or note the player is hitting another player
+    private bool hitGround_bool = false;                         // Indicates whether or not the player is hitting the ground
+    private bool hitPlayer_bool = false;                         // Indicates whether or note the player is hitting another player
     private Rigidbody2D hitPlayer_RB;                       // Rigidbody reference of hit player (if any)
 
     private SpriteRenderer spriteRenderer;
@@ -44,9 +44,14 @@ public class ArmBehavior : MonoBehaviour
 
     [Header("AirPush Variables")]
     public Sprite airPushSprite;
-    private bool airPushing = false;
+    private bool airPush_bool = false;
     [SerializeField] float cooldownAirPush = 0f;
     [SerializeField] float airPushAnimationTime = 0f;
+
+    public bool IsGrabbing = false;
+
+    public bool IsHolding = false;
+
 
     // #endregion
 
@@ -62,20 +67,18 @@ public class ArmBehavior : MonoBehaviour
 
 
     /// <summary>
-    ///     Modify every frame the arm physic (scale, position...) depending on whether or not it is active
+    ///     Modify every frame the arm physic (scale, position...) depending on whether or not it is extending
     /// </summary>
     private void Update()
     {
-        if(active)
+        if (IsExtending && !IsExtended)
         {
-            if (!isExtended)
-            {
-                UpdateScale();
-            }
-            else
-            {
-                UnextendArm();
-            }
+            Extend();
+        }
+
+        if (IsUnextending && IsExtended)
+        {
+            Unextend();
         }
     }
 
@@ -86,53 +89,80 @@ public class ArmBehavior : MonoBehaviour
     // #region ================ ARM EXTENSION FUNCTIONS ================
 
     /// <summary>
-    ///     Start the extension by activating it
+    ///     Start the extension by activating it with a button tap
     /// </summary>
-    public void ExtensionStart()
+    public void ExtensionTapStart()
     {
-        active = true;
-        isExtended = false;
+        IsExtending = true;
+        IsHolding = false;
+    }
+
+
+    /// <summary>
+    ///     Start the extension by activating it with a button hold
+    /// </summary>
+    public void ExtensionHoldStart()
+    {
+        IsExtending = true;
+        IsHolding = true;
+    }
+
+
+    /// <summary>
+    ///     End the extension by releasing a button hold
+    /// </summary>
+    public void ExtensionHoldEnd()
+    {
+        IsUnextending = true;
+        IsHolding = false;
     }
 
 
     /// <summary>
     ///
     /// </summary>
-    private void UpdateScale()
+    public void Extend()
     {
-        if(curScale >= StartScaleEndScale.y)
+        if (curScale >= StartScaleEndScale.y)
         {
             // FMOD event
             OnExtended.Invoke();
 
             // If hitting the ground, use force impulsion to move to the opposite side
-            if (hitGround)
+            if (hitGround_bool)
             {
                 Face.rb.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
-                hitGround = false;
+                hitGround_bool = false;
             }
-            else if (!airPushing)
+            else if (!airPush_bool)
             {
                 spriteRenderer.sprite = airPushSprite;
                 Face.rb.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
-                airPushing = true;
+                airPush_bool = true;
                 Invoke("ResetArmSprite", airPushAnimationTime);
                 Invoke("ResetAirPush", cooldownAirPush);
             }
 
             // If hitting a player, that player will receive a force impulsion
-            if (hitPlayer)
+            if (hitPlayer_bool)
             {
                 if (hitPlayer_RB != null)
                 {
                     hitPlayer_RB.AddForce(-this.transform.up * impulseForce * forceCoef_playerHit, ForceMode2D.Impulse);
-                    hitPlayer = false;
+                    hitPlayer_bool = false;
                     hitPlayer_RB = null;
                 }
             }
 
-            isExtended = true;
+            IsExtending = false;
+            IsExtended = true;
+
+            if (!IsHolding)
+            {
+                IsUnextending = true;
+            }
         }
+
         this.transform.localScale = new Vector3(1f, curScale, 1f);
 
         curScale += speedExtension * Time.deltaTime;
@@ -142,11 +172,15 @@ public class ArmBehavior : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private void UnextendArm()
+    public void Unextend()
     {
-        if(curScale <= StartScaleEndScale.x)
+        IsExtending = false;
+        
+        if (curScale <= StartScaleEndScale.x)
         {
             OnStopExtension();
+            IsExtended = false;
+            IsUnextending = false;
         }
 
         this.transform.localScale = new Vector3(1f, curScale, 1f);
@@ -156,11 +190,10 @@ public class ArmBehavior : MonoBehaviour
 
 
     /// <summary>
-    ///     When the arm retracts, set active to false for this arm
+    ///     When the arm is completely retracted, set IsExtending to false for this arm
     /// </summary>
     private void OnStopExtension()
     {
-        active = false;
         // FMOD event
         OnUnextended.Invoke();
     }
@@ -175,14 +208,14 @@ public class ArmBehavior : MonoBehaviour
 
         if (_GO.CompareTag("StaticGround"))
         {
-            hitGround = true;
+            hitGround_bool = true;
             OnCollision.Invoke();
             Face.OnCollision.Invoke();
         }
 
         if(_GO.CompareTag("Player"))
         {
-            hitPlayer = true;
+            hitPlayer_bool = true;
             hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
         }
     }
@@ -196,11 +229,11 @@ public class ArmBehavior : MonoBehaviour
         GameObject _GO = _collision.gameObject;
         if (_GO.CompareTag("StaticGround"))
         {
-            hitGround = false;
+            hitGround_bool = false;
         }
         else if (_GO.CompareTag("Player"))
         {
-            hitPlayer = false;
+            hitPlayer_bool = false;
         }
     }
 
@@ -217,8 +250,37 @@ public class ArmBehavior : MonoBehaviour
     /// </summary>
     private void ResetAirPush()
     {
-        airPushing = false;
+        airPush_bool = false;
     }
+
+    // #endregion
+
+
+    // #region ================== ARM GRAB FUNCTIONS ===================
+    /*
+    /// <summary>
+    ///
+    /// </summary>
+    public void StartGrab()
+    {
+        if (!IsGrabbing)
+        {
+            IsGrabbing = true;
+        }
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void EndGrab()
+    {
+        if (IsGrabbing)
+        {
+            IsGrabbing = false;
+        }
+    }
+    */
 
     // #endregion
 }

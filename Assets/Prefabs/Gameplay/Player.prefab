@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6108265605736228712}
   m_LocalRotation: {x: -0, y: -0, z: 0.004161841, w: 0.9999914}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 0.001, z: 1}
+  m_LocalScale: {x: 1, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 7457634657507086815}
   m_RootOrder: 0
@@ -124,12 +124,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  IsExtending: 0
+  IsExtended: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -142,6 +146,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
+  IsHolding: 0
 --- !u!61 &6108265605736228717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -224,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 6108265605862454131}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.001, z: 1}
+  m_LocalScale: {x: 1, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 7457634657507086815}
   m_RootOrder: 2
@@ -318,12 +327,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  IsExtending: 1
+  IsExtended: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -336,6 +349,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
+  IsHolding: 0
 --- !u!61 &6108265605862454128
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -418,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 6108265606138303112}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.001, z: 1}
+  m_LocalScale: {x: 1, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 7457634657507086815}
   m_RootOrder: 1
@@ -512,12 +530,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  IsExtending: 0
+  IsExtended: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -530,6 +552,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
+  IsHolding: 0
 --- !u!61 &6108265606138303117
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -612,7 +639,7 @@ Transform:
   m_GameObject: {fileID: 6108265606756007929}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 0.001, z: 1}
+  m_LocalScale: {x: 1, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 7457634657507086815}
   m_RootOrder: 3
@@ -706,12 +733,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  IsExtending: 0
+  IsExtended: 0
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -724,6 +755,11 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
+  IsGrabbing: 0
+  IsHolding: 0
 --- !u!61 &6108265606756007934
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -931,7 +967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1044,7 +1080,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6108265605568746725}
         m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
         m_MethodName: RotateRight
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1060,7 +1096,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6108265605568746725}
         m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
         m_MethodName: RotateLeft
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1125,6 +1161,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  downArm: {fileID: 6046377824961911952, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
+  leftArm: {fileID: 4571830371782205128, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
+  rightArm: {fileID: -3442742723969703564, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
+  upArm: {fileID: 9017928720813095053, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
 --- !u!114 &7410854094116458528
 MonoBehaviour:
   m_ObjectHideFlags: 0
