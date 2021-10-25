@@ -17,7 +17,7 @@ public class ArmBehavior : MonoBehaviour
     [SerializeField] float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
-    public PlayerArmExtender Face;                          // Face reference from which the arm extends
+    public PlayerControls Face;                             // Face reference from which the arm extends
 
     [Header("Extension Variables")]
     [SerializeField] private Vector2 StartScaleEndScale;            //
@@ -59,6 +59,9 @@ public class ArmBehavior : MonoBehaviour
 
     // #region ==================== UNITY FUNCTIONS ====================
 
+    /// <summary>
+    ///     Init variables
+    /// </summary>
     private void Awake()
     {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
@@ -75,8 +78,7 @@ public class ArmBehavior : MonoBehaviour
         {
             Extend();
         }
-
-        if (IsUnextending && IsExtended)
+        else if (IsUnextending && IsExtended)
         {
             Unextend();
         }
@@ -93,8 +95,12 @@ public class ArmBehavior : MonoBehaviour
     /// </summary>
     public void ExtensionTapStart()
     {
-        IsExtending = true;
-        IsHolding = false;
+        if (CanExtend())
+        {
+            IsExtending = true;
+            IsHolding = false;
+            print("Arm Tap");
+        }
     }
 
 
@@ -103,8 +109,12 @@ public class ArmBehavior : MonoBehaviour
     /// </summary>
     public void ExtensionHoldStart()
     {
-        IsExtending = true;
-        IsHolding = true;
+        if (CanExtend())
+        {
+            IsExtending = true;
+            IsHolding = true;
+            print("Arm Held");
+        }
     }
 
 
@@ -115,6 +125,13 @@ public class ArmBehavior : MonoBehaviour
     {
         IsUnextending = true;
         IsHolding = false;
+        print("Arm Release");
+    }
+
+
+    private bool CanExtend()
+    {
+        return !IsExtending && !IsUnextending && !IsHolding;
     }
 
 
@@ -131,13 +148,13 @@ public class ArmBehavior : MonoBehaviour
             // If hitting the ground, use force impulsion to move to the opposite side
             if (hitGround_bool)
             {
-                Face.rb.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
+                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
                 hitGround_bool = false;
             }
             else if (!airPush_bool)
             {
                 spriteRenderer.sprite = airPushSprite;
-                Face.rb.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
+                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
                 airPush_bool = true;
                 Invoke("ResetArmSprite", airPushAnimationTime);
                 Invoke("ResetAirPush", cooldownAirPush);
@@ -155,6 +172,8 @@ public class ArmBehavior : MonoBehaviour
             }
 
             IsExtending = false;
+            IsUnextending = false;
+
             IsExtended = true;
 
             if (!IsHolding)
@@ -175,12 +194,14 @@ public class ArmBehavior : MonoBehaviour
     public void Unextend()
     {
         IsExtending = false;
-        
+
         if (curScale <= StartScaleEndScale.x)
         {
             OnStopExtension();
             IsExtended = false;
+            IsExtending = false;
             IsUnextending = false;
+            IsHolding = false;
         }
 
         this.transform.localScale = new Vector3(1f, curScale, 1f);

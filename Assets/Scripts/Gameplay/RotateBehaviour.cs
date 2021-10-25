@@ -31,7 +31,7 @@ public class RotateBehaviour : MonoBehaviour
     /// <summary>
     ///     Get initial references
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
     }
