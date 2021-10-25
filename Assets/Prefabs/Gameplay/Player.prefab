@@ -124,12 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  active: 1
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -142,6 +145,9 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
 --- !u!61 &6108265605736228717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -318,12 +324,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  active: 1
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -336,6 +345,9 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
 --- !u!61 &6108265605862454128
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -512,12 +524,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  active: 1
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -530,6 +545,9 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
 --- !u!61 &6108265606138303117
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -706,12 +724,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  impulseForce: 10
+  forceCoef_groundExtension: 1
+  forceCoef_airPush: 1
+  forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
   speedExtension: 10
   speedUnextension: 15
-  active: 0
+  active: 1
   OnAppear:
     m_PersistentCalls:
       m_Calls: []
@@ -724,6 +745,9 @@ MonoBehaviour:
   OnUnextended:
     m_PersistentCalls:
       m_Calls: []
+  airPushSprite: {fileID: 0}
+  cooldownAirPush: 0
+  airPushAnimationTime: 0
 --- !u!61 &6108265606756007934
 BoxCollider2D:
   m_ObjectHideFlags: 0
