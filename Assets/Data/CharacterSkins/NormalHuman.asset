@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Normal Human
   Face: {fileID: 21300000, guid: 2627c3714dd16b24ea9ecd25740c0d15, type: 3}
-  Arms: {fileID: 21300000, guid: 4b7adbc2a7cf9c04587080c7f062a7fd, type: 3}
+  Arms: {fileID: 21300000, guid: 73c4c3efe255e614cb42a7e153e59d90, type: 3}

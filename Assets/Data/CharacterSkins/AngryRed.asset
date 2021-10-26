@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Angry Red
   Face: {fileID: 21300000, guid: 60b199ee344bdcd4583322ba2f31c420, type: 3}
-  Arms: {fileID: 21300000, guid: 4b7adbc2a7cf9c04587080c7f062a7fd, type: 3}
+  Arms: {fileID: 21300000, guid: f4b74c0fc80b46545963f31536682cf5, type: 3}

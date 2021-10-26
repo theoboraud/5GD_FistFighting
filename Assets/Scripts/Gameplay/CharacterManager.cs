@@ -8,12 +8,14 @@ public class CharacterManager : MonoBehaviour
     public CharacterSkin charSkin;
     [SerializeField] SpriteRenderer face;
     [SerializeField] SpriteRenderer[] Arm;
+    public Rigidbody2D rb;
 
     private void Awake()
     {
         if(Reference.multipleCharacterManager != null)
         {
             Reference.multipleCharacterManager.AddCharacter(this);
+            this.transform.parent = Reference.multipleCharacterManager.transform;
             charSkin = Reference.multipleCharacterManager.characterSkinManager.GetRandomSkin();
             Init();
         }
@@ -26,5 +28,11 @@ public class CharacterManager : MonoBehaviour
         {
             Arm[i].sprite = charSkin.Arms;
         }
+    }
+
+    public void ChangeSkin(CharacterSkin charSkin)
+    {
+        this.charSkin = charSkin;
+        Init();
     }
 }

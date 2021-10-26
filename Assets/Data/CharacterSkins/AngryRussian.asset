@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33d4beee9101bf340bd6b5b249a1ce3b, type: 3}
-  m_Name: Terminator
+  m_Name: AngryRussian
   m_EditorClassIdentifier: 
-  Name: Terminator
-  Face: {fileID: 21300000, guid: 19dc6048eeec6984ca302889fd4593b4, type: 3}
-  Arms: {fileID: 21300000, guid: dfc2848c72953774cb3c4046da037529, type: 3}
+  Name: Angry Russian
+  Face: {fileID: 21300000, guid: 2dedc88f13a5f3244ada79f7d2852100, type: 3}
+  Arms: {fileID: 21300000, guid: fdba2fe0649632c44882f873206e62c6, type: 3}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterSkinManager : MonoBehaviour
 {
     [Header("Skins")]
-    [SerializeField] CharacterSkin[] characterSkins;
+    public CharacterSkin[] characterSkins;
 
     public CharacterSkin GetRandomSkin()
     {
