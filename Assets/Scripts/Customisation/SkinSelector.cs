@@ -2,53 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class SkinSelector : MonoBehaviour
 {
     [Header("Status")]
-    public CharacterManager character;
+    public Player Player;
     int index;
-    private SelectScreenManager scm;
+    private SelectScreenManager selectScreenManager;
     public bool Validated;
+
     [Header("Reference Visuals")]
     [SerializeField] SpriteRenderer LeftArrow;
     [SerializeField] SpriteRenderer RightArrow;
     [SerializeField] Text SkinName;
     [SerializeField] GameObject Ready;
 
-    private void Start()
+    private void Awake()
     {
         LeftArrow.flipX = true;
-        scm = FindObjectOfType<SelectScreenManager>();
+        selectScreenManager = FindObjectOfType<SelectScreenManager>();
         index = 0;
-        if (scm.Skins.Count > 0)
+        if (selectScreenManager.Skins.Count > 0)
         {
-            character = scm.LinkCharacterToSelector(scm.Skins.Count - 1);
-            SkinName.text = character.charSkin.Name;
-            character.ChangeSkin(Reference.multipleCharacterManager.characterSkinManager.GetSkin(Mathf.Abs(index)));
+            Player = selectScreenManager.LinkCharacterToSelector(selectScreenManager.Skins.Count - 1);
+            SkinName.text = Player.CharSkin.Name;
+            Player.ChangeSkin(GameManager.Singleton_GameManager.CharacterSkinManager.GetSkin(Mathf.Abs(index)));
         }
     }
 
-    public void ChangeSkinLeft(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    public void ChangeSkinLeft()
     {
-        if (character != null && ctx.started)
-        {
-            index += -1;
-            index %= Reference.multipleCharacterManager.characterSkinManager.characterSkins.Length;
-            character.ChangeSkin(Reference.multipleCharacterManager.characterSkinManager.GetSkin(Mathf.Abs(index)));
-            SkinName.text = character.charSkin.Name;
-        }
+        index += -1;
+        index %= GameManager.Singleton_GameManager.CharacterSkinManager.CharacterSkins.Length;
+        Player.ChangeSkin(GameManager.Singleton_GameManager.CharacterSkinManager.GetSkin(Mathf.Abs(index)));
+        SkinName.text = Player.CharSkin.Name;
     }
 
-    public void ChangeSkinRight(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    public void ChangeSkinRight()
     {
-        if (character != null && ctx.started)
-        {
-            index += 1;
-            index %= Reference.multipleCharacterManager.characterSkinManager.characterSkins.Length;
-            character.ChangeSkin(Reference.multipleCharacterManager.characterSkinManager.GetSkin(Mathf.Abs(index)));
-            SkinName.text = character.charSkin.Name;
-        }
+        index += 1;
+        index %= GameManager.Singleton_GameManager.CharacterSkinManager.CharacterSkins.Length;
+        Player.ChangeSkin(GameManager.Singleton_GameManager.CharacterSkinManager.GetSkin(Mathf.Abs(index)));
+        SkinName.text = Player.CharSkin.Name;
     }
 
     public void ValidateSkin()

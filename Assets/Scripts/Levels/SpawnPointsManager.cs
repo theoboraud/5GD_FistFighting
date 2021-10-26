@@ -8,11 +8,11 @@ public class SpawnPointsManager : MonoBehaviour
 
     private void Start()
     {
-        if(Reference.multipleCharacterManager != null)
+        if(GameManager.Singleton_GameManager != null)
         {
-            Reference.multipleCharacterManager.SpawnPoints = this.SpawnPoints;
-            Reference.multipleCharacterManager.PlaceCharacters();
+            GameManager.Singleton_GameManager.SpawnPoints = this.SpawnPoints;
+            GameManager.Singleton_GameManager.PlacePlayers();
         }
-            
+
     }
 }

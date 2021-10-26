@@ -23,7 +23,7 @@ public class LevelSelectUI : MonoBehaviour
 
     public void LoadScene(int i)
     {
-        Reference.multipleCharacterManager.ChangeScene(i);
+        GameManager.Singleton_GameManager.ChangeScene(i);
         Debug.Log("Scene Loaded");
     }
 }

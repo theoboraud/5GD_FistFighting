@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7457634657507086815}
   - component: {fileID: 4023946081940462339}
+  - component: {fileID: 5655228929501688058}
   - component: {fileID: 5796460706983378298}
   - component: {fileID: 6108265605568746725}
-  - component: {fileID: 5655228929501688058}
-  - component: {fileID: 7410854094116458528}
   - component: {fileID: 7919616249934068131}
   - component: {fileID: 378933910590484317}
   - component: {fileID: 8230067169135093452}
@@ -94,41 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5796460706983378298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638854206922542603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26d6a919638149959e7146cb7485ddf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Arms:
-  - {fileID: 1966931639075448305}
-  - {fileID: 3449385171344854831}
-  - {fileID: 2130720605477548008}
-  - {fileID: 2076644909682508698}
-  OnExtendArm:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &6108265605568746725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638854206922542603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa4e93741e4349f4aa08aa9b329de76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5655228929501688058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,12 +222,68 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: adcf3d95-d6e4-41ec-a541-f475dda383cf
     m_ActionName: BaseControls/RotateLeft[/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d98e8f0c-a8f4-4d6e-b850-f6f13a195f6d
+    m_ActionName: Menu/Up[/XboxOneGampadMacOSWireless/dpad/up,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: GoRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: db964beb-1635-4caf-9408-abe3c5d62938
+    m_ActionName: Menu/Right[/XboxOneGampadMacOSWireless/dpad/right,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aadcdc37-9e6d-4ce8-9811-bde53f46496b
+    m_ActionName: Menu/Down[/XboxOneGampadMacOSWireless/dpad/down,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: GoLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6a1b0798-a88e-4a9f-bbc3-c6bc2c691022
+    m_ActionName: Menu/Left[/XboxOneGampadMacOSWireless/dpad/left,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Validate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 32eded2b-1eca-45ff-a008-a4c21e0384a9
+    m_ActionName: Menu/Validate[/XboxOneGampadMacOSWireless/start,/XboxOneGampadMacOSWireless/buttonSouth,/Keyboard/enter,/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: BaseControls
+  m_DefaultActionMap: Menu
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7410854094116458528
+--- !u!114 &5796460706983378298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,17 +292,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 8638854206922542603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bef3fbff88890d42b36d45500b7311d, type: 3}
+  m_Script: {fileID: 11500000, guid: c26d6a919638149959e7146cb7485ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charSkin: {fileID: 0}
+  Arms:
+  - {fileID: 1966931639075448305}
+  - {fileID: 3449385171344854831}
+  - {fileID: 2130720605477548008}
+  - {fileID: 2076644909682508698}
+  CharSkin: {fileID: 0}
   face: {fileID: 4023946081940462339}
   Arm:
   - {fileID: 1966931639075448306}
   - {fileID: 3449385171344854828}
   - {fileID: 2130720605477548011}
   - {fileID: 2076644909682508697}
-  RB: {fileID: 8230067169135093452}
+  SkinSelector: {fileID: 0}
+  OnExtendArm:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollision:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6108265605568746725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638854206922542603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa4e93741e4349f4aa08aa9b329de76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7919616249934068131
 MonoBehaviour:
   m_ObjectHideFlags: 0

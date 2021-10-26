@@ -10,60 +10,62 @@ public class SelectScreenManager : MonoBehaviour
     [SerializeField] GameObject OptionScreen;
     [SerializeField] GameObject LevelScreen;
     [Header("References")]
-    [SerializeField] private MultipleCharacterManager mcc;
+    [SerializeField] private GameManager gameManager;
     public List<int> Skins = new List<int>();
     [SerializeField] GameObject SkinSelector;
-    private List<SkinSelector> Selectors = new List<SkinSelector>();
+    private List<SkinSelector> SkinSelectors = new List<SkinSelector>();
 
     public int chars = 0;
     private bool ready;
 
-    private void Start()
+    private void Awake()
     {
-        mcc = Reference.multipleCharacterManager;
+        gameManager = GameManager.Singleton_GameManager;
     }
 
     private void Update()
     {
-        if(mcc.characters.Count > chars)
+        if (gameManager.Players.Count > chars)
         {
-            mcc.characters[chars].RB.simulated = false;
+            gameManager.Players[chars].RB.simulated = false;
             SpawnSkinSelector(chars);
             chars++;
             Skins.Add(0);
         }
-        if(CheckIfAllReady() && ready == false)
+        if (CheckIfAllReady() && ready == false)
         {
             ready = true;
             OpenMenu();
         }
     }
 
-    public CharacterManager LinkCharacterToSelector(int index)
+    public Player LinkCharacterToSelector(int _index)
     {
-        return mcc.characters[index];
+        return gameManager.Players[_index];
     }
 
-    private void SpawnSkinSelector(int index)
+    private void SpawnSkinSelector(int _index)
     {
-        SkinSelector ss = GameObject.Instantiate(SkinSelector, mcc.characters[index].transform.position, Quaternion.identity, SelectScreen.transform).GetComponent<SkinSelector>();
-        ss.transform.parent = SelectScreen.transform;
-        Selectors.Add(ss);
+        SkinSelector _skinSelector = GameObject.Instantiate(SkinSelector, gameManager.Players[_index].transform.position, Quaternion.identity, SelectScreen.transform).GetComponent<SkinSelector>();
+        _skinSelector.transform.parent = SelectScreen.transform;
+        _skinSelector.Player = GameManager.Singleton_GameManager.Players[_index];
+        GameManager.Singleton_GameManager.Players[_index].SkinSelector = _skinSelector;
+        SkinSelectors.Add(_skinSelector);
     }
 
-    private void RemoveSkinSelector(int index)
+    private void RemoveSkinSelector(int _index)
     {
-        Destroy(Selectors[index].gameObject);
-        Selectors.RemoveAt(index);
+        Destroy(SkinSelectors[_index].gameObject);
+        SkinSelectors.RemoveAt(_index);
     }
 
-    public void DestroyAllSkinSelectors()
+    public void DestroyAllSkinSkinSelectors()
     {
-        for (int i = 0; i < Selectors.Count; i++)
+        for (int i = 0; i < SkinSelectors.Count; i++)
         {
-            Destroy(Selectors[i].gameObject);
+            Destroy(SkinSelectors[i].gameObject);
         }
-        Selectors.Clear();
+        SkinSelectors.Clear();
     }
 
     private bool CheckIfAllReady()
@@ -72,7 +74,7 @@ public class SelectScreenManager : MonoBehaviour
         int a = 0;
         for (int i = 0; i < chars; i++)
         {
-            if (Selectors[i].Validated) a++;
+            if (SkinSelectors[i].Validated) a++;
         }
         if (a == chars && a > 0) ready = true;
         return ready;
@@ -104,7 +106,7 @@ public class SelectScreenManager : MonoBehaviour
 
     public void OpenSelectScreen()
     {
-        foreach (var item in Selectors)
+        foreach (var item in SkinSelectors)
         {
             item.Validated = false;
         }
@@ -116,6 +118,6 @@ public class SelectScreenManager : MonoBehaviour
 
     public void Quit()
     {
-        Reference.multipleCharacterManager.QuitGame();
+        gameManager.QuitGame();
     }
 }

@@ -2,7 +2,7 @@
     "name": "MainControls",
     "maps": [
         {
-            "name": "BaseControls",
+            "name": "Gameplay",
             "id": "e643b30b-e29c-4654-9c5f-d9f8ae4812a8",
             "actions": [
                 {
@@ -244,6 +244,186 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "RightArm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "44b164b6-b4ef-4384-8ca0-f81b67c6724c",
+            "actions": [
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "d98e8f0c-a8f4-4d6e-b850-f6f13a195f6d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "db964beb-1635-4caf-9408-abe3c5d62938",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "aadcdc37-9e6d-4ce8-9811-bde53f46496b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "6a1b0798-a88e-4a9f-bbc3-c6bc2c691022",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Validate",
+                    "type": "Button",
+                    "id": "32eded2b-1eca-45ff-a008-a4c21e0384a9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "54ac8609-4940-47a1-af8f-a19db90a8bb3",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "59f1a83d-eddd-42e8-8d56-c1de80bdf4b1",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af8bb740-b601-4a63-bd0c-c65cfee9ba9c",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8211c8b7-2de0-47f8-a30e-049058ebfa87",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "159f3631-bb70-4051-a3e0-c1420a7be044",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ba2118e-e1a0-4ec5-bb54-a837d875becd",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1c91d3f-c4ff-4f7e-9fab-d01bf3cc6b2c",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9baa75b5-275b-4268-8fe2-7557a250e2db",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90b40887-e9eb-4a13-acb9-dd21b8a6d298",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Validate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dbda67e9-3e8d-48d6-9409-3f4ee5da67a0",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Validate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "405d2632-f6fe-4baf-a1a6-6b6f77417ae2",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Validate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc70c86c-8e40-4720-9d58-d077b6a244b3",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Validate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

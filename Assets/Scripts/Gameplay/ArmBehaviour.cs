@@ -133,7 +133,6 @@ public class ArmBehaviour : MonoBehaviour
         {
             IsExtending = true;
             IsHolding = false;
-            print("Arm Tap");
         }
     }
 
@@ -147,7 +146,6 @@ public class ArmBehaviour : MonoBehaviour
         {
             IsExtending = true;
             IsHolding = true;
-            print("Arm Held");
         }
     }
 
@@ -159,7 +157,6 @@ public class ArmBehaviour : MonoBehaviour
     {
         IsUnextending = true;
         IsHolding = false;
-        print("Arm Release");
     }
 
 
@@ -187,10 +184,8 @@ public class ArmBehaviour : MonoBehaviour
             }
             else if (!airPush_bool)
             {
-                spriteRenderer.sprite = airPushSprite;
                 Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
                 airPush_bool = true;
-                Invoke("ResetArmSprite", airPushAnimationTime);
                 Invoke("ResetAirPush", cooldownAirPush);
             }
 
@@ -290,13 +285,6 @@ public class ArmBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary>
-    ///     Reset arm sprite to default, after using an AirPush
-    /// </summary>
-    private void ResetArmSprite()
-    {
-        spriteRenderer.sprite = armSprite;
-    }
 
     /// <summary>
     ///     Reset boolean indicating whether or not the player has used AirPush at the end of a cooldown
