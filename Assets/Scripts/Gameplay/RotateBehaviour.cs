@@ -59,7 +59,7 @@ public class RotateBehaviour : MonoBehaviour
         }
         else if (isRotating && rotateValue > 0)
         {
-            rotateValue = Mathf.Clamp(rotateValue, CONSTANT_rotateSpeed, CONSTANT_rotateValue);
+            rotateValue = Mathf.Clamp(rotateValue, CONSTANT_rotateSpeed, CONSTANT_rotateMaximum);
             RB.rotation += rotateDir * CONSTANT_rotateSpeed;
             rotateValue -= CONSTANT_rotateSpeed;
         }

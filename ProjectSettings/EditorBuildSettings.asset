@@ -11,4 +11,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test_MainMechanic_Multiplayer.unity
     guid: 13baf60e0f585364fbe2c66d989731dd
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}

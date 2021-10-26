@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseForce: 10
+  impulseForce: 100
   forceCoef_groundExtension: 1
   forceCoef_airPush: 1
   forceCoef_playerHit: 1

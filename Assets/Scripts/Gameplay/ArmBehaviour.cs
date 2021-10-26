@@ -80,7 +80,7 @@ public class ArmBehaviour : MonoBehaviour
         {
             Extend();
         }
-        else if (IsUnextending && IsExtended)
+        else if (IsUnextending && !IsHolding)
         {
             Unextend();
         }
@@ -207,7 +207,6 @@ public class ArmBehaviour : MonoBehaviour
 
             IsExtending = false;
             IsUnextending = false;
-
             IsExtended = true;
 
             if (!IsHolding)
@@ -228,12 +227,11 @@ public class ArmBehaviour : MonoBehaviour
     public void Unextend()
     {
         IsExtending = false;
+        IsExtended = false;
 
         if (curScale <= StartScaleEndScale.x)
         {
             OnStopExtension();
-            IsExtended = false;
-            IsExtending = false;
             IsUnextending = false;
             IsHolding = false;
         }
