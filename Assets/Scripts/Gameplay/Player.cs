@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Events;
+using Enums;
 
 /// <summary>
 ///     Class used to spawn the player arms during gameplay
@@ -16,47 +17,71 @@ public class Player : MonoBehaviour
     [Header("References")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
     public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
-    public CharacterSkin CharSkin;
-    [SerializeField] private SpriteRenderer face;
-    [SerializeField] private SpriteRenderer[] Arm;
-    public SkinSelector SkinSelector;
-    private PlayerInput playerInput;
+    [System.NonSerialized] public CharacterSkin CharSkin;
+    [SerializeField] private SpriteRenderer SpriteFace;
+    [SerializeField] private SpriteRenderer[] SpriteArms;
 
-    [Header("Events")]
+    [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
     public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
 
-    [Header("MenuElements")]
-    [System.NonSerialized] public MenuTravel MenuTravel;
+    [Header("Controls")]
+    private PlayerInput playerInput;
+    private GameplayControls gameplayControls;
+    private MenuControls menuControls;
+
+    [Header("Variables")]
+    [System.NonSerialized] public PlayerState PlayerState;
     // #endregion
 
 
-    // #region ================ INIT CONTROLS FUNCTIONS ================
+    // #region ===================== INIT FUNCTIONS ====================
 
     /// <summary>
     ///     Init variables
     /// </summary>
     private void Awake()
     {
-        MenuTravel = FindObjectOfType<MenuTravel>();
-        playerInput = gameObject.GetComponent<PlayerInput>();
-        RB = gameObject.GetComponent<Rigidbody2D>();
-        if (GameManager.Singleton_GameManager != null)
+        InitReferences();
+        InitControls();
+        InitVariables();
+
+        if (PlayerManager.Instance != null)
         {
-            GameManager.Singleton_GameManager.AddPlayer(this);
-            this.transform.parent = GameManager.Singleton_GameManager.transform;
-            CharSkin = GameManager.Singleton_GameManager.CharacterSkinManager.GetRandomSkin();
+            PlayerManager.Instance.AddPlayer(this);
+            //this.transform.parent = GameManager.Singleton_GameManager.transform;
+            CharSkin = PlayerManager.Instance.SkinsData.GetRandomSkin();
             InitSkin();
         }
     }
 
 
+    private void InitReferences()
+    {
+        RB = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+
+    private void InitControls()
+    {
+        playerInput = gameObject.GetComponent<PlayerInput>();
+        gameplayControls = gameObject.GetComponent<GameplayControls>();
+        menuControls = gameObject.GetComponent<MenuControls>();
+    }
+
+
+    private void InitVariables()
+    {
+        PlayerState = PlayerState.NotReady;
+    }
+
+
     private void InitSkin()
     {
-        face.sprite = CharSkin.Face;
-        for (int i = 0; i < Arm.Length; i++)
+        SpriteFace.sprite = CharSkin.SpriteFace;
+        for (int i = 0; i < SpriteArms.Length; i++)
         {
-            Arm[i].sprite = CharSkin.Arms;
+            SpriteArms[i].sprite = CharSkin.SpriteArm;
         }
     }
 
@@ -74,75 +99,52 @@ public class Player : MonoBehaviour
     // #endregion
 
 
-    // #region ===================== MENU FUNCTIONS ====================
+    // #region ============== GAMEPLAY CONTROLS FUNCTIONS ==============
 
-    public void GoUp(InputAction.CallbackContext _context)
+    // TO REIMPLEMENT
+
+    // #endregion
+
+
+    // #region ================ MENU CONTROLS FUNCTIONS ================
+
+    public void Menu_GoUp(InputAction.CallbackContext _context)
     {
-        if (_context.started && _context.interaction is PressInteraction)
+        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (MenuTravel.Active)
-            {
-                MenuTravel.GoUp();
-            }
+            menuControls.GoUp();
         }
     }
 
-
-    public void GoRight(InputAction.CallbackContext _context)
+    public void Menu_GoRight(InputAction.CallbackContext _context)
     {
-        if (_context.started && _context.interaction is PressInteraction)
+        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (MenuTravel.Active)
-            {
-                MenuTravel.GoRight();
-            }
-            else
-            {
-                SkinSelector.ChangeSkinRight();
-            }
+            menuControls.GoRight();
         }
     }
 
-
-    public void GoDown(InputAction.CallbackContext _context)
+    public void Menu_GoDown(InputAction.CallbackContext _context)
     {
-        if (_context.started && _context.interaction is PressInteraction)
+        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (MenuTravel.Active)
-            {
-                MenuTravel.GoRight();
-            }
+            menuControls.GoDown();
         }
     }
 
-
-    public void GoLeft(InputAction.CallbackContext _context)
+    public void Menu_GoLeft(InputAction.CallbackContext _context)
     {
-        if (_context.started && _context.interaction is PressInteraction)
+        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (MenuTravel.Active)
-            {
-                MenuTravel.GoLeft();
-            }
-            else
-            {
-                SkinSelector.ChangeSkinLeft();
-            }
+            menuControls.GoLeft();
         }
     }
 
-    public void Validate(InputAction.CallbackContext _context)
+    public void Menu_Validate(InputAction.CallbackContext _context)
     {
-        if (_context.started && _context.interaction is PressInteraction)
+        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (MenuTravel.Active)
-            {
-                MenuTravel.Validate();
-            }
-            else
-            {
-                SkinSelector.ValidateSkin();
-            }
+            menuControls.Validate();
         }
     }
 

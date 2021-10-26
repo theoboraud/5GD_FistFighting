@@ -10,7 +10,6 @@ public class SkinSelector : MonoBehaviour
     [Header("Status")]
     public Player Player;
     int index;
-    private SelectScreenManager selectScreenManager;
     public bool Validated;
 
     [Header("Reference Visuals")]
@@ -22,14 +21,13 @@ public class SkinSelector : MonoBehaviour
     private void Awake()
     {
         LeftArrow.flipX = true;
-        selectScreenManager = FindObjectOfType<SelectScreenManager>();
         index = 0;
-        if (selectScreenManager.Skins.Count > 0)
+        /*if (selectScreenManager.Skins.Count > 0)
         {
             Player = selectScreenManager.LinkCharacterToSelector(selectScreenManager.Skins.Count - 1);
             SkinName.text = Player.CharSkin.Name;
             Player.ChangeSkin(GameManager.Singleton_GameManager.CharacterSkinManager.GetSkin(Mathf.Abs(index)));
-        }
+        }*/
     }
 
     public void ChangeSkinLeft()

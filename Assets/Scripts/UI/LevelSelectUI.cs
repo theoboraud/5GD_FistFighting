@@ -21,9 +21,10 @@ public class LevelSelectUI : MonoBehaviour
         }
     }
 
+
     public void LoadScene(int i)
     {
-        GameManager.Singleton_GameManager.ChangeScene(i);
+        LevelManager.Instance.LoadScene(i);
         Debug.Log("Scene Loaded");
     }
 }
