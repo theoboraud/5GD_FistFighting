@@ -9,6 +9,10 @@ public class SpawnPointsManager : MonoBehaviour
     private void Start()
     {
         if(Reference.multipleCharacterManager != null)
+        {
             Reference.multipleCharacterManager.SpawnPoints = this.SpawnPoints;
+            Reference.multipleCharacterManager.PlaceCharacters();
+        }
+            
     }
 }

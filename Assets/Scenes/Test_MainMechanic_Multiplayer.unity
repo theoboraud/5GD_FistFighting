@@ -242,7 +242,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -266,7 +266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678728589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 2.51, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -603,6 +603,7 @@ GameObject:
   - component: {fileID: 1571824462}
   - component: {fileID: 1571824461}
   - component: {fileID: 1571824460}
+  - component: {fileID: 1571824463}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -626,6 +627,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 525864f9567d5a649b4c096802663100, type: 2}
   - {fileID: 11400000, guid: 2c2e6593ffea5ac4dbac8ca7804987eb, type: 2}
   - {fileID: 11400000, guid: 3b19da8ba18afc745a75e0086da3eb3d, type: 2}
+  - {fileID: 11400000, guid: ed824eb5aacdeee4d867789f4a5bd181, type: 2}
+  - {fileID: 11400000, guid: 7a2c0298551ae0c40a5e64a438319d49, type: 2}
 --- !u!114 &1571824461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,6 +644,7 @@ MonoBehaviour:
   characters: []
   SpawnPoints: []
   characterSkinManager: {fileID: 1571824460}
+  sceneManager: {fileID: 1571824463}
 --- !u!4 &1571824462
 Transform:
   m_ObjectHideFlags: 0
@@ -655,6 +659,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1571824463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571824459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf622caf38734b42b16cdfadbc86b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2082736127
 GameObject:
   m_ObjectHideFlags: 0

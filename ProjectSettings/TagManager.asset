@@ -42,3 +42,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: EstheticEnvironment
+    uniqueID: 73120909
+    locked: 0
+  - name: StaticEnvironment
+    uniqueID: 3254621041
+    locked: 0
+  - name: Arms
+    uniqueID: 1330413343
+    locked: 0
+  - name: Faces
+    uniqueID: 19936561
+    locked: 0
+  - name: UI
+    uniqueID: 31769
+    locked: 0
