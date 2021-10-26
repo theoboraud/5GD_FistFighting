@@ -230,8 +230,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6108265605568746725}
         m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
-        m_MethodName: RotateRight
-        m_Mode: 1
+        m_MethodName: Input_RotateRight
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -246,8 +246,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6108265605568746725}
         m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
-        m_MethodName: RotateLeft
-        m_Mode: 1
+        m_MethodName: Input_RotateLeft
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -400,6 +400,10 @@ PrefabInstance:
       propertyPath: Face
       value: 
       objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsExtending
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -486,6 +490,10 @@ PrefabInstance:
       propertyPath: Face
       value: 
       objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsExtending
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -576,6 +584,10 @@ PrefabInstance:
       propertyPath: Face
       value: 
       objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsExtending
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: impulseForce
       value: 20
@@ -670,6 +682,10 @@ PrefabInstance:
       propertyPath: Face
       value: 
       objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsExtending
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_RootOrder
       value: 1

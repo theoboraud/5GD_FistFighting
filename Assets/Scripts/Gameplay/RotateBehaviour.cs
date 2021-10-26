@@ -12,9 +12,11 @@ public class RotateBehaviour : MonoBehaviour
 
     private Rigidbody2D RB;
 
-    private const float CONSTANT_rotateValue = 90f;         // How much the character turns when using rotation
-    private const float CONSTANT_rotateSpeed = 20f;         // How much the character rotates every frame
-    private const float CONSTANT_rotateCooldown = 0.5f;     // How much time to wait after rotating to be able to rotate again
+    [SerializeField] private const float CONSTANT_rotateValue = 90f;         // How much the character turns when using rotation
+    [SerializeField] private const float CONSTANT_rotateSpeed = 20f;         // How much the character rotates every frame
+    [SerializeField] private const float CONSTANT_rotateCooldown = 0.5f;     // How much time to wait after rotating to be able to rotate again
+    [SerializeField] private const float CONSTANT_rotateIncrement = 5f;
+    [SerializeField] private const float CONSTANT_rotateMaximum = 1000f;
 
     private int rotateDir = 0;                              // Variable containing the trigonometric direction (1 for left, -1 for right)
     private float rotateValue = 0;                          // Variable containing the value of rotation to apply left
@@ -22,6 +24,7 @@ public class RotateBehaviour : MonoBehaviour
     private bool isRotating = false;                        // Boolean indicating whether or not the player is rotating right now
     private bool onCooldown = false;                        // Boolean indicating whether or not the rotation is on cooldown (if so, player can't rotate)
     private bool cooldownRoutineRunning = false;            // Boolean indicating whether or not the cooldown routine is on
+    private bool isHolding = false;                         // Boolean indicating whether or not a rotate button is being held
 
     // #endregion
 
@@ -43,7 +46,18 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (rotateValue > 0)
+        if (isHolding)
+        {
+            if (rotateValue < CONSTANT_rotateMaximum)
+            {
+                rotateValue += CONSTANT_rotateIncrement;
+            }
+            else
+            {
+                rotateValue = CONSTANT_rotateMaximum;
+            }
+        }
+        else if (isRotating && rotateValue > 0)
         {
             rotateValue = Mathf.Clamp(rotateValue, CONSTANT_rotateSpeed, CONSTANT_rotateValue);
             RB.rotation += rotateDir * CONSTANT_rotateSpeed;
@@ -75,29 +89,6 @@ public class RotateBehaviour : MonoBehaviour
         {
             if (_context.interaction is HoldInteraction)
             {
-                RotateHold(1);
-            }
-            else if (_context.interaction is TapInteraction)
-            {
-                RotateTap(1);
-            }
-        }
-        else if (_context.canceled)
-        {
-            if (_context.interaction is HoldInteraction)
-            {
-                RotateRelease(1);
-            }
-        }
-    }
-
-
-    public void Input_RotateLeft(InputAction.CallbackContext _context)
-    {
-        if (_context.performed)
-        {
-            if (_context.interaction is HoldInteraction)
-            {
                 RotateHold(-1);
             }
             else if (_context.interaction is TapInteraction)
@@ -110,6 +101,29 @@ public class RotateBehaviour : MonoBehaviour
             if (_context.interaction is HoldInteraction)
             {
                 RotateRelease(-1);
+            }
+        }
+    }
+
+
+    public void Input_RotateLeft(InputAction.CallbackContext _context)
+    {
+        if (_context.performed)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                RotateHold(1);
+            }
+            else if (_context.interaction is TapInteraction)
+            {
+                RotateTap(1);
+            }
+        }
+        else if (_context.canceled)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                RotateRelease(1);
             }
         }
     }
@@ -142,6 +156,7 @@ public class RotateBehaviour : MonoBehaviour
     {
         if (CanRotate())
         {
+            isHolding = true;
             rotateDir = _rotateDir;
             rotateValue = CONSTANT_rotateValue;
         }
@@ -153,8 +168,9 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateRelease(int _rotateDir)
     {
-        if (CanRotate())
+        if (CanRotate() && rotateDir == _rotateDir)
         {
+            isHolding = false;
             isRotating = true;
             onCooldown = true;
         }

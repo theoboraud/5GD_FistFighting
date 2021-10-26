@@ -59,7 +59,7 @@
                     "id": "383de03f-5403-40bb-8fbb-264947cd250e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Tap,Hold"
                 },
                 {
                     "name": "RotateLeft",
@@ -67,7 +67,7 @@
                     "id": "adcf3d95-d6e4-41ec-a541-f475dda383cf",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Hold,Tap"
                 }
             ],
             "bindings": [
