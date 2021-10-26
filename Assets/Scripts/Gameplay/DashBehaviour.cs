@@ -16,9 +16,10 @@ public class DashBehaviour : MonoBehaviour
     private const float CONSTANT_endOfDashSpeed = 5f;      // Player speed set at the end of a dash
     private const float CONSTANT_dashCooldown = 1f;        // How much time the dash is not available for after using it
 
-    private Rigidbody2D rb;                 // Rigidbody reference
+    private Rigidbody2D RB;                 // Rigidbody reference
 
     private Vector2 dashDirection;          // Vector containing the dash direction (right or left)
+    private float dashTime;
     private bool isDashing = false;         // Boolean telling whether or not the player is dashing right now
     private bool canDash = true;            // Boolean telling whether or not the player can dash
 
@@ -33,7 +34,7 @@ public class DashBehaviour : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        rb = this.GetComponent<Rigidbody2D>();
+        RB = this.GetComponent<Rigidbody2D>();
     }
 
 
@@ -44,7 +45,7 @@ public class DashBehaviour : MonoBehaviour
     {
         if(isDashing)
         {
-            rb.velocity = dashDirection * CONSTANT_dashSpeed;
+            RB.velocity = dashDirection * CONSTANT_dashSpeed;
         }
     }
 
@@ -62,6 +63,7 @@ public class DashBehaviour : MonoBehaviour
         if(!isDashing && canDash)
         {
             dashDirection = Vector2.right;
+            dashTime = CONSTANT_dashTime;
             StartCoroutine("Dash");
         }
     }
@@ -75,6 +77,7 @@ public class DashBehaviour : MonoBehaviour
         if(!isDashing && canDash)
         {
             dashDirection = Vector2.left;
+            dashTime = CONSTANT_dashTime;
             StartCoroutine("Dash");
         }
     }
@@ -86,14 +89,14 @@ public class DashBehaviour : MonoBehaviour
     private IEnumerator Dash()
     {
         isDashing = true;
-        float _gravity = rb.gravityScale;
-        rb.gravityScale = CONSTANT_dashGravity;
+        float _gravity = RB.gravityScale;
+        RB.gravityScale = CONSTANT_dashGravity;
 
-        yield return new WaitForSeconds(CONSTANT_dashTime);
+        yield return new WaitForSeconds(dashTime);
 
         isDashing = false;
-        rb.gravityScale = _gravity;
-        rb.velocity = dashDirection * CONSTANT_endOfDashSpeed;
+        RB.gravityScale = _gravity;
+        RB.velocity = dashDirection * CONSTANT_endOfDashSpeed;
         dashDirection = Vector2.zero;
 
         // Call the cooldown coroutine

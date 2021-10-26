@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Events;
 
 public class RotateBehaviour : MonoBehaviour
@@ -66,17 +67,67 @@ public class RotateBehaviour : MonoBehaviour
 
 
 
+    // #region =================== CONTROLS FUNCTIONS ==================
+
+    public void Input_RotateRight(InputAction.CallbackContext _context)
+    {
+        if (_context.performed)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                RotateHold(1);
+            }
+            else if (_context.interaction is TapInteraction)
+            {
+                RotateTap(1);
+            }
+        }
+        else if (_context.canceled)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                RotateRelease(1);
+            }
+        }
+    }
+
+
+    public void Input_RotateLeft(InputAction.CallbackContext _context)
+    {
+        if (_context.performed)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                RotateHold(-1);
+            }
+            else if (_context.interaction is TapInteraction)
+            {
+                RotateTap(-1);
+            }
+        }
+        else if (_context.canceled)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                RotateRelease(-1);
+            }
+        }
+    }
+
+    // #endregion
+
+
+
     // #region ==================== ROTATE FUNCTIONS ===================
 
-
     /// <summary>
-    ///     When rotating right, set rotateDir to right and initialize the rotate value and the state booleans
+    ///     When rotating left, set rotateDir to left and initialize the rotate value and the state booleans
     /// </summary>
-    public void RotateRight()
+    public void RotateTap(int _rotateDir)
     {
         if (CanRotate())
         {
-            rotateDir = -1;
+            rotateDir = _rotateDir;
             rotateValue = CONSTANT_rotateValue;
             isRotating = true;
             onCooldown = true;
@@ -85,14 +136,25 @@ public class RotateBehaviour : MonoBehaviour
 
 
     /// <summary>
-    ///     When rotating left, set rotateDir to left and initialize the rotate value and the state booleans
+    ///     When rotating right, set rotateDir to right and initialize the rotate value and the state booleans
     /// </summary>
-    public void RotateLeft()
+    public void RotateHold(int _rotateDir)
     {
         if (CanRotate())
         {
-            rotateDir = 1;
+            rotateDir = _rotateDir;
             rotateValue = CONSTANT_rotateValue;
+        }
+    }
+
+
+    /// <summary>
+    ///     When rotating right, set rotateDir to right and initialize the rotate value and the state booleans
+    /// </summary>
+    public void RotateRelease(int _rotateDir)
+    {
+        if (CanRotate())
+        {
             isRotating = true;
             onCooldown = true;
         }
@@ -119,7 +181,6 @@ public class RotateBehaviour : MonoBehaviour
     private bool CanRotate()
     {
         return !onCooldown && !isRotating;
-
     }
 
     // #endregion
