@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Interactions;
 /// <summary>
 ///     Class used by each arm for physics behaviours
 /// </summary>
-public class ArmBehaviour : MonoBehaviour
+public class ArmBehaviourDoubleJump : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
 
