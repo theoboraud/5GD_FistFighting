@@ -8,7 +8,7 @@ public class CharacterManager : MonoBehaviour
     public CharacterSkin charSkin;
     [SerializeField] SpriteRenderer face;
     [SerializeField] SpriteRenderer[] Arm;
-    public Rigidbody2D rb;
+    public Rigidbody2D RB;
 
     private void Awake()
     {

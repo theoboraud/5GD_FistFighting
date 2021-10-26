@@ -14,7 +14,7 @@ public class SelectScreenManager : MonoBehaviour
     public List<int> Skins = new List<int>();
     [SerializeField] GameObject SkinSelector;
     private List<SkinSelector> Selectors = new List<SkinSelector>();
-    
+
     public int chars = 0;
     private bool ready;
 
@@ -27,7 +27,7 @@ public class SelectScreenManager : MonoBehaviour
     {
         if(mcc.characters.Count > chars)
         {
-            mcc.characters[chars].rb.simulated = false;
+            mcc.characters[chars].RB.simulated = false;
             SpawnSkinSelector(chars);
             chars++;
             Skins.Add(0);
@@ -43,7 +43,7 @@ public class SelectScreenManager : MonoBehaviour
     {
         return mcc.characters[index];
     }
-    
+
     private void SpawnSkinSelector(int index)
     {
         SkinSelector ss = GameObject.Instantiate(SkinSelector, mcc.characters[index].transform.position, Quaternion.identity, SelectScreen.transform).GetComponent<SkinSelector>();

@@ -42,7 +42,7 @@ public class MultipleCharacterManager : MonoBehaviour
         {
             foreach (var item in characters)
             {
-                item.rb.simulated = true;
+                item.RB.simulated = true;
             }
         }
         sceneManager.LoadScene(sceneIndex);

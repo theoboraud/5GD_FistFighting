@@ -155,109 +155,37 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2130720605477548008}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
-        m_MethodName: Input_Extend
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 1f4c73e5-a746-46f9-8637-62cf654bf789
-    m_ActionName: BaseControls/DownArm[/Keyboard/s]
+      m_Calls: []
+    m_ActionId: fcab80f8-4ef8-436a-b9ac-47bdb9f0940f
+    m_ActionName: BaseControls/UpArm[/Keyboard/w]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2076644909682508698}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
-        m_MethodName: Input_Extend
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c155569e-ed1f-4db0-b151-a5ddfb2bbdb6
-    m_ActionName: BaseControls/LeftArm[/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3449385171344854831}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
-        m_MethodName: Input_Extend
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: f5a59a6b-d516-487f-9f63-03abca681aa4
     m_ActionName: BaseControls/RightArm[/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1966931639075448305}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
-        m_MethodName: Input_Extend
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: fcab80f8-4ef8-436a-b9ac-47bdb9f0940f
-    m_ActionName: BaseControls/UpArm[/Keyboard/z]
+      m_Calls: []
+    m_ActionId: 1f4c73e5-a746-46f9-8637-62cf654bf789
+    m_ActionName: BaseControls/DownArm[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c155569e-ed1f-4db0-b151-a5ddfb2bbdb6
+    m_ActionName: BaseControls/LeftArm[/Keyboard/a]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: e32f6233-b5f6-4453-b857-000711039108
-    m_ActionName: BaseControls/DashRight[/XboxOneGampadMacOSWireless/rightTrigger,/Keyboard/e]
+    m_ActionName: BaseControls/DashRight[/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 1cdeb7d6-cab1-485d-bf7e-de9eab6945ce
-    m_ActionName: BaseControls/DashLeft[/XboxOneGampadMacOSWireless/leftTrigger,/Keyboard/q]
+    m_ActionName: BaseControls/DashLeft[/Keyboard/leftArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6108265605568746725}
-        m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
-        m_MethodName: Input_RotateRight
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 383de03f-5403-40bb-8fbb-264947cd250e
-    m_ActionName: BaseControls/RotateRight[/XboxOneGampadMacOSWireless/rightShoulder,/Keyboard/3]
+    m_ActionName: BaseControls/RotateRight[/Keyboard/upArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6108265605568746725}
-        m_TargetAssemblyTypeName: RotateBehaviour, Assembly-CSharp
-        m_MethodName: Input_RotateLeft
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: adcf3d95-d6e4-41ec-a541-f475dda383cf
-    m_ActionName: BaseControls/RotateLeft[/XboxOneGampadMacOSWireless/leftShoulder,/Keyboard/1]
+    m_ActionName: BaseControls/RotateLeft[/Keyboard/downArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: BaseControls
@@ -282,6 +210,7 @@ MonoBehaviour:
   - {fileID: 3449385171344854828}
   - {fileID: 2130720605477548011}
   - {fileID: 2076644909682508697}
+  RB: {fileID: 8230067169135093452}
 --- !u!114 &7919616249934068131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +333,10 @@ PrefabInstance:
       propertyPath: IsExtending
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsUnextending
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -492,6 +425,10 @@ PrefabInstance:
       objectReference: {fileID: 5796460706983378298}
     - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: IsExtending
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsUnextending
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
@@ -592,6 +529,10 @@ PrefabInstance:
       propertyPath: impulseForce
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsUnextending
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -684,6 +625,10 @@ PrefabInstance:
       objectReference: {fileID: 5796460706983378298}
     - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: IsExtending
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: IsUnextending
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
