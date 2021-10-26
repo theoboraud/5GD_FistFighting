@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 /// <summary>
 ///     Class used by each arm for physics behaviours
 /// </summary>
-public class ArmBehavior : MonoBehaviour
+public class ArmBehaviour : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
 
@@ -17,7 +19,7 @@ public class ArmBehavior : MonoBehaviour
     [SerializeField] float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
-    public PlayerControls Face;                             // Face reference from which the arm extends
+    public Player Face;                                     // Face reference from which the arm extends
 
     [Header("Extension Variables")]
     [SerializeField] private Vector2 StartScaleEndScale;            //
@@ -86,6 +88,38 @@ public class ArmBehavior : MonoBehaviour
 
     // #endregion
 
+
+    // #region =================== CONTROLS FUNCTIONS ==================
+
+    public void Input_Extend(InputAction.CallbackContext _context)
+    {
+        if (_context.performed)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                ExtensionHoldStart();
+
+                // FMOD Event
+                Face.OnExtendArm.Invoke();
+            }
+            else if (_context.interaction is TapInteraction)
+            {
+                ExtensionTapStart();
+
+                // FMOD Event
+                Face.OnExtendArm.Invoke();
+            }
+        }
+        else if (_context.canceled)
+        {
+            if (_context.interaction is HoldInteraction)
+            {
+                ExtensionHoldEnd();
+            }
+        }
+    }
+
+    // #endregion
 
 
     // #region ================ ARM EXTENSION FUNCTIONS ================

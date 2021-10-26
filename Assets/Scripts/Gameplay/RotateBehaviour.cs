@@ -9,7 +9,7 @@ public class RotateBehaviour : MonoBehaviour
 
     // #region ==================== CLASS VARIABLES ====================
 
-    private Rigidbody2D rb;
+    private Rigidbody2D RB;
 
     private const float CONSTANT_rotateValue = 90f;         // How much the character turns when using rotation
     private const float CONSTANT_rotateSpeed = 20f;         // How much the character rotates every frame
@@ -33,7 +33,7 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        rb = this.GetComponent<Rigidbody2D>();
+        RB = this.GetComponent<Rigidbody2D>();
     }
 
 
@@ -45,7 +45,7 @@ public class RotateBehaviour : MonoBehaviour
         if (rotateValue > 0)
         {
             rotateValue = Mathf.Clamp(rotateValue, CONSTANT_rotateSpeed, CONSTANT_rotateValue);
-            rb.rotation += rotateDir * CONSTANT_rotateSpeed;
+            RB.rotation += rotateDir * CONSTANT_rotateSpeed;
             rotateValue -= CONSTANT_rotateSpeed;
         }
 

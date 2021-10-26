@@ -117,10 +117,6 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls: []
-  UpArm: {fileID: 9017928720813095053, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
-  RightArm: {fileID: -3442742723969703564, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
-  DownArm: {fileID: 6046377824961911952, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
-  LeftArm: {fileID: 4571830371782205128, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
 --- !u!114 &6108265605568746725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 235b89ac9bf64f1429f57a216122c4ae, type: 3}
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -160,10 +156,10 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5796460706983378298}
-        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
-        m_MethodName: ExtendArm
-        m_Mode: 3
+      - m_Target: {fileID: 2130720605477548008}
+        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+        m_MethodName: Input_Extend
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -176,10 +172,10 @@ MonoBehaviour:
     m_ActionName: BaseControls/DownArm[/Keyboard/s]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5796460706983378298}
-        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
-        m_MethodName: ExtendArm
-        m_Mode: 3
+      - m_Target: {fileID: 2076644909682508698}
+        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+        m_MethodName: Input_Extend
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -192,10 +188,10 @@ MonoBehaviour:
     m_ActionName: BaseControls/LeftArm[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5796460706983378298}
-        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
-        m_MethodName: ExtendArm
-        m_Mode: 3
+      - m_Target: {fileID: 3449385171344854831}
+        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+        m_MethodName: Input_Extend
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -208,10 +204,10 @@ MonoBehaviour:
     m_ActionName: BaseControls/RightArm[/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5796460706983378298}
-        m_TargetAssemblyTypeName: PlayerArmExtender, Assembly-CSharp
-        m_MethodName: ExtendArm
-        m_Mode: 3
+      - m_Target: {fileID: 1966931639075448305}
+        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+        m_MethodName: Input_Extend
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -223,35 +219,11 @@ MonoBehaviour:
     m_ActionId: fcab80f8-4ef8-436a-b9ac-47bdb9f0940f
     m_ActionName: BaseControls/UpArm[/Keyboard/z]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DashBehaviour, Assembly-CSharp
-        m_MethodName: DashRight
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: e32f6233-b5f6-4453-b857-000711039108
     m_ActionName: BaseControls/DashRight[/XboxOneGampadMacOSWireless/rightTrigger,/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DashBehaviour, Assembly-CSharp
-        m_MethodName: DashLeft
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 1cdeb7d6-cab1-485d-bf7e-de9eab6945ce
     m_ActionName: BaseControls/DashLeft[/XboxOneGampadMacOSWireless/leftTrigger,/Keyboard/q]
   - m_PersistentCalls:
