@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     [Header("Refs")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
-    public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
+    public ArmBehaviourDoubleJump[] Arms = new ArmBehaviourDoubleJump[4];     // Array containing each arm
 
     [Header("Events")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -34,5 +34,16 @@ public class Player : MonoBehaviour
         RB = gameObject.GetComponent<Rigidbody2D>();
     }
 
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("StaticGround"))
+    //    {
+    //        for (int i = 0; i < Arms.Length; i++)
+    //        {
+    //            Arms[i].CanAirPush = true;
+    //        }
+            
+    //    }
+    //}
     // #endregion
 }

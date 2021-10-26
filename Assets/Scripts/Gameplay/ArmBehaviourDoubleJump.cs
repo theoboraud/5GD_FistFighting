@@ -47,6 +47,7 @@ public class ArmBehaviourDoubleJump : MonoBehaviour
     [Header("AirPush Variables")]
     public Sprite airPushSprite;
     private bool airPush_bool = false;
+
     [SerializeField] private float cooldownAirPush = 10f;
     [SerializeField] private float airPushAnimationTime = 0f;
 
@@ -54,6 +55,7 @@ public class ArmBehaviourDoubleJump : MonoBehaviour
 
     public bool IsHolding = false;
 
+    public bool CanAirPush = true;
 
     // #endregion
 
@@ -185,11 +187,12 @@ public class ArmBehaviourDoubleJump : MonoBehaviour
                 Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
                 hitGround_bool = false;
             }
-            else if (!airPush_bool)
+            else if (!airPush_bool && CanAirPush)
             {
                 spriteRenderer.sprite = airPushSprite;
                 Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
                 airPush_bool = true;
+                CanAirPush = false;
                 print(cooldownAirPush);
                 Invoke("ResetArmSprite", airPushAnimationTime);
                 Invoke("ResetAirPush", cooldownAirPush);

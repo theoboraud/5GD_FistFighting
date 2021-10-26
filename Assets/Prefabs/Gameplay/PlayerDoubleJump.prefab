@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4991406778086158185
+--- !u!114 &115212976634953521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1966931639075448319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 164997b52936d2f47bcb67f136ca6e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseForce: 10
+  impulseForce: 15
   forceCoef_groundExtension: 1
-  forceCoef_airPush: 1
+  forceCoef_airPush: 1.5
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -36,11 +36,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   airPushSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
-  cooldownAirPush: 10
+  cooldownAirPush: 0
   airPushAnimationTime: 0
   IsGrabbing: 0
   IsHolding: 0
---- !u!114 &4979160527744394301
+  CanAirPush: 1
+--- !u!114 &4167705834074886307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,17 +50,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2076644909682508692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 164997b52936d2f47bcb67f136ca6e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseForce: 10
+  impulseForce: 15
   forceCoef_groundExtension: 1
-  forceCoef_airPush: 1
+  forceCoef_airPush: 1.5
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -76,11 +77,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   airPushSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
-  cooldownAirPush: 10
+  cooldownAirPush: 0
   airPushAnimationTime: 0
   IsGrabbing: 0
   IsHolding: 0
---- !u!114 &418101247467418921
+  CanAirPush: 1
+--- !u!114 &2758851333013218724
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,17 +91,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2130720605477548006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 164997b52936d2f47bcb67f136ca6e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseForce: 10
+  impulseForce: 15
   forceCoef_groundExtension: 1
-  forceCoef_airPush: 1
+  forceCoef_airPush: 1.5
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -116,11 +118,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   airPushSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
-  cooldownAirPush: 10
+  cooldownAirPush: 0
   airPushAnimationTime: 0
   IsGrabbing: 0
   IsHolding: 0
---- !u!114 &9013662834385835750
+  CanAirPush: 1
+--- !u!114 &4916842561883576679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,17 +132,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3449385171344854817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 164997b52936d2f47bcb67f136ca6e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseForce: 10
+  impulseForce: 15
   forceCoef_groundExtension: 1
-  forceCoef_airPush: 1
+  forceCoef_airPush: 1.5
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -156,10 +159,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   airPushSprite: {fileID: 21300000, guid: a3618e13cf6f67645a1afc13daf6fae8, type: 3}
-  cooldownAirPush: 10
+  cooldownAirPush: 0
   airPushAnimationTime: 0
   IsGrabbing: 0
   IsHolding: 0
+  CanAirPush: 1
 --- !u!1 &8638854206922542603
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +183,7 @@ GameObject:
   - component: {fileID: 8230067169135093452}
   - component: {fileID: 8023127552561660906}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerDoubleJump
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,10 +271,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Arms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 115212976634953521}
+  - {fileID: 4916842561883576679}
+  - {fileID: 2758851333013218724}
+  - {fileID: 4167705834074886307}
   OnExtendArm:
     m_PersistentCalls:
       m_Calls: []
@@ -316,8 +320,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 418101247467418921}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 2758851333013218724}
+        m_TargetAssemblyTypeName: ArmBehaviourDoubleJump, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
         m_Arguments:
@@ -332,8 +336,8 @@ MonoBehaviour:
     m_ActionName: BaseControls/DownArm[/Keyboard/s]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4979160527744394301}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 4167705834074886307}
+        m_TargetAssemblyTypeName: ArmBehaviourDoubleJump, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
         m_Arguments:
@@ -348,8 +352,8 @@ MonoBehaviour:
     m_ActionName: BaseControls/LeftArm[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9013662834385835750}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 4916842561883576679}
+        m_TargetAssemblyTypeName: ArmBehaviourDoubleJump, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
         m_Arguments:
@@ -364,8 +368,8 @@ MonoBehaviour:
     m_ActionName: BaseControls/RightArm[/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4991406778086158185}
-        m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 115212976634953521}
+        m_TargetAssemblyTypeName: ArmBehaviourDoubleJump, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
         m_Arguments:

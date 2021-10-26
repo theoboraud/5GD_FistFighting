@@ -36,6 +36,7 @@ public class ArmBehaviourDegressif : MonoBehaviour
     public UnityEvent OnUnextended;                         //
 
     private float curScale;                                 //
+    private float coeffAirJet=1;
 
     private bool hitGround_bool = false;                         // Indicates whether or not the player is hitting the ground
     private bool hitPlayer_bool = false;                         // Indicates whether or note the player is hitting another player
@@ -188,11 +189,12 @@ public class ArmBehaviourDegressif : MonoBehaviour
             else if (!airPush_bool)
             {
                 spriteRenderer.sprite = airPushSprite;
-                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
+                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush* coeffAirJet, ForceMode2D.Impulse);
                 airPush_bool = true;
                 print(cooldownAirPush);
                 Invoke("ResetArmSprite", airPushAnimationTime);
                 Invoke("ResetAirPush", cooldownAirPush);
+                coeffAirJet /= 2;
             }
 
             // If hitting a player, that player will receive a force impulsion
@@ -267,6 +269,7 @@ public class ArmBehaviourDegressif : MonoBehaviour
             hitGround_bool = true;
             OnCollision.Invoke();
             Face.OnCollision.Invoke();
+            coeffAirJet = 1;
         }
 
         if(_GO.CompareTag("Player"))
