@@ -5,12 +5,12 @@ using UnityEngine;
 public class SkinsData: MonoBehaviour
 {
     [Header("Skins")]
-    public CharacterSkin[] CharacterSkins;
+    public List<CharacterSkin> CharacterSkins = new List<CharacterSkin>();
 
     public CharacterSkin GetRandomSkin()
     {
-        int _rand = Random.Range(0, CharacterSkins.Length);
-        return CharacterSkins[_rand];
+        print(CharacterSkins.Count);
+        return CharacterSkins[Random.Range(0, CharacterSkins.Count)];
     }
 
     public CharacterSkin GetSkin(int _index)

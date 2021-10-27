@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 378933910590484317}
   - component: {fileID: 8230067169135093452}
   - component: {fileID: 8023127552561660906}
+  - component: {fileID: -7318027113983621175}
+  - component: {fileID: 8136433403798808548}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -280,7 +282,7 @@ MonoBehaviour:
     m_ActionName: Menu/Validate[/XboxOneGampadMacOSWireless/start,/XboxOneGampadMacOSWireless/buttonSouth,/Keyboard/enter,/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Menu
+  m_DefaultActionMap: e643b30b-e29c-4654-9c5f-d9f8ae4812a8
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5796460706983378298
@@ -300,14 +302,12 @@ MonoBehaviour:
   - {fileID: 3449385171344854831}
   - {fileID: 2130720605477548008}
   - {fileID: 2076644909682508698}
-  CharSkin: {fileID: 0}
-  face: {fileID: 4023946081940462339}
-  Arm:
+  SpriteFace: {fileID: 4023946081940462339}
+  SpriteArms:
   - {fileID: 1966931639075448306}
   - {fileID: 3449385171344854828}
   - {fileID: 2130720605477548011}
   - {fileID: 2076644909682508697}
-  SkinSelector: {fileID: 0}
   OnExtendArm:
     m_PersistentCalls:
       m_Calls: []
@@ -433,6 +433,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-7318027113983621175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638854206922542603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fe2ee0ef5d2427991028f2b7066355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8136433403798808548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638854206922542603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0087832b907cf4002bd5216488d2cc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4616410225161356570
 PrefabInstance:
   m_ObjectHideFlags: 0

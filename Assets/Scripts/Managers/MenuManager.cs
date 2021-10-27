@@ -9,10 +9,11 @@ public class MenuManager : MonoBehaviour
     [System.NonSerialized] public static MenuManager Instance;
 
     [Header("Menu Screens")]
-    [SerializeField] GameObject SelectScreen;
-    [SerializeField] GameObject MenuScreen;
-    [SerializeField] GameObject OptionScreen;
-    [SerializeField] GameObject LevelScreen;
+    [SerializeField] CharacterSelectMenu CharacterSelectMenu;
+    [SerializeField] MainMenu MainMenu;
+    [SerializeField] OptionsMenu OptionsMenu;
+    [SerializeField] LevelSelectMenu LevelSelectMenu;
+    private Menu ActiveMenu;
 
     [Header("Variables")]
     public List<int> CharacterSkinIndex = new List<int>();
@@ -20,6 +21,7 @@ public class MenuManager : MonoBehaviour
     private int spawnedPlayerCount = 0;
 
 
+    // Init singleton
     private void Awake()
     {
         if (Instance == null)
@@ -31,59 +33,81 @@ public class MenuManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        InitMenu();
     }
 
-
-    private void Update()
+    private void InitMenu()
     {
-        if (PlayersManager.Instance.Players.Count > spawnedPlayerCount)
+        DeactivateAllMenu();
+        switch (GameManager.Instance.GameState)
         {
-            PlayerManager.Instance.Players[spawnedPlayerCount].RB.simulated = false;
-            SpawnSkinSelector(spawnedPlayerCount);
-            spawnedPlayerCount++;
-            CharacterSkinIndex.Add(Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count));
+            case GameState.MainMenu:
+                GoTo_MainMenu();
+                break;
+            case GameState.CharacterSelectMenu:
+                GoTo_CharacterSelectMenu();
+                break;
+            case GameState.LevelSelectMenu:
+                GoTo_LevelSelectMenu();
+                break;
+            case GameState.OptionsMenu:
+                GoTo_OptionsMenu();
+                break;
+            default:
+                break;
         }
-        if (GameManager.Instance.GameState is SelectMenu && PlayersManager.Instance.AllPlayersReady())
+    }
+
+    public void GoTo_MainMenu()
+    {
+        if (ActiveMenu != null)
         {
-            OpenMenu();
+            ActiveMenu.Deactivate();
         }
+        ActiveMenu = MainMenu;
+        ActiveMenu.Activate();
+
+        // Update GameState
+        GameManager.Instance.GameState = GameState.MainMenu;
     }
 
-
-    public void OpenMenu()
+    public void GoTo_CharacterSelectMenu()
     {
-        SelectScreen.SetActive(false);
-        LevelScreen.SetActive(false);
-        OptionScreen.SetActive(false);
-        MenuScreen.SetActive(true);
+        ActiveMenu.Deactivate();
+        ActiveMenu = CharacterSelectMenu;
+        ActiveMenu.Activate();
+
+        // Update GameState
+        GameManager.Instance.GameState = GameState.CharacterSelectMenu;
     }
 
-    public void OpenLevelSelect()
+    public void GoTo_OptionsMenu()
     {
-        MenuScreen.SetActive(false);
-        SelectScreen.SetActive(false);
-        OptionScreen.SetActive(false);
-        LevelScreen.SetActive(true);
+        ActiveMenu.Deactivate();
+        ActiveMenu = OptionsMenu;
+        ActiveMenu.Activate();
+
+        // Update GameState
+        GameManager.Instance.GameState = GameState.OptionsMenu;
     }
 
-    public void OpenOptions()
+    public void GoTo_LevelSelectMenu()
     {
-        MenuScreen.SetActive(false);
-        SelectScreen.SetActive(false);
-        LevelScreen.SetActive(false);
-        OptionScreen.SetActive(true);
+        ActiveMenu.Deactivate();
+        ActiveMenu = LevelSelectMenu;
+        ActiveMenu.Activate();
+
+        // Update GameState
+        GameManager.Instance.GameState = GameState.LevelSelectMenu;
     }
 
-    public void OpenSelectScreen()
+    private void DeactivateAllMenu()
     {
-        /*foreach (var item in SkinSelectors)
-        {
-            item.Validated = false;
-        }*/
-        MenuScreen.SetActive(false);
-        SelectScreen.SetActive(true);
-        LevelScreen.SetActive(false);
-        OptionScreen.SetActive(false);
+        MainMenu.Deactivate();
+        CharacterSelectMenu.Deactivate();
+        LevelSelectMenu.Deactivate();
+        OptionsMenu.Deactivate();
     }
 
     public void Quit()

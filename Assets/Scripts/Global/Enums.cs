@@ -5,7 +5,8 @@ namespace Enums
         InPlay,
         MainMenu,
         CharacterSelectMenu,
-        SettingsMenu,
+        LevelSelectMenu,
+        OptionsMenu,
     }
 
     public enum PlayerState
@@ -20,5 +21,20 @@ namespace Enums
     {
         Race,
         Versus
+    }
+
+    public enum ArmState
+    {
+        Extending,
+        Extended,
+        Unextending,
+        Default
+    }
+
+    public enum NavType
+    {
+        Vertical,
+        Horizontal,
+        TwoDimensions
     }
 }

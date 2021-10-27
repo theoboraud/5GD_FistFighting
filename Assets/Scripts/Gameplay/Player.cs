@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public CharacterSkin CharSkin;
     [SerializeField] private SpriteRenderer SpriteFace;
     [SerializeField] private SpriteRenderer[] SpriteArms;
+    [System.NonSerialized] public PlayerSelector PlayerSelector;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -46,11 +47,11 @@ public class Player : MonoBehaviour
         InitControls();
         InitVariables();
 
-        if (PlayerManager.Instance != null)
+        if (PlayersManager.Instance != null)
         {
-            PlayerManager.Instance.AddPlayer(this);
-            //this.transform.parent = GameManager.Singleton_GameManager.transform;
-            CharSkin = PlayerManager.Instance.SkinsData.GetRandomSkin();
+            PlayersManager.Instance.AddPlayer(this);
+            this.transform.parent = PlayersManager.Instance.transform;
+            CharSkin = PlayersManager.Instance.SkinsData.GetRandomSkin();
             InitSkin();
         }
     }
@@ -112,7 +113,14 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            menuControls.GoUp();
+            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            {
+
+            }
+            else
+            {
+                menuControls.GoUp();
+            }
         }
     }
 
@@ -120,7 +128,14 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            menuControls.GoRight();
+            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            {
+                PlayerSelector.ChangeSkinRight();
+            }
+            else
+            {
+                menuControls.GoRight();
+            }
         }
     }
 
@@ -128,7 +143,14 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            menuControls.GoDown();
+            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            {
+
+            }
+            else
+            {
+                menuControls.GoDown();
+            }
         }
     }
 
@@ -136,7 +158,14 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            menuControls.GoLeft();
+            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            {
+                PlayerSelector.ChangeSkinLeft();
+            }
+            else
+            {
+                menuControls.GoLeft();
+            }
         }
     }
 
@@ -144,7 +173,14 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            menuControls.Validate();
+            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            {
+                PlayerSelector.ValidateSkin();
+            }
+            else
+            {
+                menuControls.Validate();
+            }
         }
     }
 

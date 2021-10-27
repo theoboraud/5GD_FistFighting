@@ -23,7 +23,9 @@ public class PlayersManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        // Init references
         Players = new List<Player>();
+        SkinsData = gameObject.GetComponent<SkinsData>();
     }
 
 
@@ -31,9 +33,9 @@ public class PlayersManager : MonoBehaviour
     //Allows this script to manage all players
     public void AddPlayer(Player _player)
     {
-        Players.Add(_player);
+        /*Players.Add(_player);
         _player.transform.position = SpawnPoints[i].position;
-        i++;
+        i++;*/
     }
 
 
@@ -55,7 +57,7 @@ public class PlayersManager : MonoBehaviour
                 return false;
             }
         }
-        
+
         return true;
     }
 }

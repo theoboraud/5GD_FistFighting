@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Enums;
 
 public class LevelManager : MonoBehaviour
 {
     [Header("References")]
     [System.NonSerialized] public static LevelManager Instance;
+    public List<GameObject> SpawnPoints = new List<GameObject>();
+
     //[System.NonSerialized] public List<LevelData> Levels;
     //[System.NonSerialized] public LevelData Level;
-
+    [Header("Variables")]
+    [System.NonSerialized] public int NbPlayerSpawned = 0;
 
     private void Awake()
     {
@@ -27,7 +31,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadScene(int _levelIndex)
     {
-        PlayerManager.Instance.SimulateAllPlayers(_levelIndex > 0);
+        PlayersManager.Instance.SimulateAllPlayers(_levelIndex > 0);
         SceneManager.LoadScene(_levelIndex);
     }
 
@@ -40,9 +44,15 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnAllPlayers()
     {
-        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+        for (int i = NbPlayerSpawned; i < PlayersManager.Instance.Players.Count; i++)
         {
-            PlayersManager.Instance.Players[i].transform.position = Level.SpawnPoints[i].position;
+            PlayersManager.Instance.Players[i].transform.position = LevelManager.Instance.SpawnPoints[i].transform.position;
+            if (PlayersManager.Instance.Players[i].CharSkin == null)
+            {
+                
+            }
         }
+
+        NbPlayerSpawned = PlayersManager.Instance.Players.Count;
     }
 }

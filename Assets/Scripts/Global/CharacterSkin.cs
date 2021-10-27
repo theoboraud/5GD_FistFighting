@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //[CreateAssetMenu(fileName = "Skin", menuName = "CharacterSkin")] -> TODO ASK ALEXANDER WHAT THE HELL IT IS!
-public struct CharacterSkin
+public class CharacterSkin : ScriptableObject
 {
     [Header("General")]
     public string Name;
