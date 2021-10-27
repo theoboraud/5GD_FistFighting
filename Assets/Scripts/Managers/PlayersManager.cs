@@ -34,6 +34,8 @@ public class PlayersManager : MonoBehaviour
     public void AddPlayer(Player _player)
     {
         Players.Add(_player);
+        _player.ChangeSkin(SkinsData.GetRandomSkin());
+        LevelManager.Instance.SpawnPlayer(_player);
     }
 
 

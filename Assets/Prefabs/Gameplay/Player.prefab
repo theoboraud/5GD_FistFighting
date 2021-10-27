@@ -282,7 +282,7 @@ MonoBehaviour:
     m_ActionName: Menu/Validate[/XboxOneGampadMacOSWireless/start,/XboxOneGampadMacOSWireless/buttonSouth,/Keyboard/enter,/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: e643b30b-e29c-4654-9c5f-d9f8ae4812a8
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5796460706983378298
@@ -302,8 +302,8 @@ MonoBehaviour:
   - {fileID: 3449385171344854831}
   - {fileID: 2130720605477548008}
   - {fileID: 2076644909682508698}
-  SpriteFace: {fileID: 4023946081940462339}
-  SpriteArms:
+  Face_SpriteRenderer: {fileID: 4023946081940462339}
+  Arms_SpriteRenderers:
   - {fileID: 1966931639075448306}
   - {fileID: 3449385171344854828}
   - {fileID: 2130720605477548011}

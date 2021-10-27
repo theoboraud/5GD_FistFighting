@@ -153,17 +153,6 @@ Transform:
   m_Father: {fileID: 1710693088}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &143456573 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 641489741251934048, guid: 0463327b65eec46e78c8510802327fd7, type: 3}
-  m_PrefabInstance: {fileID: 1876034636}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2a412d54ba774894aec3c285dda8470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &345486606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,31 +1902,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 143456573}
+      objectReference: {fileID: 1464665717}
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SpawnAllPlayers
+      value: AddPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LevelManager, Assembly-CSharp
+      value: PlayersManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4825756672620167336, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: Player, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4825756672620167337, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_Name
@@ -13758,6 +13747,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416064625}
   m_CullTransparentMesh: 1
+--- !u!114 &1464665717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4825756672620167339, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
+  m_PrefabInstance: {fileID: 1155808382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0be96bca059c4182bc8b35af64f8858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1472335800
 GameObject:
   m_ObjectHideFlags: 0

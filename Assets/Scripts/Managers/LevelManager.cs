@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     //[System.NonSerialized] public List<LevelData> Levels;
     //[System.NonSerialized] public LevelData Level;
     [Header("Variables")]
-    [System.NonSerialized] public int NbPlayerSpawned = 0;
+    [System.NonSerialized] public int IndexPlayerSpawn = 0;
 
     private void Awake()
     {
@@ -44,15 +44,21 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnAllPlayers()
     {
-        for (int i = NbPlayerSpawned; i < PlayersManager.Instance.Players.Count; i++)
+        for (int i = IndexPlayerSpawn; i < PlayersManager.Instance.Players.Count; i++)
         {
-            PlayersManager.Instance.Players[i].transform.position = LevelManager.Instance.SpawnPoints[i].transform.position;
+
             if (PlayersManager.Instance.Players[i].CharSkin == null)
             {
                 PlayersManager.Instance.Players[i].ChangeSkin(PlayersManager.Instance.SkinsData.GetRandomSkin());
             }
         }
 
-        NbPlayerSpawned = PlayersManager.Instance.Players.Count;
+        IndexPlayerSpawn = PlayersManager.Instance.Players.Count;
+    }
+
+    public void SpawnPlayer(Player _player)
+    {
+        _player.transform.position = SpawnPoints[IndexPlayerSpawn].transform.position;
+        IndexPlayerSpawn++;
     }
 }

@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
     public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
     [System.NonSerialized] public CharacterSkin CharSkin;
-    [SerializeField] private SpriteRenderer SpriteFace;
-    [SerializeField] private SpriteRenderer[] SpriteArms;
+    [SerializeField] private SpriteRenderer Face_SpriteRenderer;
+    [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     [System.NonSerialized] public PlayerSelector PlayerSelector;
 
     [Header("Events for FMOD")]
@@ -46,13 +46,7 @@ public class Player : MonoBehaviour
         InitReferences();
         InitControls();
         InitVariables();
-
-        if (PlayersManager.Instance != null)
-        {
-            PlayersManager.Instance.AddPlayer(this);
-            CharSkin = PlayersManager.Instance.SkinsData.GetRandomSkin();
-            InitSkin();
-        }
+        AddToPlayersManager();
     }
 
 
@@ -78,11 +72,19 @@ public class Player : MonoBehaviour
 
     private void InitSkin()
     {
-        SpriteFace.sprite = CharSkin.SpriteFace;
-        for (int i = 0; i < SpriteArms.Length; i++)
+        print(CharSkin);
+        Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
+        for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
-            SpriteArms[i].sprite = CharSkin.SpriteArm;
+            Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;
         }
+    }
+
+
+    private void AddToPlayersManager()
+    {
+        print("Adding to player manager");
+        PlayersManager.Instance.AddPlayer(this);
     }
 
     // #endregion
