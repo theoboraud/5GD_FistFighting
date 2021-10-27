@@ -9,7 +9,6 @@ public class SkinsData: MonoBehaviour
 
     public CharacterSkin GetRandomSkin()
     {
-        print(CharacterSkins.Count);
         return CharacterSkins[Random.Range(0, CharacterSkins.Count)];
     }
 

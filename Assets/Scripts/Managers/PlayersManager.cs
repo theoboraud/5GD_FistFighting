@@ -33,9 +33,7 @@ public class PlayersManager : MonoBehaviour
     //Allows this script to manage all players
     public void AddPlayer(Player _player)
     {
-        /*Players.Add(_player);
-        _player.transform.position = SpawnPoints[i].position;
-        i++;*/
+        Players.Add(_player);
     }
 
 

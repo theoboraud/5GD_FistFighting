@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour
             PlayersManager.Instance.Players[i].transform.position = LevelManager.Instance.SpawnPoints[i].transform.position;
             if (PlayersManager.Instance.Players[i].CharSkin == null)
             {
-                
+                PlayersManager.Instance.Players[i].ChangeSkin(PlayersManager.Instance.SkinsData.GetRandomSkin());
             }
         }
 

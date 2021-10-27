@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
         if (PlayersManager.Instance != null)
         {
             PlayersManager.Instance.AddPlayer(this);
-            this.transform.parent = PlayersManager.Instance.transform;
             CharSkin = PlayersManager.Instance.SkinsData.GetRandomSkin();
             InitSkin();
         }
