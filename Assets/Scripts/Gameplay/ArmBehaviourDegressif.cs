@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using DG.Tweening;
 
 /// <summary>
 ///     Class used by each arm for physics behaviours
 /// </summary>
+
 public class ArmBehaviourDegressif : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
@@ -77,14 +77,15 @@ public class ArmBehaviourDegressif : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (IsExtending && !IsExtended)
-        {
-            Extend();
-        }
-        else if (IsUnextending && IsExtended)
-        {
-            Unextend();
-        }
+        //if (IsExtending && !IsExtended)
+        //{
+        //    Extend();
+           
+        //}
+        //else if (IsUnextending && IsExtended)
+        //{
+        //    Unextend();
+        //}
     }
 
     // #endregion
@@ -99,6 +100,7 @@ public class ArmBehaviourDegressif : MonoBehaviour
             if (_context.interaction is HoldInteraction)
             {
                 ExtensionHoldStart();
+                print("hold");
 
                 // FMOD Event
                 Face.OnExtendArm.Invoke();
@@ -106,6 +108,7 @@ public class ArmBehaviourDegressif : MonoBehaviour
             else if (_context.interaction is TapInteraction)
             {
                 ExtensionTapStart();
+                print("Tap");
 
                 // FMOD Event
                 Face.OnExtendArm.Invoke();
@@ -115,6 +118,7 @@ public class ArmBehaviourDegressif : MonoBehaviour
         {
             if (_context.interaction is HoldInteraction)
             {
+                print("canceleds");
                 ExtensionHoldEnd();
             }
         }

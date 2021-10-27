@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using DG.Tweening;
 
 /// <summary>
 ///     Class used by each arm for physics behaviours

@@ -98,14 +98,12 @@ public class ArmBehaviour : MonoBehaviour
             if (_context.interaction is HoldInteraction)
             {
                 ExtensionHoldStart();
-
                 // FMOD Event
                 Face.OnExtendArm.Invoke();
             }
             else if (_context.interaction is TapInteraction)
             {
                 ExtensionTapStart();
-
                 // FMOD Event
                 Face.OnExtendArm.Invoke();
             }
