@@ -28,24 +28,24 @@ public class GravityController : MonoBehaviour
             ran = Random.Range(0, directionList.Count);
             gravity = directionList[ran] * 9.8f;
         }
-        switch (ran)
-        {
-            case 0:
-                transform.Rotate(new Vector3(0,0,180));
-                break;
-            case 1:
-                transform.Rotate(new Vector3(0, 0, 0));
-                break;
-            case 2:
-                transform.Rotate(new Vector3(0, 0, -90));
-                break;
-            case 3:
-                transform.Rotate(new Vector3(0, 0, 90));
-                break;
+        //switch (ran)
+        //{
+        //    case 0:
+        //        transform.Rotate(new Vector3(0,0,180));
+        //        break;
+        //    case 1:
+        //        transform.Rotate(new Vector3(0, 0, 0));
+        //        break;
+        //    case 2:
+        //        transform.Rotate(new Vector3(0, 0, -90));
+        //        break;
+        //    case 3:
+        //        transform.Rotate(new Vector3(0, 0, 90));
+        //        break;
 
-            default:
-                break;
-        }
+        //    default:
+        //        break;
+        //}
 
         Physics2D.gravity = gravity;
     }

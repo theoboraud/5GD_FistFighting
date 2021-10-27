@@ -18,8 +18,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -58,8 +58,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 2
-  speedUnextension: 2
+  speedExtension: 10
+  speedUnextension: 10
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
