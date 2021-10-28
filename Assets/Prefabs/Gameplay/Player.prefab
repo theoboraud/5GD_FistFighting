@@ -297,6 +297,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26d6a919638149959e7146cb7485ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Arms:
+  - {fileID: 3821352002144408879}
+  - {fileID: 116380043279122417}
+  - {fileID: 3734062003636018998}
+  - {fileID: 3644083948250067780}
   Face_SpriteRenderer: {fileID: 4023946081940462339}
   Arms_SpriteRenderers:
   - {fileID: 1966931639075448306}

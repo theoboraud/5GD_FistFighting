@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using Enums;
 
 /// <summary>
 ///     Class used by each arm for physics behaviours
@@ -12,20 +13,27 @@ public class ArmBehaviour : MonoBehaviour
     // #region ==================== CLASS VARIABLES ====================
 
     [Header("Stats")]
-    private float impulseForce = 50f;
     float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
-    float forceCoef_airPush = 1.5f;          // Push force coefficient for physics interactions in the air
+    float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
     float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
-    public Player Face;                                     // Face reference from which the arm extends
+    [System.NonSerialized] public Player Player;                                     // Player reference from which the arm extends
+
+    [Header("Extension Parameters")]
+    private float endScale = 2f;            //
+    private float extendingTime;            //
+    private float unextendingTime;
+    private float groundForce;
+    private float hitForce;
+    private float cooldown;
+
+    [Header("Air Control Parameters")]
+    private float airPushForce;
+    private float airPushForceLossFactor;
 
     [Header("Extension Variables")]
-    private float EndScale = 2f;            //
-    private float speedExtension=10f;                  //
-    public bool IsExtending = false;                             //
-    public bool IsUnextending = false;
-    public bool IsExtended = false;                         // Indicates whether or not the arm is extended at maximum
+    private PlayerArmState armState = PlayerArmState.Ready;                  // Indicates whether or not the arm is extended at maximum
 
     [Header("Arm Behaviour Events")]
     public UnityEvent OnAppear;                             //
@@ -48,8 +56,6 @@ public class ArmBehaviour : MonoBehaviour
     [Header("AirPush Variables")]
     public Sprite airPushSprite;
     public bool airPush_bool = false;
-    public float coeffAirPush = 1;
-    public bool CanAirPush=false;
 
     // #endregion
 
@@ -63,63 +69,87 @@ public class ArmBehaviour : MonoBehaviour
     private void Awake()
     {
         Init();
+        InitParameters();
     }
+
+
     private void Init()
     {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
         armSprite = spriteRenderer.sprite;
-        curScale = new Vector3(1, curScaleY, 1);
+        curScale = new Vector3(1f, curScaleY, 1f);
         transform.localScale = curScale;
     }
-    // #endregion
+
+
+    private void InitParameters()
+    {
+        groundForce = GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce;
+        hitForce = GameManager.Instance.ParamData.PARAM_Player_ArmHitForce;
+        extendingTime = GameManager.Instance.ParamData.PARAM_Player_ArmExtendingTime;
+        unextendingTime = GameManager.Instance.ParamData.PARAM_Player_ArmUnextendingTime;
+        cooldown = GameManager.Instance.ParamData.PARAM_Player_ArmCooldown;
+        airPushForce = GameManager.Instance.ParamData.PARAM_Player_AirControlForce;
+        airPushForceLossFactor = GameManager.Instance.ParamData.PARAM_Player_AirControlForceLossFactor;
+    }
+
 
     private  void Update()
     {
-        if (IsExtended)
+        if (armState == PlayerArmState.Extending)
         {
-            Extending();
+            Extend();
         }
-        else
+        else if (armState == PlayerArmState.Unextending)
         {
-            UnExtended();
+            Unextend();
         }
     }
+
+    // #endregion
+
+
     // #region =================== CONTROLS FUNCTIONS ==================
+
     public void Input_Extend(InputAction.CallbackContext _context)
     {
         if (_context.control.IsPressed())
         {
-            IsExtended = true;
+            armState = PlayerArmState.Extending;
         }
         else
         {
-            IsExtended = false;
+            armState = PlayerArmState.Unextending;
             //Debug.LogFormat("released {0} from {1} on {2}", _context.interaction.ToString(), this.GetInstanceID(), this.gameObject.transform.parent.name);
         }
     }
-    //// #endregion
+    
+    // #endregion
 
-    private void Extending()
+
+    private void Extend()
     {
-        
-        curScaleY = Mathf.Clamp(curScaleY+speedExtension * Time.deltaTime, 0, EndScale);
+        print("Extend()");
+        curScaleY = Mathf.Clamp(curScaleY + extendingTime * Time.deltaTime, 0, endScale);
         curScale.y = curScaleY;
         transform.localScale = curScale;
         //Air Push
-        if (transform.localScale.y >= EndScale && CanAirPush)
+        if (transform.localScale.y >= endScale && Player.PlayerPhysicState == PlayerPhysicState.OnAir)
         {
-            if (!hitObjet_bool&& !airPush_bool)
+            if (!hitObjet_bool && !airPush_bool)
             {
-                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush * coeffAirPush, ForceMode2D.Impulse);
-                coeffAirPush /= 3;
+                Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
+                Player.AirPushFactor *= airPushForceLossFactor;
                 spriteRenderer.sprite = airPushSprite;
                 airPush_bool = true;
             }
         }
     }
-    private void UnExtended()
+
+
+    private void Unextend()
     {
-        curScaleY = Mathf.Clamp(curScaleY-speedExtension * Time.deltaTime, 0, EndScale);
+        curScaleY = Mathf.Clamp(curScaleY - unextendingTime * Time.deltaTime, 0, endScale);
         curScale.y = curScaleY;
         transform.localScale = curScale;
 
@@ -131,23 +161,22 @@ public class ArmBehaviour : MonoBehaviour
     /// <summary>
     ///  When entering a collision with the ground of another player
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D _collision)
+    private void OnCollisionEnter2D(Collision2D _collision)
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround")&&!hitObjet_bool)
+        if (_GO.CompareTag("StaticGround") && !Player.HitObject_bool)
         {
-            hitObjet_bool = true;
+            Player.HitObject_bool = true;
             OnCollision.Invoke();
-            Face.OnCollision.Invoke();
-            Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
-            coeffAirPush = 1;
+            //Player.OnCollision.Invoke();
+            Player.RB.AddForce(this.transform.up * groundForce, ForceMode2D.Impulse);
         }
 
-        if (_GO.CompareTag("Player")&&!hitObjet_bool)
+        if (_GO.CompareTag("Player") && !Player.HitObject_bool)
         {
-            hitPlayer_RB.AddForce(-this.transform.up * impulseForce * forceCoef_playerHit, ForceMode2D.Impulse);
-            hitObjet_bool = true;
+            hitPlayer_RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
+            Player.HitObject_bool = true;
             hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
         }
     }
