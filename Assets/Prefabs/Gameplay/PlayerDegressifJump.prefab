@@ -110,6 +110,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ArmsDeg:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   Face_SpriteRenderer: {fileID: 4023946081940462339}
   Arms_SpriteRenderers:
   - {fileID: 1966931639075448306}
@@ -506,7 +511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 0.2538456
       objectReference: {fileID: 0}
     - target: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: m_LocalPosition.x
