@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/Race_Levels/LD_Race_2.unity
     guid: 2bd89bfe6bc4edb4195ee9ce9d8f47a0
   - enabled: 1
-    path: Assets/Scenes/MainLevels/KingOfTheHill_Levels/LD_KingOfTheHill_1.unity
+    path: Assets/Scenes/MainLevels/KingOfTheHill_Levels/LD_KingOfTheHill_2.unity
     guid: 209e08ccf251bb64cbbfe4b2d5d9fab2
   - enabled: 1
     path: Assets/Scenes/MainLevels/Versus_Levels/LD_Versus_1.unity
