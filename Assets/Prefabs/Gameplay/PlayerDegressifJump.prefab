@@ -110,6 +110,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ArmsDeg:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   Face_SpriteRenderer: {fileID: 4023946081940462339}
   Arms_SpriteRenderers:
   - {fileID: 1966931639075448306}
