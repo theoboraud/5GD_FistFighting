@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637705098130000000
+  lastModified: 637710267460000000
   FileSizes:
   - Name: Desktop
-    Value: 830
+    Value: 876
   Exists: 1
 --- !u!114 &-2941222361413983516
 MonoBehaviour:
@@ -35,10 +35,10 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637705098130000000
+  lastModified: 637710267460000000
   FileSizes:
   - Name: Desktop
-    Value: 65472
+    Value: 233184
   Exists: 1
 --- !u!114 &-667907306219088350
 MonoBehaviour:
@@ -61,12 +61,39 @@ MonoBehaviour:
   Banks:
   - {fileID: -2941222361413983516}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
+--- !u!114 &-287999523212624820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MusicLoop
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MusicLoop
+  Guid:
+    Data1: 1059671664
+    Data2: 1142253031
+    Data3: 1041042345
+    Data4: -1647692354
+  Banks:
+  - {fileID: -2941222361413983516}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 10245
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,12 +112,13 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -667907306219088350}
   - {fileID: 4506837749276564834}
+  - {fileID: -287999523212624820}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2941222361413983516}
   StringsBanks:
   - {fileID: -5866793057682515442}
-  cacheTime: 637705098130000000
+  cacheTime: 637710267460000000
   cacheVersion: 9
 --- !u!114 &4506837749276564834
 MonoBehaviour:
@@ -113,7 +141,7 @@ MonoBehaviour:
   Banks:
   - {fileID: -2941222361413983516}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1

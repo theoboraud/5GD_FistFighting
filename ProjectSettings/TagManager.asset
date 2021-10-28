@@ -47,6 +47,9 @@ TagManager:
   - name: EstheticEnvironment
     uniqueID: 73120909
     locked: 0
+  - name: VFX
+    uniqueID: 745520341
+    locked: 0
   - name: StaticEnvironment
     uniqueID: 3254621041
     locked: 0
