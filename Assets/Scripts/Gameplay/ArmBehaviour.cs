@@ -57,6 +57,10 @@ public class ArmBehaviour : MonoBehaviour
     public Sprite airPushSprite;
     public bool airPush_bool = false;
 
+    private bool InputOff;
+    private bool Force = true;
+    private bool HitObject;
+
     // #endregion
 
 
@@ -100,6 +104,11 @@ public class ArmBehaviour : MonoBehaviour
         {
             Extend();
         }
+        else if (InputOff && armState == PlayerArmState.Extended)
+        {
+            armState = PlayerArmState.Unextending;
+            InputOff = false;
+        }
         else if (armState == PlayerArmState.Unextending)
         {
             Unextend();
@@ -113,14 +122,13 @@ public class ArmBehaviour : MonoBehaviour
 
     public void Input_Extend(InputAction.CallbackContext _context)
     {
-        if (_context.control.IsPressed())
+        if (_context.started && armState == PlayerArmState.Ready)
         {
             armState = PlayerArmState.Extending;
         }
-        else
+        else if (!_context.control.IsPressed())
         {
-            armState = PlayerArmState.Unextending;
-            //Debug.LogFormat("released {0} from {1} on {2}", _context.interaction.ToString(), this.GetInstanceID(), this.gameObject.transform.parent.name);
+            InputOff = true;
         }
     }
     
@@ -129,23 +137,39 @@ public class ArmBehaviour : MonoBehaviour
 
     private void Extend()
     {
-        print("Extend()");
         curScaleY = Mathf.Clamp(curScaleY + extendingTime * Time.deltaTime, 0, endScale);
         curScale.y = curScaleY;
         transform.localScale = curScale;
+
         //Air Push
-        if (transform.localScale.y >= endScale && Player.PlayerPhysicState == PlayerPhysicState.OnAir)
+        if (transform.localScale.y >= endScale)
         {
-            if (!hitObjet_bool && !airPush_bool)
+            Force = true;
+            armState = PlayerArmState.Extended;
+            if (!hitObjet_bool && !airPush_bool && Player.PlayerPhysicState == PlayerPhysicState.OnAir && !HitObject)
             {
                 Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
                 Player.AirPushFactor *= airPushForceLossFactor;
-                spriteRenderer.sprite = airPushSprite;
                 airPush_bool = true;
             }
+            if (HitObject && Force)
+            {
+                OnCollision.Invoke();
+                Player.OnCollision.Invoke();
+                Player.RB.AddForce(this.transform.up * groundForce, ForceMode2D.Impulse);
+                Player.HitObject_bool = true;
+                HitObject = false;
+                Debug.Log("HERE WE GO!!!!!");
+            }
+            Invoke("TurnForceOff", 0.2f);
+            
         }
     }
 
+    private void TurnForceOff()
+    {
+        Force = false;
+    }
 
     private void Unextend()
     {
@@ -155,29 +179,42 @@ public class ArmBehaviour : MonoBehaviour
 
         hitObjet_bool = false;
         airPush_bool = false;
-        spriteRenderer.sprite = armSprite;
+
+        if(curScaleY <= 0)
+        {
+            Debug.Log("I'm ready baby!!!");
+            armState = PlayerArmState.Ready;
+            Force = true;
+        }
     }
 
     /// <summary>
     ///  When entering a collision with the ground of another player
     /// </summary>
-    private void OnCollisionEnter2D(Collision2D _collision)
+    private void OnTriggerEnter2D(Collider2D _collision)
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround") && !Player.HitObject_bool)
+        if (_GO.CompareTag("StaticGround"))
         {
-            Player.HitObject_bool = true;
-            OnCollision.Invoke();
-            //Player.OnCollision.Invoke();
-            Player.RB.AddForce(this.transform.up * groundForce, ForceMode2D.Impulse);
+            HitObject = true;
         }
 
         if (_GO.CompareTag("Player") && !Player.HitObject_bool)
         {
             hitPlayer_RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
-            Player.HitObject_bool = true;
             hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
+            Player.HitObject_bool = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        GameObject _GO = collision.gameObject;
+
+        if (_GO.CompareTag("StaticGround"))
+        {
+            HitObject = false;
         }
     }
 }
