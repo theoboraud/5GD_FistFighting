@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     private void InitReferences()
     {
-        RB = gameObject.GetComponent<Rigidbody2D>();
+        RB = this.GetComponent<Rigidbody2D>();
         for (int i = 0; i < Arms.Length; i++)
         {
             Arms[i].Player = this;
