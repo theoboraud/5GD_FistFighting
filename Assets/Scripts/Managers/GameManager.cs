@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public static GameManager Instance;
     public GlobalGameState GlobalGameState;
     public ParamData ParamData;
+    public FeedbackManager Feedback;
 
     // Init as a singleton
     private void Awake()
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         // TODO: Implement loading screen...
         LevelManager.Instance.LoadRandomLevel();
         MenuManager.Instance.PrintScoreScreen(false);
+        PlayersManager.Instance.DestroyAllPlayers();
         GlobalGameState = GlobalGameState.InPlay;
     }
 

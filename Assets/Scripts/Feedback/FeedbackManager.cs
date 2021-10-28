@@ -10,11 +10,11 @@ public class FeedbackManager : MonoBehaviour
 
     public void SpawnHitVFX(Vector3 position, Quaternion rotation)
     {
-
+        GameObject _go = Instantiate(hitVFX, position, rotation, this.transform);
     }
 
     public void SpawnHitAvatarVFX(Vector3 position, Quaternion rotation)
     {
-
+        GameObject _go = Instantiate(hitAvatarVFX, position, rotation, this.transform);
     }
 }
