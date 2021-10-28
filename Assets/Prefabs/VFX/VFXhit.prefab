@@ -132,11 +132,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 473890470
-      Data2: 1227450626
-      Data3: -1400929623
-      Data4: -193255345
-    Path: event:/Collisions/GroundHit
+      Data1: 53382742
+      Data2: 1081212413
+      Data3: -175612791
+      Data4: 615716646
+    Path: event:/Collisions/HitGeneral
   Event: 
   PlayEvent: 1
   StopEvent: 0

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{ffc23a6a-26da-4ef8-a927-dd6bc33add61}">
+		<property name="name">
+			<value>AirControlStrength</value>
+		</property>
+		<relationship name="folder">
+			<destination>{cbfcd5e2-9202-4618-9cfd-713aa6573002}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{745260e6-f7d4-4063-abaf-16ba0c37a695}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{745260e6-f7d4-4063-abaf-16ba0c37a695}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

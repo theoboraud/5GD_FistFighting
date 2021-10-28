@@ -206,6 +206,7 @@ public class ArmBehaviour : MonoBehaviour
         {
             hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
             hitPlayer_RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
+            AudioManager.audioManager.PlayTrack("event:/Voices/Hurt", hitPlayer_RB.transform.position);
             Player.HitObject_bool = true;
         }
     }

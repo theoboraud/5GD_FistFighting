@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{e6825902-2d03-4f1e-90c0-c199a64d5bbe}">
+	<object class="AudioFile" id="{a48ea540-7bd5-4a75-8b5f-87a21dd4e1f3}">
 		<property name="assetPath">
-			<value>Fight, Impact, Punch, Low End SND0301.wav</value>
+			<value>Whoosh, Wood Stick, Heavy SND0419 4.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>96</value>
 		</property>
 		<property name="channelCount">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<property name="length">
-			<value>0.35110416666666666</value>
+			<value>0.16623958333333333</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{6caa0bc0-a240-4a11-8aab-0b09d1f7f2d6}</destination>
