@@ -72,7 +72,10 @@ public class LevelManager : MonoBehaviour
         {
             _randomSceneIndex = Random.Range(0, SceneManager.sceneCountInBuildSettings);
         }
+        print("Called LoadRandomLevel");
+        print(currentSceneIndex);
+        print(_randomSceneIndex);
         currentSceneIndex = _randomSceneIndex;
-        SceneManager.LoadScene(_randomSceneIndex);
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }

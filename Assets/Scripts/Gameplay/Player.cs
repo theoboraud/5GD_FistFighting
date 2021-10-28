@@ -128,12 +128,17 @@ public class Player : MonoBehaviour
 
     // TO REIMPLEMENT
 
-    public void Gameplay_Start()
+    public void Gameplay_Start(InputAction.CallbackContext _context)
     {
         if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
         {
             GameManager.Instance.NewGameRound();
         }
+    }
+
+    public void Debug_NewScene(InputAction.CallbackContext _context)
+    {
+        GameManager.Instance.NewGameRound();
     }
 
     // #endregion

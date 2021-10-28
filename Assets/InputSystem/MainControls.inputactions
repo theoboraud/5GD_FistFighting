@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold,Tap"
+                },
+                {
+                    "name": "NewScene",
+                    "type": "Button",
+                    "id": "8ee6623b-b9b2-4cab-85c6-dfd8bbcd7d74",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold"
                 }
             ],
             "bindings": [
@@ -236,6 +244,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e264661-deca-4b4a-8730-41ed9e6074fb",
+                    "path": "<Keyboard>/#(p)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "NewScene",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

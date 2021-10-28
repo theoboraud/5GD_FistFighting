@@ -284,6 +284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen_Score
       objectReference: {fileID: 0}
+    - target: {fileID: 3443457382059517506, guid: a4db28f6a25544efa9ba5b4b20808664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9046777036521747640, guid: a4db28f6a25544efa9ba5b4b20808664, type: 3}
       propertyPath: m_RootOrder
       value: 4

@@ -277,7 +277,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5796460706983378298}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Gameplay_Start
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -288,6 +288,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5bb21308-0bf5-47e7-aee5-4e34a0f6c259
     m_ActionName: Gameplay/Start[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5796460706983378298}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Debug_NewScene
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8ee6623b-b9b2-4cab-85c6-dfd8bbcd7d74
+    m_ActionName: Gameplay/NewScene[/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
