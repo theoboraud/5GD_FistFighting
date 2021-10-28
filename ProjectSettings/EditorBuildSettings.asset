@@ -6,13 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/WIP/CharacterSelect.unity
-    guid: 500a9c47da00ccc4aa2d512fefc2e7cf
-  - enabled: 0
-    path: Assets/Scenes/TestLevels/Test_Race.unity
-    guid: 13baf60e0f585364fbe2c66d989731dd
+    path: Assets/Scenes/MainLevels/Race_Levels/LD_Race_1.unity
+    guid: 61395b049db8a43e6bf911febcc866b0
   - enabled: 1
-    path: Assets/Scenes/TestLevels/Test_ChangeGravity.unity
-    guid: dfbf6b9aa018dac43abf00c3cf67a6d2
+    path: Assets/Scenes/MainLevels/Race_Levels/LD_Race_2.unity
+    guid: 2bd89bfe6bc4edb4195ee9ce9d8f47a0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}
