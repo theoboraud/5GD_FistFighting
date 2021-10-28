@@ -19,6 +19,8 @@ public class AudioManager : MonoBehaviour
         {
             musicRef.Play();
         }
+
+        AudioManager.audioManager.PlayTrack("event:/Voices/Victory", this.transform.position);
     }
 
     public void PlayMusic()

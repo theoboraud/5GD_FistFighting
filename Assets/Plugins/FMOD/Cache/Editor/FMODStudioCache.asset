@@ -1,59 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8630809059070697705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Voices/Hurt
-  m_EditorClassIdentifier: 
-  Path: event:/Voices/Hurt
-  Guid:
-    Data1: -818897139
-    Data2: 1138997425
-    Data3: 1520244650
-    Data4: -236250370
-  Banks:
-  - {fileID: -2941222361413983516}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-8515141446490942267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Voices/Victory
-  m_EditorClassIdentifier: 
-  Path: event:/Voices/Victory
-  Guid:
-    Data1: -1664853534
-    Data2: 1099041833
-    Data3: -687362409
-    Data4: -747004410
-  Banks:
-  - {fileID: -2941222361413983516}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2000
 --- !u!114 &-7230596508394440651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,31 +23,7 @@ MonoBehaviour:
   Type: 0
   IsGlobal: 0
   Labels: []
-  Exists: 1
---- !u!114 &-6737318921755456763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/HitGeneral/AirControlStrength
-  m_EditorClassIdentifier: 
-  Name: AirControlStrength
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 1
-  ID:
-    data1: 0
-    data2: 0
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5866793057682515442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,10 +39,10 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637710462730000000
+  lastModified: 637710478780000000
   FileSizes:
   - Name: Desktop
-    Value: 1148
+    Value: 1198
   Exists: 1
 --- !u!114 &-3542036720964011332
 MonoBehaviour:
@@ -140,8 +62,7 @@ MonoBehaviour:
     Data2: 1084526079
     Data3: 2065356467
     Data4: -535770594
-  Banks:
-  - {fileID: -2941222361413983516}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -164,11 +85,35 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637710462730000000
+  lastModified: 637710478780000000
   FileSizes:
   - Name: Desktop
-    Value: 227904
+    Value: 362144
   Exists: 1
+--- !u!114 &-2925703938852192982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
+  m_EditorClassIdentifier: 
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-1866050892872578129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,8 +132,7 @@ MonoBehaviour:
     Data2: 1138997425
     Data3: 1520244650
     Data4: -236250370
-  Banks:
-  - {fileID: -2941222361413983516}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -196,7 +140,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-1287549971408323565
+--- !u!114 &-1103581071992621290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,24 +149,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Character/Alien/Alien_Hurt
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
   m_EditorClassIdentifier: 
-  Path: event:/Character/Alien/Alien_Hurt
-  Guid:
-    Data1: -2067497347
-    Data2: 1141230478
-    Data3: 1257517954
-    Data4: 975541504
-  Banks:
-  - {fileID: -2941222361413983516}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 8000
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-667907306219088350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,16 +238,44 @@ MonoBehaviour:
   - {fileID: 4506837749276564834}
   - {fileID: -287999523212624820}
   - {fileID: 6572590674941046338}
-  - {fileID: -8630809059070697705}
-  - {fileID: -1287549971408323565}
-  - {fileID: -8515141446490942267}
+  - {fileID: 7843823417658995193}
+  - {fileID: 177983123650137616}
+  - {fileID: 5899105220731776901}
+  - {fileID: 5487857018581409200}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2941222361413983516}
   StringsBanks:
   - {fileID: -5866793057682515442}
-  cacheTime: 637710462730000000
+  cacheTime: 637710478780000000
   cacheVersion: 9
+--- !u!114 &177983123650137616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Character/Alien/Alien_Hurt
+  m_EditorClassIdentifier: 
+  Path: event:/Character/Alien/Alien_Hurt
+  Guid:
+    Data1: -2067497347
+    Data2: 1141230478
+    Data3: 1257517954
+    Data4: 975541504
+  Banks:
+  - {fileID: -2941222361413983516}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 8000
 --- !u!114 &4506837749276564834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +303,132 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6000
+--- !u!114 &4735053315899770200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
+  m_EditorClassIdentifier: 
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &5472380789476379517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
+  m_EditorClassIdentifier: 
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &5487857018581409200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Actions/Rotate
+  m_EditorClassIdentifier: 
+  Path: event:/Actions/Rotate
+  Guid:
+    Data1: 1648648953
+    Data2: 1337113109
+    Data3: -1555252588
+    Data4: 1989255544
+  Banks:
+  - {fileID: -2941222361413983516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
+--- !u!114 &5899105220731776901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Voices/Victory
+  m_EditorClassIdentifier: 
+  Path: event:/Voices/Victory
+  Guid:
+    Data1: -1664853534
+    Data2: 1099041833
+    Data3: -687362409
+    Data4: -747004410
+  Banks:
+  - {fileID: -2941222361413983516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
+--- !u!114 &5931759215105198975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
+  m_EditorClassIdentifier: 
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &6572590674941046338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,10 +453,61 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -6737318921755456763}
+  - {fileID: 4735053315899770200}
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
+--- !u!114 &6922749684535005177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
+  m_EditorClassIdentifier: 
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &7843823417658995193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Voices/Hurt
+  m_EditorClassIdentifier: 
+  Path: event:/Voices/Hurt
+  Guid:
+    Data1: -818897139
+    Data2: 1138997425
+    Data3: 1520244650
+    Data4: -236250370
+  Banks:
+  - {fileID: -2941222361413983516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8445564345981278722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,8 +526,7 @@ MonoBehaviour:
     Data2: 1341069435
     Data3: -189377396
     Data4: -53248908
-  Banks:
-  - {fileID: -2941222361413983516}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
