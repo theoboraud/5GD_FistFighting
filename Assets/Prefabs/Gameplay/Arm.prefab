@@ -176,9 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseForce: 10
   Face: {fileID: 5796460706983378298, guid: ca703caaf16eefc4ea83dfc0bab8c364, type: 3}
-  speedExtension: 0.1
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0

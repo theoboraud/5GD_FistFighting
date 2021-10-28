@@ -14,7 +14,7 @@ public class ArmBehaviour : MonoBehaviour
     [Header("Stats")]
     private float impulseForce = 50f;
     float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
-    float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
+    float forceCoef_airPush = 1.5f;          // Push force coefficient for physics interactions in the air
     float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
@@ -49,7 +49,7 @@ public class ArmBehaviour : MonoBehaviour
     public Sprite airPushSprite;
     public bool airPush_bool = false;
     public float coeffAirPush = 1;
-    public bool CanAirPush;
+    public bool CanAirPush=false;
 
     // #endregion
 
@@ -106,7 +106,7 @@ public class ArmBehaviour : MonoBehaviour
         curScale.y = curScaleY;
         transform.localScale = curScale;
         //Air Push
-        if (transform.localScale.y >= EndScale)
+        if (transform.localScale.y >= EndScale && CanAirPush)
         {
             if (!hitObjet_bool&& !airPush_bool)
             {
@@ -131,11 +131,11 @@ public class ArmBehaviour : MonoBehaviour
     /// <summary>
     ///  When entering a collision with the ground of another player
     /// </summary>
-    private void OnCollisionEnter2D(Collision2D _collision)
+    private void OnTriggerEnter2D(Collider2D _collision)
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround") )
+        if (_GO.CompareTag("StaticGround")&&!hitObjet_bool)
         {
             hitObjet_bool = true;
             OnCollision.Invoke();
@@ -144,7 +144,7 @@ public class ArmBehaviour : MonoBehaviour
             coeffAirPush = 1;
         }
 
-        if (_GO.CompareTag("Player") )
+        if (_GO.CompareTag("Player")&&!hitObjet_bool)
         {
             hitPlayer_RB.AddForce(-this.transform.up * impulseForce * forceCoef_playerHit, ForceMode2D.Impulse);
             hitObjet_bool = true;
