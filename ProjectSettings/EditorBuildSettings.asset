@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestLevels/Test_Race.unity
     guid: 13baf60e0f585364fbe2c66d989731dd
   - enabled: 1
-    path: Assets/Scenes/TestLevels/Test_BouncingPlatform.unity
+    path: Assets/Scenes/TestLevels/Test_ChangeGravity.unity
     guid: dfbf6b9aa018dac43abf00c3cf67a6d2
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}

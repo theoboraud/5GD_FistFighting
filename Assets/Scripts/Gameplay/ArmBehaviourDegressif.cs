@@ -332,5 +332,5 @@ public class ArmBehaviourDegressif : MonoBehaviour
             */
 
             // #endregion
-        
+
 }
