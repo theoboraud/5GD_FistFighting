@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    
     public bool PlayOnStart = true;
     [SerializeField] FMODUnity.StudioEventEmitter musicRef;
+    public static AudioManager audioManager;
 
     private void Start()
     {
+        if(AudioManager.audioManager != null)
+        {
+            AudioManager.audioManager = this;
+        }
         if(PlayOnStart)
         {
             musicRef.Play();
@@ -30,4 +36,8 @@ public class AudioManager : MonoBehaviour
         musicRef.SetParameter(musicRef.Params[0].ID, _value);
     }
 
+    public void PlayTrack(string eventPath, Vector3 position)
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(eventPath, position);
+    }
 }

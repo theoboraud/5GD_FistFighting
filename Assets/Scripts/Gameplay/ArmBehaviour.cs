@@ -151,6 +151,7 @@ public class ArmBehaviour : MonoBehaviour
                 Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
                 Player.AirPushFactor *= airPushForceLossFactor;
                 airPush_bool = true;
+                GameManager.Instance.Feedback.SpawnHitAvatarVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90+this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
             if (HitObject && Force)
             {
@@ -160,6 +161,7 @@ public class ArmBehaviour : MonoBehaviour
                 Player.HitObject_bool = true;
                 HitObject = false;
                 Debug.Log("HERE WE GO!!!!!");
+                GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
             Invoke("TurnForceOff", 0.2f);
             
