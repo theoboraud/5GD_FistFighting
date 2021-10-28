@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8541058654011324802, guid: 0463327b65eec46e78c8510802327fd7, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8596528521284930781, guid: 0463327b65eec46e78c8510802327fd7, type: 3}
       propertyPath: m_Name
       value: LevelManager
@@ -437,6 +441,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1606660123, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/Music/MusicLoop
+      objectReference: {fileID: 0}
+    - target: {fileID: 1606660123, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: 1059671664
+      objectReference: {fileID: 0}
+    - target: {fileID: 1606660123, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1142253031
+      objectReference: {fileID: 0}
+    - target: {fileID: 1606660123, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 1041042345
+      objectReference: {fileID: 0}
+    - target: {fileID: 1606660123, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: -1647692354
+      objectReference: {fileID: 0}
     - target: {fileID: 1814137963291488322, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
       propertyPath: m_Name
       value: GameManager

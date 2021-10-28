@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8023127552561660906}
   - component: {fileID: -7318027113983621175}
   - component: {fileID: 8136433403798808548}
+  - component: {fileID: 3286076153300636023}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -199,6 +200,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3286076153300636023}
+        m_TargetAssemblyTypeName: PlayTrack, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Actions/Rotate
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 383de03f-5403-40bb-8fbb-264947cd250e
     m_ActionName: BaseControls/RotateRight[/Keyboard/upArrow]
   - m_PersistentCalls:
@@ -213,6 +226,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3286076153300636023}
+        m_TargetAssemblyTypeName: PlayTrack, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Actions/Rotate
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: adcf3d95-d6e4-41ec-a541-f475dda383cf
@@ -480,6 +505,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0087832b907cf4002bd5216488d2cc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3286076153300636023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638854206922542603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45cd2882fab06b444b79c28f59ac3e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4616410225161356570

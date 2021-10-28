@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{5b1a38c4-8cbc-4877-8e3b-6e1a62dbaedd}">
+		<property name="assetPath">
+			<value>Cri_Thomas_Argh_0.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.5036734693877551</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6caa0bc0-a240-4a11-8aab-0b09d1f7f2d6}</destination>
+		</relationship>
+	</object>
+</objects>
