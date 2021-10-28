@@ -16,12 +16,13 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
-    //public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
+    public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
     //public ArmBehaviourDegressif[] ArmsDeg = new ArmBehaviourDegressif[4];
     [System.NonSerialized] public CharacterSkin CharSkin;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     [System.NonSerialized] public PlayerSelector PlayerSelector;
+
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -34,6 +35,12 @@ public class Player : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public PlayerGameState PlayerGameState;
+    [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
+    [System.NonSerialized] public float AirPushFactor = 1f;
+    [System.NonSerialized] public bool HitObject_bool = false;
+
+    [System.NonSerialized] public float StunRecoveryTime;
+
     // #endregion
 
 
@@ -47,6 +54,7 @@ public class Player : MonoBehaviour
         InitReferences();
         InitControls();
         InitVariables();
+        InitParameters();
         AddToPlayersManager();
     }
 
@@ -54,6 +62,10 @@ public class Player : MonoBehaviour
     private void InitReferences()
     {
         RB = gameObject.GetComponent<Rigidbody2D>();
+        for (int i = 0; i < Arms.Length; i++)
+        {
+            Arms[i].Player = this;
+        }
     }
 
 
@@ -68,6 +80,16 @@ public class Player : MonoBehaviour
     private void InitVariables()
     {
         PlayerGameState = PlayerGameState.NotReady;
+        PlayerPhysicState = PlayerPhysicState.OnAir;
+    }
+
+    private void InitParameters()
+    {
+        RB.mass = GameManager.Instance.ParamData.PARAM_Player_Mass;
+        RB.gravityScale = GameManager.Instance.ParamData.PARAM_Player_GravityScale;
+        RB.drag = GameManager.Instance.ParamData.PARAM_Player_LinearDrag;
+        RB.angularDrag = GameManager.Instance.ParamData.PARAM_Player_AngularDrag;
+        StunRecoveryTime = GameManager.Instance.ParamData.PARAM_Player_StunRecoveryTime;
     }
 
 
@@ -187,4 +209,31 @@ public class Player : MonoBehaviour
     }
 
     // #endregion
+
+
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        GameObject _GO = _collision.gameObject;
+
+        if (_GO.CompareTag("StaticGround") && !HitObject_bool)
+        {
+            HitObject_bool = true;
+            PlayerPhysicState = PlayerPhysicState.OnGround;
+            // Reset air push factor
+            AirPushFactor = 1f;
+        }
+    }
+
+
+    private void OnCollisionExit2D(Collision2D _collision)
+    {
+        GameObject _GO = _collision.gameObject;
+
+        if (_GO.CompareTag("StaticGround"))
+        {
+            HitObject_bool = false;
+            PlayerPhysicState = PlayerPhysicState.OnAir;
+        }
+    }
 }

@@ -9,6 +9,12 @@ namespace Enums
         OptionsMenu,
     }
 
+    public enum GameMode
+    {
+        Race,
+        Versus
+    }
+
     public enum PlayerGameState
     {
         Dead,
@@ -16,10 +22,11 @@ namespace Enums
         NotReady
     }
 
-    public enum GameMode
+    public enum PlayerPhysicState
     {
-        Race,
-        Versus
+        OnGround,
+        OnAir,
+        isHit
     }
 
     public enum PlayerArmState
@@ -27,7 +34,8 @@ namespace Enums
         Extending,
         Extended,
         Unextending,
-        Default
+        Ready,
+        NotReady
     }
 
     public enum NavType
@@ -35,12 +43,5 @@ namespace Enums
         Vertical,
         Horizontal,
         TwoDimensions
-    }
-
-    public enum PlayerPhysicState
-    {
-        OnGround,
-        OnAir,
-        isHit
     }
 }
