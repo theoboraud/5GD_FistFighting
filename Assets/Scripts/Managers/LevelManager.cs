@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
 {
     [Header("References")]
     [System.NonSerialized] public static LevelManager Instance;
-    public List<GameObject> SpawnPoints = new List<GameObject>();
+    private List<GameObject> SpawnPoints = new List<GameObject>();
 
     //[System.NonSerialized] public List<LevelData> Levels;
     //[System.NonSerialized] public LevelData Level;
@@ -29,6 +29,14 @@ public class LevelManager : MonoBehaviour
         }
 
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        GameObject _GO_SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints")[0];
+
+        int _index = 0;
+        foreach (Transform _child in _GO_SpawnPoints.transform)
+        {
+            SpawnPoints[_index] = _child.gameObject;
+            _index++;
+        }
     }
 
 
