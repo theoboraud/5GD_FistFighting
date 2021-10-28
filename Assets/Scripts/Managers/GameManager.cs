@@ -37,9 +37,9 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
+        PlayersManager.Instance.DestroyAllPlayers();
         LevelManager.Instance.LoadRandomLevel();
         MenuManager.Instance.PrintScoreScreen(false);
-        PlayersManager.Instance.DestroyAllPlayers();
         GlobalGameState = GlobalGameState.InPlay;
     }
 

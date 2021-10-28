@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        if(AudioManager.audioManager != null)
+        if(AudioManager.audioManager == null)
         {
             AudioManager.audioManager = this;
         }
