@@ -223,6 +223,11 @@ public class Player : MonoBehaviour
             // Reset air push factor
             AirPushFactor = 1f;
         }
+
+        if (_GO.CompareTag("Arrival"))
+        {
+            GameManager.Instance.PlayerReachedArrival(this);
+        }
     }
 
 

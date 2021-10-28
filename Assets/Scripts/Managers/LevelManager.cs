@@ -61,4 +61,9 @@ public class LevelManager : MonoBehaviour
         _player.transform.position = SpawnPoints[IndexPlayerSpawn].transform.position;
         IndexPlayerSpawn++;
     }
+
+    public void LoadRandomLevel()
+    {
+        SceneManager.LoadScene(Random.Range(0, SceneManager.sceneCountInBuildSettings));
+    }
 }

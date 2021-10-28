@@ -24,9 +24,9 @@ MonoBehaviour:
   PARAM_Player_ArmCooldown: 0
   PARAM_Player_AirControlForce: 10
   PARAM_Player_AirControlForceLossFactor: 0.5
-  PARAM_Player_RotationTorqueMin: 90
-  PARAM_Player_RotationTorqueMax: 1000
-  PARAM_Player_RotationForceMin: 0.5
-  PARAM_Player_RotationForceMax: 1
+  PARAM_Player_RotationTorqueMin: 5
+  PARAM_Player_RotationTorqueMax: 10
+  PARAM_Player_RotationForceMin: 0
+  PARAM_Player_RotationForceMax: 0
   PARAM_Player_RotationChargeTimeMax: 1
   PARAM_Player_RotationCooldown: 0

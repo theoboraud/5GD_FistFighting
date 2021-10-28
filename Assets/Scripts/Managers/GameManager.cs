@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public GlobalGameState GlobalGameState;
     public ParamData ParamData;
 
-
     // Init as a singleton
     private void Awake()
     {
@@ -23,6 +22,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+
+    public void PlayerReachedArrival(Player _player)
+    {
+        LevelManager.Instance.LoadRandomLevel();
     }
 
 
