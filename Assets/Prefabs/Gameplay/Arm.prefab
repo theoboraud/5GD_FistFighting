@@ -177,11 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impulseForce: 10
-  forceCoef_groundExtension: 1
-  forceCoef_airPush: 1
-  forceCoef_playerHit: 1
-  Face: {fileID: 5796460706983378298, guid: 6a3937af4db52aa4c970ca410940464e, type: 3}
-  StartScaleEndScale: {x: 0, y: 0}
+  Face: {fileID: 5796460706983378298, guid: ca703caaf16eefc4ea83dfc0bab8c364, type: 3}
   speedExtension: 0.1
   IsExtending: 0
   IsUnextending: 0
@@ -199,7 +195,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   airPushSprite: {fileID: 0}
-  cooldownAirPush: 10
-  airPushAnimationTime: 0
-  IsGrabbing: 0
-  IsHolding: 0
+  airPush_bool: 0
+  coeffAirPush: 1
+  CanAirPush: 0

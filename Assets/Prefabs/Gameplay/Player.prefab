@@ -122,7 +122,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1966931639075448305}
+      - m_Target: {fileID: 3821352002144408879}
         m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
     m_ActionName: BaseControls/UpArm[/Keyboard/w]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3449385171344854831}
+      - m_Target: {fileID: 116380043279122417}
         m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
     m_ActionName: BaseControls/RightArm[/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2130720605477548008}
+      - m_Target: {fileID: 3734062003636018998}
         m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
     m_ActionName: BaseControls/DownArm[/Keyboard/s]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2076644909682508698}
+      - m_Target: {fileID: 3644083948250067780}
         m_TargetAssemblyTypeName: ArmBehaviour, Assembly-CSharp
         m_MethodName: Input_Extend
         m_Mode: 0
@@ -297,11 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26d6a919638149959e7146cb7485ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Arms:
-  - {fileID: 1966931639075448305}
-  - {fileID: 3449385171344854831}
-  - {fileID: 2130720605477548008}
-  - {fileID: 2076644909682508698}
   Face_SpriteRenderer: {fileID: 4023946081940462339}
   Arms_SpriteRenderers:
   - {fileID: 1966931639075448306}
@@ -528,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftArm
       objectReference: {fileID: 0}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
 --- !u!4 &2076644909682508702 stripped
@@ -540,15 +539,15 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 4616410225161356570}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2076644909682508698 stripped
+--- !u!114 &3644083948250067780 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 4616410225161356570}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4706444356815333736
@@ -622,6 +621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DownArm
       objectReference: {fileID: 0}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
 --- !u!4 &2130720605477548012 stripped
@@ -634,15 +637,15 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 4706444356815333736}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2130720605477548008 stripped
+--- !u!114 &3734062003636018998 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 4706444356815333736}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5155074325909807985
@@ -720,6 +723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpArm
       objectReference: {fileID: 0}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
 --- !u!4 &1966931639075448309 stripped
@@ -732,15 +739,15 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 5155074325909807985}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1966931639075448305 stripped
+--- !u!114 &3821352002144408879 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 5155074325909807985}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8295591649690782127
@@ -818,6 +825,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightArm
       objectReference: {fileID: 0}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
 --- !u!4 &3449385171344854827 stripped
@@ -830,14 +841,14 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 8295591649690782127}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3449385171344854831 stripped
+--- !u!114 &116380043279122417 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366080, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 8295591649690782127}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335d88c367c06314abe0c9da8c62ef92, type: 3}
+  m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

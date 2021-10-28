@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,23 +6,23 @@ using UnityEngine.InputSystem.Interactions;
 /// <summary>
 ///     Class used by each arm for physics behaviours
 /// </summary>
+
 public class ArmBehaviour : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
 
     [Header("Stats")]
-    [SerializeField] float impulseForce = 10f;
-    [SerializeField] float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
-    [SerializeField] float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
-    [SerializeField] float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
+    private float impulseForce = 50f;
+    float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
+    float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
+    float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
     public Player Face;                                     // Face reference from which the arm extends
 
     [Header("Extension Variables")]
-    [SerializeField] private Vector2 StartScaleEndScale;            //
-    [SerializeField] private float speedExtension;                  //
-    [SerializeField] private float speedUnextension;                //
+    private float EndScale = 2f;            //
+    private float speedExtension=10f;                  //
     public bool IsExtending = false;                             //
     public bool IsUnextending = false;
     public bool IsExtended = false;                         // Indicates whether or not the arm is extended at maximum
@@ -35,10 +33,13 @@ public class ArmBehaviour : MonoBehaviour
     public UnityEvent OnCollision;                          //
     public UnityEvent OnUnextended;                         //
 
-    private float curScale;                                 //
+    private float curScaleY = 0;                                 //
 
-    private bool hitGround_bool = false;                         // Indicates whether or not the player is hitting the ground
-    private bool hitPlayer_bool = false;                         // Indicates whether or note the player is hitting another player
+    private Vector3 curScale;
+
+    private bool hitObjet_bool = false;                         // Indicates whether or not the player is hitting the ground
+   /* private bool hitPlayer_bool = false;   */                      // Indicates whether or note the player is hitting another player
+
     private Rigidbody2D hitPlayer_RB;                       // Rigidbody reference of hit player (if any)
 
     private SpriteRenderer spriteRenderer;
@@ -46,14 +47,9 @@ public class ArmBehaviour : MonoBehaviour
 
     [Header("AirPush Variables")]
     public Sprite airPushSprite;
-    private bool airPush_bool = false;
-    [SerializeField] float cooldownAirPush = 0f;
-    [SerializeField] float airPushAnimationTime = 0f;
-
-    public bool IsGrabbing = false;
-
-    public bool IsHolding = false;
-
+    public bool airPush_bool = false;
+    public float coeffAirPush = 1;
+    public bool CanAirPush;
 
     // #endregion
 
@@ -66,262 +62,93 @@ public class ArmBehaviour : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        Init();
+    }
+    private void Init()
+    {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
         armSprite = spriteRenderer.sprite;
+        curScale = new Vector3(1, curScaleY, 1);
+        transform.localScale = curScale;
     }
-
-
-    /// <summary>
-    ///     Modify every frame the arm physic (scale, position...) depending on whether or not it is extending
-    /// </summary>
-    private void Update()
-    {
-        if (IsExtending && !IsExtended)
-        {
-            Extend();
-        }
-        else if (IsUnextending && !IsHolding)
-        {
-            Unextend();
-        }
-    }
-
     // #endregion
 
-
+    private  void Update()
+    {
+        if (IsExtended)
+        {
+            Extending();
+        }
+        else
+        {
+            UnExtended();
+        }
+    }
     // #region =================== CONTROLS FUNCTIONS ==================
-
     public void Input_Extend(InputAction.CallbackContext _context)
     {
-        if (_context.performed)
+        if (_context.control.IsPressed())
         {
-            if (_context.interaction is HoldInteraction)
-            {
-                ExtensionHoldStart();
-
-                // FMOD Event
-                Face.OnExtendArm.Invoke();
-            }
-            else if (_context.interaction is TapInteraction)
-            {
-                ExtensionTapStart();
-
-                // FMOD Event
-                Face.OnExtendArm.Invoke();
-            }
-        }
-        else if (_context.canceled)
-        {
-            if (_context.interaction is HoldInteraction)
-            {
-                ExtensionHoldEnd();
-            }
-        }
-    }
-
-    // #endregion
-
-
-    // #region ================ ARM EXTENSION FUNCTIONS ================
-
-    /// <summary>
-    ///     Start the extension by activating it with a button tap
-    /// </summary>
-    public void ExtensionTapStart()
-    {
-        if (CanExtend())
-        {
-            IsExtending = true;
-            IsHolding = false;
-        }
-    }
-
-
-    /// <summary>
-    ///     Start the extension by activating it with a button hold
-    /// </summary>
-    public void ExtensionHoldStart()
-    {
-        if (CanExtend())
-        {
-            IsExtending = true;
-            IsHolding = true;
-        }
-    }
-
-
-    /// <summary>
-    ///     End the extension by releasing a button hold
-    /// </summary>
-    public void ExtensionHoldEnd()
-    {
-        IsUnextending = true;
-        IsHolding = false;
-    }
-
-
-    private bool CanExtend()
-    {
-        return !IsExtending && !IsUnextending && !IsHolding;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void Extend()
-    {
-        if (curScale >= StartScaleEndScale.y)
-        {
-            // FMOD event
-            OnExtended.Invoke();
-
-            // If hitting the ground, use force impulsion to move to the opposite side
-            if (hitGround_bool)
-            {
-                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
-                hitGround_bool = false;
-            }
-            else if (!airPush_bool)
-            {
-                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush, ForceMode2D.Impulse);
-                airPush_bool = true;
-                Invoke("ResetAirPush", cooldownAirPush);
-            }
-
-            // If hitting a player, that player will receive a force impulsion
-            if (hitPlayer_bool)
-            {
-                if (hitPlayer_RB != null)
-                {
-                    hitPlayer_RB.AddForce(-this.transform.up * impulseForce * forceCoef_playerHit, ForceMode2D.Impulse);
-                    hitPlayer_bool = false;
-                    hitPlayer_RB = null;
-                }
-            }
-
-            IsExtending = false;
-            IsUnextending = false;
             IsExtended = true;
+        }
+        else
+        {
+            IsExtended = false;
+            //Debug.LogFormat("released {0} from {1} on {2}", _context.interaction.ToString(), this.GetInstanceID(), this.gameObject.transform.parent.name);
+        }
+    }
+    //// #endregion
 
-            if (!IsHolding)
+    private void Extending()
+    {
+        
+        curScaleY = Mathf.Clamp(curScaleY+speedExtension * Time.deltaTime, 0, EndScale);
+        curScale.y = curScaleY;
+        transform.localScale = curScale;
+        //Air Push
+        if (transform.localScale.y >= EndScale)
+        {
+            if (!hitObjet_bool&& !airPush_bool)
             {
-                IsUnextending = true;
+                Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_airPush * coeffAirPush, ForceMode2D.Impulse);
+                coeffAirPush /= 3;
+                spriteRenderer.sprite = airPushSprite;
+                airPush_bool = true;
             }
         }
-
-        this.transform.localScale = new Vector3(1f, curScale, 1f);
-
-        curScale += speedExtension * Time.deltaTime;
     }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void Unextend()
+    private void UnExtended()
     {
-        IsExtending = false;
-        IsExtended = false;
+        curScaleY = Mathf.Clamp(curScaleY-speedExtension * Time.deltaTime, 0, EndScale);
+        curScale.y = curScaleY;
+        transform.localScale = curScale;
 
-        if (curScale <= StartScaleEndScale.x)
-        {
-            OnStopExtension();
-            IsUnextending = false;
-            IsHolding = false;
-        }
-
-        this.transform.localScale = new Vector3(1f, curScale, 1f);
-
-        curScale -= speedUnextension * Time.deltaTime;
+        hitObjet_bool = false;
+        airPush_bool = false;
+        spriteRenderer.sprite = armSprite;
     }
 
-
     /// <summary>
-    ///     When the arm is completely retracted, set IsExtending to false for this arm
+    ///  When entering a collision with the ground of another player
     /// </summary>
-    private void OnStopExtension()
-    {
-        // FMOD event
-        OnUnextended.Invoke();
-    }
-
-
-    /// <summary>
-    ///     When entering a collision with the ground of another player
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D _collision)
+    private void OnCollisionEnter2D(Collision2D _collision)
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround"))
+        if (_GO.CompareTag("StaticGround") )
         {
-            hitGround_bool = true;
+            hitObjet_bool = true;
             OnCollision.Invoke();
             Face.OnCollision.Invoke();
+            Face.RB.AddForce(this.transform.up * impulseForce * forceCoef_groundExtension, ForceMode2D.Impulse);
+            coeffAirPush = 1;
         }
 
-        if(_GO.CompareTag("Player"))
+        if (_GO.CompareTag("Player") )
         {
-            hitPlayer_bool = true;
+            hitPlayer_RB.AddForce(-this.transform.up * impulseForce * forceCoef_playerHit, ForceMode2D.Impulse);
+            hitObjet_bool = true;
             hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
         }
     }
-
-
-    /// <summary>
-    ///     Change the variable hitGround to false if leaving a collision with the ground, and hitPlayer to false if leaving a collision with a player
-    /// </summary>
-    private void OnTriggerExit2D(Collider2D _collision)
-    {
-        GameObject _GO = _collision.gameObject;
-        if (_GO.CompareTag("StaticGround"))
-        {
-            hitGround_bool = false;
-        }
-        else if (_GO.CompareTag("Player"))
-        {
-            hitPlayer_bool = false;
-        }
-    }
-
-
-    /// <summary>
-    ///     Reset boolean indicating whether or not the player has used AirPush at the end of a cooldown
-    /// </summary>
-    private void ResetAirPush()
-    {
-        airPush_bool = false;
-    }
-
-    // #endregion
-
-
-    // #region ================== ARM GRAB FUNCTIONS ===================
-    /*
-    /// <summary>
-    ///
-    /// </summary>
-    public void StartGrab()
-    {
-        if (!IsGrabbing)
-        {
-            IsGrabbing = true;
-        }
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void EndGrab()
-    {
-        if (IsGrabbing)
-        {
-            IsGrabbing = false;
-        }
-    }
-    */
-
-    // #endregion
 }
