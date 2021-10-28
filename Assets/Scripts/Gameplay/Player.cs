@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
-    public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
-    public ArmBehaviourDegressif[] ArmsDeg = new ArmBehaviourDegressif[4];
+    //public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
+    //public ArmBehaviourDegressif[] ArmsDeg = new ArmBehaviourDegressif[4];
     [System.NonSerialized] public CharacterSkin CharSkin;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
