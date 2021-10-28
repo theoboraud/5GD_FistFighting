@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637710406810000000
+  lastModified: 637710419871494564
   FileSizes:
   - Name: Desktop
     Value: 876
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637710406810000000
+  lastModified: 637710419871484595
   FileSizes:
   - Name: Desktop
     Value: 233184
@@ -118,7 +118,7 @@ MonoBehaviour:
   - {fileID: -2941222361413983516}
   StringsBanks:
   - {fileID: -5866793057682515442}
-  cacheTime: 637710406810000000
+  cacheTime: 637710419871494564
   cacheVersion: 9
 --- !u!114 &4506837749276564834
 MonoBehaviour:
