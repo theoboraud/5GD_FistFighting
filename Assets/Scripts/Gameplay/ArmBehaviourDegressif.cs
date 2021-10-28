@@ -47,6 +47,7 @@ public class ArmBehaviourDegressif : MonoBehaviour
     public Sprite airPushSprite;
     public bool airPush_bool = false;
     public float coeffAirPush = 1;
+    public bool CanAirPush;
 
     // #endregion
 
