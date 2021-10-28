@@ -10,7 +10,7 @@ public class RotateBehaviour : MonoBehaviour
 
     // #region ==================== CLASS VARIABLES ====================
 
-    private Rigidbody2D RB;
+    public Rigidbody2D RB;
 
     private float rotationTorqueMin;
     private float rotationTorqueMax;
@@ -20,14 +20,29 @@ public class RotateBehaviour : MonoBehaviour
     private float rotationCooldown;
 
     private int rotateDir = 0;                              // Variable containing the trigonometric direction (1 for left, -1 for right)
-    private float rotateValue = 0f;                          // Variable containing the value of rotation to apply left
-    private float forceValue = 0f;
-    private float holdTime = 0f;
+    //private float rotateValue = 0f;                          // Variable containing the value of rotation to apply left
+    //private float forceValue = 0f;
 
-    private bool isRotating = false;                        // Boolean indicating whether or not the player is rotating right now
+    private float rotateValueRight = 0f;                          // Variable containing the value of rotation to apply left
+    private float forceValueRight = 0f;
+    private float rotateValueLeft = 0f;                          // Variable containing the value of rotation to apply left
+    private float forceValueLeft = 0f;
+
+    //  private float holdTime = 0f;
+    private float holdTimeLeft = 0f;
+    private float holdTimeRight = 0f;
+
+    public System.DateTime startTimeRight = System.DateTime.MinValue;
+    public System.DateTime startTimeLeft = System.DateTime.MinValue;
+
+
+    private bool isRotating = false;
+
     private bool onCooldown = false;                        // Boolean indicating whether or not the rotation is on cooldown (if so, player can't rotate)
     private bool cooldownRoutineRunning = false;            // Boolean indicating whether or not the cooldown routine is on
-    private bool isHolding = false;                         // Boolean indicating whether or not a rotate button is being held
+    //private bool isHolding = false;                         // Boolean indicating whether or not a rotate button is being held
+    private bool isHoldingLeft = false;                         // Boolean indicating whether or not a rotate button is being held
+    private bool isHoldingRight = false;                         // Boolean indicating whether or not a rotate button is being held
 
     // #endregion
 
@@ -40,7 +55,7 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        RB = this.GetComponent<Rigidbody2D>();
+        //RB = gameObject.GetComponent<Rigidbody2D>();
         InitParameters();
     }
 
@@ -55,30 +70,6 @@ public class RotateBehaviour : MonoBehaviour
     }
 
 
-    /// <summary>
-    ///     Every frame, the player will rotate if rotateValue is not equal to zero. Otherwise, if rotate should be on cooldown, start the cooldown coroutine
-    /// </summary>
-    private void FixedUpdate()
-    {
-        if (isHolding)
-        {
-            if (holdTime < rotationChargeTimeMax)
-            {
-                holdTime += Time.deltaTime;
-                holdTime = Mathf.Clamp(holdTime, 0, rotationChargeTimeMax);
-                rotateValue = Mathf.Lerp(rotationTorqueMin, rotationTorqueMax, holdTime/rotationChargeTimeMax);
-                forceValue = Mathf.Lerp(rotationForceMin, rotationForceMax, holdTime/rotationChargeTimeMax);
-            }
-        }
-        else if (CanRotate())
-        {
-            holdTime = 0f;
-            isRotating = false;
-            RB.AddTorque(rotateDir * rotateValue, ForceMode2D.Impulse);
-            RB.AddForce(transform.up * rotateDir * forceValue, ForceMode2D.Impulse);
-        }
-    }
-
     // #endregion
 
 
@@ -87,22 +78,37 @@ public class RotateBehaviour : MonoBehaviour
 
     public void Input_RotateRight(InputAction.CallbackContext _context)
     {
-        if (_context.performed)
+        print("Input right");
+        if (_context.interaction is HoldInteraction && _context.started &&  startTimeRight == System.DateTime.MinValue)
         {
-            if (_context.interaction is HoldInteraction)
-            {
-                RotateHold(-1);
-            }
-            else if (_context.interaction is TapInteraction)
-            {
-                RotateTap(-1);
-            }
+            startTimeRight = System.DateTime.UtcNow;
         }
         else if (_context.canceled)
         {
             if (_context.interaction is HoldInteraction)
             {
-                RotateRelease(-1);
+                print("RR");
+                System.TimeSpan ts = System.DateTime.UtcNow - startTimeRight;
+                holdTimeRight = Mathf.Clamp((float)ts.TotalSeconds, 0, rotationChargeTimeMax);
+                rotateValueRight = Mathf.Lerp(rotationTorqueMin, rotationTorqueMax, holdTimeRight / rotationChargeTimeMax);
+                if (rotateValueRight == float.NaN) rotateValueRight = rotationTorqueMin;
+
+
+                forceValueRight = Mathf.Lerp(rotationForceMin, rotationForceMax, holdTimeRight / rotationChargeTimeMax);
+                if (forceValueRight == float.NaN) forceValueRight = rotationForceMin;
+
+                print("hold");
+                startTimeRight = System.DateTime.MinValue;
+
+                print("rotate dir left time pressed " + holdTimeRight + " : force " + forceValueRight + "/" + rotationForceMax);
+
+                RB.AddTorque(-1 * rotateValueRight, ForceMode2D.Impulse);
+                RB.AddForce(transform.up * -1 * forceValueRight, ForceMode2D.Impulse);
+            }
+            else if (_context.interaction is TapInteraction)
+            {
+                //RB.AddTorque(-1 * rotationTorqueMin, ForceMode2D.Impulse);
+                //RB.AddForce(transform.up * -1 * rotationForceMin, ForceMode2D.Impulse);
             }
         }
     }
@@ -110,22 +116,41 @@ public class RotateBehaviour : MonoBehaviour
 
     public void Input_RotateLeft(InputAction.CallbackContext _context)
     {
-        if (_context.performed)
+        print("Input left");
+        if (_context.interaction is HoldInteraction && _context.started && startTimeLeft == System.DateTime.MinValue)
         {
-            if (_context.interaction is HoldInteraction)
-            {
-                RotateHold(1);
-            }
-            else if (_context.interaction is TapInteraction)
-            {
-                RotateTap(1);
-            }
+            startTimeLeft = System.DateTime.UtcNow;
         }
         else if (_context.canceled)
         {
             if (_context.interaction is HoldInteraction)
             {
-                RotateRelease(1);
+                print("RL");
+                // print("holded");
+                System.TimeSpan ts = System.DateTime.UtcNow - startTimeLeft;
+                holdTimeLeft = Mathf.Clamp((float)ts.TotalSeconds, 0, rotationChargeTimeMax);
+
+                rotateValueLeft = Mathf.Lerp(rotationTorqueMin, rotationTorqueMax, holdTimeLeft / rotationChargeTimeMax);
+                if (rotateValueLeft == float.NaN) rotateValueLeft = rotationTorqueMin;
+
+                forceValueLeft = Mathf.Lerp(rotationForceMin, rotationForceMax, holdTimeLeft / rotationChargeTimeMax);
+
+
+                if (forceValueLeft == float.NaN) forceValueLeft = rotationForceMin;
+
+                print("rotate dir left time pressed "+holdTimeLeft+" : force "+forceValueLeft+"/"+rotationForceMax);
+
+                startTimeLeft = System.DateTime.MinValue;
+                RB.AddTorque(1 * rotateValueLeft, ForceMode2D.Impulse);
+                RB.AddForce(transform.up * 1 * forceValueLeft, ForceMode2D.Impulse);
+            }
+            else if (_context.interaction is TapInteraction)
+            {
+
+                //print("tapped");
+                ////print("rotate dir left tapping");
+                //RB.AddTorque(1 * rotationTorqueMin, ForceMode2D.Impulse);
+                //RB.AddForce(transform.up * 1 * rotationForceMin, ForceMode2D.Impulse);
             }
         }
     }
@@ -141,12 +166,25 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateTap(int _rotateDir)
     {
-        isHolding = false;
-        isRotating = true;
-        //onCooldown = false;
-        rotateDir = _rotateDir;
-        rotateValue = rotationTorqueMin;
-        forceValue = rotationForceMin;
+        if(_rotateDir>0)
+        {
+            isHoldingLeft = false;
+            isRotating = true;
+            //onCooldown = false;
+            rotateDir = _rotateDir;
+            rotateValueLeft = rotationTorqueMin;
+            forceValueLeft = rotationForceMin;
+        }
+        else
+        {
+            isHoldingRight = false;
+            isRotating = true;
+            //onCooldown = false;
+            rotateDir = _rotateDir;
+            rotateValueRight = rotationTorqueMin;
+            forceValueRight = rotationForceMin;
+        }
+
     }
 
 
@@ -155,10 +193,21 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateHold(int _rotateDir)
     {
-        isHolding = true;
-        rotateDir = _rotateDir;
-        rotateValue = rotationTorqueMin;
-        forceValue = rotationForceMin;
+        if (_rotateDir > 0)
+        {
+            isHoldingLeft = true;
+            rotateDir = _rotateDir;
+            rotateValueLeft = rotationTorqueMin;
+            forceValueLeft = rotationForceMin;
+        }
+        else
+        {
+            isHoldingRight = true;
+            rotateDir = _rotateDir;
+            rotateValueRight = rotationTorqueMin;
+            forceValueRight = rotationForceMin;
+        }
+
     }
 
 
@@ -167,12 +216,19 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateRelease(int _rotateDir)
     {
-        if (isHolding && rotateDir == _rotateDir)
+
+        if (_rotateDir > 0)
         {
-            isHolding = false;
+            isHoldingLeft = false;
             isRotating = true;
-            //onCooldown = true;
         }
+        else
+        {
+            isHoldingRight = false;
+            isRotating = true;
+        }
+
+
     }
 
 
@@ -195,7 +251,8 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private bool CanRotate()
     {
-        return !onCooldown && isRotating;
+        return !onCooldown;
+        //return !onCooldown && isRotating;
     }
 
     // #endregion

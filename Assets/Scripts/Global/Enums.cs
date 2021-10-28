@@ -40,6 +40,14 @@ namespace Enums
         NotReady
     }
 
+    public enum PlayerRotateState
+    {
+        Ready,
+        IsHolding,
+        IsRotating,
+        OnCooldown
+    }
+
     public enum NavType
     {
         Vertical,
