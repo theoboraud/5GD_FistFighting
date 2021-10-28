@@ -12,14 +12,17 @@ public class RotateBehaviour : MonoBehaviour
 
     private Rigidbody2D RB;
 
-    [SerializeField] private const float CONSTANT_rotateValue = 90f;         // How much the character turns when using rotation
-    [SerializeField] private const float CONSTANT_rotateSpeed = 20f;         // How much the character rotates every frame
-    [SerializeField] private const float CONSTANT_rotateCooldown = 0.5f;     // How much time to wait after rotating to be able to rotate again
-    [SerializeField] private const float CONSTANT_rotateIncrement = 5f;
-    [SerializeField] private const float CONSTANT_rotateMaximum = 1000f;
+    private float rotationTorqueMin;
+    private float rotationTorqueMax;
+    private float rotationForceMin;
+    private float rotationForceMax;
+    private float rotationChargeTimeMax;
+    private float rotationCooldown;
 
     private int rotateDir = 0;                              // Variable containing the trigonometric direction (1 for left, -1 for right)
-    private float rotateValue = 0;                          // Variable containing the value of rotation to apply left
+    private float rotateValue = 0f;                          // Variable containing the value of rotation to apply left
+    private float forceValue = 0f;
+    private float holdTime = 0f;
 
     private bool isRotating = false;                        // Boolean indicating whether or not the player is rotating right now
     private bool onCooldown = false;                        // Boolean indicating whether or not the rotation is on cooldown (if so, player can't rotate)
@@ -38,6 +41,17 @@ public class RotateBehaviour : MonoBehaviour
     private void Awake()
     {
         RB = this.GetComponent<Rigidbody2D>();
+        InitParameters();
+    }
+
+    private void InitParameters()
+    {
+        rotationTorqueMin = GameManager.Instance.ParamData.PARAM_Player_RotationTorqueMin;
+        rotationTorqueMax = GameManager.Instance.ParamData.PARAM_Player_RotationTorqueMax;
+        rotationForceMin = GameManager.Instance.ParamData.PARAM_Player_RotationForceMin;
+        rotationForceMax = GameManager.Instance.ParamData.PARAM_Player_RotationForceMax;
+        rotationChargeTimeMax = GameManager.Instance.ParamData.PARAM_Player_RotationChargeTimeMax;
+        rotationCooldown = GameManager.Instance.ParamData.PARAM_Player_RotationCooldown;
     }
 
 
@@ -48,32 +62,20 @@ public class RotateBehaviour : MonoBehaviour
     {
         if (isHolding)
         {
-            if (rotateValue < CONSTANT_rotateMaximum)
+            if (holdTime < rotationChargeTimeMax)
             {
-                rotateValue += CONSTANT_rotateIncrement;
-            }
-            else
-            {
-                rotateValue = CONSTANT_rotateMaximum;
+                holdTime += Time.deltaTime;
+                holdTime = Mathf.Clamp(holdTime, 0, rotationChargeTimeMax);
+                rotateValue = Mathf.Lerp(rotationTorqueMin, rotationTorqueMax, holdTime/rotationChargeTimeMax);
+                forceValue = Mathf.Lerp(rotationForceMin, rotationForceMax, holdTime/rotationChargeTimeMax);
             }
         }
-        else if (isRotating && rotateValue > 0)
+        else if (CanRotate())
         {
-            rotateValue = Mathf.Clamp(rotateValue, CONSTANT_rotateSpeed, CONSTANT_rotateMaximum);
-            RB.rotation += rotateDir * CONSTANT_rotateSpeed;
-            rotateValue -= CONSTANT_rotateSpeed;
-        }
-
-        if (isRotating && rotateValue <= 0)
-        {
+            holdTime = 0f;
             isRotating = false;
-            rotateDir = 0;
-            rotateValue = 0;
-        }
-
-        if (onCooldown && !isRotating && !cooldownRoutineRunning)
-        {
-            StartCoroutine(RotateCooldown());
+            RB.AddTorque(rotateDir * rotateValue, ForceMode2D.Impulse);
+            RB.AddForce(transform.up * rotateDir * forceValue, ForceMode2D.Impulse);
         }
     }
 
@@ -139,13 +141,12 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateTap(int _rotateDir)
     {
-        if (CanRotate())
-        {
-            rotateDir = _rotateDir;
-            rotateValue = CONSTANT_rotateValue;
-            isRotating = true;
-            onCooldown = true;
-        }
+        isHolding = false;
+        isRotating = true;
+        //onCooldown = false;
+        rotateDir = _rotateDir;
+        rotateValue = rotationTorqueMin;
+        forceValue = rotationForceMin;
     }
 
 
@@ -154,12 +155,10 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateHold(int _rotateDir)
     {
-        if (CanRotate())
-        {
-            isHolding = true;
-            rotateDir = _rotateDir;
-            rotateValue = CONSTANT_rotateValue;
-        }
+        isHolding = true;
+        rotateDir = _rotateDir;
+        rotateValue = rotationTorqueMin;
+        forceValue = rotationForceMin;
     }
 
 
@@ -168,11 +167,11 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void RotateRelease(int _rotateDir)
     {
-        if (CanRotate() && rotateDir == _rotateDir)
+        if (isHolding && rotateDir == _rotateDir)
         {
             isHolding = false;
             isRotating = true;
-            onCooldown = true;
+            //onCooldown = true;
         }
     }
 
@@ -184,7 +183,7 @@ public class RotateBehaviour : MonoBehaviour
     {
         cooldownRoutineRunning = true;
 
-        yield return new WaitForSeconds(CONSTANT_rotateCooldown);
+        yield return new WaitForSeconds(rotationCooldown);
 
         cooldownRoutineRunning = false;
         onCooldown = false;
@@ -196,7 +195,7 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private bool CanRotate()
     {
-        return !onCooldown && !isRotating;
+        return !onCooldown && isRotating;
     }
 
     // #endregion

@@ -38,28 +38,12 @@
                     "interactions": "Tap,Hold"
                 },
                 {
-                    "name": "DashRight",
-                    "type": "Button",
-                    "id": "e32f6233-b5f6-4453-b857-000711039108",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press"
-                },
-                {
-                    "name": "DashLeft",
-                    "type": "Button",
-                    "id": "1cdeb7d6-cab1-485d-bf7e-de9eab6945ce",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press"
-                },
-                {
                     "name": "RotateRight",
                     "type": "Button",
                     "id": "383de03f-5403-40bb-8fbb-264947cd250e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap,Hold"
+                    "interactions": "Hold,Tap"
                 },
                 {
                     "name": "RotateLeft",
@@ -117,50 +101,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4fd7fb8c-9fab-4ff9-b1f0-6c7517f6aaed",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "DashRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f9e8f721-e425-444e-9ce3-9e725b2c5da2",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "DashRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "428e910d-816e-4de9-92bc-748c98fd51f2",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "DashLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bb89ce3b-ff13-4c44-8ec5-f1ccb7cf8ac2",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "DashLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3b572063-9c17-4747-8131-21aeb9285e46",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
@@ -172,8 +112,19 @@
                 },
                 {
                     "name": "",
-                    "id": "72b71c65-dea4-4f62-bb3c-eba312b22f11",
-                    "path": "<Keyboard>/upArrow",
+                    "id": "88ec9d51-3fe4-4956-804e-e1cdf4f9752a",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "RotateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0b85f87-d9b0-4896-924c-d26d9d1bff78",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -194,8 +145,19 @@
                 },
                 {
                     "name": "",
-                    "id": "3cc3025a-9082-4ecd-aa7f-46cce103aa0a",
-                    "path": "<Keyboard>/downArrow",
+                    "id": "c53a40fd-6b98-4d39-a7be-78274c4c223f",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "RotateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3cf9de05-e731-467b-9e74-e4e410e1acb4",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",

@@ -52,6 +52,7 @@ public class ParamData : ScriptableObject
     public float PARAM_Player_RotationForceMin;
     public float PARAM_Player_RotationForceMax;
     public float PARAM_Player_RotationChargeTimeMax;
+    public float PARAM_Player_RotationCooldown;
 
     // #endregion
 }
