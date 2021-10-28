@@ -81,4 +81,15 @@ public class PlayersManager : MonoBehaviour
 
         return true;
     }
+
+
+    public void DestroyAllPlayers()
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            Player _player = Players[i];
+            Players.Remove(_player);
+            Destroy(_player.gameObject);
+        }
+    }
 }
