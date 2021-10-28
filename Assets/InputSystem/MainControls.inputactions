@@ -27,7 +27,7 @@
                     "id": "1f4c73e5-a746-46f9-8637-62cf654bf789",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap,Hold"
+                    "interactions": "Tap,Hold(duration=2)"
                 },
                 {
                     "name": "LeftArm",
