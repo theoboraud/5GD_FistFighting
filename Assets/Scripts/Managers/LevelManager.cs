@@ -29,12 +29,17 @@ public class LevelManager : MonoBehaviour
         }
 
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        InitSpawnPoints();
+    }
+
+    private void InitSpawnPoints()
+    {
         GameObject _GO_SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints")[0];
 
         int _index = 0;
         foreach (Transform _child in _GO_SpawnPoints.transform)
         {
-            SpawnPoints[_index] = _child.gameObject;
+            SpawnPoints.Add(_child.gameObject);
             _index++;
         }
     }
