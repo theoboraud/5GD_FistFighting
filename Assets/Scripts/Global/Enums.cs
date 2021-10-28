@@ -1,6 +1,6 @@
 namespace Enums
 {
-    public enum GameState
+    public enum GlobalGameState
     {
         InPlay,
         MainMenu,
@@ -9,9 +9,8 @@ namespace Enums
         OptionsMenu,
     }
 
-    public enum PlayerState
+    public enum PlayerGameState
     {
-        Alive,
         Dead,
         Ready,
         NotReady
@@ -23,7 +22,7 @@ namespace Enums
         Versus
     }
 
-    public enum ArmState
+    public enum PlayerArmState
     {
         Extending,
         Extended,
@@ -36,5 +35,12 @@ namespace Enums
         Vertical,
         Horizontal,
         TwoDimensions
+    }
+
+    public enum PlayerPhysicState
+    {
+        OnGround,
+        OnAir,
+        isHit
     }
 }

@@ -40,18 +40,18 @@ public class MenuManager : MonoBehaviour
     private void InitMenu()
     {
         DeactivateAllMenu();
-        switch (GameManager.Instance.GameState)
+        switch (GameManager.Instance.GlobalGameState)
         {
-            case GameState.MainMenu:
+            case GlobalGameState.MainMenu:
                 GoTo_MainMenu();
                 break;
-            case GameState.CharacterSelectMenu:
+            case GlobalGameState.CharacterSelectMenu:
                 GoTo_CharacterSelectMenu();
                 break;
-            case GameState.LevelSelectMenu:
+            case GlobalGameState.LevelSelectMenu:
                 GoTo_LevelSelectMenu();
                 break;
-            case GameState.OptionsMenu:
+            case GlobalGameState.OptionsMenu:
                 GoTo_OptionsMenu();
                 break;
             default:
@@ -68,8 +68,8 @@ public class MenuManager : MonoBehaviour
         ActiveMenu = MainMenu;
         ActiveMenu.Activate();
 
-        // Update GameState
-        GameManager.Instance.GameState = GameState.MainMenu;
+        // Update GlobalGameState
+        GameManager.Instance.GlobalGameState = GlobalGameState.MainMenu;
     }
 
     public void GoTo_CharacterSelectMenu()
@@ -78,8 +78,8 @@ public class MenuManager : MonoBehaviour
         ActiveMenu = CharacterSelectMenu;
         ActiveMenu.Activate();
 
-        // Update GameState
-        GameManager.Instance.GameState = GameState.CharacterSelectMenu;
+        // Update GlobalGameState
+        GameManager.Instance.GlobalGameState = GlobalGameState.CharacterSelectMenu;
     }
 
     public void GoTo_OptionsMenu()
@@ -88,8 +88,8 @@ public class MenuManager : MonoBehaviour
         ActiveMenu = OptionsMenu;
         ActiveMenu.Activate();
 
-        // Update GameState
-        GameManager.Instance.GameState = GameState.OptionsMenu;
+        // Update GlobalGameState
+        GameManager.Instance.GlobalGameState = GlobalGameState.OptionsMenu;
     }
 
     public void GoTo_LevelSelectMenu()
@@ -98,8 +98,8 @@ public class MenuManager : MonoBehaviour
         ActiveMenu = LevelSelectMenu;
         ActiveMenu.Activate();
 
-        // Update GameState
-        GameManager.Instance.GameState = GameState.LevelSelectMenu;
+        // Update GlobalGameState
+        GameManager.Instance.GlobalGameState = GlobalGameState.LevelSelectMenu;
     }
 
     private void DeactivateAllMenu()

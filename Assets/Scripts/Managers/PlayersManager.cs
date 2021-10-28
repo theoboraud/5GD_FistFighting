@@ -52,7 +52,7 @@ public class PlayersManager : MonoBehaviour
     {
         for (int i = 0; i < Players.Count; i++)
         {
-            if (Players[i].PlayerState != PlayerState.Ready)
+            if (Players[i].PlayerGameState != PlayerGameState.Ready)
             {
                 return false;
             }

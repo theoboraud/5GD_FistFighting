@@ -31,7 +31,7 @@ public class CharacterSelectMenu : Menu
         {
             for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
             {
-                if (PlayersManager.Instance.Players[i].PlayerState != PlayerState.Ready)
+                if (PlayersManager.Instance.Players[i].PlayerGameState != PlayerGameState.Ready)
                 {
                     return false;
                 }

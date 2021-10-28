@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("References")]
     [System.NonSerialized] public static GameManager Instance;
-    public GameState GameState;
+    public GlobalGameState GlobalGameState;
 
 
     // Init as a singleton

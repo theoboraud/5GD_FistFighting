@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     private MenuControls menuControls;
 
     [Header("Variables")]
-    [System.NonSerialized] public PlayerState PlayerState;
+    [System.NonSerialized] public PlayerGameState PlayerGameState;
     // #endregion
 
 
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     private void InitVariables()
     {
-        PlayerState = PlayerState.NotReady;
+        PlayerGameState = PlayerGameState.NotReady;
     }
 
 
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
             {
 
             }
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
             {
                 PlayerSelector.ChangeSkinRight();
             }
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
             {
 
             }
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
             {
                 PlayerSelector.ChangeSkinLeft();
             }
@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
     {
         if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
         {
-            if (GameManager.Instance.GameState == GameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
             {
                 PlayerSelector.ValidateSkin();
             }
