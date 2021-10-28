@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         // TODO: Implement loading screen...
         LevelManager.Instance.LoadRandomLevel();
         MenuManager.Instance.PrintScoreScreen(false);
+        PlayersManager.Instance.DestroyAllPlayers();
         GlobalGameState = GlobalGameState.InPlay;
     }
 
