@@ -202,8 +202,8 @@ public class ArmBehaviour : MonoBehaviour
 
         if (_GO.CompareTag("Player") && !Player.HitObject_bool)
         {
-            hitPlayer_RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
             hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
+            hitPlayer_RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
             Player.HitObject_bool = true;
         }
     }
