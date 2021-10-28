@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
-using DG.Tweening;
 
 /// <summary>
 ///     Class used by each arm for physics behaviours
@@ -13,17 +12,17 @@ public class ArmBehaviour : MonoBehaviour
     // #region ==================== CLASS VARIABLES ====================
 
     [Header("Stats")]
-    [SerializeField] float impulseForce = 10f;
-     float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
-     float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
-     float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
+    private float impulseForce = 50f;
+    float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
+    float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
+    float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
     public Player Face;                                     // Face reference from which the arm extends
 
     [Header("Extension Variables")]
     private float EndScale = 2f;            //
-    [SerializeField] private float speedExtension;                  //
+    private float speedExtension=10f;                  //
     public bool IsExtending = false;                             //
     public bool IsUnextending = false;
     public bool IsExtended = false;                         // Indicates whether or not the arm is extended at maximum
@@ -34,10 +33,13 @@ public class ArmBehaviour : MonoBehaviour
     public UnityEvent OnCollision;                          //
     public UnityEvent OnUnextended;                         //
 
-    private float curScale;                                 //
+    private float curScaleY = 0;                                 //
+
+    private Vector3 curScale;
 
     private bool hitObjet_bool = false;                         // Indicates whether or not the player is hitting the ground
    /* private bool hitPlayer_bool = false;   */                      // Indicates whether or note the player is hitting another player
+
     private Rigidbody2D hitPlayer_RB;                       // Rigidbody reference of hit player (if any)
 
     private SpriteRenderer spriteRenderer;
@@ -66,29 +68,43 @@ public class ArmBehaviour : MonoBehaviour
     {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
         armSprite = spriteRenderer.sprite;
-        transform.localScale = new Vector3(1, 0, 1);
+        curScale = new Vector3(1, curScaleY, 1);
+        transform.localScale = curScale;
     }
     // #endregion
 
-
-    // #region =================== CONTROLS FUNCTIONS ==================
-    public void Input_Extend(InputAction.CallbackContext _context)
+    private  void Update()
     {
-        if (_context.control.IsPressed())
+        if (IsExtended)
         {
             Extending();
         }
         else
         {
-            //Debug.LogFormat("released {0} from {1} on {2}", _context.interaction.ToString(), this.GetInstanceID(), this.gameObject.transform.parent.name);
             UnExtended();
+        }
+    }
+    // #region =================== CONTROLS FUNCTIONS ==================
+    public void Input_Extend(InputAction.CallbackContext _context)
+    {
+        if (_context.control.IsPressed())
+        {
+            IsExtended = true;
+        }
+        else
+        {
+            IsExtended = false;
+            //Debug.LogFormat("released {0} from {1} on {2}", _context.interaction.ToString(), this.GetInstanceID(), this.gameObject.transform.parent.name);
         }
     }
     //// #endregion
 
     private void Extending()
     {
-        transform.DOScaleY(EndScale, speedExtension);
+        
+        curScaleY = Mathf.Clamp(curScaleY+speedExtension * Time.deltaTime, 0, EndScale);
+        curScale.y = curScaleY;
+        transform.localScale = curScale;
         //Air Push
         if (transform.localScale.y >= EndScale)
         {
@@ -103,7 +119,10 @@ public class ArmBehaviour : MonoBehaviour
     }
     private void UnExtended()
     {
-        transform.DOScaleY(0, speedExtension);
+        curScaleY = Mathf.Clamp(curScaleY-speedExtension * Time.deltaTime, 0, EndScale);
+        curScale.y = curScaleY;
+        transform.localScale = curScale;
+
         hitObjet_bool = false;
         airPush_bool = false;
         spriteRenderer.sprite = armSprite;
@@ -116,7 +135,7 @@ public class ArmBehaviour : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround") && hitObjet_bool == false)
+        if (_GO.CompareTag("StaticGround") )
         {
             hitObjet_bool = true;
             OnCollision.Invoke();
@@ -125,7 +144,7 @@ public class ArmBehaviour : MonoBehaviour
             coeffAirPush = 1;
         }
 
-        if (_GO.CompareTag("Player") && hitObjet_bool == false)
+        if (_GO.CompareTag("Player") )
         {
             hitPlayer_RB.AddForce(-this.transform.up * impulseForce * forceCoef_playerHit, ForceMode2D.Impulse);
             hitObjet_bool = true;
