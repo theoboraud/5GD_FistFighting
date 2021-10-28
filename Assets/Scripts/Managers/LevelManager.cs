@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     //[System.NonSerialized] public LevelData Level;
     [Header("Variables")]
     [System.NonSerialized] public int IndexPlayerSpawn = 0;
+    private int currentSceneIndex;
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
 
@@ -64,6 +67,12 @@ public class LevelManager : MonoBehaviour
 
     public void LoadRandomLevel()
     {
-        SceneManager.LoadScene(Random.Range(0, SceneManager.sceneCountInBuildSettings));
+        int _randomSceneIndex = currentSceneIndex;
+        while(_randomSceneIndex == currentSceneIndex)
+        {
+            _randomSceneIndex = Random.Range(0, SceneManager.sceneCountInBuildSettings);
+        }
+        currentSceneIndex = _randomSceneIndex;
+        SceneManager.LoadScene(_randomSceneIndex);
     }
 }

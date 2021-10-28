@@ -3,6 +3,7 @@ namespace Enums
     public enum GlobalGameState
     {
         InPlay,
+        ScoreScreen,
         MainMenu,
         CharacterSelectMenu,
         LevelSelectMenu,
@@ -17,6 +18,7 @@ namespace Enums
 
     public enum PlayerGameState
     {
+        Alive,
         Dead,
         Ready,
         NotReady

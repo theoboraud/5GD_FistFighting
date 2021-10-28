@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold,Tap"
+                },
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "5bb21308-0bf5-47e7-aee5-4e34a0f6c259",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold,Tap"
                 }
             ],
             "bindings": [
@@ -206,6 +214,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "RightArm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1059e33c-9c87-42e7-9eea-f26bc6a54023",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01046c7b-2db7-44fe-a85e-9c30dfe75bc1",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

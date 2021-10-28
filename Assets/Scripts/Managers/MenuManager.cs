@@ -7,18 +7,19 @@ public class MenuManager : MonoBehaviour
 {
     [Header("References")]
     [System.NonSerialized] public static MenuManager Instance;
+    [SerializeField] GameObject ScoreScreen;
 
     [Header("Menu Screens")]
     [SerializeField] CharacterSelectMenu CharacterSelectMenu;
     [SerializeField] MainMenu MainMenu;
     [SerializeField] OptionsMenu OptionsMenu;
     [SerializeField] LevelSelectMenu LevelSelectMenu;
-    private Menu ActiveMenu;
 
     [Header("Variables")]
     public List<int> CharacterSkinIndex = new List<int>();
     private List<bool> PlayersReady = new List<bool>();
     private int spawnedPlayerCount = 0;
+    private Menu ActiveMenu;
 
 
     // Init singleton
@@ -108,6 +109,11 @@ public class MenuManager : MonoBehaviour
         CharacterSelectMenu.Deactivate();
         LevelSelectMenu.Deactivate();
         OptionsMenu.Deactivate();
+    }
+
+    public void PrintScoreScreen(bool _bool)
+    {
+        ScoreScreen.SetActive(_bool);
     }
 
     public void Quit()

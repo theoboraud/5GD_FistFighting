@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StaticGround
   - Arrival
+  - Lethal
   layers:
   - Default
   - TransparentFX

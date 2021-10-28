@@ -10,6 +10,9 @@ public class PlayersManager : MonoBehaviour
     [System.NonSerialized] public List<Player> Players;
     [System.NonSerialized] public SkinsData SkinsData;
 
+    [Header("Variables")]
+    private List<Player> PlayersAlive;
+
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class PlayersManager : MonoBehaviour
 
         // Init references
         Players = new List<Player>();
+        PlayersAlive = new List<Player>();
         SkinsData = gameObject.GetComponent<SkinsData>();
     }
 
@@ -36,6 +40,23 @@ public class PlayersManager : MonoBehaviour
         Players.Add(_player);
         _player.ChangeSkin(SkinsData.GetRandomSkin());
         LevelManager.Instance.SpawnPlayer(_player);
+    }
+
+
+    public void KillPlayer(Player _player)
+    {
+        _player.Kill();
+        PlayersAlive.Remove(_player);
+
+        if (PlayersAlive.Count == 1)
+        {
+            GameManager.Instance.EndOfRound(PlayersAlive[0]);
+        }
+        // If there is only one player
+        else if (PlayersAlive.Count == 0)
+        {
+            GameManager.Instance.EndOfRound(null);
+        }
     }
 
 

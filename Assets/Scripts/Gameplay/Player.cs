@@ -128,6 +128,14 @@ public class Player : MonoBehaviour
 
     // TO REIMPLEMENT
 
+    public void Gameplay_Start()
+    {
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
+        {
+            GameManager.Instance.NewGameRound();
+        }
+    }
+
     // #endregion
 
 
@@ -211,6 +219,12 @@ public class Player : MonoBehaviour
     // #endregion
 
 
+    public void Kill()
+    {
+        PlayerGameState = PlayerGameState.Dead;
+        gameObject.SetActive(false);
+    }
+
 
     private void OnCollisionEnter2D(Collision2D _collision)
     {
@@ -226,7 +240,12 @@ public class Player : MonoBehaviour
 
         if (_GO.CompareTag("Arrival"))
         {
-            GameManager.Instance.PlayerReachedArrival(this);
+            GameManager.Instance.EndOfRound(this);
+        }
+
+        if (_GO.CompareTag("Lethal"))
+        {
+            PlayersManager.Instance.KillPlayer(this);
         }
     }
 

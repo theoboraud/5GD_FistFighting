@@ -25,9 +25,20 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void PlayerReachedArrival(Player _player)
+    public void EndOfRound(Player _winner)
     {
+        // TODO: Implement score screen, victory/defeat feedbacks...
+        GlobalGameState = GlobalGameState.ScoreScreen;
+        MenuManager.Instance.PrintScoreScreen(true);
+    }
+
+
+    public void NewGameRound()
+    {
+        // TODO: Implement loading screen...
         LevelManager.Instance.LoadRandomLevel();
+        MenuManager.Instance.PrintScoreScreen(false);
+        GlobalGameState = GlobalGameState.InPlay;
     }
 
 
