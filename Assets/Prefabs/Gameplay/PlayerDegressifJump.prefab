@@ -18,9 +18,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 10
-  speedUnextension: 10
-  IsExtending: 0
+  speedExtension: 0.2
+  IsExtending: 1
   IsUnextending: 0
   IsExtended: 0
   OnAppear:
@@ -58,9 +57,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 10
-  speedUnextension: 10
-  IsExtending: 0
+  speedExtension: 0.2
+  IsExtending: 1
   IsUnextending: 0
   IsExtended: 0
   OnAppear:
@@ -98,9 +96,8 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 10
-  speedUnextension: 10
-  IsExtending: 0
+  speedExtension: 0.2
+  IsExtending: 1
   IsUnextending: 0
   IsExtended: 0
   OnAppear:
@@ -138,8 +135,7 @@ MonoBehaviour:
   forceCoef_playerHit: 1
   Face: {fileID: 5796460706983378298}
   StartScaleEndScale: {x: 0.01, y: 2}
-  speedExtension: 10
-  speedUnextension: 10
+  speedExtension: 0.2
   IsExtending: 0
   IsUnextending: 0
   IsExtended: 0
@@ -306,7 +302,19 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2130720605477548006}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
