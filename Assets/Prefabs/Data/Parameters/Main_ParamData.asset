@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: Main_ParamData
   m_EditorClassIdentifier: 
   PARAM_Player_Mass: 1
-  PARAM_Player_GravityScale: 6
-  PARAM_Player_LinearDrag: 1
-  PARAM_Player_AngularDrag: 8
+  PARAM_Player_GravityScale: 5
+  PARAM_Player_LinearDrag: 0
+  PARAM_Player_AngularDrag: 12
   PARAM_Player_StunRecoveryTime: 0
-  PARAM_Player_ArmGroundForce: 20
-  PARAM_Player_ArmHitForce: 15
-  PARAM_Player_ArmExtendingTime: 15
-  PARAM_Player_ArmUnextendingTime: 15
+  PARAM_Player_ArmGroundForce: 10
+  PARAM_Player_ArmHitForce: 12
+  PARAM_Player_ArmExtendingTime: 20
+  PARAM_Player_ArmUnextendingTime: 20
   PARAM_Player_ArmCooldown: 0
   PARAM_Player_AirControlForce: 20
   PARAM_Player_AirControlForceLossFactor: 0.7
-  PARAM_Player_RotationTorqueMin: 5
+  PARAM_Player_RotationTorqueMin: 6.2
   PARAM_Player_RotationTorqueMax: 10
-  PARAM_Player_RotationForceMin: 0
-  PARAM_Player_RotationForceMax: 0
+  PARAM_Player_RotationForceMin: 0.5
+  PARAM_Player_RotationForceMax: 2
   PARAM_Player_RotationChargeTimeMax: 1
   PARAM_Player_RotationCooldown: 0
