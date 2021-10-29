@@ -1019,6 +1019,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControlGuide
       objectReference: {fileID: 0}
+    - target: {fileID: 6819292033665067075, guid: 28868ae6cff0e8a44be6dfb25cb6de6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7102594080046638403, guid: 28868ae6cff0e8a44be6dfb25cb6de6d, type: 3}
       propertyPath: m_Sprite
       value: 
