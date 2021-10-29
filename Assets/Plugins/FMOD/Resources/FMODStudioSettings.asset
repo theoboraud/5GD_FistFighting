@@ -402,7 +402,7 @@ MonoBehaviour:
   sourceProjectPath: Fmod/FistFighting/FistFighting.fspro
   sourceBankPath: Fmod/FistFighting/Build
   SourceBankPathUnformatted: 
-  BankRefreshCooldown: 5
+  BankRefreshCooldown: -2
   ShowBankRefreshWindow: 1
   AutomaticEventLoading: 1
   BankLoadType: 0
