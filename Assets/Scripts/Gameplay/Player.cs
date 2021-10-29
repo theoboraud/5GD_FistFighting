@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
     private void InitVariables()
     {
         PlayerGameState = PlayerGameState.NotReady;
-        PlayerPhysicState = PlayerPhysicState.OnAir;
+        PlayerPhysicState = PlayerPhysicState.InAir;
     }
 
     private void InitParameters()
@@ -259,10 +259,10 @@ public class Player : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround"))
+        if (_GO.CompareTag("StaticGround") || _GO.CompareTag("Arrival"))
         {
             HitObject_bool = false;
-            PlayerPhysicState = PlayerPhysicState.OnAir;
+            PlayerPhysicState = PlayerPhysicState.InAir;
         }
     }
 }
