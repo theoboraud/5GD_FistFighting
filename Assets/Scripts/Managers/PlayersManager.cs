@@ -11,7 +11,7 @@ public class PlayersManager : MonoBehaviour
     [System.NonSerialized] public SkinsData SkinsData;
 
     [Header("Variables")]
-    private List<Player> PlayersAlive;
+    [System.NonSerialized] public List<Player> PlayersAlive;
 
 
     private void Awake()
@@ -40,6 +40,7 @@ public class PlayersManager : MonoBehaviour
         Players.Add(_player);
         _player.ChangeSkin(SkinsData.GetRandomSkin());
         LevelManager.Instance.SpawnPlayer(_player);
+        PlayersAlive.Add(_player);
     }
 
 
@@ -85,6 +86,7 @@ public class PlayersManager : MonoBehaviour
 
     public void DestroyAllPlayers()
     {
+        PlayersAlive.Clear();
         for (int i = 0; i < Players.Count; i++)
         {
             Player _player = Players[i];
