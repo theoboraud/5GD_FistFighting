@@ -6,10 +6,49 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainLevels/LD_first1 1.unity
+    path: Assets/Scenes/MainLevels/LD_1.unity
     guid: 3267ca98f85bf6f4dad6b64aee6d7aab
   - enabled: 1
-    path: Assets/Scenes/MainLevels/LD_first1 2.unity
+    path: Assets/Scenes/MainLevels/LD_2.unity
+    guid: cc96da4f71ba5ac439b613a74ccf4cbe
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_3.unity
     guid: 14f42857b1be18b40a5ca457b5d9b3ce
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_4.unity
+    guid: 1475e409c9444254a925f7c021b5ce24
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_5.unity
+    guid: 88433c54f5f51b64f96891d27e981d5f
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_6.unity
+    guid: f41b2aba5e11dc54ab0e02a891e027c7
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_7.unity
+    guid: 4d72be8eb0e052249b692038826bc171
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_8.unity
+    guid: 8ff95412dfcafb14db3613ba126d5dec
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_9.unity
+    guid: a088ec4dcc4750e46aa180a0c01fe8c9
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_10.unity
+    guid: 8a528fcc430eadb44a4ee515a790fada
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_11.unity
+    guid: ba84101d22e556d45bc5548cd9de72b3
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_12.unity
+    guid: b1e1a2c699e4a554796e0a0f1646d48c
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_13.unity
+    guid: dd8db76bde5d16c40ad1989148d098a9
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Race1.unity
+    guid: a3e6d0b8defe56f499636fee2573f82c
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Race2.unity
+    guid: 47e03829de51abe4e8f9eaa2f76e9d9e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}
