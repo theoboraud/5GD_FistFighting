@@ -27,7 +27,7 @@ namespace Enums
     public enum PlayerPhysicState
     {
         OnGround,
-        OnAir,
+        InAir,
         isHit
     }
 

@@ -132,7 +132,7 @@ public class ArmBehaviour : MonoBehaviour
             InputOff = true;
         }
     }
-    
+
     // #endregion
 
 
@@ -147,10 +147,14 @@ public class ArmBehaviour : MonoBehaviour
         {
             Force = true;
             armState = PlayerArmState.Extended;
-            if (!hitObjet_bool && !airPush_bool && Player.PlayerPhysicState == PlayerPhysicState.OnAir && !HitObject)
+
+            if (!hitObjet_bool && !airPush_bool && !HitPlayer && !HitObject)
             {
                 Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
-                Player.AirPushFactor *= airPushForceLossFactor;
+                if (Player.PlayerPhysicState == PlayerPhysicState.InAir)
+                {
+                    Player.AirPushFactor *= airPushForceLossFactor;
+                }
                 airPush_bool = true;
                 GameManager.Instance.Feedback.SpawnHitAvatarVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90+this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
@@ -173,7 +177,7 @@ public class ArmBehaviour : MonoBehaviour
                 HitPlayer = false;
             }
             Invoke("TurnForceOff", 0.2f);
-            
+
         }
     }
 

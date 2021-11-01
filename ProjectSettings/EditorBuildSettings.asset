@@ -6,28 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainLevels/Race_Levels/LD_Race_1.unity
-    guid: 61395b049db8a43e6bf911febcc866b0
+    path: Assets/Scenes/MainLevels/LD_first1 1.unity
+    guid: 3267ca98f85bf6f4dad6b64aee6d7aab
   - enabled: 1
-    path: Assets/Scenes/MainLevels/Race_Levels/LD_Race_3.unity
-    guid: 2bd89bfe6bc4edb4195ee9ce9d8f47a0
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/KingOfTheHill_Levels/LD_KingOfTheHill_2.unity
-    guid: 209e08ccf251bb64cbbfe4b2d5d9fab2
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/Versus_Levels/LD_Versus_1.unity
-    guid: 78b6232e3c657a845b3c94ce859dc669
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/Versus_Levels/LD_Versus_2.unity
-    guid: cca52f113c71b9f4797e3fa160e24364
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/Versus_Levels/LD_Versus_3.unity
-    guid: e241b64144c54aa479108810a9ddbd57
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/KingOfTheHill_Levels/LD_KingOfTheHill_1 1.unity
-    guid: 9a0bbafb759906a42b0e5e211d728c52
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/Race_Levels/LD_Race_2.unity
-    guid: b2dbbf71009f13647abc53f6d0d38706
+    path: Assets/Scenes/MainLevels/LD_first1 2.unity
+    guid: 14f42857b1be18b40a5ca457b5d9b3ce
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}

@@ -102,8 +102,12 @@ public class RotateBehaviour : MonoBehaviour
 
                 print("rotate dir left time pressed " + holdTimeRight + " : force " + forceValueRight + "/" + rotationForceMax);
 
-                RB.AddTorque(-1 * rotateValueRight, ForceMode2D.Impulse);
-                RB.AddForce(transform.up * -1 * forceValueRight, ForceMode2D.Impulse);
+
+                RB.AddTorque(-1 * rotationTorqueMin, ForceMode2D.Impulse);
+                RB.AddForce(transform.up * -1 * rotationForceMin, ForceMode2D.Impulse);
+
+                //RB.AddTorque(-1 * rotateValueRight, ForceMode2D.Impulse);
+                //RB.AddForce(transform.up * -1 * forceValueRight, ForceMode2D.Impulse);
             }
             else if (_context.interaction is TapInteraction)
             {
@@ -141,8 +145,12 @@ public class RotateBehaviour : MonoBehaviour
                 print("rotate dir left time pressed "+holdTimeLeft+" : force "+forceValueLeft+"/"+rotationForceMax);
 
                 startTimeLeft = System.DateTime.MinValue;
-                RB.AddTorque(1 * rotateValueLeft, ForceMode2D.Impulse);
-                RB.AddForce(transform.up * 1 * forceValueLeft, ForceMode2D.Impulse);
+
+                RB.AddTorque(1 * rotationTorqueMin, ForceMode2D.Impulse);
+                RB.AddForce(transform.up * 1 * rotationForceMin, ForceMode2D.Impulse);
+
+                //RB.AddTorque(1 * rotateValueLeft, ForceMode2D.Impulse);
+                //RB.AddForce(transform.up * 1 * forceValueLeft, ForceMode2D.Impulse);
             }
             else if (_context.interaction is TapInteraction)
             {
