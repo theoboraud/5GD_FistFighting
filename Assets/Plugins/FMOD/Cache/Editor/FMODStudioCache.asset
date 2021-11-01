@@ -39,7 +39,7 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637710992853568569
+  lastModified: 637710478780000000
   FileSizes:
   - Name: Desktop
     Value: 1198
@@ -85,7 +85,7 @@ MonoBehaviour:
   Path: Fmod/FistFighting/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637710992853568569
+  lastModified: 637710478780000000
   FileSizes:
   - Name: Desktop
     Value: 362144
@@ -271,7 +271,7 @@ MonoBehaviour:
   - {fileID: -2941222361413983516}
   StringsBanks:
   - {fileID: -5866793057682515442}
-  cacheTime: 637710992853568569
+  cacheTime: 637710478780000000
   cacheVersion: 9
 --- !u!114 &177983123650137616
 MonoBehaviour:
@@ -324,7 +324,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &2072063987320397520
+--- !u!114 &1868172884006332998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,6 +348,30 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &2072063987320397520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HitGeneral/AirControlStrength
+  m_EditorClassIdentifier: 
+  Name: AirControlStrength
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &4506837749276564834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +549,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 2072063987320397520}
+  - {fileID: 1868172884006332998}
   MinDistance: 1
   MaxDistance: 20
   Length: 2000

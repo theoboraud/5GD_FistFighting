@@ -48,7 +48,7 @@ public class ArmBehaviour : MonoBehaviour
     private bool hitObjet_bool = false;                         // Indicates whether or not the player is hitting the ground
    /* private bool hitPlayer_bool = false;   */                      // Indicates whether or note the player is hitting another player
 
-    private Rigidbody2D hitPlayer_RB;                       // Rigidbody reference of hit player (if any)
+    private Player hitPlayer;                       // Rigidbody reference of hit player (if any)
 
     private SpriteRenderer spriteRenderer;
     private Sprite armSprite;
@@ -60,7 +60,7 @@ public class ArmBehaviour : MonoBehaviour
     private bool InputOff;
     private bool Force = true;
     private bool HitObject;
-    private bool HitPlayer;
+    private bool bool_HitPlayer;
 
     // #endregion
 
@@ -101,16 +101,16 @@ public class ArmBehaviour : MonoBehaviour
 
     private  void Update()
     {
-        if (armState == PlayerArmState.Extending)
+        if (armState == PlayerArmState.Extending && Player.PlayerPhysicState != PlayerPhysicState.isHit)
         {
             Extend();
         }
-        else if (InputOff && armState == PlayerArmState.Extended)
+        else if (InputOff && armState == PlayerArmState.Extended && Player.PlayerPhysicState != PlayerPhysicState.isHit)
         {
             armState = PlayerArmState.Unextending;
             InputOff = false;
         }
-        else if (armState == PlayerArmState.Unextending)
+        else if (armState == PlayerArmState.Unextending || Player.PlayerPhysicState == PlayerPhysicState.isHit)
         {
             Unextend();
         }
@@ -121,15 +121,21 @@ public class ArmBehaviour : MonoBehaviour
 
     // #region =================== CONTROLS FUNCTIONS ==================
 
+    //Function called once input to extend arm is pressed
     public void Input_Extend(InputAction.CallbackContext _context)
     {
-        if (_context.started && armState == PlayerArmState.Ready)
+        //Check if player is hit.
+        //Player arms cannot extend if in StunState
+        if(Player.PlayerPhysicState != PlayerPhysicState.isHit)
         {
-            armState = PlayerArmState.Extending;
-        }
-        else if (!_context.control.IsPressed())
-        {
-            InputOff = true;
+            if (_context.started && armState == PlayerArmState.Ready)
+            {
+                armState = PlayerArmState.Extending;
+            }
+            else if (!_context.control.IsPressed())
+            {
+                InputOff = true;
+            }
         }
     }
 
@@ -148,7 +154,7 @@ public class ArmBehaviour : MonoBehaviour
             Force = true;
             armState = PlayerArmState.Extended;
 
-            if (!hitObjet_bool && !airPush_bool && !HitPlayer && !HitObject)
+            if (!hitObjet_bool && !airPush_bool && !bool_HitPlayer && !HitObject)
             {
                 Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
                 if (Player.PlayerPhysicState == PlayerPhysicState.InAir)
@@ -168,13 +174,15 @@ public class ArmBehaviour : MonoBehaviour
                 Debug.Log("HERE WE GO!!!!!");
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
-            if (HitPlayer && Force)
+            if (bool_HitPlayer && Force)
             {
-                hitPlayer_RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
-                AudioManager.audioManager.PlayTrack("event:/Voices/Victory", hitPlayer_RB.transform.position);
+                hitPlayer.RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
+                AudioManager.audioManager.PlayTrack("event:/Voices/Victory", hitPlayer.transform.position);
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
                 Player.HitObject_bool = true;
-                HitPlayer = false;
+                hitPlayer.Hit();
+                bool_HitPlayer = false;
+                hitPlayer = null;
             }
             Invoke("TurnForceOff", 0.2f);
 
@@ -217,8 +225,8 @@ public class ArmBehaviour : MonoBehaviour
 
         if (_GO.CompareTag("Player"))
         {
-            hitPlayer_RB = _GO.GetComponent<Rigidbody2D>();
-            HitPlayer = true;
+            hitPlayer = _GO.GetComponent<Player>();
+            bool_HitPlayer = true;
         }
     }
 
