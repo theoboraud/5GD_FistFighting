@@ -33,13 +33,23 @@ public class MultiplePlayerCamera : MonoBehaviour
     private Vector3 GetAverageCameraPosition()
     {
         Vector3 pos = new Vector3();
-        for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
+        if (PlayersManager.Instance.PlayersAlive.Count!=0)
         {
-            pos += PlayersManager.Instance.PlayersAlive[i].transform.position;
+            for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
+            {
+                pos += PlayersManager.Instance.PlayersAlive[i].transform.position;
+            }
+            pos /= PlayersManager.Instance.PlayersAlive.Count;
+            pos.z = this.cam.transform.position.z;
+            return pos;
         }
-        pos /= PlayersManager.Instance.PlayersAlive.Count;
-        pos.z = this.cam.transform.position.z;
-        return pos;
+        else
+        {
+            pos = Vector3.zero;
+            return pos;
+        }
+
     }
+
 
 }
