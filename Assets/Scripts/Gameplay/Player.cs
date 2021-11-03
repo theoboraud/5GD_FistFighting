@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
 
     [System.NonSerialized] public float StunRecoveryTime;
 
+    [System.NonSerialized] public float StunTimer;
+
     // #endregion
 
 
@@ -230,17 +232,26 @@ public class Player : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Hit()
+    {
+        PlayerPhysicState = PlayerPhysicState.isHit;
+        StunTimer = 0;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D _collision)
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround") && !HitObject_bool)
+        if(PlayerPhysicState != PlayerPhysicState.isHit)
         {
-            HitObject_bool = true;
-            PlayerPhysicState = PlayerPhysicState.OnGround;
-            // Reset air push factor
-            AirPushFactor = 1f;
+            if (_GO.CompareTag("StaticGround") && !HitObject_bool)
+            {
+                HitObject_bool = true;
+                PlayerPhysicState = PlayerPhysicState.OnGround;
+                // Reset air push factor
+                AirPushFactor = 1f;
+            }
         }
 
         if (_GO.CompareTag("Arrival"))
@@ -259,10 +270,13 @@ public class Player : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("StaticGround") || _GO.CompareTag("Arrival"))
+        if(PlayerPhysicState != PlayerPhysicState.isHit)
         {
-            HitObject_bool = false;
-            PlayerPhysicState = PlayerPhysicState.InAir;
+            if (_GO.CompareTag("StaticGround") || _GO.CompareTag("Arrival"))
+            {
+                HitObject_bool = false;
+                PlayerPhysicState = PlayerPhysicState.InAir;
+            }
         }
     }
 }
