@@ -8,6 +8,7 @@ TagManager:
   - Arrival
   - Lethal
   - SpawnPoints
+  - DynamicEnvironment
   layers:
   - Default
   - TransparentFX

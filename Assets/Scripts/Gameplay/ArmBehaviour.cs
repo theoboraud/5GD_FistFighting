@@ -48,7 +48,7 @@ public class ArmBehaviour : MonoBehaviour
     private bool hitObjet_bool = false;                         // Indicates whether or not the player is hitting the ground
    /* private bool hitPlayer_bool = false;   */                      // Indicates whether or note the player is hitting another player
 
-    private Player hitPlayer;                       // Rigidbody reference of hit player (if any)
+    private Player hitPlayer;                       // Player reference of the avatar that is hit (if he's hit)
 
     private SpriteRenderer spriteRenderer;
     private Sprite armSprite;
@@ -61,6 +61,8 @@ public class ArmBehaviour : MonoBehaviour
     private bool Force = true;
     private bool HitObject;
     private bool bool_HitPlayer;
+    private bool bool_HitDynamic;
+    private Rigidbody2D DynamicRB;
 
     // #endregion
 
@@ -149,11 +151,13 @@ public class ArmBehaviour : MonoBehaviour
         transform.localScale = curScale;
 
         //Air Push
+        //Check if Arm is Extended
         if (transform.localScale.y >= endScale)
         {
             Force = true;
             armState = PlayerArmState.Extended;
 
+            //In the case that the player hasn't hit anything
             if (!hitObjet_bool && !airPush_bool && !bool_HitPlayer && !HitObject)
             {
                 Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
@@ -164,7 +168,9 @@ public class ArmBehaviour : MonoBehaviour
                 airPush_bool = true;
                 GameManager.Instance.Feedback.SpawnHitAvatarVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90+this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
-            if (HitObject && Force)
+
+            //In the case that the player has hit a static object
+            else if (HitObject && Force)
             {
                 OnCollision.Invoke();
                 Player.OnCollision.Invoke();
@@ -174,7 +180,9 @@ public class ArmBehaviour : MonoBehaviour
                 Debug.Log("HERE WE GO!!!!!");
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
-            if (bool_HitPlayer && Force)
+
+            //In the case that the player has hit another Player
+            else if (bool_HitPlayer && Force)
             {
                 hitPlayer.RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
                 AudioManager.audioManager.PlayTrack("event:/Voices/Victory", hitPlayer.transform.position);
@@ -183,6 +191,16 @@ public class ArmBehaviour : MonoBehaviour
                 hitPlayer.Hit();
                 bool_HitPlayer = false;
                 hitPlayer = null;
+            }
+
+            else if (bool_HitDynamic && Force)
+            {
+                DynamicRB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
+                AudioManager.audioManager.PlayTrack("event:/Voices/Victory", hitPlayer.transform.position);
+                GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
+                Player.HitObject_bool = true;
+                bool_HitDynamic = false;
+                DynamicRB = null;
             }
             Invoke("TurnForceOff", 0.2f);
 
@@ -207,8 +225,19 @@ public class ArmBehaviour : MonoBehaviour
         {
             Debug.Log("I'm ready baby!!!");
             armState = PlayerArmState.Ready;
-            Force = true;
+            ReinitializeAllBools();
         }
+    }
+
+    private void ReinitializeAllBools()
+    {
+        InputOff = false;
+        Force = true;
+        hitObjet_bool = false;
+        bool_HitPlayer = false;
+        hitPlayer = null;
+        bool_HitDynamic = false;
+        DynamicRB = null;
     }
 
     /// <summary>
@@ -227,6 +256,12 @@ public class ArmBehaviour : MonoBehaviour
         {
             hitPlayer = _GO.GetComponent<Player>();
             bool_HitPlayer = true;
+        }
+
+        if(_GO.CompareTag("DynamicEnvironment"))
+        {
+            bool_HitDynamic = true;
+            DynamicRB = _GO.GetComponent<Rigidbody2D>();
         }
     }
 

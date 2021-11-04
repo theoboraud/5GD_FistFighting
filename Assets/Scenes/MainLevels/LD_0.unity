@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 401429764}
   m_Layer: 0
   m_Name: Dynamic Sprite
-  m_TagString: Player
+  m_TagString: DynamicEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1099,7 +1099,7 @@ GameObject:
   - component: {fileID: 1659220206}
   m_Layer: 0
   m_Name: Dynamic Sprite (2)
-  m_TagString: Player
+  m_TagString: DynamicEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1220,7 +1220,7 @@ GameObject:
   - component: {fileID: 1865358867}
   m_Layer: 0
   m_Name: Dynamic Sprite (1)
-  m_TagString: Player
+  m_TagString: DynamicEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

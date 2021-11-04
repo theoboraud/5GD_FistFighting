@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[CreateAssetMenu(fileName = "Skin", menuName = "CharacterSkin")] -> TODO ASK ALEXANDER WHAT THE HELL IT IS!
+[CreateAssetMenu(fileName = "Skin", menuName = "CharacterSkin")]
 public class CharacterSkin : ScriptableObject
 {
     [Header("General")]
