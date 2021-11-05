@@ -17,8 +17,7 @@ public class LevelManager : MonoBehaviour
 
 
     [Header("Variables")]
-    private List<GameObject> spawnPoints;                           // Current level spawn points
-    [System.NonSerialized] public int IndexPlayerSpawn;             // Index of the current number of spawned players
+    [System.NonSerialized] public List<GameObject> SpawnPoints;     // Current level spawn points
     private int currentSceneIndex;                                  // Index of the current scene (in Build Settings)
 
     // TODO Implement level classes to load data ?
@@ -62,18 +61,17 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void InitSpawnPoints()
     {
-        IndexPlayerSpawn = 0;
-
-        spawnPoints = new List<GameObject>();
+        SpawnPoints = new List<GameObject>();
         GameObject _GO_SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints")[0];
 
         int _index = 0;
         foreach (Transform _child in _GO_SpawnPoints.transform)
         {
-            spawnPoints.Add(_child.gameObject);
+            SpawnPoints.Add(_child.gameObject);
             _index++;
         }
     }
+
 
     /// <summary>
     ///     Load scene at the given index
@@ -82,7 +80,9 @@ public class LevelManager : MonoBehaviour
     {
         PlayersManager.Instance.SimulateAllPlayers(_levelIndex > 0);
         SceneManager.LoadScene(_levelIndex);
+        InitSpawnPoints();
     }
+
 
     /// <summary>
     ///     Get the current scene index
@@ -92,31 +92,7 @@ public class LevelManager : MonoBehaviour
         return SceneManager.GetActiveScene().buildIndex;
     }
 
-    /// <summary>
-    ///     Spawn all players registered by PlayersManager
-    /// </summary>
-    public void SpawnAllPlayers()
-    {
-        for (int i = IndexPlayerSpawn; i < PlayersManager.Instance.Players.Count; i++)
-        {
-            SpawnPlayer(PlayersManager.Instance.Players[i]);
-        }
-    }
 
-    /// <summary>
-    ///     Spawn a given player
-    /// </summary>
-    public void SpawnPlayer(Player _player)
-    {
-        _player.transform.position = spawnPoints[IndexPlayerSpawn].transform.position;
-
-        if (_player.CharSkin == null)
-        {
-            _player.ChangeSkin(PlayersManager.Instance.SkinsData.GetRandomSkin());
-        }
-
-        IndexPlayerSpawn++;
-    }
 
     /// <summary>
     ///     Load a random level from Build Settings
@@ -124,13 +100,12 @@ public class LevelManager : MonoBehaviour
     public void LoadRandomLevel()
     {
         int _randomSceneIndex = currentSceneIndex;
+
         while(_randomSceneIndex == currentSceneIndex)
         {
             _randomSceneIndex = Random.Range(0, SceneManager.sceneCountInBuildSettings);
         }
-        print("Called LoadRandomLevel");
-        print(currentSceneIndex);
-        print(_randomSceneIndex);
+
         currentSceneIndex = _randomSceneIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }

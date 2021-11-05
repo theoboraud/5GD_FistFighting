@@ -18,7 +18,7 @@ public class ArmBehaviour : MonoBehaviour
     float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
 
     [Header("Refs")]
-    [System.NonSerialized] public Player Player;                                     // Player reference from which the arm extends
+    public Player Player;                                     // Player reference from which the arm extends
 
     [Header("Extension Parameters")]
     private float endScale = 2f;            //

@@ -489,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c74c4374fd27499bac5cb4e4d843317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 5796460706983378298}
 --- !u!1001 &4616410225161356570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -570,6 +571,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Player
       value: 
       objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
@@ -676,6 +681,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Player
       value: 
       objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
@@ -865,6 +874,10 @@ PrefabInstance:
       propertyPath: Face
       value: 
       objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
 --- !u!114 &3821352002144408879 stripped
@@ -973,6 +986,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
       propertyPath: Face
+      value: 
+      objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+      propertyPath: Player
       value: 
       objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []

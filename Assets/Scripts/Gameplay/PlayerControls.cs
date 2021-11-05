@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour
     // #region ============== CLASS VARIABLES ==============
 
     [Header("References")]
-    private Player player;                      // Player reference
+    public Player Player;                      // Player reference
     private List<ArmBehaviour> arms;            // Player arms references
     private RotateBehaviour rotate;             // Player rotate reference
     private PlayerInput playerInput;            // Player Input reference
@@ -22,17 +22,15 @@ public class PlayerControls : MonoBehaviour
 
 
 
-    // #region ============== UNITY FUNCTIONS ==============
+    // #region ============== INIT FUNCTIONS ==============
 
     /// <summary>
     ///     Init references
     /// </summary>
-    private void Awake()
+    public void Init()
     {
-        player = gameObject.GetComponent<Player>();
-        
         arms = new List<ArmBehaviour>();
-        foreach (ArmBehaviour _arm in player.Arms)
+        foreach (ArmBehaviour _arm in Player.Arms)
         {
             arms.Add(_arm);
         }
@@ -52,9 +50,9 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendUp(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (player.PlayerGameState != PlayerGameState.Dead)
+        if (Player.PlayerGameState == PlayerGameState.Alive)
         {
-            player.Arms[0].Input_Extend(_context);
+            Player.Arms[0].Input_Extend(_context);
         }
     }
 
@@ -65,9 +63,9 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendRight(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (player.PlayerGameState != PlayerGameState.Dead)
+        if (Player.PlayerGameState == PlayerGameState.Alive)
         {
-            player.Arms[1].Input_Extend(_context);
+            Player.Arms[1].Input_Extend(_context);
         }
     }
 
@@ -78,9 +76,9 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendDown(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (player.PlayerGameState != PlayerGameState.Dead)
+        if (Player.PlayerGameState == PlayerGameState.Alive)
         {
-            player.Arms[2].Input_Extend(_context);
+            Player.Arms[2].Input_Extend(_context);
         }
     }
 
@@ -91,9 +89,9 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendLeft(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (player.PlayerGameState != PlayerGameState.Dead)
+        if (Player.PlayerGameState == PlayerGameState.Alive)
         {
-            player.Arms[3].Input_Extend(_context);
+            Player.Arms[3].Input_Extend(_context);
         }
     }
 
@@ -104,7 +102,7 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_RotateRight(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (player.PlayerGameState != PlayerGameState.Dead)
+        if (Player.PlayerGameState == PlayerGameState.Alive)
         {
             rotate.Input_RotateRight(_context);
         }
@@ -117,13 +115,16 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_RotateLeft(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (player.PlayerGameState != PlayerGameState.Dead)
+        if (Player.PlayerGameState == PlayerGameState.Alive)
         {
             rotate.Input_RotateLeft(_context);
         }
     }
 
 
+    /// <summary>
+    ///     Called when pressing start to end the round
+    /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
         if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
@@ -133,12 +134,16 @@ public class PlayerControls : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///     Called when using the P key for ending the round (as if someone has won and pressed Start)
+    /// </summary>
     public void Debug_NewScene(InputAction.CallbackContext _context)
     {
         GameManager.Instance.NewGameRound();
     }
 
     // #endregion
+
 
 
     // #region ================ MENU CONTROLS FUNCTIONS ================

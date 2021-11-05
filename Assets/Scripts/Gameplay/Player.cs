@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     [Header("References")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
     public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
-    //public ArmBehaviourDegressif[] ArmsDeg = new ArmBehaviourDegressif[4];
     [System.NonSerialized] public CharacterSkin CharSkin;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
@@ -39,17 +38,27 @@ public class Player : MonoBehaviour
     // #endregion
 
 
-    // #region ===================== INIT FUNCTIONS ====================
+    // #region ==================== INIT FUNCTIONS ====================
 
     /// <summary>
     ///     Init variables
     /// </summary>
     private void Awake()
     {
+        // Keep the player game object between scenes
+        DontDestroyOnLoad(gameObject);
+
+        // Call init methods
         InitReferences();
         InitVariables();
         InitParameters();
-        AddToPlayersManager();
+
+        // Init player controls
+        gameObject.GetComponent<PlayerControls>().Init();
+
+        // Get a random skin at start -> TODO: Select skin
+        ChangeSkin(PlayersManager.Instance.SkinsData.GetRandomSkin());
+        PlayersManager.Instance.SpawnPlayer(this);
     }
 
 
@@ -65,7 +74,7 @@ public class Player : MonoBehaviour
 
     private void InitVariables()
     {
-        PlayerGameState = PlayerGameState.NotReady;
+        PlayerGameState = PlayerGameState.Alive;
         PlayerPhysicState = PlayerPhysicState.InAir;
     }
 
@@ -93,14 +102,13 @@ public class Player : MonoBehaviour
 
     private void AddToPlayersManager()
     {
-        print("Adding to player manager");
         PlayersManager.Instance.AddPlayer(this);
     }
 
     // #endregion
 
 
-    // #region ===================== SKIN FUNCTIONS ====================
+    // #region ==================== SKIN FUNCTIONS ====================
 
     public void ChangeSkin(CharacterSkin _charSkin)
     {
@@ -111,20 +119,28 @@ public class Player : MonoBehaviour
     // #endregion
 
 
+    // #region ==================== PLAYER FUNCTIONS ====================
 
     public void Kill()
     {
+        // Remove the player from the PlayersAlive reference in PlayersManager
+        PlayersManager.Instance.KillPlayer(this);
+
         Face_SpriteRenderer.enabled = false;
+        RB.isKinematic = true;
 
         PlayerGameState = PlayerGameState.Dead;
     }
 
+
     public void Spawn()
     {
         Face_SpriteRenderer.enabled = true;
+        RB.isKinematic = false;
 
         PlayerGameState = PlayerGameState.Alive;
     }
+
 
     public void Hit()
     {
@@ -155,7 +171,7 @@ public class Player : MonoBehaviour
 
         if (_GO.CompareTag("Lethal"))
         {
-            PlayersManager.Instance.KillPlayer(this);
+            Kill();
         }
     }
 
