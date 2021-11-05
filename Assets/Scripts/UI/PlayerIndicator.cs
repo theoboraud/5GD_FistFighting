@@ -18,6 +18,8 @@ public class PlayerIndicator : MonoBehaviour
     {
         Vector3 _pos = Camera.main.WorldToScreenPoint(GO_Player.transform.position);
         _pos.z = 0;
+        _pos.y += 55f;
         image.transform.position = _pos;
+        //this.transform.position = GO_Player.transform.position;
     }
 }
