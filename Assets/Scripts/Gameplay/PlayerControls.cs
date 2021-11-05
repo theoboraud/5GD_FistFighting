@@ -15,7 +15,7 @@ public class PlayerControls : MonoBehaviour
     [Header("References")]
     public Player Player;                      // Player reference
     private List<ArmBehaviour> arms;            // Player arms references
-    private RotateBehaviour rotate;             // Player rotate reference
+    public RotateBehaviour Rotate;             // Player rotate reference
     private PlayerInput playerInput;            // Player Input reference
 
     // #endregion
@@ -34,6 +34,8 @@ public class PlayerControls : MonoBehaviour
         {
             arms.Add(_arm);
         }
+
+        Rotate = gameObject.GetComponent<RotateBehaviour>();
 
         playerInput = gameObject.GetComponent<PlayerInput>();
     }
@@ -105,7 +107,7 @@ public class PlayerControls : MonoBehaviour
         // If the player is not dead
         if (Player.PlayerGameState == PlayerGameState.Alive)
         {
-            rotate.Input_RotateRight(_context);
+            Rotate.Input_RotateRight(_context);
         }
     }
 
@@ -118,7 +120,7 @@ public class PlayerControls : MonoBehaviour
         // If the player is not dead
         if (Player.PlayerGameState == PlayerGameState.Alive)
         {
-            rotate.Input_RotateLeft(_context);
+            Rotate.Input_RotateLeft(_context);
         }
     }
 
