@@ -63,12 +63,12 @@ public class CharacterSelectMenu : Menu
 
     public void SpawnPlayerSelectors()
     {
-        for (int i = PlayerSelectors.Count; i < PlayersManager.Instance.Players.Count; i++)
+        /*for (int i = PlayerSelectors.Count; i < PlayersManager.Instance.Players.Count; i++)
         {
             GO_PlayerSelectors[i].SetActive(true);
             PlayerSelectors[i].Player = PlayersManager.Instance.Players[i];
             PlayersManager.Instance.Players[i].PlayerSelector = PlayerSelectors[i];
-        }
+        }*/
     }
 
     public void DespawnPlayerSelectors()
