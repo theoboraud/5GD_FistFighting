@@ -5,15 +5,25 @@ using Enums;
 
 public class PlayersManager : MonoBehaviour
 {
+    // #region ==================== CLASS VARIABLES ====================
+
     [Header("References")]
-    [System.NonSerialized] public static PlayersManager Instance;
-    [System.NonSerialized] public List<Player> Players;
-    [System.NonSerialized] public SkinsData SkinsData;
+    [System.NonSerialized] public static PlayersManager Instance;   // Singleton reference
+    [System.NonSerialized] public SkinsData SkinsData;              // SkinData reference for loading skins
 
     [Header("Variables")]
-    [System.NonSerialized] public List<Player> PlayersAlive;
+    [System.NonSerialized] public List<Player> Players;             // All players references
+    [System.NonSerialized] public List<Player> PlayersAlive;        // All players alive in the current game
+
+    // #endregion
 
 
+
+    // #region ==================== UNITY FUNCTIONS ====================
+
+    /// <summary>
+    ///     Init singleton, references and variables
+    /// </summary>
     private void Awake()
     {
         if (Instance == null)
@@ -27,14 +37,22 @@ public class PlayersManager : MonoBehaviour
         }
 
         // Init references
+        SkinsData = gameObject.GetComponent<SkinsData>();
+
+        // Init variables
         Players = new List<Player>();
         PlayersAlive = new List<Player>();
-        SkinsData = gameObject.GetComponent<SkinsData>();
     }
 
+    // #endregion
 
-    //Function that's called when Avatar is spawned
-    //Allows this script to manage all players
+
+
+    // #region ==================== PLAYERS FUNCTIONS ====================
+
+    /// <summary>
+    ///     Add a given player to the game
+    /// </summary>
     public void AddPlayer(Player _player)
     {
         Players.Add(_player);
@@ -44,6 +62,38 @@ public class PlayersManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///     Simulate or stop simulating all players in the game, depending on the boolean parameter _bool
+    /// </summary>
+    public void SimulateAllPlayers(bool _bool)
+    {
+        foreach (var _player in Players)
+        {
+            _player.RB.simulated = _bool;
+        }
+    }
+
+
+    /// <summary>
+    ///     Returns whether or not all players are ready to play (from menu or score screen)
+    /// </summary>
+    public bool AllPlayersReady()
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            if (Players[i].PlayerGameState != PlayerGameState.Ready)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /// <summary>
+    ///     Kill a given player
+    /// </summary>
     public void KillPlayer(Player _player)
     {
         _player.Kill();
@@ -61,29 +111,9 @@ public class PlayersManager : MonoBehaviour
     }
 
 
-    public void SimulateAllPlayers(bool _bool)
-    {
-        foreach (var _player in Players)
-        {
-            _player.RB.simulated = _bool;
-        }
-    }
-
-
-    public bool AllPlayersReady()
-    {
-        for (int i = 0; i < Players.Count; i++)
-        {
-            if (Players[i].PlayerGameState != PlayerGameState.Ready)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-
+    /// <summary>
+    ///     Destroy all players in the game
+    /// </summary>
     public void DestroyAllPlayers()
     {
         PlayersAlive.Clear();
@@ -94,4 +124,6 @@ public class PlayersManager : MonoBehaviour
             Destroy(_player.gameObject);
         }
     }
+
+    // #endregion
 }
