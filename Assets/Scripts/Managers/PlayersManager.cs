@@ -66,8 +66,6 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnAllPlayers()
     {
-        ResetSpawnedPlayers();
-
         for (int i = IndexPlayerSpawn; i < PlayersManager.Instance.Players.Count; i++)
         {
             SpawnPlayer(PlayersManager.Instance.Players[i]);
@@ -80,20 +78,29 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer(Player _player)
     {
+        _player.Spawn();
+
+        // Set player position and velocity for spawning
         _player.transform.position = LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.position;
+        _player.transform.rotation = LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.rotation;
+        _player.RB.velocity = new Vector2(0f, 0f);
 
         IndexPlayerSpawn++;
 
         // Add the player to PlayersAlive references in PlayerManager
         PlayersAlive.Add(_player);
-
-        _player.Spawn();
     }
 
 
     public void ResetSpawnedPlayers()
     {
         IndexPlayerSpawn = 0;
+
+        for (int i = 0; i < PlayersAlive.Count; i++)
+        {
+            PlayersAlive[i].Kill();
+        }
+
         PlayersAlive.Clear();
     }
 

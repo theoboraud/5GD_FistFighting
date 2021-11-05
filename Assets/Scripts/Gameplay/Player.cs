@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Enums;
 
 /// <summary>
@@ -20,6 +21,8 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public CharacterSkin CharSkin;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
+    [SerializeField] private GameObject playerIndicator;
+    [SerializeField] private GameObject UI_PlayerIndicator;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -58,7 +61,10 @@ public class Player : MonoBehaviour
 
         // Get a random skin at start -> TODO: Select skin
         ChangeSkin(PlayersManager.Instance.SkinsData.GetRandomSkin());
-        PlayersManager.Instance.SpawnPlayer(this);
+
+        // Init player color and add to PlayersManager Players references
+        InitIndicatorColor();
+        PlayersManager.Instance.AddPlayer(this);
     }
 
 
@@ -105,6 +111,32 @@ public class Player : MonoBehaviour
         PlayersManager.Instance.AddPlayer(this);
     }
 
+
+    public void InitIndicatorColor()
+    {
+        switch (PlayersManager.Instance.Players.Count)
+        {
+            case 0:
+                playerIndicator.GetComponent<SpriteRenderer>().color = Color.yellow;
+                UI_PlayerIndicator.GetComponent<Image>().color = Color.yellow;
+                break;
+            case 1:
+                playerIndicator.GetComponent<SpriteRenderer>().color = Color.blue;
+                UI_PlayerIndicator.GetComponent<Image>().color = Color.blue;
+                break;
+            case 2:
+                playerIndicator.GetComponent<SpriteRenderer>().color = Color.red;
+                UI_PlayerIndicator.GetComponent<Image>().color = Color.red;
+                break;
+            case 3:
+                playerIndicator.GetComponent<SpriteRenderer>().color = Color.green;
+                UI_PlayerIndicator.GetComponent<Image>().color = Color.green;
+                break;
+            default:
+                break;
+        }
+    }
+
     // #endregion
 
 
@@ -123,20 +155,19 @@ public class Player : MonoBehaviour
 
     public void Kill()
     {
-        // Remove the player from the PlayersAlive reference in PlayersManager
-        PlayersManager.Instance.KillPlayer(this);
-
-        Face_SpriteRenderer.enabled = false;
-        RB.isKinematic = true;
+        Face_SpriteRenderer.enabled = true;
+        this.transform.position = new Vector3(1000, 1000, 0);
 
         PlayerGameState = PlayerGameState.Dead;
+
+        // Remove the player from the PlayersAlive reference in PlayersManager
+        PlayersManager.Instance.KillPlayer(this);
     }
 
 
     public void Spawn()
     {
         Face_SpriteRenderer.enabled = true;
-        RB.isKinematic = false;
 
         PlayerGameState = PlayerGameState.Alive;
     }

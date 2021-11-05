@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.LoadRandomLevel();
         MenuManager.Instance.PrintScoreScreen(false);
         GlobalGameState = GlobalGameState.InPlay;
-        PlayersManager.Instance.SpawnAllPlayers();
+        PlayersManager.Instance.ResetSpawnedPlayers();
+        MenuManager.Instance.StartTimer();
     }
 
 

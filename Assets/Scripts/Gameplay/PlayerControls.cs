@@ -62,6 +62,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_ExtendRight(InputAction.CallbackContext _context)
     {
+        print(PlayersManager.Instance.Players.Count);
         // If the player is not dead
         if (Player.PlayerGameState == PlayerGameState.Alive)
         {

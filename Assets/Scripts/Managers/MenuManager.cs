@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Enums;
 
 public class MenuManager : MonoBehaviour
@@ -20,6 +21,11 @@ public class MenuManager : MonoBehaviour
     private List<bool> PlayersReady = new List<bool>();
     private int spawnedPlayerCount = 0;
     private Menu ActiveMenu;
+    private float startingTimer = 0f;
+
+    [Header("Starting Timer")]
+    public GameObject UI_StartingTimer;
+    public GameObject Text_StartingTimer;
 
 
     // Init singleton
@@ -36,6 +42,43 @@ public class MenuManager : MonoBehaviour
         }
 
         InitMenu();
+    }
+
+    private void Update()
+    {
+        if (startingTimer > 0f)
+        {
+            // Clamp the timer to minimum 0 and maximum 3
+            startingTimer = Mathf.Clamp(startingTimer - Time.deltaTime, 0f, 3f);
+
+            // If timer reached 0, spawn the players
+            if (startingTimer == 0f)
+            {
+                PlayersManager.Instance.SpawnAllPlayers();
+                UI_StartingTimer.SetActive(false);
+            }
+            // If the timer is less or equal to 1, the timer shows 1
+            else if (startingTimer <= 1f)
+            {
+                Text_StartingTimer.GetComponent<Text>().text = "1";
+            }
+            // If the timer is less or equal to 2, the timer shows 2
+            else if (startingTimer <= 2f)
+            {
+                Text_StartingTimer.GetComponent<Text>().text = "2";
+            }
+            // If the timer is less or equal to 3, the timer shows 3
+            else if (startingTimer <= 3f)
+            {
+                Text_StartingTimer.GetComponent<Text>().text = "3";
+            }
+        }
+    }
+
+    public void StartTimer()
+    {
+        UI_StartingTimer.SetActive(true);
+        startingTimer = 3f;
     }
 
     private void InitMenu()
