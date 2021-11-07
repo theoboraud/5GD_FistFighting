@@ -68,6 +68,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
+                },
+                {
+                    "name": "HoldTrigger",
+                    "type": "Button",
+                    "id": "efb48ea4-38d3-40ad-85f6-4ec53b6d3306",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold"
                 }
             ],
             "bindings": [
@@ -233,6 +241,39 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "NewScene",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06a98cf7-4851-4ab7-bae4-a6a55efdd3f6",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dbb0d37-cc62-4da1-8438-cf0d97f4b2ad",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "981f5bd5-8e3a-46f9-a8d7-d757b6c78da9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

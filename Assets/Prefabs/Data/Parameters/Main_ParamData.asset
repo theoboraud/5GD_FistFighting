@@ -19,8 +19,8 @@ MonoBehaviour:
   PARAM_Player_StunRecoveryTime: 0.5
   PARAM_Player_ArmGroundForce: 12.5
   PARAM_Player_ArmHitForce: 20
-  PARAM_Player_ArmExtendingTime: 10
-  PARAM_Player_ArmUnextendingTime: 10
+  PARAM_Player_ArmExtendingTime: 15
+  PARAM_Player_ArmUnextendingTime: 15
   PARAM_Player_ArmCooldown: 0
   PARAM_Player_AirControlForce: 10
   PARAM_Player_AirControlForceLossFactor: 0.5

@@ -158,7 +158,7 @@ public class ArmBehaviour : MonoBehaviour
             armState = PlayerArmState.Extended;
 
             //In the case that the player hasn't hit anything
-            if (!hitObjet_bool && !airPush_bool && !bool_HitPlayer && !HitObject)
+            if (!hitObjet_bool && !airPush_bool && !bool_HitPlayer && !HitObject && !Player.HoldingTrigger)
             {
                 Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
                 if (Player.PlayerPhysicState == PlayerPhysicState.InAir)
@@ -193,6 +193,7 @@ public class ArmBehaviour : MonoBehaviour
                 hitPlayer = null;
             }
 
+            //In the case that the player hits a dynamic object
             else if (bool_HitDynamic && Force)
             {
                 DynamicRB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
