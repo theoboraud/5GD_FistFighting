@@ -100,6 +100,19 @@ public class PlayerControls : MonoBehaviour
 
 
     /// <summary>
+    ///     Called when rotating using the stick
+    /// </summary>
+    public void Gameplay_RotateStick(InputAction.CallbackContext _context)
+    {
+        // If the player is not dead
+        if (Player.PlayerGameState == PlayerGameState.Alive)
+        {
+            Rotate.Input_RotateStick(_context);
+        }
+    }
+
+    /*
+    /// <summary>
     ///     Called when rotating right
     /// </summary>
     public void Gameplay_RotateRight(InputAction.CallbackContext _context)
@@ -122,7 +135,7 @@ public class PlayerControls : MonoBehaviour
         {
             Rotate.Input_RotateLeft(_context);
         }
-    }
+    }*/
 
 
     /// <summary>

@@ -4,10 +4,127 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Events;
+using Enums;
 
 public class RotateBehaviour : MonoBehaviour
 {
+    // #region ==================== CLASS VARIABLES ====================
 
+    [Header("References")]
+    public Rigidbody2D RB;                                                  // Rigidbody2D reference
+
+    [Header("Parameters")]
+    private float rotationTorque;                                           // Rotation torque parameter value
+    private float rotationForce;                                            // Rotation force parameter value
+    private bool useFactorForRotation;                              // Whether or not to use a factor for the rotation input value
+
+    [Header("Variables")]
+    [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
+    private float rotateValue;                                              // Current value of rotation to apply
+    private float rotationFactor;                                           // Rotation factor value, useful if useFactorForRotation is true; otherwise is set to 1
+
+    // #endregion
+
+
+
+    // #region ==================== INIT FUNCTIONS ====================
+
+    /// <summary>
+    ///     Init all class variables
+    /// </summary>
+    private void Awake()
+    {
+        InitParameters();
+        InitVariables();
+    }
+
+
+    /// <summary>
+    ///     Init parameters
+    /// </summary>
+    private void InitParameters()
+    {
+        // TODO: Add these parameters to ParamData
+        rotationTorque = GameManager.Instance.ParamData.PARAM_Player_RotationTorque;
+        rotationForce = GameManager.Instance.ParamData.PARAM_Player_RotationForce;
+        useFactorForRotation = GameManager.Instance.ParamData.PARAM_Player_UseFactorForRotation;
+    }
+
+
+    /// <summary>
+    ///     Init variables
+    /// </summary>
+    private void InitVariables()
+    {
+        rotationFactor = 1f;
+    }
+
+    // #endregion
+
+
+
+    // #region =================== CONTROLS FUNCTIONS ==================
+
+    /// <summary>
+    ///     Input function called when rotating using the stick
+    /// </summary>
+    public void Input_RotateStick(InputAction.CallbackContext _context)
+    {
+        // Read Vector2 value of the stick input
+        Vector2 _inputValue = _context.ReadValue<Vector2>();
+
+        if (useFactorForRotation)
+        {
+            rotationFactor = Mathf.Abs(_inputValue.x);
+        }
+
+        // If the stick is pushed to the right side, then the player will rotate to the right
+        if (_inputValue.x > 0)
+        {
+            PlayerRotateState = PlayerRotateState.RotatingRight;
+        }
+        // If the stick is pushed to the left side, then the player will rotate to the left
+        else if (_inputValue.x < 0)
+        {
+            PlayerRotateState = PlayerRotateState.RotatingLeft;
+        }
+        // Else, set the player state to ready
+        else
+        {
+            PlayerRotateState = PlayerRotateState.Ready;
+        }
+    }
+
+    // #endregion
+
+
+
+    // #region ==================== ROTATE FUNCTIONS ====================
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void Update()
+    {
+        if (PlayerRotateState is PlayerRotateState.RotatingRight)
+        {
+            RB.AddTorque(-1 * rotationTorque * rotationFactor, ForceMode2D.Force);
+            RB.AddForce(transform.up * -1 * rotationForce * rotationFactor, ForceMode2D.Force);
+        }
+        else if (PlayerRotateState is PlayerRotateState.RotatingLeft)
+        {
+            RB.AddTorque(rotationTorque * rotationFactor, ForceMode2D.Force);
+            RB.AddForce(transform.up * rotationForce * rotationFactor, ForceMode2D.Force);
+        }
+    }
+
+
+
+
+
+
+
+    /*
     // #region ==================== CLASS VARIABLES ====================
 
     public Rigidbody2D RB;
@@ -19,8 +136,8 @@ public class RotateBehaviour : MonoBehaviour
     private float rotationChargeTimeMax;
     private float rotationCooldown;
 
-    private int rotateDir = 0;                              // Variable containing the trigonometric direction (1 for left, -1 for right)
-    //private float rotateValue = 0f;                          // Variable containing the value of rotation to apply left
+    private int rotateDir = 0;                                  // Variable containing the trigonometric direction (1 for left, -1 for right)
+    //private float rotateValue = 0f;                           // Variable containing the value of rotation to apply left
     //private float forceValue = 0f;
 
     private float rotateValueRight = 0f;                          // Variable containing the value of rotation to apply left
@@ -264,4 +381,5 @@ public class RotateBehaviour : MonoBehaviour
     }
 
     // #endregion
+    */
 }

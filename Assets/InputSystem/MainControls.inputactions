@@ -68,6 +68,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
+                },
+                {
+                    "name": "RotateStick",
+                    "type": "Value",
+                    "id": "3f80a269-a7d4-4850-a9d9-a10c48f2dc5a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "Hold"
                 }
             ],
             "bindings": [
@@ -233,6 +241,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "NewScene",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dad54fca-bd90-4a98-9b4f-e2c0bba85f30",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "RotateStick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

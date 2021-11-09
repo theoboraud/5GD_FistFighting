@@ -43,8 +43,8 @@ namespace Enums
     public enum PlayerRotateState
     {
         Ready,
-        IsHolding,
-        IsRotating,
+        RotatingRight,
+        RotatingLeft,
         OnCooldown
     }
 

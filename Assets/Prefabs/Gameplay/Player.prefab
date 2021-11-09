@@ -462,18 +462,6 @@ MonoBehaviour:
     m_ActionName: BaseControls/LeftArm[/Keyboard/a]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2613099719800877202}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
-        m_MethodName: Gameplay_RotateRight
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3286076153300636023}
         m_TargetAssemblyTypeName: PlayTrack, Assembly-CSharp
         m_MethodName: PlayOneShot
@@ -490,18 +478,6 @@ MonoBehaviour:
     m_ActionName: BaseControls/RotateRight[/Keyboard/upArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2613099719800877202}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
-        m_MethodName: Gameplay_RotateLeft
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3286076153300636023}
         m_TargetAssemblyTypeName: PlayTrack, Assembly-CSharp
         m_MethodName: PlayOneShot
@@ -568,6 +544,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8ee6623b-b9b2-4cab-85c6-dfd8bbcd7d74
     m_ActionName: Gameplay/NewScene[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2613099719800877202}
+        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+        m_MethodName: Gameplay_RotateStick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3f80a269-a7d4-4850-a9d9-a10c48f2dc5a
+    m_ActionName: Gameplay/RotateStick[/XInputControllerWindows/leftStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -855,11 +847,6 @@ PrefabInstance:
       objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
---- !u!212 &2076644909682508697 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
-  m_PrefabInstance: {fileID: 4616410225161356570}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3644083948250067780 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
@@ -874,6 +861,11 @@ MonoBehaviour:
 --- !u!4 &2076644909682508702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_PrefabInstance: {fileID: 4616410225161356570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2076644909682508697 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
   m_PrefabInstance: {fileID: 4616410225161356570}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4706444356815333736
@@ -965,6 +957,16 @@ PrefabInstance:
       objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+--- !u!212 &2130720605477548011 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_PrefabInstance: {fileID: 4706444356815333736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2130720605477548012 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_PrefabInstance: {fileID: 4706444356815333736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3734062003636018998 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
@@ -976,16 +978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &2130720605477548011 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
-  m_PrefabInstance: {fileID: 4706444356815333736}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2130720605477548012 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
-  m_PrefabInstance: {fileID: 4706444356815333736}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4870679213647867913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1270,6 +1262,16 @@ PrefabInstance:
       objectReference: {fileID: 5796460706983378298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+--- !u!212 &3449385171344854828 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_PrefabInstance: {fileID: 8295591649690782127}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3449385171344854827 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
+  m_PrefabInstance: {fileID: 8295591649690782127}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &116380043279122417 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8251346236127098462, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
@@ -1281,16 +1283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190c2dca61217bb478eca126f9d3bbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &3449385171344854828 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366083, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
-  m_PrefabInstance: {fileID: 8295591649690782127}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3449385171344854827 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: 11aed4fe0f7382b47860d26dc4a25a81, type: 3}
-  m_PrefabInstance: {fileID: 8295591649690782127}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8859831727486336397
 PrefabInstance:
   m_ObjectHideFlags: 0

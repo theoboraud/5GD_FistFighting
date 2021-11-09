@@ -47,6 +47,11 @@ public class ParamData : ScriptableObject
     // #region ================== ROTATION PARAMETERS ==================
 
     [Header("PLAYER ROTATION PARAMETERS")]
+    public float PARAM_Player_RotationTorque;
+    public float PARAM_Player_RotationForce;
+    public bool PARAM_Player_UseFactorForRotation;
+
+    [Header("OLD PLAYER ROTATION PARAMETERS")]
     public float PARAM_Player_RotationTorqueMin;
     public float PARAM_Player_RotationTorqueMax;
     public float PARAM_Player_RotationForceMin;
