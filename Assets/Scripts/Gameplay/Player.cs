@@ -36,8 +36,8 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public bool HoldingTrigger = false;
 
     [System.NonSerialized] public float StunRecoveryTime;
-
     [System.NonSerialized] public float StunTimer;
+    [System.NonSerialized] public float ForceIncreaseFactor;
 
     // #endregion
 
