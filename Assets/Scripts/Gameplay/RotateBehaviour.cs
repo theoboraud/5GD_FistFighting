@@ -12,11 +12,12 @@ public class RotateBehaviour : MonoBehaviour
 
     [Header("References")]
     public Rigidbody2D RB;                                                  // Rigidbody2D reference
+    public Player Player;
 
     [Header("Parameters")]
     private float rotationTorque;                                           // Rotation torque parameter value
     private float rotationForce;                                            // Rotation force parameter value
-    private bool useFactorForRotation;                              // Whether or not to use a factor for the rotation input value
+    private bool useFactorForRotation;                                      // Whether or not to use a factor for the rotation input value
 
     [Header("Variables")]
     [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
@@ -73,10 +74,22 @@ public class RotateBehaviour : MonoBehaviour
         // Read Vector2 value of the stick input
         Vector2 _inputValue = _context.ReadValue<Vector2>();
 
+        // If the player is on the ground, then we multiply the rotation factor by OnGroundFactor
+        if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
+        {
+            rotationFactor = 4f;
+        }
+        else
+        {
+            rotationFactor = 1f;
+        }
+
         if (useFactorForRotation)
         {
-            rotationFactor = Mathf.Abs(_inputValue.x);
+            rotationFactor *= Mathf.Abs(_inputValue.x);
         }
+
+
 
         // If the stick is pushed to the right side, then the player will rotate to the right
         if (_inputValue.x > 0)
