@@ -340,7 +340,7 @@
                     "path": "<Keyboard>/#(e)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "HoldTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
