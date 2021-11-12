@@ -241,6 +241,7 @@ public class Player : MonoBehaviour
         return false;
     }
 
+
     /// <summary>
     ///     Set the player physic state to OnGround if hitting the ground, otherwise its InAir
     /// </summary>
@@ -255,6 +256,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            HitObject_bool = false;
             PlayerPhysicState = PlayerPhysicState.InAir;
         }
     }
