@@ -92,6 +92,14 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "Hold"
+                },
+                {
+                    "name": "HoldTrigger",
+                    "type": "Button",
+                    "id": "3a74d111-eb37-4a90-aeca-886a30e1b80f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold"
                 }
             ],
             "bindings": [
@@ -290,6 +298,50 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "RotateLeftKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "534f0700-2780-4009-981d-c034a7c19d3a",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "HoldTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a255f327-3013-42fa-bdae-6b073d5cdf1f",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "HoldTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d89fe63e-4453-4713-a2d2-cdf6ef3c4545",
+                    "path": "<Keyboard>/#(a)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "HoldTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acff1cbf-f817-454e-a50f-3bf7e1f87232",
+                    "path": "<Keyboard>/#(e)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
