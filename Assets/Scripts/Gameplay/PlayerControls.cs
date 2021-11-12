@@ -194,6 +194,18 @@ public class PlayerControls : MonoBehaviour
         GameManager.Instance.NewGameRound();
     }
 
+    /// <summary>
+    ///     Called when using the player holds any of the Triggers of the controller
+    /// </summary>
+    public void HoldTrigger(InputAction.CallbackContext _context)
+    {
+        Player.HoldingTrigger = true;
+        if(!_context.control.IsPressed())
+        {
+            Player.HoldingTrigger = false;
+        }
+    }
+
     // #endregion
 
 

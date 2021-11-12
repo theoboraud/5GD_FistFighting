@@ -34,10 +34,11 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
+    [System.NonSerialized] public bool HoldingTrigger = false;
 
     [System.NonSerialized] public float StunRecoveryTime;
-
     [System.NonSerialized] public float StunTimer;
+    [System.NonSerialized] public float ForceIncreaseFactor;
 
     // #endregion
 

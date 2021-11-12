@@ -158,9 +158,9 @@ public class ArmBehaviour : MonoBehaviour
             armState = PlayerArmState.Extended;
 
             //In the case that the player hasn't hit anything
-            if (!hitObjet_bool && !airPush_bool && !bool_HitPlayer && !HitObject)
+            if (!hitObjet_bool && !airPush_bool && !bool_HitPlayer && !HitObject && !Player.HoldingTrigger)
             {
-                Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor, ForceMode2D.Impulse);
+                Player.RB.AddForce(this.transform.up * airPushForce * Player.AirPushFactor * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
                 if (Player.PlayerPhysicState == PlayerPhysicState.InAir)
                 {
                     Player.AirPushFactor *= airPushForceLossFactor;
@@ -174,7 +174,7 @@ public class ArmBehaviour : MonoBehaviour
             {
                 OnCollision.Invoke();
                 Player.OnCollision.Invoke();
-                Player.RB.AddForce(this.transform.up * groundForce, ForceMode2D.Impulse);
+                Player.RB.AddForce(this.transform.up * groundForce * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
                 Player.HitObject_bool = true;
                 HitObject = false;
                 Debug.Log("HERE WE GO!!!!!");
@@ -184,7 +184,7 @@ public class ArmBehaviour : MonoBehaviour
             //In the case that the player has hit another Player
             else if (bool_HitPlayer && Force)
             {
-                hitPlayer.RB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
+                hitPlayer.RB.AddForce(-this.transform.up * hitForce * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
                 AudioManager.audioManager.PlayTrack("event:/Voices/Victory", hitPlayer.transform.position);
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
                 Player.HitObject_bool = true;
@@ -193,17 +193,16 @@ public class ArmBehaviour : MonoBehaviour
                 hitPlayer = null;
             }
 
+            //In the case that the player hits a dynamic object
             else if (bool_HitDynamic && Force)
             {
-                DynamicRB.AddForce(-this.transform.up * hitForce, ForceMode2D.Impulse);
-                AudioManager.audioManager.PlayTrack("event:/Voices/Victory", hitPlayer.transform.position);
+                DynamicRB.AddForce(-this.transform.up * hitForce * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
                 Player.HitObject_bool = true;
                 bool_HitDynamic = false;
                 DynamicRB = null;
             }
             Invoke("TurnForceOff", 0.2f);
-
         }
     }
 
