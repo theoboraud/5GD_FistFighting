@@ -12,12 +12,14 @@ public class PlayerForceControl : MonoBehaviour
     {
         if(player.HoldingTrigger)
         {
+            Debug.Log("Holding....");
             timer += Time.deltaTime;
             timer = Mathf.Clamp(timer, 0, GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime);
             currentForce = Mathf.Lerp(1, GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor, timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime);
         }
         else
         {
+            Debug.Log("NOT HOLDING!!");
             timer = 0;
             currentForce = 1;
         }
