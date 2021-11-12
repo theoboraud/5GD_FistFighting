@@ -246,9 +246,12 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (IsGrounded())
+        if (IsGrounded() && !HitObject_bool && PlayerPhysicState != PlayerPhysicState.isHit)
         {
+            HitObject_bool = true;
             PlayerPhysicState = PlayerPhysicState.OnGround;
+            // Reset air push factor
+            AirPushFactor = 1f;
         }
         else
         {
