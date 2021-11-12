@@ -76,6 +76,22 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "Hold"
+                },
+                {
+                    "name": "RotateRightKeyboard",
+                    "type": "Value",
+                    "id": "06b68344-8eba-4c77-b6b0-57dae33bb320",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "RotateLeftKeyboard",
+                    "type": "Value",
+                    "id": "e9d877b5-ad53-4f34-931a-8ab37a665381",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "Hold"
                 }
             ],
             "bindings": [
@@ -252,6 +268,28 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "RotateStick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d37f8cc-baad-40f2-9543-baefb5053cf6",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "RotateRightKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbee3c8f-817e-4fb8-983f-0263ac2c03f4",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "RotateLeftKeyboard",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

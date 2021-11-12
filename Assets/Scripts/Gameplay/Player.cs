@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     [SerializeField] private GameObject playerIndicator;
     [SerializeField] private GameObject UI_PlayerIndicator;
+    [SerializeField] private BoxCollider2D BoxCollider;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -153,9 +154,27 @@ public class Player : MonoBehaviour
 
     // #region ==================== PLAYER FUNCTIONS ====================
 
-    public void Kill()
+    /// <summary>
+    ///     Enable the player's sprite renderer and set its position to _targetPos
+    /// </summary>
+    public void Spawn(Vector3 _targetPos)
     {
         Face_SpriteRenderer.enabled = true;
+        this.transform.position = _targetPos;
+        // Reset rotation and velocity
+        this.transform.rotation = Quaternion.identity;
+        RB.velocity = new Vector2(0f, 0f);
+
+        PlayerGameState = PlayerGameState.Alive;
+    }
+
+
+    /// <summary>
+    ///     Disable the player's sprite renderer and set its position to somewhere far from the map (to change?)
+    /// </summary>
+    public void Kill()
+    {
+        Face_SpriteRenderer.enabled = false;
         this.transform.position = new Vector3(1000, 1000, 0);
 
         PlayerGameState = PlayerGameState.Dead;
@@ -165,14 +184,9 @@ public class Player : MonoBehaviour
     }
 
 
-    public void Spawn()
-    {
-        Face_SpriteRenderer.enabled = true;
-
-        PlayerGameState = PlayerGameState.Alive;
-    }
-
-
+    /// <summary>
+    ///     Stun the player
+    /// </summary>
     public void Hit()
     {
         PlayerPhysicState = PlayerPhysicState.isHit;
@@ -180,44 +194,64 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///     Check if hit a lethal object or an arrival
+    /// </summary>
     private void OnCollisionEnter2D(Collision2D _collision)
     {
         GameObject _GO = _collision.gameObject;
 
-        if(PlayerPhysicState != PlayerPhysicState.isHit)
+        if (_GO.CompareTag("Lethal"))
         {
-            if (_GO.CompareTag("StaticGround") && !HitObject_bool)
-            {
-                HitObject_bool = true;
-                PlayerPhysicState = PlayerPhysicState.OnGround;
-                // Reset air push factor
-                AirPushFactor = 1f;
-            }
+            Kill();
         }
 
         if (_GO.CompareTag("Arrival"))
         {
             GameManager.Instance.EndOfRound(this);
         }
-
-        if (_GO.CompareTag("Lethal"))
-        {
-            Kill();
-        }
     }
 
 
-    private void OnCollisionExit2D(Collision2D _collision)
+    /// <summary>
+    ///     Check if hit a StaticGround object from the bottom, with raycast
+    /// </summary>
+    private bool IsGrounded()
     {
-        GameObject _GO = _collision.gameObject;
+        float extraDistance = 0.1f;
+        RaycastHit2D raycastHit = Physics2D.Raycast(BoxCollider.bounds.center, Vector2.down, BoxCollider.bounds.extents.y + extraDistance);
 
-        if(PlayerPhysicState != PlayerPhysicState.isHit)
+        // DEBUG TEST
+        /*Color rayColor;
+        if (raycastHit.collider != null)
         {
-            if (_GO.CompareTag("StaticGround") || _GO.CompareTag("Arrival"))
-            {
-                HitObject_bool = false;
-                PlayerPhysicState = PlayerPhysicState.InAir;
-            }
+            rayColor = Color.green;
+        }
+        else
+        {
+            rayColor = Color.red;
+        }
+        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance));*/
+
+        if (raycastHit.collider != null)
+        {
+            return raycastHit.collider.gameObject.CompareTag("StaticGround");
+        }
+        return false;
+    }
+
+    /// <summary>
+    ///     Set the player physic state to OnGround if hitting the ground, otherwise its InAir
+    /// </summary>
+    private void Update()
+    {
+        if (IsGrounded())
+        {
+            PlayerPhysicState = PlayerPhysicState.OnGround;
+        }
+        else
+        {
+            PlayerPhysicState = PlayerPhysicState.InAir;
         }
     }
 }

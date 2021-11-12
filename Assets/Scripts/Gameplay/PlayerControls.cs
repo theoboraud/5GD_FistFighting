@@ -111,6 +111,42 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///     Called when rotating using the stick
+    /// </summary>
+    public void Gameplay_RotateRight(InputAction.CallbackContext _context)
+    {
+        // If the player is not dead
+        if (_context.started && Player.PlayerGameState == PlayerGameState.Alive)
+        {
+            Rotate.Input_RotateRight();
+        }
+
+        else if (_context.canceled)
+        {
+            Rotate.PlayerRotateState = PlayerRotateState.Ready;
+        }
+    }
+
+
+    /// <summary>
+    ///     Called when rotating using the stick
+    /// </summary>
+    public void Gameplay_RotateLeft(InputAction.CallbackContext _context)
+    {
+        // If the player is not dead
+        if (_context.started && Player.PlayerGameState == PlayerGameState.Alive)
+        {
+            Rotate.Input_RotateLeft();
+        }
+
+        else if (_context.canceled)
+        {
+            Rotate.PlayerRotateState = PlayerRotateState.Ready;
+        }
+    }
+
     /*
     /// <summary>
     ///     Called when rotating right

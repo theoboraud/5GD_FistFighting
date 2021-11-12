@@ -78,12 +78,7 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer(Player _player)
     {
-        _player.Spawn();
-
-        // Set player position and velocity for spawning
-        _player.transform.position = LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.position;
-        _player.transform.rotation = LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.rotation;
-        _player.RB.velocity = new Vector2(0f, 0f);
+        _player.Spawn(LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.position);
 
         IndexPlayerSpawn++;
 

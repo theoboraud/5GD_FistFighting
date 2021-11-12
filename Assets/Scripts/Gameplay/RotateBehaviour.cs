@@ -15,13 +15,16 @@ public class RotateBehaviour : MonoBehaviour
     public Player Player;
 
     [Header("Parameters")]
-    private float rotationTorque;                                           // Rotation torque parameter value
-    private float rotationForce;                                            // Rotation force parameter value
+    private float rotationTorque_InAir;                                     // Rotation torque parameter value in air
+    private float rotationForce_InAir;                                      // Rotation force parameter value in air
+    private float rotationTorque_OnGround;                                  // Rotation torque parameter value in air
+    private float rotationForce_OnGround;                                   // Rotation force parameter value in air
     private bool useFactorForRotation;                                      // Whether or not to use a factor for the rotation input value
 
     [Header("Variables")]
     [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
-    private float rotateValue;                                              // Current value of rotation to apply
+    private float torqueValue;                                              // Current value of torque to apply
+    private float forceValue;                                               // Current value of force to apply
     private float rotationFactor;                                           // Rotation factor value, useful if useFactorForRotation is true; otherwise is set to 1
 
     // #endregion
@@ -46,8 +49,10 @@ public class RotateBehaviour : MonoBehaviour
     private void InitParameters()
     {
         // TODO: Add these parameters to ParamData
-        rotationTorque = GameManager.Instance.ParamData.PARAM_Player_RotationTorque;
-        rotationForce = GameManager.Instance.ParamData.PARAM_Player_RotationForce;
+        rotationTorque_InAir = GameManager.Instance.ParamData.PARAM_Player_RotationTorque_InAir;
+        rotationForce_InAir = GameManager.Instance.ParamData.PARAM_Player_RotationForce_InAir;
+        rotationTorque_OnGround = GameManager.Instance.ParamData.PARAM_Player_RotationTorque_OnGround;
+        rotationForce_OnGround = GameManager.Instance.ParamData.PARAM_Player_RotationForce_OnGround;
         useFactorForRotation = GameManager.Instance.ParamData.PARAM_Player_UseFactorForRotation;
     }
 
@@ -74,38 +79,45 @@ public class RotateBehaviour : MonoBehaviour
         // Read Vector2 value of the stick input
         Vector2 _inputValue = _context.ReadValue<Vector2>();
 
-        // If the player is on the ground, then we multiply the rotation factor by OnGroundFactor
-        if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
-        {
-            rotationFactor = 4f;
-        }
-        else
-        {
-            rotationFactor = 1f;
-        }
-
         if (useFactorForRotation)
         {
             rotationFactor *= Mathf.Abs(_inputValue.x);
         }
 
-
-
         // If the stick is pushed to the right side, then the player will rotate to the right
         if (_inputValue.x > 0)
         {
-            PlayerRotateState = PlayerRotateState.RotatingRight;
+            Input_RotateRight();
         }
         // If the stick is pushed to the left side, then the player will rotate to the left
         else if (_inputValue.x < 0)
         {
             PlayerRotateState = PlayerRotateState.RotatingLeft;
+            Input_RotateLeft();
         }
         // Else, set the player state to ready
         else
         {
             PlayerRotateState = PlayerRotateState.Ready;
         }
+    }
+
+
+    /// <summary>
+    ///     Input function called when rotating using the stick
+    /// </summary>
+    public void Input_RotateRight()
+    {
+        PlayerRotateState = PlayerRotateState.RotatingRight;
+    }
+
+
+    /// <summary>
+    ///     Input function called when rotating using the stick
+    /// </summary>
+    public void Input_RotateLeft()
+    {
+        PlayerRotateState = PlayerRotateState.RotatingLeft;
     }
 
     // #endregion
@@ -119,17 +131,32 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
+        {
+            torqueValue = rotationTorque_OnGround;
+            forceValue = rotationForce_OnGround;
+        }
+        else
+        {
+            torqueValue = rotationTorque_InAir;
+            forceValue = rotationForce_InAir;
+        }
+
         if (PlayerRotateState is PlayerRotateState.RotatingRight)
         {
-            RB.AddTorque(-1 * rotationTorque * rotationFactor, ForceMode2D.Force);
-            RB.AddForce(transform.up * -1 * rotationForce * rotationFactor, ForceMode2D.Force);
+            RB.AddTorque(-1 * torqueValue * rotationFactor, ForceMode2D.Force);
+            RB.AddForce(Vector3.up * forceValue * rotationFactor, ForceMode2D.Force);
         }
         else if (PlayerRotateState is PlayerRotateState.RotatingLeft)
         {
-            RB.AddTorque(rotationTorque * rotationFactor, ForceMode2D.Force);
-            RB.AddForce(transform.up * rotationForce * rotationFactor, ForceMode2D.Force);
+            RB.AddTorque(torqueValue * rotationFactor, ForceMode2D.Force);
+            RB.AddForce(Vector3.up * forceValue * rotationFactor, ForceMode2D.Force);
         }
+
+        //RB.angularVelocity = Mathf.Clamp(RB.angularVelocity, 0f, 1f);
     }
+
+    // #endregion
 
 
 
