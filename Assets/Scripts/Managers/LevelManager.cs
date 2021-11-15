@@ -93,9 +93,17 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///     Load the main level
+    /// </summary>
+    public void LoadMainLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 
     /// <summary>
-    ///     Load a random level from Build Settings
+    ///     Load a random level from Build Settings, except the first one
     /// </summary>
     public void LoadRandomLevel()
     {
@@ -103,7 +111,7 @@ public class LevelManager : MonoBehaviour
 
         while(_randomSceneIndex == currentSceneIndex)
         {
-            _randomSceneIndex = Random.Range(0, SceneManager.sceneCountInBuildSettings);
+            _randomSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
         }
 
         currentSceneIndex = _randomSceneIndex;
