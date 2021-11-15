@@ -81,15 +81,12 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer(Player _player)
     {
-        if (!PlayersAlive.Contains(_player))
-        {
-            _player.Spawn(LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.position);
+        _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
 
-            IndexPlayerSpawn++;
+        IndexPlayerSpawn++;
 
-            // Add the player to PlayersAlive references in PlayerManager
-            PlayersAlive.Add(_player);
-        }
+        // Add the player to PlayersAlive references in PlayerManager
+        PlayersAlive.Add(_player);
     }
 
 

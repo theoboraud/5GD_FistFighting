@@ -6,6 +6,7 @@ using Enums;
 
 public class CharacterSelectMenu : Menu
 {
+    /*
     public List<GameObject> GO_PlayerSelectors = new List<GameObject>();
     private List<PlayerSelector> PlayerSelectors = new List<PlayerSelector>();
 
@@ -68,7 +69,7 @@ public class CharacterSelectMenu : Menu
             GO_PlayerSelectors[i].SetActive(true);
             PlayerSelectors[i].Player = PlayersManager.Instance.Players[i];
             PlayersManager.Instance.Players[i].PlayerSelector = PlayerSelectors[i];
-        }*/
+        }
     }
 
     public void DespawnPlayerSelectors()
@@ -78,6 +79,6 @@ public class CharacterSelectMenu : Menu
             GO_PlayerSelectors[i].SetActive(false);
             PlayerSelectors[i].Player = null;
             PlayersManager.Instance.Players[i].PlayerSelector = null;
-        }*/
-    }
+        }
+    }*/
 }

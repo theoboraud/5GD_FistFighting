@@ -24,6 +24,7 @@ public class MenuManager : MonoBehaviour
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
 
     [Header("Starting Timer")]
+    public Canvas Canvas_Timers;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
 
@@ -131,7 +132,11 @@ public class MenuManager : MonoBehaviour
     public void StartSpawnTimer(int _playerIndex)
     {
         UI_SpawningTimers[_playerIndex].SetActive(true);
-        UI_SpawningTimers[_playerIndex].transform.position = Camera.main.WorldToScreenPoint(LevelManager.Instance.SpawnPoints[_playerIndex].transform.position);
+        Vector3 _screenPos = Camera.main.WorldToScreenPoint(LevelManager.Instance.SpawnPoints[_playerIndex].transform.position);
+        //float _scaleFactor = Canvas_Timers.scaleFactor;
+        //Vector3 _finalPos = new Vector3 (_screenPos.x/_scaleFactor, _screenPos.y/_scaleFactor, _screenPos.z/_scaleFactor);
+
+        UI_SpawningTimers[_playerIndex].GetComponent<RectTransform>().position = _screenPos;
         SpawningTimers[_playerIndex] = 3f;
     }
 

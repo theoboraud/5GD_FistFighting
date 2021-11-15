@@ -167,7 +167,7 @@ Canvas:
   m_GameObject: {fileID: 2315966428083142107}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
   OptionsMenu: {fileID: 7277826121916399165}
   LevelSelectMenu: {fileID: 7277826121983717355}
   CharacterSkinIndex: 
+  Canvas_Timers: {fileID: 6342891654183705188}
   UI_StartingTimer: {fileID: 8811369464464763118}
   UI_SpawningTimers:
   - {fileID: 1610647333330454476}
