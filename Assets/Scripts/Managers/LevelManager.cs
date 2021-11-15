@@ -94,11 +94,12 @@ public class LevelManager : MonoBehaviour
 
 
     /// <summary>
-    ///     Load the main level
+    ///     Load the lobby level
     /// </summary>
-    public void LoadMainLevel()
+    public void LoadLobbyLevel()
     {
-        SceneManager.LoadScene(0);
+        currentSceneIndex = 0;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
 
