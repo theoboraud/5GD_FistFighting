@@ -64,11 +64,9 @@ public class LevelManager : MonoBehaviour
         SpawnPoints = new List<GameObject>();
         GameObject _GO_SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints")[0];
 
-        int _index = 0;
         foreach (Transform _child in _GO_SpawnPoints.transform)
         {
             SpawnPoints.Add(_child.gameObject);
-            _index++;
         }
     }
 
@@ -80,6 +78,7 @@ public class LevelManager : MonoBehaviour
     {
         PlayersManager.Instance.SimulateAllPlayers(_levelIndex > 0);
         SceneManager.LoadScene(_levelIndex);
+        currentSceneIndex = _levelIndex;
         InitSpawnPoints();
     }
 
@@ -98,8 +97,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadLobbyLevel()
     {
-        currentSceneIndex = 0;
-        SceneManager.LoadScene(currentSceneIndex);
+        LoadScene(0);
     }
 
 
@@ -115,8 +113,7 @@ public class LevelManager : MonoBehaviour
             _randomSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
         }
 
-        currentSceneIndex = _randomSceneIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        LoadScene(_randomSceneIndex);
     }
 
     // #endregion

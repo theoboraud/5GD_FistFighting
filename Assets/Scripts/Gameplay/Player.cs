@@ -260,4 +260,6 @@ public class Player : MonoBehaviour
             PlayerPhysicState = PlayerPhysicState.InAir;
         }
     }
+
+    // #endregion
 }

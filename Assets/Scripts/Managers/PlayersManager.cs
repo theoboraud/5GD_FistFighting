@@ -58,6 +58,9 @@ public class PlayersManager : MonoBehaviour
     {
         Players.Add(_player);
         SpawnPlayer(_player);
+
+        // Add its timer reference to SpawningTimers in MenuManager
+        MenuManager.Instance.SpawningTimers.Add(0f);
     }
 
 
@@ -78,12 +81,24 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer(Player _player)
     {
-        _player.Spawn(LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.position);
+        if (!PlayersAlive.Contains(_player))
+        {
+            _player.Spawn(LevelManager.Instance.SpawnPoints[IndexPlayerSpawn].transform.position);
 
-        IndexPlayerSpawn++;
+            IndexPlayerSpawn++;
 
-        // Add the player to PlayersAlive references in PlayerManager
-        PlayersAlive.Add(_player);
+            // Add the player to PlayersAlive references in PlayerManager
+            PlayersAlive.Add(_player);
+        }
+    }
+
+
+    /// <summary>
+    ///     Start the timer to spawn a player
+    /// </summary>
+    public void StartSpawningPlayer(Player _player)
+    {
+        MenuManager.Instance.StartSpawnTimer(Players.IndexOf(_player));
     }
 
 
