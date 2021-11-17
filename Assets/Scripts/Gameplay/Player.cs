@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
-    public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm
+    public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm behaviour script
     [System.NonSerialized] public CharacterSkin CharSkin;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public PlayerGameState PlayerGameState;
     [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
+    [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
     [System.NonSerialized] public bool HoldingTrigger = false;

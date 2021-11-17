@@ -11,7 +11,7 @@
                     "id": "fcab80f8-4ef8-436a-b9ac-47bdb9f0940f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap,Hold"
+                    "interactions": "Hold,Tap"
                 },
                 {
                     "name": "RightArm",
@@ -19,7 +19,7 @@
                     "id": "f5a59a6b-d516-487f-9f63-03abca681aa4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap,Hold"
+                    "interactions": "Hold,Tap"
                 },
                 {
                     "name": "DownArm",
@@ -27,28 +27,12 @@
                     "id": "1f4c73e5-a746-46f9-8637-62cf654bf789",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap,Hold(duration=2)"
+                    "interactions": "Hold,Tap"
                 },
                 {
                     "name": "LeftArm",
                     "type": "Button",
                     "id": "c155569e-ed1f-4db0-b151-a5ddfb2bbdb6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Tap,Hold"
-                },
-                {
-                    "name": "RotateRight",
-                    "type": "Button",
-                    "id": "383de03f-5403-40bb-8fbb-264947cd250e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold,Tap"
-                },
-                {
-                    "name": "RotateLeft",
-                    "type": "Button",
-                    "id": "adcf3d95-d6e4-41ec-a541-f475dda383cf",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold,Tap"
@@ -59,39 +43,15 @@
                     "id": "5bb21308-0bf5-47e7-aee5-4e34a0f6c259",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold,Tap"
+                    "interactions": "Press"
                 },
                 {
-                    "name": "NewScene",
-                    "type": "Button",
-                    "id": "8ee6623b-b9b2-4cab-85c6-dfd8bbcd7d74",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold"
-                },
-                {
-                    "name": "RotateStick",
+                    "name": "Rotate",
                     "type": "Value",
                     "id": "3f80a269-a7d4-4850-a9d9-a10c48f2dc5a",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Digital",
                     "processors": "",
-                    "interactions": "Hold"
-                },
-                {
-                    "name": "RotateRightKeyboard",
-                    "type": "Value",
-                    "id": "06b68344-8eba-4c77-b6b0-57dae33bb320",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "Hold"
-                },
-                {
-                    "name": "RotateLeftKeyboard",
-                    "type": "Value",
-                    "id": "e9d877b5-ad53-4f34-931a-8ab37a665381",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "Hold"
+                    "interactions": "Press"
                 },
                 {
                     "name": "HoldTrigger",
@@ -144,50 +104,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "LeftArm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "88ec9d51-3fe4-4956-804e-e1cdf4f9752a",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "RotateRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b0b85f87-d9b0-4896-924c-d26d9d1bff78",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "RotateRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c53a40fd-6b98-4d39-a7be-78274c4c223f",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "RotateLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3cf9de05-e731-467b-9e74-e4e410e1acb4",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "RotateLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -259,47 +175,47 @@
                 },
                 {
                     "name": "",
-                    "id": "1e264661-deca-4b4a-8730-41ed9e6074fb",
-                    "path": "<Keyboard>/#(p)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "NewScene",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "dad54fca-bd90-4a98-9b4f-e2c0bba85f30",
-                    "path": "<Gamepad>/leftStick",
+                    "path": "<Gamepad>/leftStick/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "RotateStick",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "4d37f8cc-baad-40f2-9543-baefb5053cf6",
-                    "path": "<Keyboard>/rightArrow",
+                    "name": "1D Axis",
+                    "id": "6c6ca18d-9b4c-4193-909a-351047442834",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "RotateRightKeyboard",
-                    "isComposite": false,
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "bbee3c8f-817e-4fb8-983f-0263ac2c03f4",
+                    "name": "negative",
+                    "id": "5f6f656b-2ef8-418e-b965-ebe4e5f969db",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "RotateLeftKeyboard",
+                    "action": "Rotate",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "2f6cc838-577f-484b-b3e3-9a54906fabce",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

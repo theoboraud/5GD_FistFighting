@@ -28,7 +28,7 @@ MonoBehaviour:
   PARAM_Player_AirControlForceLossFactor: 0.5
   PARAM_Player_RotationTorque_InAir: 0.5
   PARAM_Player_RotationForce_InAir: 0.2
-  PARAM_Player_RotationTorque_OnGround: 6
+  PARAM_Player_RotationTorque_OnGround: 2.5
   PARAM_Player_RotationForce_OnGround: 0
   PARAM_Player_UseFactorForRotation: 1
   PARAM_Player_RotationTorqueMin: 5

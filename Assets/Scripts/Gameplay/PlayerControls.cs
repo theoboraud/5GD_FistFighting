@@ -13,10 +13,12 @@ public class PlayerControls : MonoBehaviour
     // #region ============== CLASS VARIABLES ==============
 
     [Header("References")]
-    public Player Player;                      // Player reference
+    public Player Player;                       // Player reference
     private List<ArmBehaviour> arms;            // Player arms references
-    public RotateBehaviour Rotate;             // Player rotate reference
+    private RotateBehaviour Rotate;              // Player rotate reference
     private PlayerInput playerInput;            // Player Input reference
+    // All input action references
+    private InputAction action_rotate;
 
     // #endregion
 
@@ -29,6 +31,8 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        Player = gameObject.GetComponent<Player>();
+
         arms = new List<ArmBehaviour>();
         foreach (ArmBehaviour _arm in Player.Arms)
         {
@@ -38,6 +42,15 @@ public class PlayerControls : MonoBehaviour
         Rotate = gameObject.GetComponent<RotateBehaviour>();
 
         playerInput = gameObject.GetComponent<PlayerInput>();
+
+        // Assign each action to corresponding inputs
+        //action_upArm = playerInput.actions["UpArm"];
+        //action_rightArm = playerInput.actions["RightArm"];
+        //action_downArm = playerInput.actions["DownArm"];
+        //action_leftArm = playerInput.actions["LeftArm"];
+        action_rotate = playerInput.actions["Rotate"];
+        //action_start = playerInput.actions["Start"];
+        //action_holdTrigger = playerInput.actions["HoldTrigger"];
     }
 
     // #endregion
@@ -52,9 +65,13 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendUp(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
+        if (_context.started)
         {
-            Player.Arms[0].Input_Extend(_context);
+            Player.Arms[0].Input_StartExtend();
+        }
+        else if (_context.canceled || _context.interaction is TapInteraction)
+        {
+            Player.Arms[0].Input_StopExtend();
         }
     }
 
@@ -64,11 +81,14 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_ExtendRight(InputAction.CallbackContext _context)
     {
-        print(PlayersManager.Instance.Players.Count);
         // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
+        if (_context.started)
         {
-            Player.Arms[1].Input_Extend(_context);
+            Player.Arms[1].Input_StartExtend();
+        }
+        else if (_context.canceled || _context.interaction is TapInteraction)
+        {
+            Player.Arms[1].Input_StopExtend();
         }
     }
 
@@ -79,9 +99,13 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendDown(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
+        if (_context.started)
         {
-            Player.Arms[2].Input_Extend(_context);
+            Player.Arms[2].Input_StartExtend();
+        }
+        if (_context.canceled || _context.interaction is TapInteraction)
+        {
+            Player.Arms[2].Input_StopExtend();
         }
     }
 
@@ -92,9 +116,13 @@ public class PlayerControls : MonoBehaviour
     public void Gameplay_ExtendLeft(InputAction.CallbackContext _context)
     {
         // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
+        if (_context.started)
         {
-            Player.Arms[3].Input_Extend(_context);
+            Player.Arms[3].Input_StartExtend();
+        }
+        else if (_context.canceled || _context.interaction is TapInteraction)
+        {
+            Player.Arms[3].Input_StopExtend();
         }
     }
 
@@ -102,50 +130,18 @@ public class PlayerControls : MonoBehaviour
     /// <summary>
     ///     Called when rotating using the stick
     /// </summary>
-    public void Gameplay_RotateStick(InputAction.CallbackContext _context)
+    public void Gameplay_Rotate(InputAction.CallbackContext _context)
     {
-        // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            Rotate.Input_RotateStick(_context);
-        }
+        //Rotate.Input_Rotating(_context.ReadValue<float>());
     }
 
 
-    /// <summary>
-    ///     Called when rotating using the stick
-    /// </summary>
-    public void Gameplay_RotateRight(InputAction.CallbackContext _context)
+    private void Update()
     {
-        // If the player is not dead
-        if (_context.started && Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            Rotate.Input_RotateRight();
-        }
-
-        else if (_context.canceled)
-        {
-            Rotate.PlayerRotateState = PlayerRotateState.Ready;
-        }
+        print(action_rotate.ReadValue<float>());
+        Rotate.Input_Rotating(action_rotate.ReadValue<float>());
     }
 
-
-    /// <summary>
-    ///     Called when rotating using the stick
-    /// </summary>
-    public void Gameplay_RotateLeft(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (_context.started && Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            Rotate.Input_RotateLeft();
-        }
-
-        else if (_context.canceled)
-        {
-            Rotate.PlayerRotateState = PlayerRotateState.Ready;
-        }
-    }
 
     /*
     /// <summary>
@@ -179,7 +175,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen && _context.started)
         {
             GameManager.Instance.NewGameRound();
         }
@@ -191,8 +187,12 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Debug_NewScene(InputAction.CallbackContext _context)
     {
-        GameManager.Instance.NewGameRound();
+        if (_context.started)
+        {
+            GameManager.Instance.NewGameRound();
+        }
     }
+
 
     /// <summary>
     ///     Called when using the player holds any of the Triggers of the controller

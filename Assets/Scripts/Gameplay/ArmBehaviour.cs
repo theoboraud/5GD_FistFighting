@@ -12,11 +12,6 @@ public class ArmBehaviour : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
 
-    [Header("Stats")]
-    float forceCoef_groundExtension = 1f;  // Push force coefficient for physics interactions with the ground
-    float forceCoef_airPush = 1f;          // Push force coefficient for physics interactions in the air
-    float forceCoef_playerHit = 1f;        // Push force coefficient inflicted to a hit player
-
     [Header("Refs")]
     public Player Player;                                     // Player reference from which the arm extends
 
@@ -121,23 +116,29 @@ public class ArmBehaviour : MonoBehaviour
     // #endregion
 
 
+
     // #region =================== CONTROLS FUNCTIONS ==================
 
     //Function called once input to extend arm is pressed
-    public void Input_Extend(InputAction.CallbackContext _context)
+    public void Input_StartExtend()
     {
         //Check if player is hit.
         //Player arms cannot extend if in StunState
-        if(Player.PlayerPhysicState != PlayerPhysicState.isHit)
+        if (Player.PlayerGameState == PlayerGameState.Alive && Player.PlayerPhysicState != PlayerPhysicState.isHit)
         {
-            if (_context.started && armState == PlayerArmState.Ready)
+            if (armState == PlayerArmState.Ready)
             {
                 armState = PlayerArmState.Extending;
             }
-            else if (!_context.control.IsPressed())
-            {
-                InputOff = true;
-            }
+        }
+    }
+
+
+    public void Input_StopExtend()
+    {
+        if (Player.PlayerGameState == PlayerGameState.Alive)
+        {
+            InputOff = true;
         }
     }
 
@@ -177,7 +178,7 @@ public class ArmBehaviour : MonoBehaviour
                 Player.RB.AddForce(this.transform.up * groundForce * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
                 Player.HitObject_bool = true;
                 HitObject = false;
-                Debug.Log("HERE WE GO!!!!!");
+                //Debug.Log("HERE WE GO!!!!!");
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
             }
 
@@ -222,7 +223,7 @@ public class ArmBehaviour : MonoBehaviour
 
         if(curScaleY <= 0)
         {
-            Debug.Log("I'm ready baby!!!");
+            //Debug.Log("I'm ready baby!!!");
             armState = PlayerArmState.Ready;
             ReinitializeAllBools();
         }

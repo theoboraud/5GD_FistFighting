@@ -50,11 +50,14 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
-        LevelManager.Instance.LoadRandomLevel();
-        MenuManager.Instance.PrintScoreScreen(false);
-        GlobalGameState = GlobalGameState.InPlay;
-        PlayersManager.Instance.ResetSpawnedPlayers();
-        MenuManager.Instance.StartTimer();
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
+        {
+            LevelManager.Instance.LoadRandomLevel();
+            MenuManager.Instance.PrintScoreScreen(false);
+            GlobalGameState = GlobalGameState.InPlay;
+            PlayersManager.Instance.ResetSpawnedPlayers();
+            MenuManager.Instance.StartTimer();
+        }
     }
 
 
