@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Hit()
     {
-        PlayerPhysicState = PlayerPhysicState.isHit;
+        PlayerPhysicState = PlayerPhysicState.IsHit;
         StunTimer = 0;
     }
 
@@ -248,17 +248,21 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (IsGrounded() && !HitObject_bool && PlayerPhysicState != PlayerPhysicState.isHit)
+        if (PlayerPhysicState != PlayerPhysicState.IsHit)
         {
-            HitObject_bool = true;
-            PlayerPhysicState = PlayerPhysicState.OnGround;
-            // Reset air push factor
-            AirPushFactor = 1f;
-        }
-        else
-        {
-            HitObject_bool = false;
-            PlayerPhysicState = PlayerPhysicState.InAir;
+            if (IsGrounded())
+            {
+                PlayerPhysicState = PlayerPhysicState.OnGround;
+                AirPushFactor = 1f;
+
+                //HitObject_bool = true;
+
+            }
+            else
+            {
+                //HitObject_bool = false;
+                PlayerPhysicState = PlayerPhysicState.InAir;
+            }
         }
     }
 

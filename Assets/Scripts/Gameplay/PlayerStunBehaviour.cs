@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enums;
 
 public class PlayerStunBehaviour : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerStunBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if(player.PlayerPhysicState == Enums.PlayerPhysicState.isHit)
+        if (player.PlayerPhysicState == PlayerPhysicState.IsHit)
         {
             //Check if material is applied to know whether it's the beginning of the Stun State
             if (!boxCollider.sharedMaterial)
@@ -20,8 +21,9 @@ public class PlayerStunBehaviour : MonoBehaviour
             }
             player.StunTimer += Time.deltaTime;
             Debug.Log(player.StunTimer);
+
             //Check if timer has gone above the required stun time
-            if(player.StunTimer >= player.StunRecoveryTime)
+            if (player.StunTimer >= player.StunRecoveryTime)
             {
                 StopStunState();
             }
@@ -39,7 +41,7 @@ public class PlayerStunBehaviour : MonoBehaviour
     //The function that stops the stun state
     private void StopStunState()
     {
-        player.PlayerPhysicState = Enums.PlayerPhysicState.InAir;
+        player.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
         particleSystemController.StopSystem();
         Debug.Log("We not stunned anymore!!");

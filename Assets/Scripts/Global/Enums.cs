@@ -28,7 +28,7 @@ namespace Enums
     {
         OnGround,
         InAir,
-        isHit
+        IsHit
     }
 
     public enum PlayerArmState

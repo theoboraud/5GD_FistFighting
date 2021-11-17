@@ -138,7 +138,6 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
-        print(action_rotate.ReadValue<float>());
         Rotate.Input_Rotating(action_rotate.ReadValue<float>());
     }
 
