@@ -12,52 +12,49 @@ public class ArmBehaviour : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
 
-    [Header("Refs")]
-    public Player Player;                                     // Player reference from which the arm extends
+    [Header("References")]
+    public Player Player;                                               // Player reference from which the arm extends
+    private SpriteRenderer spriteRenderer;                              // Sprite renderer reference of the arm
 
     [Header("Extension Parameters")]
-    private float endScale = 2f;            //
-    private float extendingTime;            //
-    private float unextendingTime;
-    private float groundForce;
-    private float hitForce;
-    private float cooldown;
+    private float endScale = 2f;                                        //
+    private float groundForce;                                          //
+    private float hitForce;                                             //
+    private float extendingTime;                                        //
+    private float unextendingTime;                                      //
+    private float cooldown;                                             //
 
     [Header("Air Control Parameters")]
-    private float airPushForce;
-    private float airPushForceLossFactor;
+    private float airPushForce;                                         //
+    private float airPushForceLossFactor;                               //
 
     [Header("Extension Variables")]
-    private PlayerArmState armState = PlayerArmState.Ready;                  // Indicates whether or not the arm is extended at maximum
+    private PlayerArmState armState = PlayerArmState.Ready;             // Indicates whether or not the arm is extended at maximum
+    private Vector3 curScale;                                           // Current scale of the arm
+    private float curScaleY = 0;                                        // Current scale y of the arm
+    private bool hitObjet_bool = false;                                 // Indicates whether or not the player is hitting the ground
+   /* private bool hitPlayer_bool = false;   */                         // Indicates whether or note the player is hitting another player
+    private Player hitPlayer;                                           // Player reference of the avatar that is hit (if he's hit)
+    private Rigidbody2D RB_dynamicEnvironment;                          // RB reference to the hit object's rigidbody
+    private Sprite armSprite;                                           // Current sprite of the arm
+    private bool buttonHold;                                            //
+    private bool Force = true;                                          //
+    private bool HitObject;                                             //
+    private bool bool_HitPlayer;                                        //
+    private bool bool_HitDynamic;                                       //
 
     [Header("Arm Behaviour Events")]
-    public UnityEvent OnAppear;                             //
-    public UnityEvent OnExtended;                           //
-    public UnityEvent OnCollision;                          //
-    public UnityEvent OnUnextended;                         //
-
-    private float curScaleY = 0;                                 //
-
-    private Vector3 curScale;
-
-    private bool hitObjet_bool = false;                         // Indicates whether or not the player is hitting the ground
-   /* private bool hitPlayer_bool = false;   */                      // Indicates whether or note the player is hitting another player
-
-    private Player hitPlayer;                       // Player reference of the avatar that is hit (if he's hit)
-
-    private SpriteRenderer spriteRenderer;
-    private Sprite armSprite;
+    public UnityEvent OnAppear;                                         //
+    public UnityEvent OnExtended;                                       //
+    public UnityEvent OnCollision;                                      //
+    public UnityEvent OnUnextended;                                     //
 
     [Header("AirPush Variables")]
-    public Sprite airPushSprite;
-    public bool airPush_bool = false;
+    public Sprite airPushSprite;                                        //
+    public bool airPush_bool = false;                                   //
 
-    private bool InputOff;
-    private bool Force = true;
-    private bool HitObject;
-    private bool bool_HitPlayer;
-    private bool bool_HitDynamic;
-    private Rigidbody2D DynamicRB;
+
+
 
     // #endregion
 
@@ -66,24 +63,28 @@ public class ArmBehaviour : MonoBehaviour
     // #region ==================== UNITY FUNCTIONS ====================
 
     /// <summary>
-    ///     Init variables
+    ///     Init class variables
     /// </summary>
     private void Awake()
     {
-        Init();
+        InitReferences();
         InitParameters();
+        InitVariables();
     }
 
 
-    private void Init()
+    /// <summary>
+    ///
+    /// </summary>
+    private void InitReferences()
     {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
-        armSprite = spriteRenderer.sprite;
-        curScale = new Vector3(1f, curScaleY, 1f);
-        transform.localScale = curScale;
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitParameters()
     {
         groundForce = GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce;
@@ -96,21 +97,15 @@ public class ArmBehaviour : MonoBehaviour
     }
 
 
-    private  void Update()
+    /// <summary>
+    ///
+    /// </summary>
+    private void InitVariables()
     {
-        if (armState == PlayerArmState.Extending && Player.PlayerPhysicState != PlayerPhysicState.isHit)
-        {
-            Extend();
-        }
-        else if (InputOff && armState == PlayerArmState.Extended && Player.PlayerPhysicState != PlayerPhysicState.isHit)
-        {
-            armState = PlayerArmState.Unextending;
-            InputOff = false;
-        }
-        else if (armState == PlayerArmState.Unextending || Player.PlayerPhysicState == PlayerPhysicState.isHit)
-        {
-            Unextend();
-        }
+        armSprite = spriteRenderer.sprite;
+        curScale = new Vector3(1f, curScaleY, 1f);
+        transform.localScale = curScale;
+        buttonHold = false;
     }
 
     // #endregion
@@ -119,13 +114,16 @@ public class ArmBehaviour : MonoBehaviour
 
     // #region =================== CONTROLS FUNCTIONS ==================
 
-    //Function called once input to extend arm is pressed
+    /// <summary>
+    ///     Function called once the input to extend arm is pressed
+    /// </summary>
     public void Input_StartExtend()
     {
         //Check if player is hit.
         //Player arms cannot extend if in StunState
         if (Player.PlayerGameState == PlayerGameState.Alive && Player.PlayerPhysicState != PlayerPhysicState.isHit)
         {
+            buttonHold = true;
             if (armState == PlayerArmState.Ready)
             {
                 armState = PlayerArmState.Extending;
@@ -134,25 +132,63 @@ public class ArmBehaviour : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///     Function called once input to extend arm is released
+    /// </summary>
     public void Input_StopExtend()
     {
-        if (Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            InputOff = true;
-        }
+        buttonHold = false;
     }
 
     // #endregion
 
 
+
+    // #region =================== ARM EXTEND FUNCTIONS ==================
+
+    /// <summary>
+    ///     Each frame, check the extension state of the arm and adapt accordingly
+    /// </summary>
+    private  void Update()
+    {
+        if (Player.PlayerPhysicState != PlayerPhysicState.isHit)
+        {
+            // If the arm is extending, it continues to extend
+            if (armState == PlayerArmState.Extending)
+            {
+                Extend();
+            }
+            // If the arm is completely extended and the button is not held, the arm starts to unextend
+            else if (armState == PlayerArmState.Extended && !buttonHold)
+            {
+                armState = PlayerArmState.Unextending;
+                Unextend();
+            }
+            // If the arm is unextending, it continues to unextend
+            else if (armState == PlayerArmState.Unextending)
+            {
+                Unextend();
+            }
+        }
+        // If the player is hit, unextend the arm
+        else
+        {
+            Unextend();
+        }
+    }
+
+
+    /// <summary>
+    ///     Function called when extending the arm
+    /// </summary>
     private void Extend()
     {
+        // Continue the extension of the arm by increasing its scale
         curScaleY = Mathf.Clamp(curScaleY + extendingTime * Time.deltaTime, 0, endScale);
         curScale.y = curScaleY;
         transform.localScale = curScale;
 
-        //Air Push
-        //Check if Arm is Extended
+        // If the arm extension is over
         if (transform.localScale.y >= endScale)
         {
             Force = true;
@@ -197,21 +233,29 @@ public class ArmBehaviour : MonoBehaviour
             //In the case that the player hits a dynamic object
             else if (bool_HitDynamic && Force)
             {
-                DynamicRB.AddForce(-this.transform.up * hitForce * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
+                RB_dynamicEnvironment.AddForce(-this.transform.up * hitForce * Player.ForceIncreaseFactor, ForceMode2D.Impulse);
                 GameManager.Instance.Feedback.SpawnHitVFX(this.transform.position + this.transform.up * -1.8f, Quaternion.AngleAxis(90 + this.transform.rotation.eulerAngles.z, Vector3.forward));
                 Player.HitObject_bool = true;
                 bool_HitDynamic = false;
-                DynamicRB = null;
+                RB_dynamicEnvironment = null;
             }
             Invoke("TurnForceOff", 0.2f);
         }
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void TurnForceOff()
     {
         Force = false;
     }
 
+
+    /// <summary>
+    ///     Function called when unextending the arm
+    /// </summary>
     private void Unextend()
     {
         curScaleY = Mathf.Clamp(curScaleY - unextendingTime * Time.deltaTime, 0, endScale);
@@ -229,19 +273,23 @@ public class ArmBehaviour : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///     Reinitialize all variables related to extension, once extension is over
+    /// </summary>
     private void ReinitializeAllBools()
     {
-        InputOff = false;
         Force = true;
         hitObjet_bool = false;
         bool_HitPlayer = false;
         hitPlayer = null;
         bool_HitDynamic = false;
-        DynamicRB = null;
+        RB_dynamicEnvironment = null;
     }
 
+
     /// <summary>
-    ///  When entering a collision with the ground of another player
+    ///     When entering a collision with the ground of another player
     /// </summary>
     private void OnTriggerEnter2D(Collider2D _collision)
     {
@@ -261,10 +309,14 @@ public class ArmBehaviour : MonoBehaviour
         if(_GO.CompareTag("DynamicEnvironment"))
         {
             bool_HitDynamic = true;
-            DynamicRB = _GO.GetComponent<Rigidbody2D>();
+            RB_dynamicEnvironment = _GO.GetComponent<Rigidbody2D>();
         }
     }
 
+
+    /// <summary>
+    ///     When exiting a collision with the ground
+    /// </summary>
     private void OnTriggerExit2D(Collider2D collision)
     {
         GameObject _GO = collision.gameObject;
@@ -274,4 +326,6 @@ public class ArmBehaviour : MonoBehaviour
             HitObject = false;
         }
     }
+
+    // #endregion
 }
