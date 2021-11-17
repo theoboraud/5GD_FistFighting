@@ -113,6 +113,19 @@ public class MenuManager : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
+    public void InitSpawnTimerPos()
+    {
+        for (int i = 0; i < SpawningTimers.Count; i++)
+        {
+            Vector3 _screenPos = Camera.main.WorldToScreenPoint(LevelManager.Instance.SpawnPoints[i].transform.position);
+            UI_SpawningTimers[i].GetComponent<RectTransform>().position = _screenPos;
+        }
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
     public void StartTimer()
     {
         UI_StartingTimer.SetActive(true);
@@ -127,16 +140,11 @@ public class MenuManager : MonoBehaviour
 
 
     /// <summary>
-    ///     Start the timer for a given player index
+    ///
     /// </summary>
     public void StartSpawnTimer(int _playerIndex)
     {
         UI_SpawningTimers[_playerIndex].SetActive(true);
-        Vector3 _screenPos = Camera.main.WorldToScreenPoint(LevelManager.Instance.SpawnPoints[_playerIndex].transform.position);
-        //float _scaleFactor = Canvas_Timers.scaleFactor;
-        //Vector3 _finalPos = new Vector3 (_screenPos.x/_scaleFactor, _screenPos.y/_scaleFactor, _screenPos.z/_scaleFactor);
-
-        UI_SpawningTimers[_playerIndex].GetComponent<RectTransform>().position = _screenPos;
         SpawningTimers[_playerIndex] = 3f;
     }
 

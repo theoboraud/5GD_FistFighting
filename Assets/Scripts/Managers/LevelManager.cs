@@ -47,7 +47,6 @@ public class LevelManager : MonoBehaviour
 
         // Init scene index and spawn points
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        InitSpawnPoints();
     }
 
     // #endregion
@@ -68,6 +67,11 @@ public class LevelManager : MonoBehaviour
         {
             SpawnPoints.Add(_child.gameObject);
         }
+
+        if (MenuManager.Instance != null)
+        {
+            MenuManager.Instance.InitSpawnTimerPos();
+        }
     }
 
 
@@ -79,7 +83,7 @@ public class LevelManager : MonoBehaviour
         PlayersManager.Instance.SimulateAllPlayers(_levelIndex > 0);
         SceneManager.LoadScene(_levelIndex);
         currentSceneIndex = _levelIndex;
-        InitSpawnPoints();
+        //InitSpawnPoints();
     }
 
 
