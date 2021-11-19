@@ -7,18 +7,29 @@ public class PlayerArmController : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private List<ArmChecker> Arms = new List<ArmChecker>();
 
+    private void Update()
+    {
+        if(player.PlayerPhysicState == Enums.PlayerPhysicState.IsHit)
+        {
+            for (int i = 0; i < Arms.Count; i++)
+            {
+                Arms[i].StopEverything();
+            }
+        }
+    }
+
     public void HoldArm(int i)
     {
-        Arms[i].Holding = true;
+        if(player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
+            Arms[i].StartHolding();
     }
 
     public void ExtendArm(int i)
     {
-        if(Arms[i].Cooldown == false)
+        if(Arms[i].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
         {
             Arms[i].anim.PlayAnimation();
             Arms[i].Cooldown = true;
-            Arms[i].Holding = false;
             if (CheckIfRigidbodyInRange(i))
             {
                 LaunchForeignObject(i);

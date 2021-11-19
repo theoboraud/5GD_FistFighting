@@ -15,6 +15,11 @@ public class ArmChecker : MonoBehaviour
     private float cooldown_timer;
     public float holding_timer;
 
+    private void Start()
+    {
+        StopEverything();
+    }
+
     private void Update()
     {
         if(Cooldown)
@@ -22,9 +27,7 @@ public class ArmChecker : MonoBehaviour
             cooldown_timer += Time.deltaTime;
             if(cooldown_timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
             {
-                Cooldown = false;
-                cooldown_timer = 0;
-                holding_timer = 0;
+                StopEverything();
             }
         }
         if(Holding)
@@ -37,6 +40,25 @@ public class ArmChecker : MonoBehaviour
                 anim.PlayHoldMaxAnimation();
             }
         }
+        if(holding_timer == 0)
+        {
+            StopEverything();
+        }
+    }
+
+    public void StopEverything()
+    {
+        Holding = false;
+        Cooldown = false;
+        cooldown_timer = 0;
+        holding_timer = 0;
+        anim.StopAnimation();
+    }
+
+    public void StartHolding()
+    {
+        Holding = true;
+        holding_timer = 0;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
