@@ -120,5 +120,22 @@ public class LevelManager : MonoBehaviour
         LoadScene(_randomSceneIndex);
     }
 
+
+    /// <summary>
+    ///     Load the next level of the list, except the first one
+    /// </summary>
+    public void LoadNextLevel()
+    {
+        int _nextSceneIndex = currentSceneIndex + 1;
+
+        // If the next scene index is more than the number of scenes, we go back to the first game level (a.k.a. the second level)
+        if (_nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            _nextSceneIndex = 1;
+        }
+
+        LoadScene(_nextSceneIndex);
+    }
+
     // #endregion
 }
