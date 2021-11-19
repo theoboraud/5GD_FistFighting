@@ -110,7 +110,7 @@ public class RotateBehaviour : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
         if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
         {
@@ -125,13 +125,13 @@ public class RotateBehaviour : MonoBehaviour
 
         if (Player.PlayerRotateState is PlayerRotateState.RotatingRight)
         {
-            RB.AddTorque(-1 * torqueValue * rotationFactor, ForceMode2D.Force);
-            RB.AddForce(Vector3.up * forceValue * rotationFactor, ForceMode2D.Force);
+            RB.AddTorque(-1 * torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+            RB.AddForce(Vector3.up * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
         }
         else if (Player.PlayerRotateState is PlayerRotateState.RotatingLeft)
         {
-            RB.AddTorque(torqueValue * rotationFactor, ForceMode2D.Force);
-            RB.AddForce(Vector3.up * forceValue * rotationFactor, ForceMode2D.Force);
+            RB.AddTorque(torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+            RB.AddForce(Vector3.up * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
         }
 
         //RB.angularVelocity = Mathf.Clamp(RB.angularVelocity, 0f, 1f);
