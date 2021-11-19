@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
     public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm behaviour script
     [System.NonSerialized] public CharacterSkin CharSkin;
+    public PlayerArmController PlayerArmController;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     [SerializeField] private GameObject playerIndicator;
@@ -74,10 +75,10 @@ public class Player : MonoBehaviour
     private void InitReferences()
     {
         RB = this.GetComponent<Rigidbody2D>();
-        for (int i = 0; i < Arms.Length; i++)
+        /*for (int i = 0; i < Arms.Length; i++)
         {
             Arms[i].Player = this;
-        }
+        }*/
     }
 
 
@@ -102,10 +103,10 @@ public class Player : MonoBehaviour
     {
         print(CharSkin);
         Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
-        for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
+        /*for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
             Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;
-        }
+        }*/
     }
 
 
