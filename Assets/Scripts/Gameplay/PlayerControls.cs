@@ -126,6 +126,66 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    public void Gameplay_NewExtendDown(InputAction.CallbackContext _context)
+    {
+        if(_context.control.IsPressed())
+        {
+
+        }
+        else
+        {
+            Player.PlayerArmController.ExtendArm(0);
+        }
+    }
+
+    public void Gameplay_NewExtendLeft(InputAction.CallbackContext _context)
+    {
+        if (_context.control.IsPressed())
+        {
+
+        }
+        else
+        {
+            Player.PlayerArmController.ExtendArm(1);
+        }
+    }
+
+    public void Gameplay_NewExtendUp(InputAction.CallbackContext _context)
+    {
+        if (_context.control.IsPressed())
+        {
+
+        }
+        else
+        {
+            Player.PlayerArmController.ExtendArm(2);
+        }
+    }
+
+    public void Gameplay_NewExtendRight(InputAction.CallbackContext _context)
+    {
+        if (_context.control.IsPressed())
+        {
+
+        }
+        else
+        {
+            Player.PlayerArmController.ExtendArm(3);
+        }
+    }
+
+    /// <summary>
+    ///     Called when rotating using the stick
+    /// </summary>
+    public void Gameplay_RotateStick(InputAction.CallbackContext _context)
+    {
+        // If the player is not dead
+        if (Player.PlayerGameState == PlayerGameState.Alive)
+        {
+            Player.Arms[3].Input_StopExtend();
+        }
+    }
+
 
     /// <summary>
     ///     Called when rotating using the stick

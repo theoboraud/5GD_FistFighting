@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78c177950889744f196ea1187d28a726, type: 3}
-  m_Name: Main_ParamData
+  m_Name: Main_NewPlayerParamData
   m_EditorClassIdentifier: 
   PARAM_Player_Mass: 1
   PARAM_Player_GravityScale: 3
@@ -28,7 +28,7 @@ MonoBehaviour:
   PARAM_Player_AirControlForceLossFactor: 0.5
   PARAM_Player_RotationTorque_InAir: 0.5
   PARAM_Player_RotationForce_InAir: 0.2
-  PARAM_Player_RotationTorque_OnGround: 2.5
+  PARAM_Player_RotationTorque_OnGround: 6
   PARAM_Player_RotationForce_OnGround: 0
   PARAM_Player_UseFactorForRotation: 1
   PARAM_Player_RotationTorqueMin: 5
