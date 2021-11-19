@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public PlayerGameState PlayerGameState;
-    [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
+    public PlayerPhysicState PlayerPhysicState;
     [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
@@ -222,10 +222,10 @@ public class Player : MonoBehaviour
     private bool IsGrounded()
     {
         float extraDistance = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.Raycast(BoxCollider.bounds.center, Vector2.down, BoxCollider.bounds.extents.y + extraDistance);
+        RaycastHit2D raycastHit = Physics2D.Raycast(BoxCollider.bounds.center, Vector2.down, BoxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
 
         // DEBUG TEST
-        /*Color rayColor;
+        Color rayColor;
         if (raycastHit.collider != null)
         {
             rayColor = Color.green;
@@ -234,11 +234,11 @@ public class Player : MonoBehaviour
         {
             rayColor = Color.red;
         }
-        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance));*/
+        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance),rayColor);
 
         if (raycastHit.collider != null)
         {
-            return raycastHit.collider.gameObject.CompareTag("StaticGround");
+            return raycastHit.collider.gameObject.CompareTag("StaticGround"); 
         }
         return false;
     }

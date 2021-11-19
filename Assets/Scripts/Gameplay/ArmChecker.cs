@@ -10,19 +10,25 @@ public class ArmChecker : MonoBehaviour
     [Header("Reference")]
     public ArmAnimationController anim;
     public bool Cooldown = false;
+    public bool Holding = false;
 
-    private float timer;
+    private float cooldown_timer;
+    private float holding_timer;
 
     private void Update()
     {
         if(Cooldown)
         {
-            timer += Time.deltaTime;
-            if(timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
+            cooldown_timer += Time.deltaTime;
+            if(cooldown_timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
             {
                 Cooldown = false;
-                timer = 0;
+                cooldown_timer = 0;
             }
+        }
+        if(Holding)
+        {
+
         }
     }
 
