@@ -13,7 +13,7 @@ public class ArmChecker : MonoBehaviour
     public bool Holding = false;
 
     private float cooldown_timer;
-    private float holding_timer;
+    public float holding_timer;
 
     private void Update()
     {
@@ -24,11 +24,16 @@ public class ArmChecker : MonoBehaviour
             {
                 Cooldown = false;
                 cooldown_timer = 0;
+                holding_timer = 0;
             }
         }
         if(Holding)
         {
-
+            holding_timer += Time.deltaTime;
+            if(holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+            {
+                holding_timer = GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime;
+            }
         }
     }
 
