@@ -394,7 +394,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: ddb0ad886f9825f4ab575cd15a244096, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &401429765
 CircleCollider2D:
@@ -1127,7 +1127,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: ddb0ad886f9825f4ab575cd15a244096, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &1659220207
 CircleCollider2D:
@@ -1248,7 +1248,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: ddb0ad886f9825f4ab575cd15a244096, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &1865358868
 CircleCollider2D:

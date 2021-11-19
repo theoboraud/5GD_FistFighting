@@ -130,7 +130,7 @@ public class PlayerControls : MonoBehaviour
     {
         if(_context.control.IsPressed())
         {
-
+            Player.PlayerArmController.HoldArm(0);
         }
         else
         {
@@ -142,7 +142,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.control.IsPressed())
         {
-
+            Player.PlayerArmController.HoldArm(1);
         }
         else
         {
@@ -154,7 +154,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.control.IsPressed())
         {
-
+            Player.PlayerArmController.HoldArm(2);
         }
         else
         {
@@ -166,7 +166,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.control.IsPressed())
         {
-
+            Player.PlayerArmController.HoldArm(3);
         }
         else
         {
