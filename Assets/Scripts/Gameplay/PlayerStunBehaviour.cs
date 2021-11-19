@@ -20,7 +20,7 @@ public class PlayerStunBehaviour : MonoBehaviour
                 StartStunState();
             }
             player.StunTimer += Time.deltaTime;
-            Debug.Log(player.StunTimer);
+            //Debug.Log(player.StunTimer);
 
             //Check if timer has gone above the required stun time
             if (player.StunTimer >= player.StunRecoveryTime)

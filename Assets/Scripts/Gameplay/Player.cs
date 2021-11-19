@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     /// <summary>
     ///     Init variables
     /// </summary>
-    private void Awake()
+    public void Init()
     {
         // Keep the player game object between scenes
         DontDestroyOnLoad(gameObject);
@@ -68,7 +68,6 @@ public class Player : MonoBehaviour
 
         // Init player color and add to PlayersManager Players references
         InitIndicatorColor();
-        PlayersManager.Instance.AddPlayer(this);
     }
 
 
@@ -107,12 +106,6 @@ public class Player : MonoBehaviour
         {
             Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;
         }*/
-    }
-
-
-    private void AddToPlayersManager()
-    {
-        PlayersManager.Instance.AddPlayer(this);
     }
 
 
@@ -238,7 +231,7 @@ public class Player : MonoBehaviour
 
         if (raycastHit.collider != null)
         {
-            return raycastHit.collider.gameObject.CompareTag("StaticGround"); 
+            return raycastHit.collider.gameObject.CompareTag("StaticGround");
         }
         return false;
     }
