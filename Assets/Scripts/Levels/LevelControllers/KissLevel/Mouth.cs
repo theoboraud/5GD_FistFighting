@@ -34,6 +34,7 @@ public class Mouth : MonoBehaviour
                 isMouthOpen = false;
                 return;
             }
+
             mouth.enabled = true;
             isMouthOpen = true;
         }
