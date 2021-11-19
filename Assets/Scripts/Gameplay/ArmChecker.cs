@@ -30,9 +30,11 @@ public class ArmChecker : MonoBehaviour
         if(Holding)
         {
             holding_timer += Time.deltaTime;
+            anim.PlayHoldAnimation();
             if(holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
             {
                 holding_timer = GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime;
+                anim.PlayHoldMaxAnimation();
             }
         }
     }
