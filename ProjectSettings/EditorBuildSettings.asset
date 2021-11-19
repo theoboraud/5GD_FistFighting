@@ -26,5 +26,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WIP/LD_noValide/LD_5 2.unity
     guid: bcd43ebd6a593144aaa35a64468fefc1
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_10.unity
+    guid: 8a528fcc430eadb44a4ee515a790fada
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_11 3.unity
+    guid: 62253d25b7d29dd4087fcf85f991bc5f
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_11.unity
+    guid: 61bbfe71a4dcb4f4a907c92f43a3a36a
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/A_tester/LD_2.unity
+    guid: cc96da4f71ba5ac439b613a74ccf4cbe
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}
