@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
         if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
         {
             LevelManager.Instance.LoadNextLevel();
-            MenuManager.Instance.PrintScoreScreen(false);
+            MenuManager.Instance.PrintScoreScreen(false, 0);
+            MenuManager.Instance.PrintScoreScreen_Alone(false);
             GlobalGameState = GlobalGameState.InPlay;
             PlayersManager.Instance.ResetSpawnedPlayers();
         }
@@ -67,7 +68,14 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Implement score screen, victory/defeat feedbacks...
         GlobalGameState = GlobalGameState.ScoreScreen;
-        MenuManager.Instance.PrintScoreScreen(true);
+        if (_winner != null)
+        {
+            MenuManager.Instance.PrintScoreScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
+        }
+        else
+        {
+            MenuManager.Instance.PrintScoreScreen_Alone(true);
+        }
     }
 
 

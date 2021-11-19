@@ -128,11 +128,11 @@ public class PlayerControls : MonoBehaviour
 
     public void Gameplay_NewExtendDown(InputAction.CallbackContext _context)
     {
-        if(_context.control.IsPressed())
+        if (_context.started)
         {
-
+            Player.PlayerArmController.HoldArm(0);
         }
-        else
+        if (_context.canceled || _context.interaction is TapInteraction)
         {
             Player.PlayerArmController.ExtendArm(0);
         }
@@ -140,11 +140,11 @@ public class PlayerControls : MonoBehaviour
 
     public void Gameplay_NewExtendLeft(InputAction.CallbackContext _context)
     {
-        if (_context.control.IsPressed())
+        if (_context.started)
         {
-
+            Player.PlayerArmController.HoldArm(1);
         }
-        else
+        if (_context.canceled || _context.interaction is TapInteraction)
         {
             Player.PlayerArmController.ExtendArm(1);
         }
@@ -152,11 +152,11 @@ public class PlayerControls : MonoBehaviour
 
     public void Gameplay_NewExtendUp(InputAction.CallbackContext _context)
     {
-        if (_context.control.IsPressed())
+        if (_context.started)
         {
-
+            Player.PlayerArmController.HoldArm(2);
         }
-        else
+        if (_context.canceled || _context.interaction is TapInteraction)
         {
             Player.PlayerArmController.ExtendArm(2);
         }
@@ -164,11 +164,11 @@ public class PlayerControls : MonoBehaviour
 
     public void Gameplay_NewExtendRight(InputAction.CallbackContext _context)
     {
-        if (_context.control.IsPressed())
+        if (_context.started)
         {
-
+            Player.PlayerArmController.HoldArm(3);
         }
-        else
+        if (_context.canceled || _context.interaction is TapInteraction)
         {
             Player.PlayerArmController.ExtendArm(3);
         }
@@ -259,7 +259,7 @@ public class PlayerControls : MonoBehaviour
     public void HoldTrigger(InputAction.CallbackContext _context)
     {
         Player.HoldingTrigger = true;
-        if(!_context.control.IsPressed())
+        if (_context.canceled || _context.interaction is TapInteraction)
         {
             Player.HoldingTrigger = false;
         }

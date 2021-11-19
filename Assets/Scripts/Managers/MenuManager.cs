@@ -9,9 +9,12 @@ public class MenuManager : MonoBehaviour
     [Header("References")]
     [System.NonSerialized] public static MenuManager Instance;
     [SerializeField] private GameObject ScoreScreen;
+    [SerializeField] private GameObject ScoreScreen_Alone;
+    public Text ScoreScreen_WinnerName;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
+    public List<Color> PlayerColors;
 
     [Header("Menu Screens")]
     [SerializeField] private CharacterSelectMenu CharacterSelectMenu;
@@ -256,9 +259,21 @@ public class MenuManager : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    public void PrintScoreScreen(bool _bool)
+    public void PrintScoreScreen(bool _bool, int _indexWinner)
     {
         ScoreScreen.SetActive(_bool);
+
+        if (_bool)
+        {
+            ScoreScreen_WinnerName.text = "Player " + (_indexWinner + 1).ToString();
+            ScoreScreen_WinnerName.color = PlayerColors[_indexWinner];
+        }
+    }
+
+
+    public void PrintScoreScreen_Alone(bool _bool)
+    {
+        ScoreScreen_Alone.SetActive(_bool);
     }
 
 

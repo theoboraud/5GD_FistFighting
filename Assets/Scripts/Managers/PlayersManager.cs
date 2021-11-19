@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Enums;
 
 public class PlayersManager : MonoBehaviour
@@ -54,13 +55,16 @@ public class PlayersManager : MonoBehaviour
     /// <summary>
     ///     Add a given player to the game
     /// </summary>
-    public void AddPlayer(Player _player)
+    public void OnPlayerJoined(PlayerInput _playerInput)
     {
+        Player _player = _playerInput.gameObject.GetComponent<Player>();
+        _player.Init();
         Players.Add(_player);
         SpawnPlayer(_player);
 
         // Add its timer reference to SpawningTimers in MenuManager
         MenuManager.Instance.SpawningTimers.Add(0f);
+        Debug.Log(PlayersAlive.Count);
     }
 
 

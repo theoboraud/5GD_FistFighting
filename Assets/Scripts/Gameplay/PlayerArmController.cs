@@ -7,9 +7,26 @@ public class PlayerArmController : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private List<ArmChecker> Arms = new List<ArmChecker>();
 
+    private void Update()
+    {
+        if(player.PlayerPhysicState == Enums.PlayerPhysicState.IsHit)
+        {
+            for (int i = 0; i < Arms.Count; i++)
+            {
+                Arms[i].StopEverything();
+            }
+        }
+    }
+
+    public void HoldArm(int i)
+    {
+        if(player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
+            Arms[i].StartHolding();
+    }
+
     public void ExtendArm(int i)
     {
-        if(Arms[i].Cooldown == false)
+        if(Arms[i].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
         {
             Arms[i].anim.PlayAnimation();
             Arms[i].Cooldown = true;
@@ -26,7 +43,7 @@ public class PlayerArmController : MonoBehaviour
                 if(!player.HoldingTrigger) LaunchThisAvatarFromAir(i);
             }
         }
-        
+
     }
 
     private bool CheckIfRigidbodyInRange(int i)
@@ -49,20 +66,31 @@ public class PlayerArmController : MonoBehaviour
 
     private void LaunchThisAvatarFromGround(int i)
     {
-        player.RB.AddForce(Arms[i].transform.up * GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce, ForceMode2D.Impulse);
+        player.RB.AddForce
+            (Arms[i].transform.up *
+            GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
+            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+            (Arms[i].holding_timer/GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1,2),
+            ForceMode2D.Impulse);
+        //Debug.Log(Arms[i].holding_timer);
         RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f);
-        GameManager.Instance.Feedback.SpawnHitVFX(ray.point, Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z, Vector3.forward));
+        GameManager.Instance.Feedback.SpawnHitVFX
+            (ray.point,
+            Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
+            Vector3.forward));
     }
 
     private void LaunchThisAvatarFromAir(int i)
     {
         player.RB.AddForce
-            (Arms[i].transform.up * 
-            GameManager.Instance.ParamData.PARAM_Player_AirControlForce, 
+            (Arms[i].transform.up *
+            GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
+            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+            (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
         GameManager.Instance.Feedback.SpawnHitAvatarVFX
-            (Arms[i].transform.position + Arms[i].transform.up * -2, 
-            Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z, 
+            (Arms[i].transform.position + Arms[i].transform.up * -2,
+            Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
             Vector3.forward));
     }
 
@@ -71,15 +99,19 @@ public class PlayerArmController : MonoBehaviour
         foreach (var item in Arms[i].rigidbodies)
         {
             item.AddForce
-                (-Arms[i].transform.up * 
-                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce, 
+                (-Arms[i].transform.up *
+                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
+                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+                (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
         }
         foreach (var item in Arms[i].players)
         {
             item.RB.AddForce
-                (-Arms[i].transform.up * 
-                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce, 
+                (-Arms[i].transform.up *
+                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
+                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+                (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();
         }
