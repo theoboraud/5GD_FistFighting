@@ -14,6 +14,7 @@ public class PlayersManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<Player> Players;             // All players references
     [System.NonSerialized] public List<Player> PlayersAlive;        // All players alive in the current game
+    [System.NonSerialized] public int IndexPlayerSpawn;             // Index of the current number of spawned players
 
     // #endregion
 
@@ -56,9 +57,58 @@ public class PlayersManager : MonoBehaviour
     public void AddPlayer(Player _player)
     {
         Players.Add(_player);
-        _player.ChangeSkin(SkinsData.GetRandomSkin());
-        LevelManager.Instance.SpawnPlayer(_player);
+        SpawnPlayer(_player);
+
+        // Add its timer reference to SpawningTimers in MenuManager
+        MenuManager.Instance.SpawningTimers.Add(0f);
+    }
+
+
+    /// <summary>
+    ///     Spawn all players registered by PlayersManager
+    /// </summary>
+    public void SpawnAllPlayers()
+    {
+        for (int i = IndexPlayerSpawn; i < PlayersManager.Instance.Players.Count; i++)
+        {
+            SpawnPlayer(PlayersManager.Instance.Players[i]);
+        }
+    }
+
+
+    /// <summary>
+    ///     Spawn a given player
+    /// </summary>
+    public void SpawnPlayer(Player _player)
+    {
+        _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
+
+        IndexPlayerSpawn++;
+
+        // Add the player to PlayersAlive references in PlayerManager
         PlayersAlive.Add(_player);
+    }
+
+
+    /// <summary>
+    ///     Start the timer to spawn a player
+    /// </summary>
+    public void StartSpawningPlayer(Player _player)
+    {
+        MenuManager.Instance.StartSpawnTimer(Players.IndexOf(_player));
+    }
+
+
+    public void ResetSpawnedPlayers()
+    {
+        IndexPlayerSpawn = 0;
+
+        for (int i = 0; i < PlayersAlive.Count; i++)
+        {
+            PlayersAlive[i].Kill();
+        }
+
+        PlayersAlive.Clear();
     }
 
 
@@ -96,7 +146,6 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void KillPlayer(Player _player)
     {
-        _player.Kill();
         PlayersAlive.Remove(_player);
 
         if (PlayersAlive.Count == 1)
@@ -107,21 +156,6 @@ public class PlayersManager : MonoBehaviour
         else if (PlayersAlive.Count == 0)
         {
             GameManager.Instance.EndOfRound(null);
-        }
-    }
-
-
-    /// <summary>
-    ///     Destroy all players in the game
-    /// </summary>
-    public void DestroyAllPlayers()
-    {
-        PlayersAlive.Clear();
-        for (int i = 0; i < Players.Count; i++)
-        {
-            Player _player = Players[i];
-            Players.Remove(_player);
-            Destroy(_player.gameObject);
         }
     }
 

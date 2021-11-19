@@ -5,20 +5,26 @@ using UnityEngine;
 public class Blower : MonoBehaviour
 {
     private bool isBlow = false;
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D RB;
+
+    private void Awake()
+    {
+        RB = this.gameObject.GetComponent<Rigidbody2D>();
+    }
+
     private void FixedUpdate()
     {
-        if ( isBlow&&rigidbody2D != null )
+        if ( isBlow&&RB != null )
         {
-            rigidbody2D.AddForce(-this.transform.up * 5f, ForceMode2D.Impulse);
+            RB.AddForce(-this.transform.up * 5f, ForceMode2D.Impulse);
         }
-        
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            rigidbody2D = collision.GetComponent<Rigidbody2D>();
+            RB = collision.GetComponent<Rigidbody2D>();
         }
         isBlow = true;
     }
@@ -27,4 +33,3 @@ public class Blower : MonoBehaviour
         isBlow = false;
     }
 }
-

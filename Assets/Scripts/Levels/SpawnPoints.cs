@@ -6,7 +6,7 @@ public class SpawnPoints : MonoBehaviour
 {
     private void Awake()
     {
-        if(LevelManager.Instance != null)
+        if (LevelManager.Instance != null)
         {
             LevelManager.Instance.InitSpawnPoints();
         }

@@ -35,6 +35,16 @@ public class ParamData : ScriptableObject
     // #endregion
 
 
+    // #region ==================== HOLD TRIGGER PARAMETERS ======================
+
+    [Header("HOLD TRIGGER PARAMETERS")]
+
+    public float PARAM_Player_MaxTriggerHoldTime;
+    public float PARAM_Player_ForceIncreaseFactor;
+
+    // #endregion
+
+
     // #region ================ AIR CONTROL PARAMETERS =================
 
     [Header("PLAYER AIR CONTROL PARAMETERS")]
@@ -47,6 +57,13 @@ public class ParamData : ScriptableObject
     // #region ================== ROTATION PARAMETERS ==================
 
     [Header("PLAYER ROTATION PARAMETERS")]
+    public float PARAM_Player_RotationTorque_InAir;
+    public float PARAM_Player_RotationForce_InAir;
+    public float PARAM_Player_RotationTorque_OnGround;
+    public float PARAM_Player_RotationForce_OnGround;
+    public bool PARAM_Player_UseFactorForRotation;
+
+    [Header("OLD PLAYER ROTATION PARAMETERS")]
     public float PARAM_Player_RotationTorqueMin;
     public float PARAM_Player_RotationTorqueMax;
     public float PARAM_Player_RotationForceMin;

@@ -28,7 +28,7 @@ namespace Enums
     {
         OnGround,
         InAir,
-        isHit
+        IsHit
     }
 
     public enum PlayerArmState
@@ -43,8 +43,8 @@ namespace Enums
     public enum PlayerRotateState
     {
         Ready,
-        IsHolding,
-        IsRotating,
+        RotatingRight,
+        RotatingLeft,
         OnCooldown
     }
 
