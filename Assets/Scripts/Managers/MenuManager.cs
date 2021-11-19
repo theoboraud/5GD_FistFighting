@@ -9,6 +9,9 @@ public class MenuManager : MonoBehaviour
     [Header("References")]
     [System.NonSerialized] public static MenuManager Instance;
     [SerializeField] private GameObject ScoreScreen;
+    public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
+    public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
+    public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
 
     [Header("Menu Screens")]
     [SerializeField] private CharacterSelectMenu CharacterSelectMenu;
@@ -22,11 +25,6 @@ public class MenuManager : MonoBehaviour
     private Menu activeMenu;
     private float startingTimer = 0f;                                                   // Contains the general spawn timer when starting a new level
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
-
-    [Header("Starting Timer")]
-    public Canvas Canvas_Timers;
-    public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
-    public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
 
 
     /// <summary>
@@ -97,7 +95,7 @@ public class MenuManager : MonoBehaviour
         {
             if (SpawningTimers[i] > 0f)
             {
-                SpawningTimers[i] = UpdateTimer(SpawningTimers[i], UI_SpawningTimers[i].GetComponent<Text>());
+                SpawningTimers[i] = UpdateTimer(SpawningTimers[i], Text_SpawningTimers[i]);
 
                 // If timer reached 0, spawn the corresponding player
                 if (SpawningTimers[i] == 0f)
@@ -144,7 +142,14 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void StartSpawnTimer(int _playerIndex)
     {
+        // Enable the timer game objects
         UI_SpawningTimers[_playerIndex].SetActive(true);
+
+        // Update the scale according to the camera distance
+        float _newScale = 10f / Camera.main.orthographicSize;
+        UI_SpawningTimers[_playerIndex].GetComponent<RectTransform>().localScale = new Vector3(_newScale, _newScale, _newScale);
+
+        // Init the timer value
         SpawningTimers[_playerIndex] = 3f;
     }
 

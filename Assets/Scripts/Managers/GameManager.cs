@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
             MenuManager.Instance.PrintScoreScreen(false);
             GlobalGameState = GlobalGameState.InPlay;
             PlayersManager.Instance.ResetSpawnedPlayers();
-            MenuManager.Instance.StartTimer();
         }
     }
 
