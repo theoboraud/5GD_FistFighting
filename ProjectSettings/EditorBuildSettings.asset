@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/LD_3.unity
     guid: 14f42857b1be18b40a5ca457b5d9b3ce
   - enabled: 1
-    path: Assets/Scenes/MainLevels/LD_4 4.unity
+    path: Assets/Scenes/TestLevels/LD_4 4.unity
     guid: 21c221c56765dc348b55092beeb6eebd
   - enabled: 1
     path: Assets/Scenes/MainLevels/LD_5 1.unity
