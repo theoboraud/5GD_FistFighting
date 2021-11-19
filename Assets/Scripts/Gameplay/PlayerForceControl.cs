@@ -19,7 +19,6 @@ public class PlayerForceControl : MonoBehaviour
         }
         else
         {
-            Debug.Log("NOT HOLDING!!");
             timer = 0;
             currentForce = 1;
         }

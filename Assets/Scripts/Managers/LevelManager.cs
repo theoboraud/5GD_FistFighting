@@ -83,7 +83,11 @@ public class LevelManager : MonoBehaviour
         PlayersManager.Instance.SimulateAllPlayers(_levelIndex > 0);
         SceneManager.LoadScene(_levelIndex);
         currentSceneIndex = _levelIndex;
-        //InitSpawnPoints();
+
+        if (_levelIndex != 0)
+        {
+            MenuManager.Instance.StartTimer();
+        }
     }
 
 

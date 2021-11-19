@@ -23,7 +23,7 @@ public class PlayerArmController : MonoBehaviour
             }
             else
             {
-                LaunchThisAvatarFromAir(i);
+                if(!player.HoldingTrigger) LaunchThisAvatarFromAir(i);
             }
         }
         
@@ -81,6 +81,7 @@ public class PlayerArmController : MonoBehaviour
                 (-Arms[i].transform.up * 
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce, 
                 ForceMode2D.Impulse);
+            item.Hit();
         }
         GameManager.Instance.Feedback.SpawnHitVFX
             (Arms[i].transform.position + Arms[i].transform.up * -2,
