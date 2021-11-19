@@ -30,7 +30,7 @@ public class ArmChecker : MonoBehaviour
                 StopEverything();
             }
         }
-        if(Holding)
+        else if(Holding)
         {
             holding_timer += Time.deltaTime;
             anim.PlayHoldAnimation();
@@ -40,7 +40,7 @@ public class ArmChecker : MonoBehaviour
                 anim.PlayHoldMaxAnimation();
             }
         }
-        if(holding_timer == 0)
+        else if(holding_timer == 0)
         {
             StopEverything();
         }
