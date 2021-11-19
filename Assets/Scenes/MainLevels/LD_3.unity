@@ -1989,7 +1989,7 @@ GameObject:
   - component: {fileID: 2082736131}
   - component: {fileID: 2082736130}
   - component: {fileID: 2082736129}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StaticEnvironment
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
