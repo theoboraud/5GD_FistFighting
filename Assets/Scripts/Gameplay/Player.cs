@@ -170,6 +170,8 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Kill()
     {
+        GameManager.Instance.Feedback.ShakeCamera(0.5f, 0.7f);
+        GameManager.Instance.Feedback.SpawnExpulsionVFX(this.transform.position);
         Face_SpriteRenderer.enabled = false;
         this.transform.position = new Vector3(1000, 1000, 0);
 
