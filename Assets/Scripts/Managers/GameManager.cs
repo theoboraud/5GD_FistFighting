@@ -113,7 +113,11 @@ public class GameManager : MonoBehaviour
         else
         {
             GlobalGameState = GlobalGameState.ScoreScreen;
-            NewGameRound();
+            if (PlayersManager.Instance.PlayersAlive.Count > 0)
+            {
+                PlayersManager.Instance.PlayersAlive[0].Kill();
+            }
+            Invoke("NewGameRound", 0.1f);
         }
     }
 
@@ -141,6 +145,7 @@ public class GameManager : MonoBehaviour
         if (_winner != null)
         {
             MenuManager.Instance.PrintWinnerScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
+            PlayersManager.Instance.KillOtherPlayers(_winner);
         }
         else
         {

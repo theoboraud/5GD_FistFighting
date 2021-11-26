@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public List<GameObject> SpawnPoints;     // Current level spawn points
-    [System.NonSerialized] public int CurrentSceneIndex;            // Index of the current scene (in Build Settings)
+    [System.NonSerialized] public int CurrentSceneIndex = 0;            // Index of the current scene (in Build Settings)
 
     // TODO Implement level classes to load data ?
     //[System.NonSerialized] public List<LevelData> Levels;

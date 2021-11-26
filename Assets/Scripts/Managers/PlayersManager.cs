@@ -105,7 +105,7 @@ public class PlayersManager : MonoBehaviour
     {
         for (int i = 0; i < PlayersAlive.Count; i++)
         {
-            PlayersAlive[i].Kill();
+            Players[i].Kill();
         }
 
         PlayersAlive.Clear();
@@ -147,6 +147,21 @@ public class PlayersManager : MonoBehaviour
             else if (PlayersAlive.Count == 0)
             {
                 GameManager.Instance.EndOfRound(null);
+            }
+        }
+    }
+
+
+    /// <summary>
+    ///     Kill all other players than _player
+    /// </summary>
+    public void KillOtherPlayers(Player _player)
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            if (Players[i] != _player)
+            {
+                Players[i].Kill();
             }
         }
     }
