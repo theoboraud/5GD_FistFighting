@@ -15,6 +15,7 @@ public class PlayersManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<Player> Players;             // All players references
     [System.NonSerialized] public List<Player> PlayersAlive;        // All players alive in the current game
+    [System.NonSerialized] public List<Player> PlayersDeathOrder;   // All players that died in the current game, in the death order
 
     // #endregion
 
@@ -38,6 +39,7 @@ public class PlayersManager : MonoBehaviour
             // Init variables
             Players = new List<Player>();
             PlayersAlive = new List<Player>();
+            PlayersDeathOrder = new List<Player>();
         }
         else
         {
@@ -57,6 +59,8 @@ public class PlayersManager : MonoBehaviour
     public void AddPlayer(Player _player)
     {
         Players.Add(_player);
+        MenuManager.Instance.AddPlayerColor(Players.IndexOf(_player));
+        GameManager.Instance.PlayerScores.Add(0);
         SpawnPlayer(_player);
 
         // Add its timer reference to SpawningTimers in MenuManager
@@ -99,7 +103,7 @@ public class PlayersManager : MonoBehaviour
 
     public void ResetSpawnedPlayers()
     {
-        for (int i = 0; i < Players.Count; i++)
+        for (int i = 0; i < PlayersAlive.Count; i++)
         {
             Players[i].Kill();
         }
@@ -131,6 +135,7 @@ public class PlayersManager : MonoBehaviour
     public void KillPlayer(Player _player)
     {
         PlayersAlive.Remove(_player);
+        PlayersDeathOrder.Add(_player);
 
         if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
         {
@@ -142,6 +147,21 @@ public class PlayersManager : MonoBehaviour
             else if (PlayersAlive.Count == 0)
             {
                 GameManager.Instance.EndOfRound(null);
+            }
+        }
+    }
+
+
+    /// <summary>
+    ///     Kill all other players than _player
+    /// </summary>
+    public void KillOtherPlayers(Player _player)
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            if (Players[i] != _player)
+            {
+                Players[i].Kill();
             }
         }
     }

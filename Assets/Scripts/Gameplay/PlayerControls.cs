@@ -207,9 +207,19 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen && _context.started)
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.PlayerWon && _context.canceled)
+        {
+            GameManager.Instance.QuitGame();
+        }
+
+        else if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen && _context.canceled)
         {
             GameManager.Instance.NewGameRound();
+        }
+
+        else if (GameManager.Instance.GlobalGameState == GlobalGameState.WinnerScreen && _context.canceled)
+        {
+            GameManager.Instance.ScoreScreen();
         }
     }
 

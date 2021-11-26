@@ -10,10 +10,14 @@ public class MenuManager : MonoBehaviour
     [System.NonSerialized] public static MenuManager Instance;
     [SerializeField] private GameObject WinnerScreen;
     [SerializeField] private GameObject WinnerScreen_Alone;
+    [SerializeField] private GameObject ScoreScreen;
+    [SerializeField] private GameObject Text_Scoreboard;
+    [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
+    public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
     public List<Color> PlayerColors;
 
     [Header("Menu Screens")]
@@ -277,11 +281,37 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    ///
-    /// </summary>
-    public void Quit()
+    public void PrintScoreScreen(bool _bool)
     {
-        GameManager.Instance.QuitGame();
+        ScoreScreen.SetActive(_bool);
+
+        if (_bool)
+        {
+            for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+            {
+                PlayerScores[i].SetScore(GameManager.Instance.PlayerScores[i]);
+            }
+        }
+
+        if (GameManager.Instance.PlayerHasWon)
+        {
+            int _indexWinner = GameManager.Instance.IndexWinner;
+            Text_Scoreboard.SetActive(false);
+            Text_PlayerHasWon.SetActive(true);
+            Text_PlayerHasWon.GetComponent<Text>().color = PlayerColors[_indexWinner];
+
+            _indexWinner += 1;
+            string _playerWon = "J" + _indexWinner.ToString() + " has won!";
+            Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;
+        }
+    }
+
+
+    /// <summary>
+    ///     Set the color for each UI element corresponding to the player
+    /// </summary>
+    public void AddPlayerColor(int _playerIndex)
+    {
+        PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
     }
 }
