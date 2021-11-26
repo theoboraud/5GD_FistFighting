@@ -80,33 +80,41 @@ public class GameManager : MonoBehaviour
         MenuManager.Instance.PrintWinnerScreen_Alone(false);
         PlayersManager.Instance.ResetSpawnedPlayers();
 
-        GlobalGameState = GlobalGameState.Null;
-
-        // Update the score
-        int _maxReward = 43;
-        int _reward = _maxReward - (PlayersManager.Instance.PlayersDeathOrder.Count - 1);     // Initial reward is 3 - (count of PlayerDeathOrder - 1)
-        int _winnerIndex = -1;
-
-        for (int i = 0; i < PlayersManager.Instance.PlayersDeathOrder.Count; i++)
+        if (LevelManager.Instance.CurrentSceneIndex > 0)
         {
-            int _index = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[i]);
-            PlayerScores[_index] += _reward;
-            _reward += 1;
-            if (PlayerScores[_index] >= 10)
+            GlobalGameState = GlobalGameState.Null;
+
+            // Update the score
+            int _maxReward = 3;
+            int _reward = _maxReward - (PlayersManager.Instance.PlayersDeathOrder.Count - 1);     // Initial reward is 3 - (count of PlayerDeathOrder - 1)
+            int _winnerIndex = -1;
+
+            for (int i = 0; i < PlayersManager.Instance.PlayersDeathOrder.Count; i++)
             {
-                _winnerIndex = _index;
+                int _index = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[i]);
+                PlayerScores[_index] += _reward;
+                _reward += 1;
+                if (PlayerScores[_index] >= 10)
+                {
+                    _winnerIndex = _index;
+                }
             }
-        }
 
-        if (_winnerIndex > -1)
+            if (_winnerIndex > -1)
+            {
+                IndexWinner = _winnerIndex;
+                PlayerHasWon = true;
+            }
+
+            // Print out the score screen
+            MenuManager.Instance.PrintScoreScreen(true);
+            Invoke("SetStateToScoreScreen", 0.1f);
+        }
+        else
         {
-            IndexWinner = _winnerIndex;
-            PlayerHasWon = true;
+            GlobalGameState == GlobalGameState.ScoreScreen;
+            NewGameRound();
         }
-
-        // Print out the score screen
-        MenuManager.Instance.PrintScoreScreen(true);
-        Invoke("SetStateToScoreScreen", 0.1f);
     }
 
 
