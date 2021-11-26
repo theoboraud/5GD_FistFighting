@@ -15,7 +15,6 @@ public class PlayersManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<Player> Players;             // All players references
     [System.NonSerialized] public List<Player> PlayersAlive;        // All players alive in the current game
-    [System.NonSerialized] public int IndexPlayerSpawn;             // Index of the current number of spawned players
 
     // #endregion
 
@@ -32,18 +31,18 @@ public class PlayersManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            // Init references
+            SkinsData = gameObject.GetComponent<SkinsData>();
+
+            // Init variables
+            Players = new List<Player>();
+            PlayersAlive = new List<Player>();
         }
         else
         {
             Destroy(this.gameObject);
         }
-
-        // Init references
-        SkinsData = gameObject.GetComponent<SkinsData>();
-
-        // Init variables
-        Players = new List<Player>();
-        PlayersAlive = new List<Player>();
     }
 
     // #endregion
@@ -55,16 +54,13 @@ public class PlayersManager : MonoBehaviour
     /// <summary>
     ///     Add a given player to the game
     /// </summary>
-    public void OnPlayerJoined(PlayerInput _playerInput)
+    public void AddPlayer(Player _player)
     {
-        Player _player = _playerInput.gameObject.GetComponent<Player>();
-        _player.Init();
         Players.Add(_player);
         SpawnPlayer(_player);
 
         // Add its timer reference to SpawningTimers in MenuManager
         MenuManager.Instance.SpawningTimers.Add(0f);
-        Debug.Log(PlayersAlive.Count);
     }
 
 
@@ -73,7 +69,7 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnAllPlayers()
     {
-        for (int i = IndexPlayerSpawn; i < PlayersManager.Instance.Players.Count; i++)
+        for (int i = PlayersManager.Instance.PlayersAlive.Count; i < PlayersManager.Instance.Players.Count; i++)
         {
             SpawnPlayer(PlayersManager.Instance.Players[i]);
         }
@@ -86,8 +82,6 @@ public class PlayersManager : MonoBehaviour
     public void SpawnPlayer(Player _player)
     {
         _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
-
-        IndexPlayerSpawn++;
 
         // Add the player to PlayersAlive references in PlayerManager
         PlayersAlive.Add(_player);
@@ -105,26 +99,12 @@ public class PlayersManager : MonoBehaviour
 
     public void ResetSpawnedPlayers()
     {
-        IndexPlayerSpawn = 0;
-
-        for (int i = 0; i < PlayersAlive.Count; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
-            PlayersAlive[i].Kill();
+            Players[i].Kill();
         }
 
         PlayersAlive.Clear();
-    }
-
-
-    /// <summary>
-    ///     Simulate or stop simulating all players in the game, depending on the boolean parameter _bool
-    /// </summary>
-    public void SimulateAllPlayers(bool _bool)
-    {
-        foreach (var _player in Players)
-        {
-            _player.RB.simulated = _bool;
-        }
     }
 
 
@@ -152,14 +132,17 @@ public class PlayersManager : MonoBehaviour
     {
         PlayersAlive.Remove(_player);
 
-        if (PlayersAlive.Count == 1)
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
         {
-            GameManager.Instance.EndOfRound(PlayersAlive[0]);
-        }
-        // If there is only one player
-        else if (PlayersAlive.Count == 0)
-        {
-            GameManager.Instance.EndOfRound(null);
+            if (PlayersAlive.Count == 1)
+            {
+                GameManager.Instance.EndOfRound(PlayersAlive[0]);
+            }
+            // If there is only one player
+            else if (PlayersAlive.Count == 0)
+            {
+                GameManager.Instance.EndOfRound(null);
+            }
         }
     }
 

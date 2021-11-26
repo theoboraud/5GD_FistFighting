@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ArmChecker : MonoBehaviour
 {
-    public List<Rigidbody2D> rigidbodies = new List<Rigidbody2D>();
-    public List<Player> players = new List<Player>();
+    public List<Rigidbody2D> Rigidbodies = new List<Rigidbody2D>();
+    public List<Player> Players = new List<Player>();
     public bool StaticEnvironmentInRange = false;
     [Header("Reference")]
     public ArmAnimationController anim;
@@ -15,17 +15,37 @@ public class ArmChecker : MonoBehaviour
     private float cooldown_timer;
     public float holding_timer;
 
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void Init()
+    {
+        Rigidbodies.Clear();
+        Players.Clear();
+        StaticEnvironmentInRange = false;
+        StopEverything();
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
     private void Start()
     {
         StopEverything();
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void Update()
     {
         if(Cooldown)
         {
             cooldown_timer += Time.deltaTime;
-            if(cooldown_timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
+            if (cooldown_timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
             {
                 StopEverything();
             }
@@ -46,6 +66,10 @@ public class ArmChecker : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     public void StopEverything()
     {
         Holding = false;
@@ -55,23 +79,31 @@ public class ArmChecker : MonoBehaviour
         anim.StopAnimation();
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     public void StartHolding()
     {
         Holding = true;
         holding_timer = 0;
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.CompareTag("DynamicEnvironment"))
         {
             Rigidbody2D rigidbody = collision.GetComponent<Rigidbody2D>();
-            if(!rigidbodies.Contains(rigidbody)) rigidbodies.Add(rigidbody);
+            if(!Rigidbodies.Contains(rigidbody)) Rigidbodies.Add(rigidbody);
         }
         if(collision.CompareTag("Player"))
         {
             Player player = collision.GetComponent<Player>();
-            if(!players.Contains(player)) players.Add(player);
+            if(!Players.Contains(player)) Players.Add(player);
         }
         if (collision.CompareTag("StaticGround"))
         {
@@ -79,17 +111,21 @@ public class ArmChecker : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("DynamicEnvironment"))
         {
             Rigidbody2D rigidbody = collision.GetComponent<Rigidbody2D>();
-            if (rigidbodies.Contains(rigidbody)) rigidbodies.Remove(rigidbody);
+            if (Rigidbodies.Contains(rigidbody)) Rigidbodies.Remove(rigidbody);
         }
         if (collision.CompareTag("Player"))
         {
             Player player = collision.GetComponent<Player>();
-            if (players.Contains(player)) players.Remove(player);
+            if (Players.Contains(player)) Players.Remove(player);
         }
         if(collision.CompareTag("StaticGround"))
         {

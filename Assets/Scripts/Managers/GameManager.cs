@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [System.NonSerialized] public static GameManager Instance;      // Singleton reference
-    public GlobalGameState GlobalGameState;                         // Current state of the game (InPlay, ScoreScreen, MainMenu, CharacterSelectMenu, LevelSelectMenu or OptionsMenu)
+    public GlobalGameState GlobalGameState;                         // Current state of the game (InPlay, WinnerScreen, MainMenu, CharacterSelectMenu, LevelSelectMenu or OptionsMenu)
     public ParamData ParamData;                                     // Game parameters customizable directly via the ParamData file
     public FeedbackManager Feedback;                                // Feedback manager reference, used to instantiate VFX and audio effects
 
@@ -50,13 +50,19 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
+        if (GlobalGameState == GlobalGameState.ScoreScreen)
         {
-            LevelManager.Instance.LoadNextLevel();
-            MenuManager.Instance.PrintScoreScreen(false, 0);
-            MenuManager.Instance.PrintScoreScreen_Alone(false);
-            GlobalGameState = GlobalGameState.InPlay;
+            // Still in the first level
             PlayersManager.Instance.ResetSpawnedPlayers();
+            Feedback.ResetAllVFX();
+            MenuManager.Instance.PrintWinnerScreen(false, 0);
+            MenuManager.Instance.PrintWinnerScreen_Alone(false);
+
+            // Load the new level
+            LevelManager.Instance.LoadNextLevel();
+
+            // Change game state
+            GlobalGameState = GlobalGameState.InPlay;
         }
     }
 
@@ -68,13 +74,14 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Implement score screen, victory/defeat feedbacks...
         GlobalGameState = GlobalGameState.ScoreScreen;
+
         if (_winner != null)
         {
-            MenuManager.Instance.PrintScoreScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
+            MenuManager.Instance.PrintWinnerScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
         }
         else
         {
-            MenuManager.Instance.PrintScoreScreen_Alone(true);
+            MenuManager.Instance.PrintWinnerScreen_Alone(true);
         }
     }
 

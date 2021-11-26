@@ -111,8 +111,8 @@ public class @MainControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9224f9ff-0e2b-48be-89f3-08a7599002fe"",
-                    ""path"": ""<Keyboard>/#(q)"",
+                    ""id"": ""cd87fc36-2e8d-4fa0-ac83-22fd0acc20dd"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -133,11 +133,11 @@ public class @MainControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3b939132-324b-4c2c-aabe-e38e139073b2"",
-                    ""path"": ""<Keyboard>/#(z)"",
+                    ""id"": ""9e49cd02-69d6-49aa-a8da-c902021d3a27"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard"",
+                    ""groups"": """",
                     ""action"": ""UpArm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -248,17 +248,6 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""HoldTrigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d89fe63e-4453-4713-a2d2-cdf6ef3c4545"",
-                    ""path"": ""<Keyboard>/#(a)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
                     ""action"": ""HoldTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

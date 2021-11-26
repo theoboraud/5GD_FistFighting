@@ -202,33 +202,6 @@ public class PlayerControls : MonoBehaviour
     }
 
 
-    /*
-    /// <summary>
-    ///     Called when rotating right
-    /// </summary>
-    public void Gameplay_RotateRight(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            Rotate.Input_RotateRight(_context);
-        }
-    }
-
-
-    /// <summary>
-    ///     Called when rotating left
-    /// </summary>
-    public void Gameplay_RotateLeft(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            Rotate.Input_RotateLeft(_context);
-        }
-    }*/
-
-
     /// <summary>
     ///     Called when pressing start to end the round
     /// </summary>

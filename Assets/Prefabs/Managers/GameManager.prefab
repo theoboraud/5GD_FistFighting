@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitVFX: {fileID: 2203765180277896203, guid: b94f042af2c870946b891f0623842116, type: 3}
   hitAvatarVFX: {fileID: 7864977891443810783, guid: ff0fcb878232b38408d0d99d8e18ee43, type: 3}
+  ExpulsionVFX: {fileID: 5295859907447675650, guid: 90f9f55340b23094b86229cd00849528, type: 3}
 --- !u!1 &1814137963291488322
 GameObject:
   m_ObjectHideFlags: 0

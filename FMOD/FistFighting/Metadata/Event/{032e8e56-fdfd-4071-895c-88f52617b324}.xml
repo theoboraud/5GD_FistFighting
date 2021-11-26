@@ -63,6 +63,9 @@
 		<property name="maxVoices">
 			<value>5</value>
 		</property>
+		<property name="maximumDistance">
+			<value>100</value>
+		</property>
 	</object>
 	<object class="MarkerTrack" id="{5f5e6a6d-4a6f-49bc-9b6a-70bf24b9de01}" />
 	<object class="GroupTrack" id="{e4ab1e3b-01a4-405d-8b28-5fc55495a74b}">

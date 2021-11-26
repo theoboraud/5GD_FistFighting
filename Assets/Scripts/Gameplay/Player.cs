@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     /// <summary>
     ///     Init variables
     /// </summary>
-    public void Init()
+    public void Awake()
     {
         // Keep the player game object between scenes
         DontDestroyOnLoad(gameObject);
@@ -68,9 +68,15 @@ public class Player : MonoBehaviour
 
         // Init player color and add to PlayersManager Players references
         InitIndicatorColor();
+
+        // Add player to the PlayersManager
+        PlayersManager.Instance.AddPlayer(this);
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitReferences()
     {
         RB = this.GetComponent<Rigidbody2D>();
@@ -81,6 +87,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitVariables()
     {
         PlayerGameState = PlayerGameState.Alive;
@@ -88,6 +97,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitParameters()
     {
         RB.mass = GameManager.Instance.ParamData.PARAM_Player_Mass;
@@ -98,9 +110,11 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitSkin()
     {
-        print(CharSkin);
         Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
         /*for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
@@ -109,6 +123,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     public void InitIndicatorColor()
     {
         switch (PlayersManager.Instance.Players.Count)
@@ -139,6 +156,9 @@ public class Player : MonoBehaviour
 
     // #region ==================== SKIN FUNCTIONS ====================
 
+    /// <summary>
+    ///
+    /// </summary>
     public void ChangeSkin(CharacterSkin _charSkin)
     {
         this.CharSkin = _charSkin;
@@ -161,6 +181,7 @@ public class Player : MonoBehaviour
         this.transform.rotation = Quaternion.identity;
         RB.velocity = new Vector2(0f, 0f);
 
+        RB.simulated = true;
         PlayerGameState = PlayerGameState.Alive;
     }
 
@@ -170,10 +191,14 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Kill()
     {
+        GameManager.Instance.Feedback.ShakeCamera(0.5f, 0.7f);
+        GameManager.Instance.Feedback.SpawnExpulsionVFX(this.transform.position);
         Face_SpriteRenderer.enabled = false;
         this.transform.position = new Vector3(1000, 1000, 0);
 
+        RB.simulated = false;
         PlayerGameState = PlayerGameState.Dead;
+        PlayerArmController.Init();
 
         // Remove the player from the PlayersAlive reference in PlayersManager
         PlayersManager.Instance.KillPlayer(this);
