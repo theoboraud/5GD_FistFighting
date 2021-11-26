@@ -8,9 +8,9 @@ public class MenuManager : MonoBehaviour
 {
     [Header("References")]
     [System.NonSerialized] public static MenuManager Instance;
-    [SerializeField] private GameObject ScoreScreen;
-    [SerializeField] private GameObject ScoreScreen_Alone;
-    public Text ScoreScreen_WinnerName;
+    [SerializeField] private GameObject WinnerScreen;
+    [SerializeField] private GameObject WinnerScreen_Alone;
+    public Text WinnerScreen_WinnerName;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
@@ -259,21 +259,21 @@ public class MenuManager : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    public void PrintScoreScreen(bool _bool, int _indexWinner)
+    public void PrintWinnerScreen(bool _bool, int _indexWinner)
     {
-        ScoreScreen.SetActive(_bool);
+        WinnerScreen.SetActive(_bool);
 
         if (_bool)
         {
-            ScoreScreen_WinnerName.text = "Player " + (_indexWinner + 1).ToString();
-            ScoreScreen_WinnerName.color = PlayerColors[_indexWinner];
+            WinnerScreen_WinnerName.text = "Player " + (_indexWinner + 1).ToString();
+            WinnerScreen_WinnerName.color = PlayerColors[_indexWinner];
         }
     }
 
 
-    public void PrintScoreScreen_Alone(bool _bool)
+    public void PrintWinnerScreen_Alone(bool _bool)
     {
-        ScoreScreen_Alone.SetActive(_bool);
+        WinnerScreen_Alone.SetActive(_bool);
     }
 
 

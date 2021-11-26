@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9046777036521747640}
   m_Layer: 0
-  m_Name: Screen_Score
+  m_Name: Screen_Winner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

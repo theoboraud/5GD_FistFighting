@@ -381,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8940690868001782648}
   m_Layer: 0
-  m_Name: Screen_ScoreAlone
+  m_Name: Screen_WinnerAlone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,9 +632,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45932ad085b44f5780d6170488a1ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreScreen: {fileID: 4679636647241624914}
-  ScoreScreen_Alone: {fileID: 3339053051838441858}
-  ScoreScreen_WinnerName: {fileID: 8646443684247273918}
+  WinnerScreen: {fileID: 4679636647241624914}
+  WinnerScreen_Alone: {fileID: 3339053051838441858}
+  WinnerScreen_WinnerName: {fileID: 8646443684247273918}
   UI_StartingTimer: {fileID: 8811369464464763118}
   UI_SpawningTimers:
   - {fileID: 8936144767150755636}
@@ -1462,7 +1462,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3443457382059517506, guid: a4db28f6a25544efa9ba5b4b20808664, type: 3}
       propertyPath: m_Name
-      value: Screen_Score
+      value: Screen_Winner
       objectReference: {fileID: 0}
     - target: {fileID: 3443457382059517506, guid: a4db28f6a25544efa9ba5b4b20808664, type: 3}
       propertyPath: m_IsActive
