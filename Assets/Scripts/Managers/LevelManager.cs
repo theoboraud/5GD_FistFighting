@@ -47,6 +47,9 @@ public class LevelManager : MonoBehaviour
 
         // Init scene index and spawn points
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        // Init spawn points of the first level
+        InitSpawnPoints();
     }
 
     // #endregion

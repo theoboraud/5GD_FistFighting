@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     /// <summary>
     ///     Init variables
     /// </summary>
-    public void Init()
+    public void Awake()
     {
         // Keep the player game object between scenes
         DontDestroyOnLoad(gameObject);
@@ -68,6 +68,9 @@ public class Player : MonoBehaviour
 
         // Init player color and add to PlayersManager Players references
         InitIndicatorColor();
+
+        // Add player to the PlayersManager
+        PlayersManager.Instance.AddPlayer(this);
     }
 
 

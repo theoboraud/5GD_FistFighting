@@ -55,10 +55,8 @@ public class PlayersManager : MonoBehaviour
     /// <summary>
     ///     Add a given player to the game
     /// </summary>
-    public void OnPlayerJoined(PlayerInput _playerInput)
+    public void AddPlayer(Player _player)
     {
-        Player _player = _playerInput.gameObject.GetComponent<Player>();
-        _player.Init();
         Players.Add(_player);
         SpawnPlayer(_player);
 
