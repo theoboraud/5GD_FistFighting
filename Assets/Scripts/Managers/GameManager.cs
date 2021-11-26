@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Implement score screen, victory/defeat feedbacks...
         GlobalGameState = GlobalGameState.ScoreScreen;
+        
         if (_winner != null)
         {
             MenuManager.Instance.PrintScoreScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
