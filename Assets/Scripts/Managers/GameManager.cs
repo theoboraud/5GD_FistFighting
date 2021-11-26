@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            GlobalGameState == GlobalGameState.ScoreScreen;
+            GlobalGameState = GlobalGameState.ScoreScreen;
             NewGameRound();
         }
     }

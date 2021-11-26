@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
 
             // Init scene index and spawn points
-            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
             // Init spawn points of the first level
             InitSpawnPoints();
@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour
     public void LoadScene(int _levelIndex)
     {
         SceneManager.LoadScene(_levelIndex);
-        currentSceneIndex = _levelIndex;
+        CurrentSceneIndex = _levelIndex;
 
         if (_levelIndex != 0)
         {
@@ -117,9 +117,9 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadRandomLevel()
     {
-        int _randomSceneIndex = currentSceneIndex;
+        int _randomSceneIndex = CurrentSceneIndex;
 
-        while(_randomSceneIndex == currentSceneIndex)
+        while(_randomSceneIndex == CurrentSceneIndex)
         {
             _randomSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
         }
@@ -133,7 +133,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadNextLevel()
     {
-        int _nextSceneIndex = currentSceneIndex + 1;
+        int _nextSceneIndex = CurrentSceneIndex + 1;
 
         // If the next scene index is more than the number of scenes, we go back to the first game level (a.k.a. the second level)
         if (_nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
