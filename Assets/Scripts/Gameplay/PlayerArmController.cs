@@ -11,9 +11,21 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
+    public void Init()
+    {
+        for (int i = 0; i < Arms.Count; i++)
+        {
+            Arms[i].Init();
+        }
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
     private void Update()
     {
-        if(player.PlayerPhysicState == Enums.PlayerPhysicState.IsHit)
+        if (player.PlayerPhysicState == Enums.PlayerPhysicState.IsHit)
         {
             for (int i = 0; i < Arms.Count; i++)
             {
@@ -28,7 +40,7 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     public void HoldArm(int i)
     {
-        if(player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit && Arms[i].Cooldown == false)
+        if (player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit && Arms[i].Cooldown == false)
             Arms[i].StartHolding();
     }
 
@@ -67,7 +79,10 @@ public class PlayerArmController : MonoBehaviour
     {
         bool inRange = false;
 
-        if (Arms[i].rigidbodies.Count > 0 || Arms[i].players.Count > 0) inRange = true;
+        if (Arms[i].Rigidbodies.Count > 0 || Arms[i].Players.Count > 0)
+        {
+            inRange = true;
+        }
 
         return inRange;
     }
@@ -129,7 +144,7 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     private void LaunchForeignObject(int i)
     {
-        foreach (var item in Arms[i].rigidbodies)
+        foreach (var item in Arms[i].Rigidbodies)
         {
             item.AddForce
                 (-Arms[i].transform.up *
@@ -138,7 +153,8 @@ public class PlayerArmController : MonoBehaviour
                 (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
         }
-        foreach (var item in Arms[i].players)
+
+        foreach (var item in Arms[i].Players)
         {
             item.RB.AddForce
                 (-Arms[i].transform.up *
@@ -148,6 +164,7 @@ public class PlayerArmController : MonoBehaviour
                 ForceMode2D.Impulse);
             item.Hit();
         }
+        
         GameManager.Instance.Feedback.SpawnHitVFX
             (Arms[i].transform.position + Arms[i].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,

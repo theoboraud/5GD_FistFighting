@@ -105,9 +105,9 @@ public class PlayersManager : MonoBehaviour
     {
         IndexPlayerSpawn = 0;
 
-        for (int i = 0; i < PlayersAlive.Count; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
-            PlayersAlive[i].Kill();
+            Players[i].Kill();
         }
 
         PlayersAlive.Clear();
@@ -150,14 +150,17 @@ public class PlayersManager : MonoBehaviour
     {
         PlayersAlive.Remove(_player);
 
-        if (PlayersAlive.Count == 1)
+        if (GameManager.Instance.GlobalGameState != GlobalGameState.InPlay)
         {
-            GameManager.Instance.EndOfRound(PlayersAlive[0]);
-        }
-        // If there is only one player
-        else if (PlayersAlive.Count == 0)
-        {
-            GameManager.Instance.EndOfRound(null);
+            if (PlayersAlive.Count == 1)
+            {
+                GameManager.Instance.EndOfRound(PlayersAlive[0]);
+            }
+            // If there is only one player
+            else if (PlayersAlive.Count == 0)
+            {
+                GameManager.Instance.EndOfRound(null);
+            }
         }
     }
 

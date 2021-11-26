@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ArmChecker : MonoBehaviour
 {
-    public List<Rigidbody2D> rigidbodies = new List<Rigidbody2D>();
-    public List<Player> players = new List<Player>();
+    public List<Rigidbody2D> Rigidbodies = new List<Rigidbody2D>();
+    public List<Player> Players = new List<Player>();
     public bool StaticEnvironmentInRange = false;
     [Header("Reference")]
     public ArmAnimationController anim;
@@ -14,6 +14,18 @@ public class ArmChecker : MonoBehaviour
 
     private float cooldown_timer;
     public float holding_timer;
+
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void Init()
+    {
+        Rigidbodies.Clear();
+        Players.Clear();
+        StaticEnvironmentInRange = false;
+        StopEverything();
+    }
 
 
     /// <summary>
@@ -86,12 +98,12 @@ public class ArmChecker : MonoBehaviour
         if(collision.CompareTag("DynamicEnvironment"))
         {
             Rigidbody2D rigidbody = collision.GetComponent<Rigidbody2D>();
-            if(!rigidbodies.Contains(rigidbody)) rigidbodies.Add(rigidbody);
+            if(!Rigidbodies.Contains(rigidbody)) Rigidbodies.Add(rigidbody);
         }
         if(collision.CompareTag("Player"))
         {
             Player player = collision.GetComponent<Player>();
-            if(!players.Contains(player)) players.Add(player);
+            if(!Players.Contains(player)) Players.Add(player);
         }
         if (collision.CompareTag("StaticGround"))
         {
@@ -108,12 +120,12 @@ public class ArmChecker : MonoBehaviour
         if (collision.CompareTag("DynamicEnvironment"))
         {
             Rigidbody2D rigidbody = collision.GetComponent<Rigidbody2D>();
-            if (rigidbodies.Contains(rigidbody)) rigidbodies.Remove(rigidbody);
+            if (Rigidbodies.Contains(rigidbody)) Rigidbodies.Remove(rigidbody);
         }
         if (collision.CompareTag("Player"))
         {
             Player player = collision.GetComponent<Player>();
-            if (players.Contains(player)) players.Remove(player);
+            if (Players.Contains(player)) Players.Remove(player);
         }
         if(collision.CompareTag("StaticGround"))
         {

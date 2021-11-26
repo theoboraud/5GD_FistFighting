@@ -197,6 +197,7 @@ public class Player : MonoBehaviour
         this.transform.position = new Vector3(1000, 1000, 0);
 
         PlayerGameState = PlayerGameState.Dead;
+        PlayerArmController.Init();
 
         // Remove the player from the PlayersAlive reference in PlayersManager
         PlayersManager.Instance.KillPlayer(this);
