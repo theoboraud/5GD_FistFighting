@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour
 
             // Change game state
             GlobalGameState = GlobalGameState.InPlay;
-
         }
     }
 
