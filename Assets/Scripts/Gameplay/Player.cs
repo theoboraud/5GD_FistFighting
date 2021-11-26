@@ -71,6 +71,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitReferences()
     {
         RB = this.GetComponent<Rigidbody2D>();
@@ -81,6 +84,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitVariables()
     {
         PlayerGameState = PlayerGameState.Alive;
@@ -88,6 +94,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitParameters()
     {
         RB.mass = GameManager.Instance.ParamData.PARAM_Player_Mass;
@@ -98,6 +107,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     private void InitSkin()
     {
         print(CharSkin);
@@ -109,6 +121,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///
+    /// </summary>
     public void InitIndicatorColor()
     {
         switch (PlayersManager.Instance.Players.Count)
@@ -139,6 +154,9 @@ public class Player : MonoBehaviour
 
     // #region ==================== SKIN FUNCTIONS ====================
 
+    /// <summary>
+    ///
+    /// </summary>
     public void ChangeSkin(CharacterSkin _charSkin)
     {
         this.CharSkin = _charSkin;
