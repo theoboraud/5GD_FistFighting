@@ -3,11 +3,14 @@ namespace Enums
     public enum GlobalGameState
     {
         InPlay,
+        WinnerScreen,
         ScoreScreen,
+        PlayerWon,
         MainMenu,
         CharacterSelectMenu,
         LevelSelectMenu,
         OptionsMenu,
+        Null,
     }
 
     public enum GameMode
