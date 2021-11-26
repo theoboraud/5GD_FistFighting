@@ -12,20 +12,20 @@ public class MoveLeg : MonoBehaviour
     private float coefRotate;
     private void Start()
     {
-        rotationZ = transform.rotation.z;
+        rotationZ = transform.rotation.eulerAngles.z;
         if (IsLeftLeg) coefRotate = 1; else coefRotate = -1;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        transform.DORotate(new Vector3 (0,0, rotationZ + coefRotate * 20),1f);
+        print(rotationZ);
+        transform.DORotate(new Vector3 (0,0, rotationZ + 20),1f);
 
         if (isActiveForce)
         {
             collision.rigidbody.AddForce((collision.transform.position - transform.position) * 10, ForceMode2D.Impulse);
 
         }
-        Invoke("LegKick", 1);
+        //Invoke("LegKick", 1);
 
     }
     private void LegKick()
