@@ -39,14 +39,14 @@ public class MenuManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            // Init the active menu as the main menu
+            InitMenu();
         }
         else
         {
             Destroy(this.gameObject);
         }
-
-        // Init the active menu as the main menu
-        InitMenu();
     }
 
 

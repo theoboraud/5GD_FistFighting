@@ -181,6 +181,7 @@ public class Player : MonoBehaviour
         this.transform.rotation = Quaternion.identity;
         RB.velocity = new Vector2(0f, 0f);
 
+        RB.simulated = true;
         PlayerGameState = PlayerGameState.Alive;
     }
 
@@ -195,6 +196,7 @@ public class Player : MonoBehaviour
         Face_SpriteRenderer.enabled = false;
         this.transform.position = new Vector3(1000, 1000, 0);
 
+        RB.simulated = false;
         PlayerGameState = PlayerGameState.Dead;
         PlayerArmController.Init();
 
