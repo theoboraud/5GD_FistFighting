@@ -15,7 +15,6 @@ public class PlayersManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<Player> Players;             // All players references
     [System.NonSerialized] public List<Player> PlayersAlive;        // All players alive in the current game
-    [System.NonSerialized] public int IndexPlayerSpawn;             // Index of the current number of spawned players
 
     // #endregion
 
@@ -32,18 +31,18 @@ public class PlayersManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            // Init references
+            SkinsData = gameObject.GetComponent<SkinsData>();
+
+            // Init variables
+            Players = new List<Player>();
+            PlayersAlive = new List<Player>();
         }
         else
         {
             Destroy(this.gameObject);
         }
-
-        // Init references
-        SkinsData = gameObject.GetComponent<SkinsData>();
-
-        // Init variables
-        Players = new List<Player>();
-        PlayersAlive = new List<Player>();
     }
 
     // #endregion
@@ -70,7 +69,7 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnAllPlayers()
     {
-        for (int i = IndexPlayerSpawn; i < PlayersManager.Instance.Players.Count; i++)
+        for (int i = PlayersManager.Instance.PlayersAlive.Count; i < PlayersManager.Instance.Players.Count; i++)
         {
             SpawnPlayer(PlayersManager.Instance.Players[i]);
         }
@@ -83,8 +82,6 @@ public class PlayersManager : MonoBehaviour
     public void SpawnPlayer(Player _player)
     {
         _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
-
-        IndexPlayerSpawn++;
 
         // Add the player to PlayersAlive references in PlayerManager
         PlayersAlive.Add(_player);
@@ -102,26 +99,12 @@ public class PlayersManager : MonoBehaviour
 
     public void ResetSpawnedPlayers()
     {
-        IndexPlayerSpawn = 0;
-
         for (int i = 0; i < Players.Count; i++)
         {
             Players[i].Kill();
         }
 
         PlayersAlive.Clear();
-    }
-
-
-    /// <summary>
-    ///     Simulate or stop simulating all players in the game, depending on the boolean parameter _bool
-    /// </summary>
-    public void SimulateAllPlayers(bool _bool)
-    {
-        foreach (var _player in Players)
-        {
-            _player.RB.simulated = _bool;
-        }
     }
 
 

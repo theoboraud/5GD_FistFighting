@@ -50,17 +50,20 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
+        if (GlobalGameState == GlobalGameState.ScoreScreen)
         {
             // Still in the first level
             Feedback.ResetAllVFX();
+            PlayersManager.Instance.ResetSpawnedPlayers();
+            MenuManager.Instance.PrintScoreScreen(false, 0);
+            MenuManager.Instance.PrintScoreScreen_Alone(false);
 
             // Load the new level
             LevelManager.Instance.LoadNextLevel();
-            MenuManager.Instance.PrintScoreScreen(false, 0);
-            MenuManager.Instance.PrintScoreScreen_Alone(false);
+
+            // Change game state
             GlobalGameState = GlobalGameState.InPlay;
-            PlayersManager.Instance.ResetSpawnedPlayers();
+
         }
     }
 
@@ -72,7 +75,7 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Implement score screen, victory/defeat feedbacks...
         GlobalGameState = GlobalGameState.ScoreScreen;
-        
+
         if (_winner != null)
         {
             MenuManager.Instance.PrintScoreScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
