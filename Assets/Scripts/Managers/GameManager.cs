@@ -84,6 +84,15 @@ public class GameManager : MonoBehaviour
         {
             GlobalGameState = GlobalGameState.Null;
 
+            int _indexFirst = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[PlayersManager.Instance.PlayersDeathOrder.Count - 1]);
+            int _winnerIndex = -1;
+            PlayerScores[_indexFirst] += 1;
+
+            if (PlayerScores[_indexFirst] >= 7)
+            {
+                _winnerIndex = _indexFirst;
+            }
+            /*
             // Update the score
             int _maxReward = 3;
             int _reward = _maxReward - (PlayersManager.Instance.PlayersDeathOrder.Count - 1);     // Initial reward is 3 - (count of PlayerDeathOrder - 1)
@@ -99,7 +108,7 @@ public class GameManager : MonoBehaviour
                 {
                     _winnerIndex = _index;
                 }
-            }
+            }*/
 
             if (_winnerIndex > -1)
             {

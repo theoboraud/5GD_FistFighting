@@ -104,9 +104,6 @@ MonoBehaviour:
   - {fileID: 9041819666704524513}
   - {fileID: 2975150050756012368}
   - {fileID: 1543383095570300252}
-  - {fileID: 6767229563257424406}
-  - {fileID: 2762945877418799714}
-  - {fileID: 2710915240350713479}
 --- !u!1 &8492897801616941559
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,14 +506,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
---- !u!224 &4401336007978399505 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 846401756856604062, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
-  m_PrefabInstance: {fileID: 3939429415657955983}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2975150050756012368 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2297523121542417375, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
+  m_PrefabInstance: {fileID: 3939429415657955983}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4401336007978399505 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 846401756856604062, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
   m_PrefabInstance: {fileID: 3939429415657955983}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4158376857204767165
@@ -618,16 +615,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreToken (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 7008088365949683365, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
 --- !u!224 &3605835540824419363 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 846401756856604062, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
-  m_PrefabInstance: {fileID: 4158376857204767165}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2762945877418799714 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2297523121542417375, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
   m_PrefabInstance: {fileID: 4158376857204767165}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4214641475444821336
@@ -729,16 +725,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreToken (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 7008088365949683365, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
 --- !u!224 &3585551392891214022 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 846401756856604062, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
-  m_PrefabInstance: {fileID: 4214641475444821336}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2710915240350713479 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2297523121542417375, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
   m_PrefabInstance: {fileID: 4214641475444821336}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4758183254517039561
@@ -840,16 +835,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreToken (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7008088365949683365, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
 --- !u!224 &5311841399678112855 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 846401756856604062, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
-  m_PrefabInstance: {fileID: 4758183254517039561}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6767229563257424406 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2297523121542417375, guid: 67d5c4c1c3bce42219131489ca9f00c8, type: 3}
   m_PrefabInstance: {fileID: 4758183254517039561}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6083454516842778851
