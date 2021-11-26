@@ -9,14 +9,29 @@ public class FeedbackManager : MonoBehaviour
     [SerializeField] GameObject hitAvatarVFX;
     [SerializeField] GameObject ExpulsionVFX;
 
+    [Header("Variables")]
+    private List<GameObject> allVFX = new List<GameObject>();
+
+    public void ResetAllVFX()
+    {
+        for (int i = 0; i < allVFX.Count; i++)
+        {
+            Destroy(allVFX[i]);
+        }
+        
+        allVFX.Clear();
+    }
+
     public void SpawnHitVFX(Vector3 position, Quaternion rotation)
     {
         GameObject _go = Instantiate(hitVFX, position, rotation, this.transform);
+        allVFX.Add(_go);
     }
 
     public void SpawnHitAvatarVFX(Vector3 position, Quaternion rotation)
     {
         GameObject _go = Instantiate(hitAvatarVFX, position, rotation, this.transform);
+        allVFX.Add(_go);
     }
 
     public void SpawnExpulsionVFX(Vector3 position)
@@ -25,6 +40,7 @@ public class FeedbackManager : MonoBehaviour
         Quaternion rotation = Quaternion.AngleAxis(Vector3.Angle(ExpulsionVFX.transform.up - position, (centerPos - position).normalized), Vector3.forward);
         GameObject _go = Instantiate(ExpulsionVFX, position, rotation * ExpulsionVFX.transform.rotation, this.transform);
         _go.transform.rotation = Quaternion.LookRotation(centerPos - position);
+        allVFX.Add(_go);
     }
 
     public void ShakeCamera(float duration, float amount)

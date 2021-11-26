@@ -35,21 +35,22 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        // Singleton declaration
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            // Init scene index and spawn points
+            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+            // Init spawn points of the first level
+            InitSpawnPoints();
         }
         else
         {
             Destroy(this.gameObject);
         }
-
-        // Init scene index and spawn points
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        // Init spawn points of the first level
-        InitSpawnPoints();
     }
 
     // #endregion

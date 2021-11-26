@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviour
         // TODO: Implement loading screen...
         if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen)
         {
+            // Still in the first level
+            Feedback.ResetAllVFX();
+
+            // Load the new level
             LevelManager.Instance.LoadNextLevel();
             MenuManager.Instance.PrintScoreScreen(false, 0);
             MenuManager.Instance.PrintScoreScreen_Alone(false);

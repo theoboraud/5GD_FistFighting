@@ -62,7 +62,6 @@ public class PlayersManager : MonoBehaviour
 
         // Add its timer reference to SpawningTimers in MenuManager
         MenuManager.Instance.SpawningTimers.Add(0f);
-        Debug.Log(PlayersAlive.Count);
     }
 
 
@@ -150,7 +149,7 @@ public class PlayersManager : MonoBehaviour
     {
         PlayersAlive.Remove(_player);
 
-        if (GameManager.Instance.GlobalGameState != GlobalGameState.InPlay)
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
         {
             if (PlayersAlive.Count == 1)
             {

@@ -115,7 +115,6 @@ public class Player : MonoBehaviour
     /// </summary>
     private void InitSkin()
     {
-        print(CharSkin);
         Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
         /*for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
