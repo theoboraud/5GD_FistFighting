@@ -5,7 +5,9 @@ using DG.Tweening;
 
 public class Mouth : MonoBehaviour
 {
-    public bool IsLeftMouth;
+    public GameObject[] eyesOpen;
+    public GameObject[] eyesClose;
+
     private bool isMouthOpen;
     private SpriteRenderer mouth;
 
@@ -22,15 +24,9 @@ public class Mouth : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (isMouthOpen && IsLeftMouth)
+            if (isMouthOpen)
             {
-                collision.gameObject.transform.DOMoveX(-5, 0.3f);
-                isMouthOpen = false;
-                return;
-            }
-            else if (isMouthOpen && !IsLeftMouth)
-            {
-                collision.gameObject.transform.DOMoveX(17, 0.3f);
+                //collision.gameObject.transform.DOMoveY(-10f, 0.3f);
                 isMouthOpen = false;
                 return;
             }
