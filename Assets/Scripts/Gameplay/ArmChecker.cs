@@ -15,17 +15,25 @@ public class ArmChecker : MonoBehaviour
     private float cooldown_timer;
     public float holding_timer;
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void Start()
     {
         StopEverything();
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void Update()
     {
         if(Cooldown)
         {
             cooldown_timer += Time.deltaTime;
-            if(cooldown_timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
+            if (cooldown_timer >= GameManager.Instance.ParamData.PARAM_Player_ArmCooldown)
             {
                 StopEverything();
             }
@@ -46,6 +54,10 @@ public class ArmChecker : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     public void StopEverything()
     {
         Holding = false;
@@ -55,12 +67,20 @@ public class ArmChecker : MonoBehaviour
         anim.StopAnimation();
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     public void StartHolding()
     {
         Holding = true;
         holding_timer = 0;
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.CompareTag("DynamicEnvironment"))
@@ -79,6 +99,10 @@ public class ArmChecker : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///
+    /// </summary>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("DynamicEnvironment"))

@@ -28,10 +28,11 @@ public class ParamData : ScriptableObject
 
     public float PARAM_Player_ArmGroundForce;
     public float PARAM_Player_ArmHitForce;
-    public float PARAM_Player_ArmExtendingTime;
-    public float PARAM_Player_ArmUnextendingTime;
     public float PARAM_Player_ArmCooldown;
 
+    [Header("OLD PLAYER ARM PARAMETERS")]
+    public float PARAM_Player_ArmExtendingTime;
+    public float PARAM_Player_ArmUnextendingTime;
     // #endregion
 
 
@@ -62,14 +63,6 @@ public class ParamData : ScriptableObject
     public float PARAM_Player_RotationTorque_OnGround;
     public float PARAM_Player_RotationForce_OnGround;
     public bool PARAM_Player_UseFactorForRotation;
-
-    [Header("OLD PLAYER ROTATION PARAMETERS")]
-    public float PARAM_Player_RotationTorqueMin;
-    public float PARAM_Player_RotationTorqueMax;
-    public float PARAM_Player_RotationForceMin;
-    public float PARAM_Player_RotationForceMax;
-    public float PARAM_Player_RotationChargeTimeMax;
-    public float PARAM_Player_RotationCooldown;
 
     // #endregion
 }
