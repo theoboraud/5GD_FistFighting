@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public List<GameObject> SpawnPoints;     // Current level spawn points
-    [System.NonSerialized] public int CurrentSceneIndex = 0;            // Index of the current scene (in Build Settings)
+    [System.NonSerialized] public int CurrentSceneIndex = 0;        // Index of the current scene (in Build Settings)
 
     // TODO Implement level classes to load data ?
     //[System.NonSerialized] public List<LevelData> Levels;
@@ -142,6 +142,25 @@ public class LevelManager : MonoBehaviour
         }
 
         LoadScene(_nextSceneIndex);
+    }
+
+
+    public void Reset()
+    {
+        MenuManager.Instance.PrintScoreScreen(false);
+        PlayersManager.Instance.PlayersDeathOrder.Clear();
+        GameManager.Instance.Feedback.ResetAllVFX();
+        GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
+
+        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+        {
+            Destroy(PlayersManager.Instance.Players[i].gameObject);
+        }
+
+        Destroy(GameManager.Instance);
+        Destroy(PlayersManager.Instance);
+        Destroy(MenuManager.Instance);
+        LoadLobbyLevel();
     }
 
     // #endregion

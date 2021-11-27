@@ -209,7 +209,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (GameManager.Instance.GlobalGameState == GlobalGameState.PlayerWon && _context.canceled)
         {
-            GameManager.Instance.QuitGame();
+            GameManager.Instance.ResetGame();
         }
 
         else if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen && _context.canceled)

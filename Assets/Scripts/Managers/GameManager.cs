@@ -84,6 +84,15 @@ public class GameManager : MonoBehaviour
         {
             GlobalGameState = GlobalGameState.Null;
 
+            int _indexFirst = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[PlayersManager.Instance.PlayersDeathOrder.Count - 1]);
+            int _winnerIndex = -1;
+            PlayerScores[_indexFirst] += 1;
+
+            if (PlayerScores[_indexFirst] >= 7)
+            {
+                _winnerIndex = _indexFirst;
+            }
+            /*
             // Update the score
             int _maxReward = 3;
             int _reward = _maxReward - (PlayersManager.Instance.PlayersDeathOrder.Count - 1);     // Initial reward is 3 - (count of PlayerDeathOrder - 1)
@@ -94,11 +103,12 @@ public class GameManager : MonoBehaviour
                 int _index = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[i]);
                 PlayerScores[_index] += _reward;
                 _reward += 1;
+
                 if (PlayerScores[_index] >= 10)
                 {
                     _winnerIndex = _index;
                 }
-            }
+            }*/
 
             if (_winnerIndex > -1)
             {
@@ -113,9 +123,9 @@ public class GameManager : MonoBehaviour
         else
         {
             GlobalGameState = GlobalGameState.ScoreScreen;
-            if (PlayersManager.Instance.PlayersAlive.Count > 0)
+            for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
             {
-                PlayersManager.Instance.PlayersAlive[0].Kill();
+                PlayersManager.Instance.Players[i].Kill();
             }
             Invoke("NewGameRound", 0.1f);
         }
@@ -155,12 +165,23 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
+    ///     Reset the game
+    /// </summary>
+    public void ResetGame()
+    {
+        LevelManager.Instance.Reset();
+    }
+
+
+    /// <summary>
     ///     Quit the game application
     /// </summary>
     public void QuitGame()
     {
-        Application.Quit();
+        #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
     }
 
     // #endregion

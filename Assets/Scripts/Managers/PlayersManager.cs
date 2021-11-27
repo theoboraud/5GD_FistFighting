@@ -103,7 +103,7 @@ public class PlayersManager : MonoBehaviour
 
     public void ResetSpawnedPlayers()
     {
-        for (int i = 0; i < PlayersAlive.Count; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
             Players[i].Kill();
         }
