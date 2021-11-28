@@ -5,8 +5,9 @@ using DG.Tweening;
 
 public class FaceBehavior : MonoBehaviour
 {
-    public GameObject[] eyesOpen;
-    public GameObject[] eyesClose;
+    public SpriteRenderer[] EyesOpen;
+    public SpriteRenderer[] EyesClose;
+    public MoveLeg MoveLeg;
 
     private SpriteRenderer mouth;
 
@@ -18,6 +19,10 @@ public class FaceBehavior : MonoBehaviour
     {
         mouth = transform.Find("Mouth").GetComponent<SpriteRenderer>();
         mouth.enabled = false;
+        foreach (var eyeClose in EyesClose)
+        {
+            eyeClose.enabled = false;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -30,9 +35,27 @@ public class FaceBehavior : MonoBehaviour
     private void OnHurt()
     {
         mouth.enabled = true;
+        foreach (var eyeOpen in EyesOpen)
+        {
+            eyeOpen.enabled = false;
+        }
+        foreach (var eyeClose in EyesClose)
+        {
+            eyeClose.enabled = true;
+        }
+
+        MoveLeg.ActiveLegMove();
     }
     private void HurtPassed()
     {
         mouth.enabled = false;
+        foreach (var eyeOpen in EyesOpen)
+        {
+            eyeOpen.enabled = true;
+        }
+        foreach (var eyeClose in EyesClose)
+        {
+            eyeClose.enabled = false;
+        }
     }
 }

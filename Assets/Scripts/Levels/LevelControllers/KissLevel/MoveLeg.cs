@@ -6,7 +6,8 @@ using DG.Tweening;
 public class MoveLeg : MonoBehaviour
 {
     public bool IsLeftLeg;
-
+    public bool DisactiveCollisionLegMove;
+    
     private bool isActiveForce = false;
     private bool isLegMove = false;
 
@@ -26,14 +27,21 @@ public class MoveLeg : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isLegMove)
+        if (!DisactiveCollisionLegMove)
         {
-            transform.DORotate(new Vector3(0, 0, rotationZ + coefRotate * 20), 1f).OnComplete(LegKick);
-            isLegMove = true;
+            LegMove();
         }
         if (isActiveForce)
         {
             collision.rigidbody.AddForce((collision.transform.position - transform.position) * 10, ForceMode2D.Impulse);
+        }
+    }
+    private void LegMove()
+    {
+        if (!isLegMove)
+        {
+            transform.DORotate(new Vector3(0, 0, rotationZ + coefRotate * 20), 1f).OnComplete(LegKick);
+            isLegMove = true;
         }
     }
     private void LegKick()
@@ -45,5 +53,9 @@ public class MoveLeg : MonoBehaviour
     {
         transform.DORotate(new Vector3(0, 0, rotationZ), 1f).OnComplete(()=>isLegMove = false);
         isActiveForce = false;
+    }
+    public void ActiveLegMove()
+    {
+        LegMove();
     }
 }
