@@ -25,7 +25,7 @@ public class ChildBehavior : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             DoFart();
-            collision.attachedRigidbody.AddForce((collision.transform.position - transform.position) * 10, ForceMode2D.Impulse);
+            collision.attachedRigidbody.AddForce(Vector2.right * 10, ForceMode2D.Impulse);
         }
     }
     private void DoFart()
