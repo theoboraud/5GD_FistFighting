@@ -90,6 +90,32 @@ public class ArmChecker : MonoBehaviour
     }
 
 
+    public float GetClosestRigidbodyPosition()
+    {
+        float shortestDist = 150f;
+        if(Rigidbodies.Count > 0)
+        {
+            for (int i = 0; i < Rigidbodies.Count; i++)
+            {
+                if(Vector2.Distance(this.transform.position, Rigidbodies[i].transform.position) < shortestDist)
+                {
+                    shortestDist = Vector3.Distance(this.transform.position, Rigidbodies[i].transform.position);
+                }
+            }
+        }
+        if(Players.Count > 0)
+        {
+            for (int i = 0; i < Players.Count; i++)
+            {
+                if (Vector2.Distance(this.transform.position, Players[i].transform.position) < shortestDist)
+                {
+                    shortestDist = Vector3.Distance(this.transform.position, Players[i].transform.position);
+                }
+            }
+        }
+        return shortestDist;
+    }
+
     /// <summary>
     ///
     /// </summary>
