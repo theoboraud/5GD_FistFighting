@@ -55,9 +55,21 @@ public class PlayerArmController : MonoBehaviour
             Arms[i].anim.PlayAnimation();
             Arms[i].Cooldown = true;
 
-            if (CheckIfRigidbodyInRange(i))
+            if (CheckIfRigidbodyInRange(i) && !CheckIfEnvironmentInRange(i))
             {
                 LaunchForeignObject(i);
+            }
+            else if(CheckIfEnvironmentInRange(i) && CheckIfRigidbodyInRange(i))
+            {
+                RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
+                if(Vector2.Distance(this.transform.position, ray.point) < Arms[i].GetClosestRigidbodyPosition())
+                {
+                    LaunchThisAvatarFromGround(i);
+                }
+                else
+                {
+                    LaunchForeignObject(i);
+                }
             }
             else if (CheckIfEnvironmentInRange(i))
             {
@@ -106,6 +118,11 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     private void LaunchThisAvatarFromGround(int i)
     {
+        player.AirPushFactor = 1f;
+
+        player.RB.velocity *= 0.75f;
+        player.RB.angularVelocity *= 0.75f;
+
         player.RB.AddForce
             (Arms[i].transform.up *
             GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
@@ -126,12 +143,23 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     private void LaunchThisAvatarFromAir(int i)
     {
+        player.RB.velocity /= 2;
+        player.RB.angularVelocity /= 2;
+
         player.RB.AddForce
             (Arms[i].transform.up *
+            player.AirPushFactor *
             GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
             (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
+
+        player.AirPushFactor -= 0.01f;
+        if (player.AirPushFactor <= 0.98f)
+        {
+            player.AirPushFactor = 0f;
+        }
+
         GameManager.Instance.Feedback.SpawnHitAvatarVFX
             (Arms[i].transform.position + Arms[i].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
@@ -164,7 +192,7 @@ public class PlayerArmController : MonoBehaviour
                 ForceMode2D.Impulse);
             item.Hit();
         }
-        
+
         GameManager.Instance.Feedback.SpawnHitVFX
             (Arms[i].transform.position + Arms[i].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
