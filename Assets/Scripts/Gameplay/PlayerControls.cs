@@ -283,75 +283,47 @@ public class PlayerControls : MonoBehaviour
 
     public void Menu_GoUp(InputAction.CallbackContext _context)
     {
-        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
+        if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
         {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
             {
-
-            }
-            else
-            {
-
+                MenuManager.Instance.MainMenu.GoUp();
             }
         }
     }
 
-    public void Menu_GoRight(InputAction.CallbackContext _context)
-    {
-        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
-        {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
-            {
-                //PlayerSelector.ChangeSkinRight();
-            }
-            else
-            {
-
-            }
-        }
-    }
 
     public void Menu_GoDown(InputAction.CallbackContext _context)
     {
-        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
+        if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
         {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
             {
-
-            }
-            else
-            {
-
+                MenuManager.Instance.MainMenu.GoDown();
             }
         }
     }
+
+
+    public void Menu_GoRight(InputAction.CallbackContext _context)
+    {
+
+    }
+
 
     public void Menu_GoLeft(InputAction.CallbackContext _context)
     {
-        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
-        {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
-            {
-                //PlayerSelector.ChangeSkinLeft();
-            }
-            else
-            {
 
-            }
-        }
     }
+
 
     public void Menu_Validate(InputAction.CallbackContext _context)
     {
-        if (playerInput.currentActionMap.name == "Menu" && _context.started && _context.interaction is PressInteraction)
+        if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
         {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.CharacterSelectMenu)
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
             {
-                //PlayerSelector.ValidateSkin();
-            }
-            else
-            {
-
+                MenuManager.Instance.MainMenu.Validate();
             }
         }
     }

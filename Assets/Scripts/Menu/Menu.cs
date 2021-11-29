@@ -28,6 +28,7 @@ public class Menu : MonoBehaviour
 
     public virtual void Init()
     {
+        /*
         int j = 0;
         int y = SceneManager.sceneCountInBuildSettings - 1;
         for (int i = 0; i < Buttons.Count; i++)
@@ -39,7 +40,7 @@ public class Menu : MonoBehaviour
             j++;
         }
 
-        SelectButton(0);
+        SelectButton(0);*/
     }
 
     public virtual void GoUp()

@@ -21,10 +21,7 @@ public class MenuManager : MonoBehaviour
     public List<Color> PlayerColors;
 
     [Header("Menu Screens")]
-    [SerializeField] private CharacterSelectMenu CharacterSelectMenu;
-    [SerializeField] private MainMenu MainMenu;
-    [SerializeField] private OptionsMenu OptionsMenu;
-    [SerializeField] private LevelSelectMenu LevelSelectMenu;
+    public MainMenu MainMenu;
 
     [Header("Variables")]
     public List<int> CharacterSkinIndex = new List<int>();
@@ -59,24 +56,8 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     private void InitMenu()
     {
-        DeactivateAllMenu();
-        switch (GameManager.Instance.GlobalGameState)
-        {
-            case GlobalGameState.MainMenu:
-                GoTo_MainMenu();
-                break;
-            case GlobalGameState.CharacterSelectMenu:
-                GoTo_CharacterSelectMenu();
-                break;
-            case GlobalGameState.LevelSelectMenu:
-                GoTo_LevelSelectMenu();
-                break;
-            case GlobalGameState.OptionsMenu:
-                GoTo_OptionsMenu();
-                break;
-            default:
-                break;
-        }
+        //DeactivateAllMenu();
+        MainMenu.Activate();
     }
 
 
@@ -189,6 +170,7 @@ public class MenuManager : MonoBehaviour
     }
 
 
+    /*
     /// <summary>
     ///
     /// </summary>
@@ -257,7 +239,7 @@ public class MenuManager : MonoBehaviour
         CharacterSelectMenu.Deactivate();
         LevelSelectMenu.Deactivate();
         OptionsMenu.Deactivate();
-    }
+    }*/
 
 
     /// <summary>
