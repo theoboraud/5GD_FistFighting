@@ -168,6 +168,7 @@ public class PlayersManager : MonoBehaviour
 
         if (PlayersLives[Players.IndexOf(_player)] <= 0)
         {
+            PlayersAlive.Remove(_player);
             PlayersDeathOrder.Add(_player);
 
             if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
