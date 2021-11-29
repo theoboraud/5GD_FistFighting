@@ -14,9 +14,10 @@ public class PlayersManager : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public List<Player> Players;                         // All players references
+    [System.NonSerialized] public List<Player> PlayersSpawned;                  // All players spawned currently
     [System.NonSerialized] public List<Player> PlayersAlive;                    // All players alive in the current game
     [System.NonSerialized] public List<Player> PlayersDeathOrder;               // All players that died in the current game, in the death order
-    [System.NonSerialized] public List<int> PlayersLives = new List<int>();      // Nb of lives for each player
+    [System.NonSerialized] public List<int> PlayersLives = new List<int>();     // Nb of lives for each player
 
     // #endregion
 
@@ -39,6 +40,7 @@ public class PlayersManager : MonoBehaviour
 
             // Init variables
             Players = new List<Player>();
+            PlayersSpawned = new List<Player>();
             PlayersAlive = new List<Player>();
             PlayersDeathOrder = new List<Player>();
 
@@ -112,11 +114,12 @@ public class PlayersManager : MonoBehaviour
         _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
 
         // Add the player to PlayersAlive references in PlayerManager
-        if (PlayersAlive.Contains(_player))
+        if (!PlayersAlive.Contains(_player))
         {
-            PlayersAlive.Remove(_player);
+            PlayersAlive.Add(_player);
         }
-        PlayersAlive.Add(_player);
+        PlayersSpawned.Add(_player);
+
     }
 
 
@@ -136,6 +139,7 @@ public class PlayersManager : MonoBehaviour
             Players[i].Kill();
         }
 
+        PlayersSpawned.Clear();
         PlayersAlive.Clear();
     }
 
@@ -165,21 +169,22 @@ public class PlayersManager : MonoBehaviour
         // The player loses a life
         PlayersLives[Players.IndexOf(_player)] -= 1;
         MenuManager.Instance.UpdateLives();
+        PlayersSpawned.Remove(_player);
 
         if (PlayersLives[Players.IndexOf(_player)] <= 0)
         {
-            PlayersAlive.Remove(_player);
             PlayersDeathOrder.Add(_player);
+            PlayersAlive.Remove(_player);
 
             if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
             {
                 // If there is a winning player
-                if (PlayersDeathOrder.Count == Players.Count - 1)
+                if (PlayersAlive.Count == 1)
                 {
                     GameManager.Instance.EndOfRound(PlayersAlive[0]);
                 }
                 // If there is only one player playing
-                else if (PlayersDeathOrder.Count == Players.Count)
+                else if (PlayersAlive.Count == 0)
                 {
                     GameManager.Instance.EndOfRound(null);
                 }
