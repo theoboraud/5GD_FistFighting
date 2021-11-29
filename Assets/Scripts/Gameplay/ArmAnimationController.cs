@@ -12,7 +12,7 @@ public class ArmAnimationController : MonoBehaviour
     {
         animator.SetBool("Extend", true);
         Invoke("StopAnimation", 0.25f);
-        Invoke("ActivateCollider", 0.1f);
+        Invoke("ActivateCollider", 0.2f);
     }
 
     public void PlayHoldAnimation()
@@ -35,7 +35,7 @@ public class ArmAnimationController : MonoBehaviour
     public void ActivateCollider()
     {
         collider.enabled = true;
-        Invoke("DeactivateCollider", GameManager.Instance.ParamData.PARAM_Player_ArmCooldown * 0.125f);
+        Invoke("DeactivateCollider", 0.1f);
     }
 
     public void DeactivateCollider()

@@ -55,9 +55,21 @@ public class PlayerArmController : MonoBehaviour
             Arms[i].anim.PlayAnimation();
             Arms[i].Cooldown = true;
 
-            if (CheckIfRigidbodyInRange(i))
+            if (CheckIfRigidbodyInRange(i) && !CheckIfEnvironmentInRange(i))
             {
                 LaunchForeignObject(i);
+            }
+            else if(CheckIfEnvironmentInRange(i) && CheckIfRigidbodyInRange(i))
+            {
+                RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
+                if(Vector2.Distance(this.transform.position, ray.point) < Arms[i].GetClosestRigidbodyPosition())
+                {
+                    LaunchThisAvatarFromGround(i);
+                }
+                else
+                {
+                    LaunchForeignObject(i);
+                }
             }
             else if (CheckIfEnvironmentInRange(i))
             {
