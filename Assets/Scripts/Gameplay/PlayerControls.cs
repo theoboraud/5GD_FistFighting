@@ -196,6 +196,9 @@ public class PlayerControls : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///     Called for checking sticks value
+    /// </summary>
     private void Update()
     {
         Rotate.Input_Rotating(action_rotate.ReadValue<float>());
@@ -220,6 +223,30 @@ public class PlayerControls : MonoBehaviour
         else if (GameManager.Instance.GlobalGameState == GlobalGameState.WinnerScreen && _context.canceled)
         {
             GameManager.Instance.ScoreScreen();
+        }
+    }
+
+
+    /// <summary>
+    ///     Called when using controls for changing characters in the lobby
+    /// </summary>
+    public void Gameplay_NextCharacter(InputAction.CallbackContext _context)
+    {
+        if (LevelManager.Instance.CurrentSceneIndex == 0 && _context.interaction is PressInteraction && _context.started)
+        {
+            Player.NextCharacter();
+        }
+    }
+
+
+    /// <summary>
+    ///     Called when using controls for changing characters in the lobby
+    /// </summary>
+    public void Gameplay_PreviousCharacter(InputAction.CallbackContext _context)
+    {
+        if (LevelManager.Instance.CurrentSceneIndex == 0 && _context.interaction is PressInteraction && _context.started)
+        {
+            Player.PreviousCharacter();
         }
     }
 

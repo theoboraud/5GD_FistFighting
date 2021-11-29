@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public float StunTimer;
     [System.NonSerialized] public float ForceIncreaseFactor;
 
+    private int skinIndex;                         // Contains the index of the current skin
+
     // #endregion
 
 
@@ -64,7 +66,8 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<PlayerControls>().Init();
 
         // Get a random skin at start -> TODO: Select skin
-        ChangeSkin(PlayersManager.Instance.SkinsData.GetRandomSkin());
+        skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
+        ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
 
         // Init player color and add to PlayersManager Players references
         InitIndicatorColor();
@@ -162,6 +165,38 @@ public class Player : MonoBehaviour
     public void ChangeSkin(CharacterSkin _charSkin)
     {
         this.CharSkin = _charSkin;
+        InitSkin();
+    }
+
+
+    /// <summary>
+    ///     Change character skin to the next one in the SkinData library
+    /// </summary>
+    public void NextCharacter()
+    {
+        skinIndex = skinIndex + 1;
+        if (skinIndex >= PlayersManager.Instance.SkinsData.CharacterSkins.Count)
+        {
+            skinIndex = 0;
+        }
+        this.CharSkin = PlayersManager.Instance.SkinsData.GetSkin(skinIndex);
+
+        InitSkin();
+    }
+
+
+    /// <summary>
+    ///     Change character skin to the previous one in the SkinData library
+    /// </summary>
+    public void PreviousCharacter()
+    {
+        skinIndex = skinIndex - 1;
+        if (skinIndex < 0)
+        {
+            skinIndex = PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1;
+        }
+        this.CharSkin = PlayersManager.Instance.SkinsData.GetSkin(skinIndex);
+
         InitSkin();
     }
 

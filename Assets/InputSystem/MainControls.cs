@@ -73,6 +73,22 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Hold""
+                },
+                {
+                    ""name"": ""NextCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""118f1003-80c9-499b-acd7-2f74c7a0cec8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""PreviousCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""3598f70b-141f-49d5-90d6-16454bb80950"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -90,7 +106,7 @@ public class @MainControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4073af91-45cc-4274-8ff9-7eacfdb3817b"",
-                    ""path"": ""<Keyboard>/#(s)"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -156,7 +172,7 @@ public class @MainControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7f54feb0-79ec-40be-848b-d31ba8423af8"",
-                    ""path"": ""<Keyboard>/#(d)"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -255,11 +271,55 @@ public class @MainControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""acff1cbf-f817-454e-a50f-3bf7e1f87232"",
-                    ""path"": ""<Keyboard>/#(e)"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""HoldTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d780514e-faa2-4a9a-a265-725f36a7641e"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""NextCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efe60712-ab48-42bc-8cd3-dbaefa84b42b"",
+                    ""path"": ""<Keyboard>/semicolon"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""NextCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5994975f-455c-4845-b11d-994674075f86"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PreviousCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20585c1c-a394-44cc-afb9-d83a1d52f06a"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PreviousCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -480,6 +540,8 @@ public class @MainControls : IInputActionCollection, IDisposable
         m_Gameplay_Start = m_Gameplay.FindAction("Start", throwIfNotFound: true);
         m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
         m_Gameplay_HoldTrigger = m_Gameplay.FindAction("HoldTrigger", throwIfNotFound: true);
+        m_Gameplay_NextCharacter = m_Gameplay.FindAction("NextCharacter", throwIfNotFound: true);
+        m_Gameplay_PreviousCharacter = m_Gameplay.FindAction("PreviousCharacter", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Up = m_Menu.FindAction("Up", throwIfNotFound: true);
@@ -543,6 +605,8 @@ public class @MainControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Start;
     private readonly InputAction m_Gameplay_Rotate;
     private readonly InputAction m_Gameplay_HoldTrigger;
+    private readonly InputAction m_Gameplay_NextCharacter;
+    private readonly InputAction m_Gameplay_PreviousCharacter;
     public struct GameplayActions
     {
         private @MainControls m_Wrapper;
@@ -554,6 +618,8 @@ public class @MainControls : IInputActionCollection, IDisposable
         public InputAction @Start => m_Wrapper.m_Gameplay_Start;
         public InputAction @Rotate => m_Wrapper.m_Gameplay_Rotate;
         public InputAction @HoldTrigger => m_Wrapper.m_Gameplay_HoldTrigger;
+        public InputAction @NextCharacter => m_Wrapper.m_Gameplay_NextCharacter;
+        public InputAction @PreviousCharacter => m_Wrapper.m_Gameplay_PreviousCharacter;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -584,6 +650,12 @@ public class @MainControls : IInputActionCollection, IDisposable
                 @HoldTrigger.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldTrigger;
                 @HoldTrigger.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldTrigger;
                 @HoldTrigger.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldTrigger;
+                @NextCharacter.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNextCharacter;
+                @NextCharacter.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNextCharacter;
+                @NextCharacter.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNextCharacter;
+                @PreviousCharacter.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPreviousCharacter;
+                @PreviousCharacter.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPreviousCharacter;
+                @PreviousCharacter.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPreviousCharacter;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -609,6 +681,12 @@ public class @MainControls : IInputActionCollection, IDisposable
                 @HoldTrigger.started += instance.OnHoldTrigger;
                 @HoldTrigger.performed += instance.OnHoldTrigger;
                 @HoldTrigger.canceled += instance.OnHoldTrigger;
+                @NextCharacter.started += instance.OnNextCharacter;
+                @NextCharacter.performed += instance.OnNextCharacter;
+                @NextCharacter.canceled += instance.OnNextCharacter;
+                @PreviousCharacter.started += instance.OnPreviousCharacter;
+                @PreviousCharacter.performed += instance.OnPreviousCharacter;
+                @PreviousCharacter.canceled += instance.OnPreviousCharacter;
             }
         }
     }
@@ -705,6 +783,8 @@ public class @MainControls : IInputActionCollection, IDisposable
         void OnStart(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnHoldTrigger(InputAction.CallbackContext context);
+        void OnNextCharacter(InputAction.CallbackContext context);
+        void OnPreviousCharacter(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
