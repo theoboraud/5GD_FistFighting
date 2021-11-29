@@ -61,6 +61,9 @@ TagManager:
   - name: Faces
     uniqueID: 19936561
     locked: 0
+  - name: ForeGround
+    uniqueID: 739689027
+    locked: 0
   - name: UI
     uniqueID: 31769
     locked: 0
