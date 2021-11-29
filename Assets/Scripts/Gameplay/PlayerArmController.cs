@@ -118,8 +118,10 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     private void LaunchThisAvatarFromGround(int i)
     {
-        player.RB.velocity /= 2;
-        player.RB.angularVelocity /= 2;
+        player.AirPushFactor = 1f;
+
+        player.RB.velocity *= 0.75f;
+        player.RB.angularVelocity *= 0.75f;
 
         player.RB.AddForce
             (Arms[i].transform.up *
@@ -146,10 +148,18 @@ public class PlayerArmController : MonoBehaviour
 
         player.RB.AddForce
             (Arms[i].transform.up *
+            player.AirPushFactor *
             GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
             (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
+
+        player.AirPushFactor -= 0.01f;
+        if (player.AirPushFactor <= 0.98f)
+        {
+            player.AirPushFactor = 0f;
+        }
+
         GameManager.Instance.Feedback.SpawnHitAvatarVFX
             (Arms[i].transform.position + Arms[i].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
