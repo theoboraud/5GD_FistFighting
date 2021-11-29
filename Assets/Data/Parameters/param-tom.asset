@@ -18,7 +18,7 @@ MonoBehaviour:
   PARAM_Player_LinearDrag: 0
   PARAM_Player_AngularDrag: 6
   PARAM_Player_StunRecoveryTime: 0.35
-  PARAM_Player_ArmGroundForce: 12.5
+  PARAM_Player_ArmGroundForce: 14
   PARAM_Player_ArmHitForce: 25
   PARAM_Player_ArmCooldown: 0.4
   PARAM_Player_ArmExtendingTime: 15
