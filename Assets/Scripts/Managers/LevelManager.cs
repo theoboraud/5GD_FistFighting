@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<GameObject> SpawnPoints;     // Current level spawn points
     [System.NonSerialized] public int CurrentSceneIndex = 0;        // Index of the current scene (in Build Settings)
+    private List<int> LevelsPlayed = new List<int>();
 
     // TODO Implement level classes to load data ?
     //[System.NonSerialized] public List<LevelData> Levels;
@@ -91,7 +92,7 @@ public class LevelManager : MonoBehaviour
         {
             MenuManager.Instance.StartTimer();
         }
-        
+
         MenuManager.Instance.UpdateLives();
     }
 
@@ -138,14 +139,25 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadNextLevel()
     {
-        int _nextSceneIndex = CurrentSceneIndex + 1;
-
-        // If the next scene index is more than the number of scenes, we go back to the first game level (a.k.a. the second level)
-        if (_nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+        // If not lobby level, add it to the levels played
+        if (CurrentSceneIndex != 0)
         {
-            _nextSceneIndex = 1;
+            LevelsPlayed.Add(CurrentSceneIndex);
         }
 
+        // If we played every level, empty the list
+        if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 1)
+        {
+            LevelsPlayed.Clear();
+        }
+
+        // Get a random scene index not yet in LevelsPlayed
+        int _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings - 1);
+        while (LevelsPlayed.Contains(_nextSceneIndex))
+        {
+            _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings - 1);
+        }
+        
         PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
 
         LoadScene(_nextSceneIndex);
@@ -155,6 +167,12 @@ public class LevelManager : MonoBehaviour
     public void Reset()
     {
         MenuManager.Instance.PrintScoreScreen(false);
+
+        for (int i = 0; i < MenuManager.Instance.UI_PlayersLives.Count; i++)
+        {
+            Destroy(MenuManager.Instance.UI_PlayersLives[i].transform.parent.gameObject);
+        }
+
         PlayersManager.Instance.PlayersDeathOrder.Clear();
         GameManager.Instance.Feedback.ResetAllVFX();
         GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
