@@ -9,13 +9,14 @@ public class PlayersManager : MonoBehaviour
     // #region ==================== CLASS VARIABLES ====================
 
     [Header("References")]
-    [System.NonSerialized] public static PlayersManager Instance;   // Singleton reference
-    [System.NonSerialized] public SkinsData SkinsData;              // SkinData reference for loading skins
+    [System.NonSerialized] public static PlayersManager Instance;               // Singleton reference
+    [System.NonSerialized] public SkinsData SkinsData;                          // SkinData reference for loading skins
 
     [Header("Variables")]
-    [System.NonSerialized] public List<Player> Players;             // All players references
-    [System.NonSerialized] public List<Player> PlayersAlive;        // All players alive in the current game
-    [System.NonSerialized] public List<Player> PlayersDeathOrder;   // All players that died in the current game, in the death order
+    [System.NonSerialized] public List<Player> Players;                         // All players references
+    [System.NonSerialized] public List<Player> PlayersAlive;                    // All players alive in the current game
+    [System.NonSerialized] public List<Player> PlayersDeathOrder;               // All players that died in the current game, in the death order
+    [System.NonSerialized] public List<int> PlayerLives = new List<int>();      // Nb of lives for each player
 
     // #endregion
 
@@ -60,9 +61,16 @@ public class PlayersManager : MonoBehaviour
     {
         // Add the player for every manager and init its values
         Players.Add(_player);
+        PlayerLives.Add(GameManager.Instance.ParamData.PARAM_Player_Lives); // Set lives to starting value
         MenuManager.Instance.AddPlayerColor(Players.IndexOf(_player));
         MenuManager.Instance.AddPlayerScore(Players.IndexOf(_player));
         GameManager.Instance.PlayerScores.Add(0);
+        
+        // Set action map on Gameplay if player is spawning InPlay
+        if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
+        {
+            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
+        }
 
         // Spawn the player
         SpawnPlayer(_player);
@@ -75,11 +83,12 @@ public class PlayersManager : MonoBehaviour
     /// <summary>
     ///     Spawn all players registered by PlayersManager
     /// </summary>
-    public void SpawnAllPlayers()
+    public void ResetPlayerLives()
     {
-        for (int i = PlayersManager.Instance.PlayersAlive.Count; i < PlayersManager.Instance.Players.Count; i++)
+        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
         {
-            SpawnPlayer(PlayersManager.Instance.Players[i]);
+            // Reinit player lives
+            PlayerLives[i] = GameManager.Instance.ParamData.PARAM_Player_Lives;
         }
     }
 
@@ -138,20 +147,31 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void KillPlayer(Player _player)
     {
+        // The player loses a life
+        PlayerLives[Players.IndexOf(_player)] -= 1;
         PlayersAlive.Remove(_player);
-        PlayersDeathOrder.Add(_player);
 
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
+        if (PlayerLives[Players.IndexOf(_player)] <= 0)
         {
-            if (PlayersAlive.Count == 1)
+            PlayersDeathOrder.Add(_player);
+
+            if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
             {
-                GameManager.Instance.EndOfRound(PlayersAlive[0]);
+                // If there is a winning player
+                if (PlayersDeathOrder.Count == Players.Count - 1)
+                {
+                    GameManager.Instance.EndOfRound(PlayersAlive[0]);
+                }
+                // If there is only one player playing
+                else if (PlayersDeathOrder.Count == Players.Count)
+                {
+                    GameManager.Instance.EndOfRound(null);
+                }
             }
-            // If there is only one player
-            else if (PlayersAlive.Count == 0)
-            {
-                GameManager.Instance.EndOfRound(null);
-            }
+        }
+        else
+        {
+            StartSpawningPlayer(_player);
         }
     }
 
@@ -177,8 +197,7 @@ public class PlayersManager : MonoBehaviour
         {
             for (int i = 0; i < Players.Count; i++)
             {
-                PlayerInput _playerInput = Players[i].GetComponent<PlayerInput>();
-                _playerInput.SwitchCurrentActionMap(_newMode);
+                Players[i].GetComponent<PlayerInput>().SwitchCurrentActionMap(_newMode);
             }
         }
         else
