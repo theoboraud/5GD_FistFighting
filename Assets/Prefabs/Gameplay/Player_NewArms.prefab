@@ -362,7 +362,7 @@ SpriteRenderer:
   m_SortingLayerID: 19936561
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 60b199ee344bdcd4583322ba2f31c420, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2dedc88f13a5f3244ada79f7d2852100, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -463,7 +463,19 @@ MonoBehaviour:
     m_ActionId: c155569e-ed1f-4db0-b151-a5ddfb2bbdb6
     m_ActionName: BaseControls/LeftArm[/Keyboard/a]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3996649375659255604}
+        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+        m_MethodName: Menu_GoUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d98e8f0c-a8f4-4d6e-b850-f6f13a195f6d
     m_ActionName: Menu/Up[/XboxOneGampadMacOSWireless/dpad/up,/Keyboard/upArrow]
   - m_PersistentCalls:
@@ -471,7 +483,19 @@ MonoBehaviour:
     m_ActionId: db964beb-1635-4caf-9408-abe3c5d62938
     m_ActionName: Menu/Right[/XboxOneGampadMacOSWireless/dpad/right,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3996649375659255604}
+        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+        m_MethodName: Menu_GoDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: aadcdc37-9e6d-4ce8-9811-bde53f46496b
     m_ActionName: Menu/Down[/XboxOneGampadMacOSWireless/dpad/down,/Keyboard/downArrow]
   - m_PersistentCalls:
@@ -552,7 +576,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/PreviousCharacter[/XboxOneGampadMacOSWireless/dpad/left,/Keyboard/l]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
+  m_DefaultActionMap: Menu
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &3996649375659255604

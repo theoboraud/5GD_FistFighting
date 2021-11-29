@@ -184,5 +184,12 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
+
+    public void Play()
+    {
+        GlobalGameState = GlobalGameState.InPlay;
+        PlayersManager.Instance.ChangeMode("Gameplay");
+    }
+
     // #endregion
 }

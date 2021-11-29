@@ -61,8 +61,8 @@ public class PlayersManager : MonoBehaviour
         // Add the player for every manager and init its values
         Players.Add(_player);
         MenuManager.Instance.AddPlayerColor(Players.IndexOf(_player));
-        GameManager.Instance.PlayerScores.Add(0);
         MenuManager.Instance.AddPlayerScore(Players.IndexOf(_player));
+        GameManager.Instance.PlayerScores.Add(0);
 
         // Spawn the player
         SpawnPlayer(_player);
@@ -167,6 +167,23 @@ public class PlayersManager : MonoBehaviour
             {
                 Players[i].Kill();
             }
+        }
+    }
+
+
+    public void ChangeMode(string _newMode)
+    {
+        if (_newMode == "Gameplay" || _newMode == "Menu")
+        {
+            for (int i = 0; i < Players.Count; i++)
+            {
+                PlayerInput _playerInput = Players[i].GetComponent<PlayerInput>();
+                _playerInput.SwitchCurrentActionMap(_newMode);
+            }
+        }
+        else
+        {
+            Debug.Log("ERROR: _newMode has the value " + _newMode.ToString() + " which is not valid. See PlayersManager.ChangeMode()");
         }
     }
 

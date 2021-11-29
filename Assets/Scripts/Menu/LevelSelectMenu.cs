@@ -14,7 +14,7 @@ public class LevelSelectMenu : Menu
 
     public void ButtonPlay()
     {
-        MenuManager.Instance.GoTo_CharacterSelectMenu();
+        //MenuManager.Instance.GoTo_CharacterSelectMenu();
     }
 
     public void ButtonOptions()
