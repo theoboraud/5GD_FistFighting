@@ -18,7 +18,8 @@ public class MenuManager : MonoBehaviour
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
-    public List<Color> PlayerColors;
+    public List<Color> PlayerColors;                                                    // Reference to the player colors
+    public List<GameObject> UI_PlayersLives = new List<GameObject>();                   // Reference to the UI indicating the number of player lives
 
     [Header("Menu Screens")]
     public MainMenu MainMenu;
@@ -263,9 +264,13 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    public void AddPlayerScore(int _playerIndex)
+    public void AddPlayer(int _playerIndex)
     {
+        UpdateLives();
         PlayerScores[_playerIndex].gameObject.SetActive(true);
+        PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
+        UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
+        UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
     }
 
 
@@ -296,10 +301,32 @@ public class MenuManager : MonoBehaviour
 
 
     /// <summary>
-    ///     Set the color for each UI element corresponding to the player
+    ///     Update lives UI
     /// </summary>
-    public void AddPlayerColor(int _playerIndex)
+    public void UpdateLives()
     {
-        PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
+        for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
+        {
+            int _playerLives = PlayersManager.Instance.PlayersLives[i];
+            Text _text = UI_PlayersLives[i].GetComponent<Text>();
+
+            if (_playerLives > 0)
+            {
+                _text.text = _playerLives.ToString();
+            }
+            else
+            {
+                _text.text = "X";
+            }
+
+            if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1 && LevelManager.Instance.CurrentSceneIndex != 0)
+            {
+                _text.color = Color.red;
+            }
+            else
+            {
+                _text.color = Color.black;
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ public class PlayersManager : MonoBehaviour
     [System.NonSerialized] public List<Player> Players;                         // All players references
     [System.NonSerialized] public List<Player> PlayersAlive;                    // All players alive in the current game
     [System.NonSerialized] public List<Player> PlayersDeathOrder;               // All players that died in the current game, in the death order
-    [System.NonSerialized] public List<int> PlayerLives = new List<int>();      // Nb of lives for each player
+    [System.NonSerialized] public List<int> PlayersLives = new List<int>();      // Nb of lives for each player
 
     // #endregion
 
@@ -41,6 +41,9 @@ public class PlayersManager : MonoBehaviour
             Players = new List<Player>();
             PlayersAlive = new List<Player>();
             PlayersDeathOrder = new List<Player>();
+
+            // Players have only 1 life in the lobby
+            ResetPlayersLives(1);
         }
         else
         {
@@ -61,11 +64,19 @@ public class PlayersManager : MonoBehaviour
     {
         // Add the player for every manager and init its values
         Players.Add(_player);
-        PlayerLives.Add(GameManager.Instance.ParamData.PARAM_Player_Lives); // Set lives to starting value
-        MenuManager.Instance.AddPlayerColor(Players.IndexOf(_player));
-        MenuManager.Instance.AddPlayerScore(Players.IndexOf(_player));
+        // Set lives to starting value
+        if (LevelManager.Instance.CurrentSceneIndex == 0)
+        {
+            PlayersLives.Add(1);
+        }
+        else
+        {
+            PlayersLives.Add(GameManager.Instance.ParamData.PARAM_Player_Lives);
+        }
+
+        MenuManager.Instance.AddPlayer(Players.IndexOf(_player));
         GameManager.Instance.PlayerScores.Add(0);
-        
+
         // Set action map on Gameplay if player is spawning InPlay
         if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
         {
@@ -83,12 +94,12 @@ public class PlayersManager : MonoBehaviour
     /// <summary>
     ///     Spawn all players registered by PlayersManager
     /// </summary>
-    public void ResetPlayerLives()
+    public void ResetPlayersLives(int _lives)
     {
-        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
             // Reinit player lives
-            PlayerLives[i] = GameManager.Instance.ParamData.PARAM_Player_Lives;
+            PlayersLives[i] = _lives;
         }
     }
 
@@ -148,10 +159,11 @@ public class PlayersManager : MonoBehaviour
     public void KillPlayer(Player _player)
     {
         // The player loses a life
-        PlayerLives[Players.IndexOf(_player)] -= 1;
+        PlayersLives[Players.IndexOf(_player)] -= 1;
+        MenuManager.Instance.UpdateLives();
         PlayersAlive.Remove(_player);
 
-        if (PlayerLives[Players.IndexOf(_player)] <= 0)
+        if (PlayersLives[Players.IndexOf(_player)] <= 0)
         {
             PlayersDeathOrder.Add(_player);
 

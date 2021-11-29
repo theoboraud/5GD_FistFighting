@@ -91,6 +91,8 @@ public class LevelManager : MonoBehaviour
         {
             MenuManager.Instance.StartTimer();
         }
+        
+        MenuManager.Instance.UpdateLives();
     }
 
 
@@ -108,6 +110,9 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadLobbyLevel()
     {
+        // Players only have 1 life in the lobby
+        PlayersManager.Instance.ResetPlayersLives(1);
+
         LoadScene(0);
     }
 
@@ -141,7 +146,7 @@ public class LevelManager : MonoBehaviour
             _nextSceneIndex = 1;
         }
 
-        PlayersManager.Instance.ResetPlayerLives();
+        PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
 
         LoadScene(_nextSceneIndex);
     }
