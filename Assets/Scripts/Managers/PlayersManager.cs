@@ -58,9 +58,13 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void AddPlayer(Player _player)
     {
+        // Add the player for every manager and init its values
         Players.Add(_player);
         MenuManager.Instance.AddPlayerColor(Players.IndexOf(_player));
         GameManager.Instance.PlayerScores.Add(0);
+        MenuManager.Instance.AddPlayerScore(Players.IndexOf(_player));
+
+        // Spawn the player
         SpawnPlayer(_player);
 
         // Add its timer reference to SpawningTimers in MenuManager
