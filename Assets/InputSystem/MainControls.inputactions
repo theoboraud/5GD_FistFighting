@@ -60,6 +60,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
+                },
+                {
+                    "name": "NextCharacter",
+                    "type": "Button",
+                    "id": "118f1003-80c9-499b-acd7-2f74c7a0cec8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "PreviousCharacter",
+                    "type": "Button",
+                    "id": "3598f70b-141f-49d5-90d6-16454bb80950",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -77,7 +93,7 @@
                 {
                     "name": "",
                     "id": "4073af91-45cc-4274-8ff9-7eacfdb3817b",
-                    "path": "<Keyboard>/#(s)",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -143,7 +159,7 @@
                 {
                     "name": "",
                     "id": "7f54feb0-79ec-40be-848b-d31ba8423af8",
-                    "path": "<Keyboard>/#(d)",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -242,11 +258,55 @@
                 {
                     "name": "",
                     "id": "acff1cbf-f817-454e-a50f-3bf7e1f87232",
-                    "path": "<Keyboard>/#(e)",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "HoldTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d780514e-faa2-4a9a-a265-725f36a7641e",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "NextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efe60712-ab48-42bc-8cd3-dbaefa84b42b",
+                    "path": "<Keyboard>/semicolon",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "NextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5994975f-455c-4845-b11d-994674075f86",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "PreviousCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20585c1c-a394-44cc-afb9-d83a1d52f06a",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PreviousCharacter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

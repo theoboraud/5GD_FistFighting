@@ -153,7 +153,7 @@ public class MenuManager : MonoBehaviour
         UI_SpawningTimers[_playerIndex].SetActive(true);
 
         // Update the scale according to the camera distance
-        float _newScale = 10f / Camera.main.orthographicSize;
+        float _newScale = 22f / Camera.main.orthographicSize;
         UI_SpawningTimers[_playerIndex].GetComponent<RectTransform>().localScale = new Vector3(_newScale, _newScale, _newScale);
 
         // Init the timer value
@@ -278,6 +278,12 @@ public class MenuManager : MonoBehaviour
     public void PrintWinnerScreen_Alone(bool _bool)
     {
         WinnerScreen_Alone.SetActive(_bool);
+    }
+
+
+    public void AddPlayerScore(int _playerIndex)
+    {
+        PlayerScores[_playerIndex].gameObject.SetActive(true);
     }
 
 
