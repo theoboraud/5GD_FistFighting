@@ -141,6 +141,8 @@ public class LevelManager : MonoBehaviour
             _nextSceneIndex = 1;
         }
 
+        PlayersManager.Instance.ResetPlayerLives();
+
         LoadScene(_nextSceneIndex);
     }
 

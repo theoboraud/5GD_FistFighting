@@ -153,7 +153,7 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""UpArm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

@@ -7,8 +7,6 @@ namespace Enums
         ScoreScreen,
         PlayerWon,
         MainMenu,
-        CharacterSelectMenu,
-        LevelSelectMenu,
         OptionsMenu,
         Null,
     }

@@ -21,7 +21,6 @@ public class MainMenu : MonoBehaviour
 
     private void SelectActiveButton()
     {
-        print(Time.deltaTime.ToString() + ": new button should be index " + activeButtonIndex.ToString());
         activeButton = Buttons[activeButtonIndex];
         EventSystem.current.SetSelectedGameObject(activeButton.gameObject);
     }
