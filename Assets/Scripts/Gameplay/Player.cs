@@ -234,6 +234,9 @@ public class Player : MonoBehaviour
             this.transform.position = new Vector3(1000, 1000, 0);
 
             RB.simulated = false;
+            RB.velocity = Vector3.zero;
+            RB.angularVelocity = 0f;
+            
             PlayerGameState = PlayerGameState.Dead;
             PlayerArmController.Init();
 
