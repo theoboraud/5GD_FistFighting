@@ -112,6 +112,10 @@ public class PlayersManager : MonoBehaviour
         _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
 
         // Add the player to PlayersAlive references in PlayerManager
+        if (PlayersAlive.Contains(_player))
+        {
+            PlayersAlive.Remove(_player);
+        }
         PlayersAlive.Add(_player);
     }
 
@@ -161,7 +165,6 @@ public class PlayersManager : MonoBehaviour
         // The player loses a life
         PlayersLives[Players.IndexOf(_player)] -= 1;
         MenuManager.Instance.UpdateLives();
-        PlayersAlive.Remove(_player);
 
         if (PlayersLives[Players.IndexOf(_player)] <= 0)
         {
