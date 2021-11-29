@@ -40,6 +40,7 @@ public class PlayersManager : MonoBehaviour
 
             // Init variables
             Players = new List<Player>();
+            PlayersSpawned = new List<Player>();
             PlayersAlive = new List<Player>();
             PlayersDeathOrder = new List<Player>();
 
@@ -137,7 +138,7 @@ public class PlayersManager : MonoBehaviour
         {
             Players[i].Kill();
         }
-        
+
         PlayersSpawned.Clear();
         PlayersAlive.Clear();
     }
