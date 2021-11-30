@@ -224,11 +224,11 @@ public class Player : MonoBehaviour
     /// <summary>
     ///     Disable the player's sprite renderer and set its position to somewhere far from the map (to change?)
     /// </summary>
-    public void InvincibilityForSeconds(float time)
+    public void InvincibilityForSeconds(float _time)
     {
         PlayerGameState = PlayerGameState.Invincible;
         playerFeedbackManager.StartInvincibleFeedback();
-        Invoke("StopInvincibility", time);
+        Invoke("StopInvincibility", _time);
     }
 
     private void StopInvincibility()
