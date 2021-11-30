@@ -152,13 +152,13 @@ public class LevelManager : MonoBehaviour
         }
 
         // Get a random scene index not yet in LevelsPlayed
-        int _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings - 1);
+        int _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
 
         if (LevelsPlayed.Count > 0)
         {
             while (LevelsPlayed.Contains(_nextSceneIndex))
             {
-                _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings - 1);
+                _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
             }
         }
 
