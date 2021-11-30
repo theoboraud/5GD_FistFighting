@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 332428218}
   - component: {fileID: 332428220}
   - component: {fileID: 332428219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Child
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
@@ -2002,7 +2002,7 @@ GameObject:
   - component: {fileID: 948658855}
   - component: {fileID: 948658854}
   - component: {fileID: 948658856}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg2
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
@@ -2039,7 +2039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLeftLeg: 0
   DisactiveCollisionLegMove: 1
-  KickForce: 3
+  KickForce: 0.5
 --- !u!212 &948658855
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2507,7 +2507,7 @@ GameObject:
   - component: {fileID: 1403173318}
   - component: {fileID: 1403173321}
   - component: {fileID: 1403173320}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftFace
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
@@ -2721,7 +2721,7 @@ GameObject:
   - component: {fileID: 1557129248}
   - component: {fileID: 1557129250}
   - component: {fileID: 1557129249}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightFace
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
@@ -3024,7 +3024,7 @@ GameObject:
   - component: {fileID: 1664575145}
   - component: {fileID: 1664575144}
   - component: {fileID: 1664575146}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MoveLeg
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
@@ -6156,7 +6156,7 @@ GameObject:
   - component: {fileID: 2115330228}
   - component: {fileID: 2115330229}
   - component: {fileID: 2115330227}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg
   m_TagString: StaticGround
   m_Icon: {fileID: 0}
@@ -6193,7 +6193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLeftLeg: 1
   DisactiveCollisionLegMove: 1
-  KickForce: 3
+  KickForce: 0.5
 --- !u!212 &2115330228
 SpriteRenderer:
   m_ObjectHideFlags: 0

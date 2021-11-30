@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevels/LD_0.unity
     guid: 1864fa6ba79efe14e96e7183a7282e59
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/TestLevels/DA_Test_Levels/Dormir_DA_CS.unity
+    guid: 1c20039dbd3861341999a24274699d9f
+  - enabled: 1
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
     guid: a8f0e325e9f4cb740b06f1e150d31ed6
   - enabled: 0
@@ -38,22 +41,22 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_14.unity
     guid: 7e96b9bc2b6f03a4a8cd35f99feb044d
-  - enabled: 1
-    path: Assets/Scenes/WIP/LD_TB_01.unity
+  - enabled: 0
+    path: Assets/Scenes/MainLevels/New LD Theo/LD_TB_01.unity
     guid: 09443b608e7444f4cadd27e5d5dbf808
-  - enabled: 1
-    path: Assets/Scenes/WIP/LD_TB_02.unity
+  - enabled: 0
+    path: Assets/Scenes/MainLevels/New LD Theo/LD_TB_02.unity
     guid: 42b4c9ab41cdd4131946a53f9085698c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Tom/LD_0 Template 4.unity
     guid: fae0525f654d00b47b04ce340feaa799
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Tom/LD_0 Template 3.unity
     guid: 6117f5de623e5854782c2c6e14d186f5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Tom/LD_0 Template 2.unity
     guid: 692dbd7fe1830854389b5a43fdc1f0ac
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Tom/LD_0 Template 1.unity
     guid: aa05e2c0587b30b42a46b90e11633cd5
   m_configObjects:
