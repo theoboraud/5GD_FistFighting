@@ -446,7 +446,7 @@ SpriteRenderer:
   m_SortingLayerID: 19936561
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2dedc88f13a5f3244ada79f7d2852100, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cf00b96f3224940b0a84eeda7363ff3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -723,7 +723,6 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls: []
-  PlayerPhysicState: 0
 --- !u!114 &3787878368541288305
 MonoBehaviour:
   m_ObjectHideFlags: 0

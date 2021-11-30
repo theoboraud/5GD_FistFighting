@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33d4beee9101bf340bd6b5b249a1ce3b, type: 3}
-  m_Name: AngryRussian
+  m_Name: Chanco
   m_EditorClassIdentifier: 
-  Name: Angry Russian
-  SpriteFace: {fileID: 21300000, guid: 2dedc88f13a5f3244ada79f7d2852100, type: 3}
-  SpriteArm: {fileID: 21300000, guid: fdba2fe0649632c44882f873206e62c6, type: 3}
+  Name: Chanco
+  SpriteFace: {fileID: 21300000, guid: 37c6667345aa341edb51cc41a7181265, type: 3}
+  SpriteArm: {fileID: 21300000, guid: c29484a4134edb44c9eacfe2acffba3d, type: 3}

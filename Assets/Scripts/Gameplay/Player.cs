@@ -120,10 +120,10 @@ public class Player : MonoBehaviour
     private void InitSkin()
     {
         Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
-        /*for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
+        for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
             Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;
-        }*/
+        }
     }
 
 

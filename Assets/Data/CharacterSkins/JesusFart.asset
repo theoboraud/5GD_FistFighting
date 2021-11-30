@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d4beee9101bf340bd6b5b249a1ce3b, type: 3}
+  m_Name: JesusFart
+  m_EditorClassIdentifier: 
+  Name: JesusFart
+  SpriteFace: {fileID: 21300000, guid: 519c2f747d89c48f3a34c0e9f4eae944, type: 3}
+  SpriteArm: {fileID: 21300000, guid: c29484a4134edb44c9eacfe2acffba3d, type: 3}
