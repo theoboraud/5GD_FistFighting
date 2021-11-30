@@ -7,7 +7,8 @@ public class MoveLeg : MonoBehaviour
 {
     public bool IsLeftLeg;
     public bool DisactiveCollisionLegMove;
-    
+    public float KickForce;
+
     private bool isActiveForce = false;
     private bool isLegMove = false;
 
@@ -17,12 +18,13 @@ public class MoveLeg : MonoBehaviour
     {
         rotationZ = transform.rotation.eulerAngles.z;
         if (IsLeftLeg) coefRotate = 1; else coefRotate = -1;
+        if (KickForce == 0) KickForce = 3f;
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (isActiveForce)
         {
-            collision.rigidbody.AddForce((collision.transform.position - transform.position) * 10, ForceMode2D.Impulse);
+            collision.rigidbody.AddForce((collision.transform.position - transform.position) * KickForce, ForceMode2D.Impulse);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -33,7 +35,7 @@ public class MoveLeg : MonoBehaviour
         }
         if (isActiveForce)
         {
-            collision.rigidbody.AddForce((collision.transform.position - transform.position) * 10, ForceMode2D.Impulse);
+            collision.rigidbody.AddForce((collision.transform.position - transform.position)* KickForce, ForceMode2D.Impulse);
         }
     }
     private void LegMove()
