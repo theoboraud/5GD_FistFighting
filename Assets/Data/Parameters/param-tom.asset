@@ -21,12 +21,14 @@ MonoBehaviour:
   PARAM_Player_ArmGroundForce: 14
   PARAM_Player_ArmHitForce: 25
   PARAM_Player_ArmCooldown: 0.4
+  PARAM_Player_VelocityResetFactor: 0.75
   PARAM_Player_ArmExtendingTime: 15
   PARAM_Player_ArmUnextendingTime: 15
   PARAM_Player_MaxTriggerHoldTime: 1
   PARAM_Player_ForceIncreaseFactor: 1.5
   PARAM_Player_AirControlForce: 10
   PARAM_Player_AirControlForceLossFactor: 0.1
+  PARAM_Player_AirControlJumpNumber: 3
   PARAM_Player_RotationTorque_InAir: 450
   PARAM_Player_RotationForce_InAir: 40
   PARAM_Player_RotationTorque_OnGround: 1000
