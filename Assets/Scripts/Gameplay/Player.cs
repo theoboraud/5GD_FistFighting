@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public PlayerGameState PlayerGameState;
-    public PlayerPhysicState PlayerPhysicState;
+    [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
     [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
