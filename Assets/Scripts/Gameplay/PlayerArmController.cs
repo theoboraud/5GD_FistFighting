@@ -146,7 +146,7 @@ public class PlayerArmController : MonoBehaviour
         // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
         player.AirPushFactor -= 0.01f;
         float _maxAirPushFactor = 1f - (GameManager.Instance.ParamData.PARAM_Player_AirControlJumpNumber * 0.01f);
-        if (player.AirPushFactor <= _maxAirPushFactor)
+        if (player.AirPushFactor < _maxAirPushFactor)
         {
             player.AirPushFactor = 0f;
         }
@@ -165,10 +165,13 @@ public class PlayerArmController : MonoBehaviour
             (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
 
-        GameManager.Instance.Feedback.SpawnHitAvatarVFX
-            (Arms[i].transform.position + Arms[i].transform.up * -2,
-            Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
-            Vector3.forward));
+        if (player.AirPushFactor > 0f)
+        {
+            GameManager.Instance.Feedback.SpawnHitAvatarVFX
+                (Arms[i].transform.position + Arms[i].transform.up * -2,
+                Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
+                Vector3.forward));
+        }
     }
 
 
