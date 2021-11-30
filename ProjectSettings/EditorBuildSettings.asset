@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Dormir_DA_CS.unity
     guid: 1c20039dbd3861341999a24274699d9f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
     guid: a8f0e325e9f4cb740b06f1e150d31ed6
   - enabled: 0
