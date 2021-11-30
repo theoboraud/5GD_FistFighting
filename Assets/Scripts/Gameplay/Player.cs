@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerFeedbackManager playerFeedbackManager;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
+    public SpriteRenderer Outline_SpriteRenderer;
     [SerializeField] private GameObject playerIndicator;
     [SerializeField] private GameObject UI_PlayerIndicator;
     [SerializeField] private BoxCollider2D BoxCollider;
@@ -120,6 +121,8 @@ public class Player : MonoBehaviour
     private void InitSkin()
     {
         Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
+        Outline_SpriteRenderer.sprite = CharSkin.SpriteFace;
+        
         for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
             Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;

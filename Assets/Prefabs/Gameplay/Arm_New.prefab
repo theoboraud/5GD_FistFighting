@@ -187,10 +187,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fcc1e7aa3c4a048b5cb67120b20a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbodies: []
-  players: []
+  Rigidbodies: []
+  Players: []
   StaticEnvironmentInRange: 0
   anim: {fileID: 2623607050116399580}
+  Cooldown: 0
+  Holding: 0
+  holding_timer: 0
 --- !u!61 &6683747768370366081
 BoxCollider2D:
   m_ObjectHideFlags: 0
