@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<int> PlayerScores = new List<int>();             // Score value of each player
     [System.NonSerialized] public bool PlayerHasWon = false;                            // Whether or not a player has won
-    [System.NonSerialized] public int IndexWinner = -1;                                 // Whether or not a player has won
+    [System.NonSerialized] public int IndexWinner
+    [System.NonSerialized] public Player RoundWinner;                                   // Winning player of the round reference
 
 
 
@@ -84,13 +85,13 @@ public class GameManager : MonoBehaviour
         {
             GlobalGameState = GlobalGameState.Null;
 
-            int _indexFirst = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[PlayersManager.Instance.PlayersDeathOrder.Count - 1]);
+            int _indexRoundWinner = PlayersManager.Instance.Players.IndexOf(RoundWinner);
             int _winnerIndex = -1;
-            PlayerScores[_indexFirst] += 1;
+            PlayerScores[] += 1;
 
-            if (PlayerScores[_indexFirst] >= 7)
+            if (PlayerScores[_indexRoundWinner] >= 5)
             {
-                _winnerIndex = _indexFirst;
+                _winnerIndex = _indexRoundWinner;
             }
             /*
             // Update the score
@@ -119,14 +120,19 @@ public class GameManager : MonoBehaviour
             // Print out the score screen
             MenuManager.Instance.PrintScoreScreen(true);
             Invoke("SetStateToScoreScreen", 0.1f);
+
+            // Reset the RoundWinner
+            RoundWinner = null;
         }
         else
         {
             GlobalGameState = GlobalGameState.ScoreScreen;
-            for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+
+            for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
             {
-                PlayersManager.Instance.Players[i].Kill();
+                PlayersManager.Instance.PlayersAlive[i].Kill();
             }
+
             Invoke("NewGameRound", 0.1f);
         }
     }
@@ -156,6 +162,7 @@ public class GameManager : MonoBehaviour
         {
             MenuManager.Instance.PrintWinnerScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
             PlayersManager.Instance.KillOtherPlayers(_winner);
+            RoundWinner = _winner;
         }
         else
         {
