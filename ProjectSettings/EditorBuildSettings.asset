@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevels/LD_0.unity
     guid: 1864fa6ba79efe14e96e7183a7282e59
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
     guid: a8f0e325e9f4cb740b06f1e150d31ed6
   - enabled: 0
@@ -38,5 +38,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_14.unity
     guid: 7e96b9bc2b6f03a4a8cd35f99feb044d
+  - enabled: 0
+    path: Assets/Scenes/WIP/LD_TB_01.unity
+    guid: 09443b608e7444f4cadd27e5d5dbf808
+  - enabled: 1
+    path: Assets/Scenes/WIP/LD_TB_02.unity
+    guid: 42b4c9ab41cdd4131946a53f9085698c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}
