@@ -2039,7 +2039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLeftLeg: 0
   DisactiveCollisionLegMove: 1
-  KickForce: 0.5
+  KickForce: 0.8
 --- !u!212 &948658855
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6193,7 +6193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLeftLeg: 1
   DisactiveCollisionLegMove: 1
-  KickForce: 0.5
+  KickForce: 0.8
 --- !u!212 &2115330228
 SpriteRenderer:
   m_ObjectHideFlags: 0

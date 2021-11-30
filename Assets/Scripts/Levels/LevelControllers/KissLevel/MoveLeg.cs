@@ -49,12 +49,17 @@ public class MoveLeg : MonoBehaviour
     private void LegKick()
     {
         isActiveForce = true;
-        transform.DORotate(new Vector3(0, 0, rotationZ - coefRotate * 20), 1f).OnComplete(ReturnLeg);
+        transform.DORotate(new Vector3(0, 0, rotationZ - coefRotate * 20), 0.3f).OnComplete(StopKick);
     }
+    private void StopKick() 
+    {
+        isActiveForce = false;
+        Invoke("ReturnLeg",1f);
+    }
+
     private void ReturnLeg()
     {
         transform.DORotate(new Vector3(0, 0, rotationZ), 1f).OnComplete(()=>isLegMove = false);
-        isActiveForce = false;
     }
     public void ActiveLegMove()
     {
