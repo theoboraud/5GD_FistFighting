@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/LD_0.unity
     guid: 1864fa6ba79efe14e96e7183a7282e59
   - enabled: 0
+    path: Assets/Scenes/TestLevels/DA_Test_Levels/Dormir_DA_CS.unity
+    guid: 1c20039dbd3861341999a24274699d9f
+  - enabled: 1
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
     guid: a8f0e325e9f4cb740b06f1e150d31ed6
   - enabled: 0
@@ -44,18 +47,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Theo/LD_TB_02.unity
     guid: 42b4c9ab41cdd4131946a53f9085698c
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/JeTestDesTrucs.unity
-    guid: aebe0f63c2156d1439ba6489440e17dc
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/JeTestDesTrucs2 - Copie.unity
-    guid: 70a12e18bde48a74d8e5c10b898b975e
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/JeTestDesTrucs2.unity
-    guid: f78d16b7c3fc541419cf51599ea4d8a5
-  - enabled: 1
-    path: Assets/Scenes/MainLevels/JeTestDesTrucs3.unity
-    guid: d9d31f76a5c3ed349903a45b425f8ac2
   - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Tom/LD_0 Template 4.unity
     guid: fae0525f654d00b47b04ce340feaa799
