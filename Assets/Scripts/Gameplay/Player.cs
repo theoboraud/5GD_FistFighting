@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm behaviour script
     [System.NonSerialized] public CharacterSkin CharSkin;
     public PlayerArmController PlayerArmController;
+    [SerializeField] private PlayerFeedbackManager playerFeedbackManager;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     [SerializeField] private GameObject playerIndicator;
@@ -220,6 +221,21 @@ public class Player : MonoBehaviour
         PlayerGameState = PlayerGameState.Alive;
     }
 
+    /// <summary>
+    ///     Disable the player's sprite renderer and set its position to somewhere far from the map (to change?)
+    /// </summary>
+    public void InvincibilityForSeconds(float time)
+    {
+        PlayerGameState = PlayerGameState.Invincible;
+        playerFeedbackManager.StartInvincibleFeedback();
+        Invoke("StopInvincibility", time);
+    }
+
+    private void StopInvincibility()
+    {
+        PlayerGameState = PlayerGameState.Alive;
+        playerFeedbackManager.StopInvincibleFeedback();
+    }
 
     /// <summary>
     ///     Disable the player's sprite renderer and set its position to somewhere far from the map (to change?)

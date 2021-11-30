@@ -129,7 +129,7 @@ public class ArmChecker : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             Player player = collision.GetComponent<Player>();
-            if(!Players.Contains(player)) Players.Add(player);
+            if(!Players.Contains(player) && player.PlayerGameState != Enums.PlayerGameState.Invincible) Players.Add(player);
         }
         if (collision.CompareTag("StaticGround"))
         {
