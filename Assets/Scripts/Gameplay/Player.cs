@@ -221,6 +221,7 @@ public class Player : MonoBehaviour
         PlayerGameState = PlayerGameState.Alive;
     }
 
+
     /// <summary>
     ///     Disable the player's sprite renderer and set its position to somewhere far from the map (to change?)
     /// </summary>
@@ -231,11 +232,13 @@ public class Player : MonoBehaviour
         Invoke("StopInvincibility", _time);
     }
 
+
     private void StopInvincibility()
     {
         PlayerGameState = PlayerGameState.Alive;
         playerFeedbackManager.StopInvincibleFeedback();
     }
+
 
     /// <summary>
     ///     Disable the player's sprite renderer and set its position to somewhere far from the map (to change?)
@@ -332,7 +335,6 @@ public class Player : MonoBehaviour
                 AirPushFactor = 1f;
 
                 //HitObject_bool = true;
-
             }
             else
             {
