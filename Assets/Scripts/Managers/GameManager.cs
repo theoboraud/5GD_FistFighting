@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public List<int> PlayerScores = new List<int>();             // Score value of each player
     [System.NonSerialized] public bool PlayerHasWon = false;                            // Whether or not a player has won
-    [System.NonSerialized] public int IndexWinner
+    [System.NonSerialized] public int IndexWinner;
     [System.NonSerialized] public Player RoundWinner;                                   // Winning player of the round reference
 
 
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 
             int _indexRoundWinner = PlayersManager.Instance.Players.IndexOf(RoundWinner);
             int _winnerIndex = -1;
-            PlayerScores[] += 1;
+            PlayerScores[_indexRoundWinner] += 1;
 
             if (PlayerScores[_indexRoundWinner] >= 5)
             {
