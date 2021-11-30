@@ -38,12 +38,24 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_14.unity
     guid: 7e96b9bc2b6f03a4a8cd35f99feb044d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Theo/LD_TB_01.unity
     guid: 09443b608e7444f4cadd27e5d5dbf808
   - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Theo/LD_TB_02.unity
     guid: 42b4c9ab41cdd4131946a53f9085698c
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/JeTestDesTrucs.unity
+    guid: aebe0f63c2156d1439ba6489440e17dc
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/JeTestDesTrucs2 - Copie.unity
+    guid: 70a12e18bde48a74d8e5c10b898b975e
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/JeTestDesTrucs2.unity
+    guid: f78d16b7c3fc541419cf51599ea4d8a5
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/JeTestDesTrucs3.unity
+    guid: d9d31f76a5c3ed349903a45b425f8ac2
   - enabled: 0
     path: Assets/Scenes/MainLevels/New LD Tom/LD_0 Template 4.unity
     guid: fae0525f654d00b47b04ce340feaa799
