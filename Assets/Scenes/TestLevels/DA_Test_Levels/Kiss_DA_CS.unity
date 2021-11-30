@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 332428219}
   m_Layer: 0
   m_Name: Child
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2004,7 +2004,7 @@ GameObject:
   - component: {fileID: 948658856}
   m_Layer: 0
   m_Name: Leg2
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2508,7 +2508,7 @@ GameObject:
   - component: {fileID: 1403173320}
   m_Layer: 0
   m_Name: LeftFace
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2722,7 +2722,7 @@ GameObject:
   - component: {fileID: 1557129249}
   m_Layer: 0
   m_Name: RightFace
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3025,7 +3025,7 @@ GameObject:
   - component: {fileID: 1664575146}
   m_Layer: 0
   m_Name: MoveLeg
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6156,7 +6156,7 @@ GameObject:
   - component: {fileID: 2115330227}
   m_Layer: 0
   m_Name: Leg
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
