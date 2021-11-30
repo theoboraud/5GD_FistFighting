@@ -155,7 +155,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -469,6 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624edd1ee6444e640be7b01195fc06d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InvincibleVFX: {fileID: 6968915368621992960}
 --- !u!114 &5655228929501688058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,6 +707,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   PlayerArmController: {fileID: 4963761400113064789}
+  playerFeedbackManager: {fileID: 0}
   Face_SpriteRenderer: {fileID: 4023946081940462339}
   Arms_SpriteRenderers:
   - {fileID: 3555056744723499572}
