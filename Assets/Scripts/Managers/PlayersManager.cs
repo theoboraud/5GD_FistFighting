@@ -111,6 +111,7 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer(Player _player)
     {
+        _player.InvincibilityForSeconds(2f);
         _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
 
         // Add the player to PlayersAlive references in PlayerManager

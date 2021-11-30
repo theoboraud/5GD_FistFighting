@@ -22,7 +22,8 @@ namespace Enums
         Alive,
         Dead,
         Ready,
-        NotReady
+        NotReady,
+        Invincible
     }
 
     public enum PlayerPhysicState

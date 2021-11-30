@@ -120,8 +120,8 @@ public class PlayerArmController : MonoBehaviour
     {
         player.AirPushFactor = 1f;
 
-        player.RB.velocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
-        player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+        player.RB.velocity = Vector2.zero;
+        player.RB.angularVelocity = 0;
 
         player.RB.AddForce
             (Arms[i].transform.up *
