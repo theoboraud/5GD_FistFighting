@@ -160,12 +160,13 @@ public class GameManager : MonoBehaviour
 
         if (_winner != null)
         {
+            RoundWinner = _winner;
             MenuManager.Instance.PrintWinnerScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
             PlayersManager.Instance.KillOtherPlayers(_winner);
-            RoundWinner = _winner;
         }
         else
         {
+            RoundWinner = PlayersManager.Instance.Players[0];
             MenuManager.Instance.PrintWinnerScreen_Alone(true);
         }
     }
