@@ -76,7 +76,7 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void Input_Rotating(float _inputValue)
     {
-        if (Player.PlayerGameState == PlayerGameState.Alive)
+        if (Player.PlayerGameState == PlayerGameState.Alive || Player.PlayerGameState == PlayerGameState.Invincible)
         {
             if (useFactorForRotation)
             {
@@ -112,27 +112,32 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
-        {
-            torqueValue = rotationTorque_OnGround;
-            forceValue = rotationForce_OnGround;
-        }
-        else
-        {
-            torqueValue = rotationTorque_InAir;
-            forceValue = rotationForce_InAir;
-        }
+        float _torqueDir = 0;
+        Vector3 _forceDir = Vector3.zero;
+
+        torqueValue = rotationTorque_InAir;
+        forceValue = rotationForce_InAir;
 
         if (Player.PlayerRotateState is PlayerRotateState.RotatingRight)
         {
-            RB.AddTorque(-1 * torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
-            RB.AddForce(Vector3.up * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+            _torqueDir = -1f;
+            _forceDir = Vector3.right;
         }
         else if (Player.PlayerRotateState is PlayerRotateState.RotatingLeft)
         {
-            RB.AddTorque(torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
-            RB.AddForce(Vector3.up * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+            _torqueDir = 1f;
+            _forceDir = -Vector3.right;
         }
+
+        if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
+        {
+            _forceDir = Vector3.up;
+            torqueValue = rotationTorque_OnGround;
+            forceValue = rotationForce_OnGround;
+        }
+
+        RB.AddTorque(_torqueDir * torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+        RB.AddForce(_forceDir * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
 
         //RB.angularVelocity = Mathf.Clamp(RB.angularVelocity, 0f, 1f);
     }
