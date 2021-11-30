@@ -146,7 +146,7 @@ public class LevelManager : MonoBehaviour
         }
 
         // If we played every level, empty the list
-        if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 1)
+        if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 2)
         {
             LevelsPlayed.Clear();
         }
