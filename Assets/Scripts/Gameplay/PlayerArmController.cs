@@ -120,8 +120,8 @@ public class PlayerArmController : MonoBehaviour
     {
         player.AirPushFactor = 1f;
 
-        player.RB.velocity *= 0.75f;
-        player.RB.angularVelocity *= 0.75f;
+        player.RB.velocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+        player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
 
         player.RB.AddForce
             (Arms[i].transform.up *
@@ -143,15 +143,18 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     private void LaunchThisAvatarFromAir(int i)
     {
+        // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
         player.AirPushFactor -= 0.01f;
-        if (player.AirPushFactor <= 0.97f)
+        float _maxAirPushFactor = 1f - (GameManager.Instance.ParamData.PARAM_Player_AirControlJumpNumber * 0.01f);
+        if (player.AirPushFactor <= _maxAirPushFactor)
         {
             player.AirPushFactor = 0f;
         }
+        // Only reset the velocity if the player can jump
         else
         {
-            player.RB.velocity /= 2;
-            player.RB.angularVelocity /= 2;
+            player.RB.velocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+            player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
         }
 
         player.RB.AddForce

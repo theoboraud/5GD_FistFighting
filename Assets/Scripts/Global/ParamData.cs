@@ -40,6 +40,7 @@ public class ParamData : ScriptableObject
     public float PARAM_Player_ArmGroundForce;
     public float PARAM_Player_ArmHitForce;
     public float PARAM_Player_ArmCooldown;
+    public float PARAM_Player_VelocityResetFactor;
 
     [Header("OLD PLAYER ARM PARAMETERS")]
     public float PARAM_Player_ArmExtendingTime;
@@ -62,6 +63,7 @@ public class ParamData : ScriptableObject
     [Header("PLAYER AIR CONTROL PARAMETERS")]
     public float PARAM_Player_AirControlForce;
     public float PARAM_Player_AirControlForceLossFactor;
+    public float PARAM_Player_AirControlJumpNumber;
 
     // #endregion
 
