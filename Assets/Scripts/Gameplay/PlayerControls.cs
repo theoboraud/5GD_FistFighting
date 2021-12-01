@@ -204,8 +204,20 @@ public class PlayerControls : MonoBehaviour
         // TODO: add HoldingItem condition
         if (_context.started)
         {
+            // TODO: Add item usage
+        }
+    }
+
+
+    public void Gameplay_Suicide(InputAction.CallbackContext _context)
+    {
+        // Allows players to kill themselves if testing in the editor
+        #if UNITY_EDITOR
+        if (_context.started && Player.PlayerGameState is PlayerGameState.Alive)
+        {
             Player.Kill();
         }
+        #endif
     }
 
     // #endregion

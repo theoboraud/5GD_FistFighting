@@ -89,6 +89,14 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Suicice"",
+                    ""type"": ""Button"",
+                    ""id"": ""eaeff884-a5ca-4dfb-bb5c-35602a07df0f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -333,6 +341,28 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""daafaf31-a300-452e-ba41-d8e3c0933ca4"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Suicice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35eec52e-659b-4599-86b6-7ae2695ec692"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Suicice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -553,6 +583,7 @@ public class @MainControls : IInputActionCollection, IDisposable
         m_Gameplay_NextCharacter = m_Gameplay.FindAction("NextCharacter", throwIfNotFound: true);
         m_Gameplay_PreviousCharacter = m_Gameplay.FindAction("PreviousCharacter", throwIfNotFound: true);
         m_Gameplay_UseItem = m_Gameplay.FindAction("UseItem", throwIfNotFound: true);
+        m_Gameplay_Suicice = m_Gameplay.FindAction("Suicice", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Up = m_Menu.FindAction("Up", throwIfNotFound: true);
@@ -618,6 +649,7 @@ public class @MainControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_NextCharacter;
     private readonly InputAction m_Gameplay_PreviousCharacter;
     private readonly InputAction m_Gameplay_UseItem;
+    private readonly InputAction m_Gameplay_Suicice;
     public struct GameplayActions
     {
         private @MainControls m_Wrapper;
@@ -631,6 +663,7 @@ public class @MainControls : IInputActionCollection, IDisposable
         public InputAction @NextCharacter => m_Wrapper.m_Gameplay_NextCharacter;
         public InputAction @PreviousCharacter => m_Wrapper.m_Gameplay_PreviousCharacter;
         public InputAction @UseItem => m_Wrapper.m_Gameplay_UseItem;
+        public InputAction @Suicice => m_Wrapper.m_Gameplay_Suicice;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -667,6 +700,9 @@ public class @MainControls : IInputActionCollection, IDisposable
                 @UseItem.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseItem;
                 @UseItem.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseItem;
                 @UseItem.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseItem;
+                @Suicice.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSuicice;
+                @Suicice.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSuicice;
+                @Suicice.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSuicice;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -698,6 +734,9 @@ public class @MainControls : IInputActionCollection, IDisposable
                 @UseItem.started += instance.OnUseItem;
                 @UseItem.performed += instance.OnUseItem;
                 @UseItem.canceled += instance.OnUseItem;
+                @Suicice.started += instance.OnSuicice;
+                @Suicice.performed += instance.OnSuicice;
+                @Suicice.canceled += instance.OnSuicice;
             }
         }
     }
@@ -796,6 +835,7 @@ public class @MainControls : IInputActionCollection, IDisposable
         void OnNextCharacter(InputAction.CallbackContext context);
         void OnPreviousCharacter(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnSuicice(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
