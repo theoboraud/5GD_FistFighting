@@ -102,7 +102,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void InitSpawnTimerPos()
     {
-        for (int i = 0; i < SpawningTimers.Count; i++)
+        for (int i = 0; i < UI_SpawningTimers.Count; i++)
         {
             Vector3 _screenPos = Camera.main.WorldToScreenPoint(LevelManager.Instance.SpawnPoints[i].transform.position);
             UI_SpawningTimers[i].GetComponent<RectTransform>().position = _screenPos;
