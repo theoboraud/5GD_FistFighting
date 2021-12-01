@@ -1135,6 +1135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 524666676}
   - component: {fileID: 524666677}
+  - component: {fileID: 524666678}
   m_Layer: 6
   m_Name: PlateformeMustacheLeft
   m_TagString: StaticGround
@@ -1207,6 +1208,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &524666678
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524666675}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.9, y: 1.88}
+    newSize: {x: 2.9, y: 1.88}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.35, y: 0.94}
+      - {x: -1.4499999, y: 0.94}
+      - {x: -1.4499999, y: -0.94}
+      - {x: 1.4499999, y: -0.94}
+      - {x: 1.4499999, y: -0.29999998}
+      - {x: 1.42, y: -0.29}
 --- !u!1 &847817249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2050,7 +2082,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796735573}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3530,6 +3562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2072273033}
   - component: {fileID: 2072273034}
+  - component: {fileID: 2072273035}
   m_Layer: 6
   m_Name: PlateformeMustacheRight
   m_TagString: StaticGround
@@ -3602,3 +3635,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &2072273035
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072273032}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.9, y: 1.88}
+    newSize: {x: 2.9, y: 1.88}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.4399999, y: -0.29999998}
+      - {x: -1.4499999, y: -0.31}
+      - {x: -1.4499999, y: -0.94}
+      - {x: 1.4499999, y: -0.94}
+      - {x: 1.4499999, y: 0.94}
+      - {x: 1.39, y: 0.94}
+      - {x: 1.11, y: 0.77}
