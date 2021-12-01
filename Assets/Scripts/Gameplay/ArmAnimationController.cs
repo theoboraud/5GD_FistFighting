@@ -5,14 +5,12 @@ using UnityEngine;
 public class ArmAnimationController : MonoBehaviour
 {
     [Header("Reference")]
-    [SerializeField] BoxCollider2D collider;
     [SerializeField] Animator animator;
 
     public void PlayAnimation()
     {
         animator.SetBool("Extend", true);
         Invoke("StopAnimation", 0.25f);
-        Invoke("ActivateCollider", 0.2f);
     }
 
     public void PlayHoldAnimation()
@@ -32,14 +30,4 @@ public class ArmAnimationController : MonoBehaviour
         animator.SetBool("HoldMax", false);
     }
 
-    public void ActivateCollider()
-    {
-        collider.enabled = true;
-        Invoke("DeactivateCollider", 0.1f);
-    }
-
-    public void DeactivateCollider()
-    {
-        collider.enabled = false;
-    }
 }
