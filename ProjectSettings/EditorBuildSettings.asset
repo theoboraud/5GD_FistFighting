@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
     guid: a8f0e325e9f4cb740b06f1e150d31ed6
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_12 1.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesPits.unity
     guid: ee747740517f8824999fda03eaf2381c
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Old/LD_12 2.unity
@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/LD_Old/LD_12.unity
     guid: 35b61083dd5a0224c900b91e7241640d
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_13 1.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_Fatality.unity
     guid: 1dcbe8d0260125943b2d8d15ebaf23b2
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Old/LD_13.unity
@@ -45,28 +45,28 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/LD_Old/LD_14.unity
     guid: 7e96b9bc2b6f03a4a8cd35f99feb044d
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Theo_1.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesBigPit.unity
     guid: 09443b608e7444f4cadd27e5d5dbf808
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Theo_2.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesCliff.unity
     guid: 42b4c9ab41cdd4131946a53f9085698c
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Old/LD_Thomas/LD_Thomas_4.unity
     guid: fae0525f654d00b47b04ce340feaa799
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Thomas_3.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_DeathBall.unity
     guid: 6117f5de623e5854782c2c6e14d186f5
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Old/LD_Thomas/LD_Thomas_2.unity
     guid: 692dbd7fe1830854389b5a43fdc1f0ac
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Thomas_1.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_Goals.unity
     guid: aa05e2c0587b30b42a46b90e11633cd5
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_11 3.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldSlides.unity
     guid: 62253d25b7d29dd4087fcf85f991bc5f
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Antoine_3.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldPit.unity
     guid: f78d16b7c3fc541419cf51599ea4d8a5
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Old/LD_Antoine/LD_Antoine_1.unity
