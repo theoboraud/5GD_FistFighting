@@ -22,6 +22,7 @@ public class MainMenu : MonoBehaviour
     private void SelectActiveButton()
     {
         activeButton = Buttons[activeButtonIndex];
+
         EventSystem.current.SetSelectedGameObject(activeButton.gameObject);
     }
 

@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     [System.NonSerialized] public List<GameObject> SpawnPoints;     // Current level spawn points
     [System.NonSerialized] public int CurrentSceneIndex = 0;        // Index of the current scene (in Build Settings)
     private List<int> LevelsPlayed = new List<int>();
+    private string levelName = "";
 
     // TODO Implement level classes to load data ?
     //[System.NonSerialized] public List<LevelData> Levels;
@@ -42,11 +43,20 @@ public class LevelManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
-            // Init scene index and spawn points
-            CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            // If the scene is not the lobby, we will only launch this scene
+            if (SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 1)
+            {
+                levelName = SceneManager.GetActiveScene().name;
+                Invoke("Reset", 0.1f);
+            }
+            else
+            {
+                // Init scene index and spawn points
+                CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-            // Init spawn points of the first level
-            InitSpawnPoints();
+                // Init spawn points of the first level
+                InitSpawnPoints();
+            }
         }
         else
         {
@@ -139,39 +149,51 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadNextLevel()
     {
-        // If not lobby level, add it to the levels played
-        if (CurrentSceneIndex != 0)
+        if (levelName == "")
         {
-            LevelsPlayed.Add(CurrentSceneIndex);
-        }
-
-        // If we played every level, empty the list
-        if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 2)
-        {
-            LevelsPlayed.Clear();
-        }
-
-        // Get a random scene index not yet in LevelsPlayed
-        int _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
-
-        if (LevelsPlayed.Count > 0)
-        {
-            while (LevelsPlayed.Contains(_nextSceneIndex))
+            // If not lobby level, add it to the levels played
+            if (CurrentSceneIndex != 0)
             {
-                _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+                LevelsPlayed.Add(CurrentSceneIndex);
             }
+
+            // If we played every level, empty the list
+            if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 2)
+            {
+                LevelsPlayed.Clear();
+            }
+
+            // Get a random scene index not yet in LevelsPlayed
+            int _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+
+            if (LevelsPlayed.Count > 0)
+            {
+                while (LevelsPlayed.Contains(_nextSceneIndex))
+                {
+                    _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+                }
+            }
+
+            PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
+
+            LoadScene(_nextSceneIndex);
         }
+        else
+        {
+            SceneManager.LoadScene(levelName);
 
-        PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
+            CurrentSceneIndex = SceneManager.sceneCountInBuildSettings;
 
-        LoadScene(_nextSceneIndex);
+            MenuManager.Instance.StartTimer();
+
+            MenuManager.Instance.UpdateLives();
+        }
     }
 
 
     public void Reset()
     {
         MenuManager.Instance.Reset();
-
 
         GameManager.Instance.Feedback.ResetAllVFX();
         GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
