@@ -59,73 +59,6 @@ public class PlayerControls : MonoBehaviour
 
     // #region ============== GAMEPLAY CONTROLS FUNCTIONS ==============
 
-    /// <summary>
-    ///     Called when extending up arm
-    /// </summary>
-    public void Gameplay_ExtendUp(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (_context.started)
-        {
-            Player.Arms[0].Input_StartExtend();
-        }
-        else if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            Player.Arms[0].Input_StopExtend();
-        }
-    }
-
-
-    /// <summary>
-    ///     Called when extending right arm
-    /// </summary>
-    public void Gameplay_ExtendRight(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (_context.started)
-        {
-            Player.Arms[1].Input_StartExtend();
-        }
-        else if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            Player.Arms[1].Input_StopExtend();
-        }
-    }
-
-
-    /// <summary>
-    ///     Called when extending up arm
-    /// </summary>
-    public void Gameplay_ExtendDown(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (_context.started)
-        {
-            Player.Arms[2].Input_StartExtend();
-        }
-        if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            Player.Arms[2].Input_StopExtend();
-        }
-    }
-
-
-    /// <summary>
-    ///     Called when extending up arm
-    /// </summary>
-    public void Gameplay_ExtendLeft(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (_context.started)
-        {
-            Player.Arms[3].Input_StartExtend();
-        }
-        else if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            Player.Arms[3].Input_StopExtend();
-        }
-    }
-
     public void Gameplay_NewExtendDown(InputAction.CallbackContext _context)
     {
         if (_context.started)
@@ -266,12 +199,12 @@ public class PlayerControls : MonoBehaviour
     /// <summary>
     ///     Called when using the player holds any of the Triggers of the controller
     /// </summary>
-    public void HoldTrigger(InputAction.CallbackContext _context)
+    public void Gameplay_UseItem(InputAction.CallbackContext _context)
     {
-        Player.HoldingTrigger = true;
-        if (_context.canceled || _context.interaction is TapInteraction)
+        // TODO: add HoldingItem condition
+        if (_context.started)
         {
-            Player.HoldingTrigger = false;
+            Player.Kill();
         }
     }
 
