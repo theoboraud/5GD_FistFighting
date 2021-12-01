@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 29400845}
   m_Layer: 6
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,7 +220,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 29400843}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -744,7 +744,7 @@ GameObject:
   - component: {fileID: 320462971}
   m_Layer: 6
   m_Name: Collider (6)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -772,7 +772,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 320462969}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1337,7 +1337,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 524666675}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1375,7 +1375,7 @@ GameObject:
   - component: {fileID: 785437264}
   m_Layer: 6
   m_Name: Collider (2)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1403,7 +1403,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 785437262}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1967,7 +1967,7 @@ GameObject:
   - component: {fileID: 1274861542}
   m_Layer: 6
   m_Name: Collider (2)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1995,7 +1995,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1274861540}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2056,7 +2056,7 @@ GameObject:
   - component: {fileID: 1343501032}
   m_Layer: 6
   m_Name: Collider (5)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2084,7 +2084,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1343501030}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2115,7 +2115,7 @@ GameObject:
   - component: {fileID: 1507154150}
   m_Layer: 6
   m_Name: Collider (1)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2143,7 +2143,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1507154148}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2254,7 +2254,7 @@ GameObject:
   - component: {fileID: 1682295061}
   m_Layer: 6
   m_Name: Collider (3)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2282,7 +2282,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1682295059}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2860,7 +2860,7 @@ GameObject:
   - component: {fileID: 2003356523}
   m_Layer: 6
   m_Name: Collider (4)
-  m_TagString: Untagged
+  m_TagString: StaticGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2888,7 +2888,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 2003356521}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -4120,7 +4120,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 2072273032}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
