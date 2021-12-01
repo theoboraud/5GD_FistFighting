@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
     public List<Color> PlayerColors;                                                    // Reference to the player colors
     public List<GameObject> UI_PlayersLives = new List<GameObject>();                   // Reference to the UI indicating the number of player lives
+    public PauseMenu PauseMenu;                                                         // Reference to the PauseMenu script
 
     [Header("Menu Screens")]
     public MainMenu MainMenu;

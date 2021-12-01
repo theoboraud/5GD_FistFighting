@@ -143,19 +143,23 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.PlayerWon && _context.canceled)
+        if (GameManager.Instance.GlobalGameState is GlobalGameState.PlayerWon && _context.canceled)
         {
             GameManager.Instance.ResetGame();
         }
 
-        else if (GameManager.Instance.GlobalGameState == GlobalGameState.ScoreScreen && _context.canceled)
+        else if (GameManager.Instance.GlobalGameState is GlobalGameState.ScoreScreen && _context.canceled)
         {
             GameManager.Instance.NewGameRound();
         }
 
-        else if (GameManager.Instance.GlobalGameState == GlobalGameState.WinnerScreen && _context.canceled)
+        else if (GameManager.Instance.GlobalGameState is GlobalGameState.WinnerScreen && _context.canceled)
         {
             GameManager.Instance.ScoreScreen();
+        }
+        else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay && _context.canceled)
+        {
+            MenuManager.Instance.PauseMenu.Activate();
         }
     }
 
@@ -269,6 +273,11 @@ public class PlayerControls : MonoBehaviour
             if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
             {
                 MenuManager.Instance.MainMenu.Validate();
+            }
+
+            else if (GameManager.Instance.GlobalGameState == GlobalGameState.InPause)
+            {
+                MenuManager.Instance.PauseMenu.Validate();
             }
         }
     }

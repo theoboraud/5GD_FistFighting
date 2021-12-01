@@ -237,5 +237,22 @@ public class PlayersManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///     Reset all variables
+    /// </summary>
+    public void Reset()
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            Destroy(Players[i].gameObject);
+        }
+
+        Players.Clear();
+        PlayersSpawned.Clear();
+        PlayersAlive.Clear();
+        PlayersDeathOrder.Clear();
+    }
+
     // #endregion
 }

@@ -193,10 +193,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void Play()
+    public void PlayMode()
     {
         GlobalGameState = GlobalGameState.InPlay;
         PlayersManager.Instance.ChangeMode("Gameplay");
+    }
+
+
+    public void MenuMode(GlobalGameState _menuState)
+    {
+        GlobalGameState = _menuState;
+        PlayersManager.Instance.ChangeMode("Menu");
     }
 
     // #endregion

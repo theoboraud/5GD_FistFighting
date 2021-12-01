@@ -198,11 +198,7 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.Feedback.ResetAllVFX();
         GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
 
-        PlayersManager.Instance.PlayersDeathOrder.Clear();
-        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
-        {
-            Destroy(PlayersManager.Instance.Players[i].gameObject);
-        }
+        PlayersManager.Instance.Reset();
 
         Destroy(GameManager.Instance);
         Destroy(PlayersManager.Instance);

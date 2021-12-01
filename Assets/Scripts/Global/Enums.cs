@@ -3,6 +3,7 @@ namespace Enums
     public enum GlobalGameState
     {
         InPlay,
+        InPause,
         WinnerScreen,
         ScoreScreen,
         PlayerWon,

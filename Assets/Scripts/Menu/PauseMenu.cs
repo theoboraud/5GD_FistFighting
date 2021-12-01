@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Enums;
 
-public class MainMenu : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     public List<Button> Buttons = new List<Button>();
     private Button activeButton;
@@ -68,17 +68,17 @@ public class MainMenu : MonoBehaviour
     }
 
 
-    public void ButtonPlay()
+    public void ButtonResume()
     {
         Deactivate();
         GameManager.Instance.PlayMode();
-        LevelManager.Instance.LoadLobbyLevel();
     }
 
 
-    public void ButtonOptions()
+    public void ButtonReset()
     {
-        // TODO
+        Deactivate();
+        LevelManager.Instance.Reset();
     }
 
 
@@ -92,7 +92,8 @@ public class MainMenu : MonoBehaviour
     {
         Init();
         this.gameObject.SetActive(true);
-        GameManager.Instance.MenuMode(GlobalGameState.MainMenu);
+        GameManager.Instance.MenuMode(GlobalGameState.InPause);
+        Time.timeScale = 0f;
     }
 
 
@@ -100,5 +101,6 @@ public class MainMenu : MonoBehaviour
     {
         UnselectActiveButton();
         this.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 }
