@@ -67,14 +67,6 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""HoldTrigger"",
-                    ""type"": ""Button"",
-                    ""id"": ""3a74d111-eb37-4a90-aeca-886a30e1b80f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Hold""
-                },
-                {
                     ""name"": ""NextCharacter"",
                     ""type"": ""Button"",
                     ""id"": ""118f1003-80c9-499b-acd7-2f74c7a0cec8"",
@@ -86,6 +78,14 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""name"": ""PreviousCharacter"",
                     ""type"": ""Button"",
                     ""id"": ""3598f70b-141f-49d5-90d6-16454bb80950"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e7bd1d8-3657-4d41-957f-f825128e1b4d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -248,39 +248,6 @@ public class @MainControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""534f0700-2780-4009-981d-c034a7c19d3a"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""HoldTrigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a255f327-3013-42fa-bdae-6b073d5cdf1f"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""HoldTrigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""acff1cbf-f817-454e-a50f-3bf7e1f87232"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""HoldTrigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d780514e-faa2-4a9a-a265-725f36a7641e"",
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
@@ -320,6 +287,50 @@ public class @MainControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""PreviousCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b5cdce6-c806-4ac5-aaa0-53198f53c343"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46ec0a9b-3192-4fda-ab4a-3c1a2e1d572d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a90ec6b5-5abb-4cf2-84ae-b1b1d0db5705"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a49ddb83-902e-407b-b3df-d32227ec201a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -539,9 +550,9 @@ public class @MainControls : IInputActionCollection, IDisposable
         m_Gameplay_LeftArm = m_Gameplay.FindAction("LeftArm", throwIfNotFound: true);
         m_Gameplay_Start = m_Gameplay.FindAction("Start", throwIfNotFound: true);
         m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
-        m_Gameplay_HoldTrigger = m_Gameplay.FindAction("HoldTrigger", throwIfNotFound: true);
         m_Gameplay_NextCharacter = m_Gameplay.FindAction("NextCharacter", throwIfNotFound: true);
         m_Gameplay_PreviousCharacter = m_Gameplay.FindAction("PreviousCharacter", throwIfNotFound: true);
+        m_Gameplay_UseItem = m_Gameplay.FindAction("UseItem", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Up = m_Menu.FindAction("Up", throwIfNotFound: true);
@@ -604,9 +615,9 @@ public class @MainControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_LeftArm;
     private readonly InputAction m_Gameplay_Start;
     private readonly InputAction m_Gameplay_Rotate;
-    private readonly InputAction m_Gameplay_HoldTrigger;
     private readonly InputAction m_Gameplay_NextCharacter;
     private readonly InputAction m_Gameplay_PreviousCharacter;
+    private readonly InputAction m_Gameplay_UseItem;
     public struct GameplayActions
     {
         private @MainControls m_Wrapper;
@@ -617,9 +628,9 @@ public class @MainControls : IInputActionCollection, IDisposable
         public InputAction @LeftArm => m_Wrapper.m_Gameplay_LeftArm;
         public InputAction @Start => m_Wrapper.m_Gameplay_Start;
         public InputAction @Rotate => m_Wrapper.m_Gameplay_Rotate;
-        public InputAction @HoldTrigger => m_Wrapper.m_Gameplay_HoldTrigger;
         public InputAction @NextCharacter => m_Wrapper.m_Gameplay_NextCharacter;
         public InputAction @PreviousCharacter => m_Wrapper.m_Gameplay_PreviousCharacter;
+        public InputAction @UseItem => m_Wrapper.m_Gameplay_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -647,15 +658,15 @@ public class @MainControls : IInputActionCollection, IDisposable
                 @Rotate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
-                @HoldTrigger.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldTrigger;
-                @HoldTrigger.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldTrigger;
-                @HoldTrigger.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldTrigger;
                 @NextCharacter.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNextCharacter;
                 @NextCharacter.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNextCharacter;
                 @NextCharacter.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNextCharacter;
                 @PreviousCharacter.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPreviousCharacter;
                 @PreviousCharacter.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPreviousCharacter;
                 @PreviousCharacter.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPreviousCharacter;
+                @UseItem.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseItem;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -678,15 +689,15 @@ public class @MainControls : IInputActionCollection, IDisposable
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
-                @HoldTrigger.started += instance.OnHoldTrigger;
-                @HoldTrigger.performed += instance.OnHoldTrigger;
-                @HoldTrigger.canceled += instance.OnHoldTrigger;
                 @NextCharacter.started += instance.OnNextCharacter;
                 @NextCharacter.performed += instance.OnNextCharacter;
                 @NextCharacter.canceled += instance.OnNextCharacter;
                 @PreviousCharacter.started += instance.OnPreviousCharacter;
                 @PreviousCharacter.performed += instance.OnPreviousCharacter;
                 @PreviousCharacter.canceled += instance.OnPreviousCharacter;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
             }
         }
     }
@@ -782,9 +793,9 @@ public class @MainControls : IInputActionCollection, IDisposable
         void OnLeftArm(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
-        void OnHoldTrigger(InputAction.CallbackContext context);
         void OnNextCharacter(InputAction.CallbackContext context);
         void OnPreviousCharacter(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

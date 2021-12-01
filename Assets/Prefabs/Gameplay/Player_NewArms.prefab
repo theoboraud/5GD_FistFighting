@@ -710,22 +710,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3996649375659255604}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
-        m_MethodName: HoldTrigger
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3a74d111-eb37-4a90-aeca-886a30e1b80f
-    m_ActionName: Gameplay/HoldTrigger[/Keyboard/q,/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_NextCharacter
         m_Mode: 0
         m_Arguments:
@@ -754,6 +738,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3598f70b-141f-49d5-90d6-16454bb80950
     m_ActionName: Gameplay/PreviousCharacter[/XboxOneGampadMacOSWireless/dpad/left,/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3996649375659255604}
+        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+        m_MethodName: Gameplay_UseItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5e7bd1d8-3657-4d41-957f-f825128e1b4d
+    m_ActionName: Gameplay/UseItem[/Keyboard/q,/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Menu

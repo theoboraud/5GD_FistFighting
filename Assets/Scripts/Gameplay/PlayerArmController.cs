@@ -126,7 +126,7 @@ public class PlayerArmController : MonoBehaviour
         player.RB.AddForce
             (Arms[i].transform.up *
             GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
-            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
             (Arms[i].holding_timer/GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1,2),
             ForceMode2D.Impulse);
         //Debug.Log(Arms[i].holding_timer);
@@ -161,7 +161,7 @@ public class PlayerArmController : MonoBehaviour
             (Arms[i].transform.up *
             player.AirPushFactor *
             GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
-            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
             (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
 
@@ -185,7 +185,7 @@ public class PlayerArmController : MonoBehaviour
             item.AddForce
                 (-Arms[i].transform.up *
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
-                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
                 (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
         }
@@ -195,7 +195,7 @@ public class PlayerArmController : MonoBehaviour
             item.RB.AddForce
                 (-Arms[i].transform.up *
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
-                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor *
+                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
                 (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();

@@ -54,14 +54,6 @@
                     "interactions": "Press"
                 },
                 {
-                    "name": "HoldTrigger",
-                    "type": "Button",
-                    "id": "3a74d111-eb37-4a90-aeca-886a30e1b80f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold"
-                },
-                {
                     "name": "NextCharacter",
                     "type": "Button",
                     "id": "118f1003-80c9-499b-acd7-2f74c7a0cec8",
@@ -73,6 +65,14 @@
                     "name": "PreviousCharacter",
                     "type": "Button",
                     "id": "3598f70b-141f-49d5-90d6-16454bb80950",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "5e7bd1d8-3657-4d41-957f-f825128e1b4d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
@@ -235,39 +235,6 @@
                 },
                 {
                     "name": "",
-                    "id": "534f0700-2780-4009-981d-c034a7c19d3a",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "HoldTrigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a255f327-3013-42fa-bdae-6b073d5cdf1f",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "HoldTrigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "acff1cbf-f817-454e-a50f-3bf7e1f87232",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "HoldTrigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d780514e-faa2-4a9a-a265-725f36a7641e",
                     "path": "<Gamepad>/dpad/right",
                     "interactions": "",
@@ -307,6 +274,50 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "PreviousCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b5cdce6-c806-4ac5-aaa0-53198f53c343",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "46ec0a9b-3192-4fda-ab4a-3c1a2e1d572d",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a90ec6b5-5abb-4cf2-84ae-b1b1d0db5705",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a49ddb83-902e-407b-b3df-d32227ec201a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "UseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

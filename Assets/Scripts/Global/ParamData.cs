@@ -42,7 +42,7 @@ public class ParamData : ScriptableObject
     public float PARAM_Player_ArmCooldown;
     public float PARAM_Player_VelocityResetFactor;
 
-    [Header("OLD PLAYER ARM PARAMETERS")]
+    [Header("DEPRECATED")]
     public float PARAM_Player_ArmExtendingTime;
     public float PARAM_Player_ArmUnextendingTime;
     // #endregion
@@ -53,7 +53,8 @@ public class ParamData : ScriptableObject
     [Header("HOLD TRIGGER PARAMETERS")]
 
     public float PARAM_Player_MaxTriggerHoldTime;
-    public float PARAM_Player_ForceIncreaseFactor;
+    public float PARAM_Player_ForceIncreaseFactor_Movement;
+    public float PARAM_Player_ForceIncreaseFactor_Hit;
 
     // #endregion
 

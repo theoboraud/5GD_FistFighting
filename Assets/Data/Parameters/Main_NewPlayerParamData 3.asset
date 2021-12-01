@@ -25,7 +25,8 @@ MonoBehaviour:
   PARAM_Player_ArmExtendingTime: 15
   PARAM_Player_ArmUnextendingTime: 15
   PARAM_Player_MaxTriggerHoldTime: 1
-  PARAM_Player_ForceIncreaseFactor: 1.5
+  PARAM_Player_ForceIncreaseFactor_Movement: 1.5
+  PARAM_Player_ForceIncreaseFactor_Hit: 1.5
   PARAM_Player_AirControlForce: 10
   PARAM_Player_AirControlForceLossFactor: 0.1
   PARAM_Player_AirControlJumpNumber: 3
