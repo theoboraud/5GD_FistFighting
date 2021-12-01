@@ -170,17 +170,13 @@ public class LevelManager : MonoBehaviour
 
     public void Reset()
     {
-        MenuManager.Instance.PrintScoreScreen(false);
+        MenuManager.Instance.Reset();
 
-        for (int i = 0; i < MenuManager.Instance.UI_PlayersLives.Count; i++)
-        {
-            Destroy(MenuManager.Instance.UI_PlayersLives[i].transform.parent.gameObject);
-        }
 
-        PlayersManager.Instance.PlayersDeathOrder.Clear();
         GameManager.Instance.Feedback.ResetAllVFX();
         GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
 
+        PlayersManager.Instance.PlayersDeathOrder.Clear();
         for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
         {
             Destroy(PlayersManager.Instance.Players[i].gameObject);
