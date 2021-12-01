@@ -8,74 +8,41 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevels/Lobby_HUB.unity
     guid: 1864fa6ba79efe14e96e7183a7282e59
-  - enabled: 0
-    path: Assets/Scenes/TestLevels/DA_Test_Levels/Mustache_DA_Cs.unity
-    guid: f3856a223749ecd40971ec95e51d7396
   - enabled: 1
-    path: Assets/Scenes/TestLevels/DA_Test_Levels/Dormir_DA_CS.unity
-    guid: 1c20039dbd3861341999a24274699d9f
-  - enabled: 0
-    path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
-    guid: a8f0e325e9f4cb740b06f1e150d31ed6
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesPits.unity
-    guid: ee747740517f8824999fda03eaf2381c
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_12 2.unity
-    guid: d826646dc18e65a459ff685b4d68be2e
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_12 3.unity
-    guid: 825abf293d21f2641a594f4269bef8aa
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_12.unity
-    guid: 35b61083dd5a0224c900b91e7241640d
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Fatality.unity
-    guid: 1dcbe8d0260125943b2d8d15ebaf23b2
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_13.unity
-    guid: 401869f3364e0da4b957f02dad30b384
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_14 1.unity
-    guid: fd70a92e2a1375c4282774bb46712791
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_14 2.unity
-    guid: 7000abb3a31cb4e43816045a81a5140f
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_14.unity
-    guid: 7e96b9bc2b6f03a4a8cd35f99feb044d
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesBigPit.unity
-    guid: 09443b608e7444f4cadd27e5d5dbf808
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesCliff.unity
-    guid: 42b4c9ab41cdd4131946a53f9085698c
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_Thomas/LD_Thomas_4.unity
-    guid: fae0525f654d00b47b04ce340feaa799
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_DeathBall.unity
-    guid: 6117f5de623e5854782c2c6e14d186f5
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_Thomas/LD_Thomas_2.unity
-    guid: 692dbd7fe1830854389b5a43fdc1f0ac
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Goals.unity
-    guid: aa05e2c0587b30b42a46b90e11633cd5
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldSlides.unity
-    guid: 62253d25b7d29dd4087fcf85f991bc5f
-  - enabled: 0
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldGround.unity
+    guid: 0143a14f6e4ed4d4ea47ae828b579e9a
+  - enabled: 1
     path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldPit.unity
     guid: f78d16b7c3fc541419cf51599ea4d8a5
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_Antoine/LD_Antoine_1.unity
-    guid: aebe0f63c2156d1439ba6489440e17dc
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_Antoine/LD_Antoine_2.unity
-    guid: 70a12e18bde48a74d8e5c10b898b975e
-  - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Old/LD_Antoine/LD_Antoine_4.unity
-    guid: d9d31f76a5c3ed349903a45b425f8ac2
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldSlides.unity
+    guid: 62253d25b7d29dd4087fcf85f991bc5f
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_CageBouncy.unity
+    guid: 6137f54208dfc3b458a7e7a801c4b9a6
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_DeathBall.unity
+    guid: 6117f5de623e5854782c2c6e14d186f5
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_Fatality.unity
+    guid: 1dcbe8d0260125943b2d8d15ebaf23b2
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesBigPit.unity
+    guid: 09443b608e7444f4cadd27e5d5dbf808
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesCliff.unity
+    guid: 42b4c9ab41cdd4131946a53f9085698c
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesPits.unity
+    guid: ee747740517f8824999fda03eaf2381c
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_Goals.unity
+    guid: aa05e2c0587b30b42a46b90e11633cd5
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_PitArena.unity
+    guid: d257af485764041498af70f518843598
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_PitWell.unity
+    guid: 14f42857b1be18b40a5ca457b5d9b3ce
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}
