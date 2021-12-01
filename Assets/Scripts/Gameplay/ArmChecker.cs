@@ -8,6 +8,8 @@ public class ArmChecker : MonoBehaviour
     public List<Player> Players = new List<Player>();
     public bool StaticEnvironmentInRange = false;
     [Header("Reference")]
+    [SerializeField] private Player player;
+    [SerializeField] BoxCollider2D collider;
     public ArmAnimationController anim;
     public bool Cooldown = false;
     public bool Holding = false;
@@ -42,6 +44,14 @@ public class ArmChecker : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if(player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        {
+            collider.enabled = true;
+        }
+        else
+        {
+            collider.enabled = false;
+        }
         if(Cooldown)
         {
             cooldown_timer += Time.deltaTime;

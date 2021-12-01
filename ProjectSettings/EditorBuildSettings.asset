@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Mustache_DA_Cs.unity
     guid: f3856a223749ecd40971ec95e51d7396
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Dormir_DA_CS.unity
     guid: 1c20039dbd3861341999a24274699d9f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TestLevels/DA_Test_Levels/Kiss_DA_CS.unity
     guid: a8f0e325e9f4cb740b06f1e150d31ed6
   - enabled: 0
