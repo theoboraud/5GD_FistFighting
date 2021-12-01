@@ -190,7 +190,7 @@ public class PlayersManager : MonoBehaviour
                 }
             }
         }
-        else
+        else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
         {
             StartSpawningPlayer(_player);
         }
