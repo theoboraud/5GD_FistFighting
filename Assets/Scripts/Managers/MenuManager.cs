@@ -330,4 +330,18 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
+
+
+    public void Reset()
+    {
+        PrintScoreScreen(false);
+
+        // For each player
+        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+        {
+            Destroy(UI_PlayersLives[i].transform.parent.gameObject);
+            Destroy(UI_SpawningTimers[i]);
+        }
+
+    }
 }
