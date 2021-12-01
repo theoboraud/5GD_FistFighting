@@ -64,32 +64,42 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void AddPlayer(Player _player)
     {
-        // Add the player for every manager and init its values
-        Players.Add(_player);
-        // Set lives to starting value
-        if (LevelManager.Instance.CurrentSceneIndex == 0)
+        // Maximum number of players is 4
+        if (Players.Count < 4)
         {
-            PlayersLives.Add(1);
+            // Add the player for every manager and init its values
+            Players.Add(_player);
+            // Set lives to starting value
+            if (LevelManager.Instance.CurrentSceneIndex == 0)
+            {
+                PlayersLives.Add(1);
+            }
+            else
+            {
+                PlayersLives.Add(GameManager.Instance.ParamData.PARAM_Player_Lives);
+            }
+
+            MenuManager.Instance.AddPlayer(Players.IndexOf(_player));
+            GameManager.Instance.PlayerScores.Add(0);
+
+            // Set action map on Gameplay if player is spawning InPlay
+            if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
+            {
+                _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
+            }
+
+            // Spawn the player
+            SpawnPlayer(_player);
+
+            // Add its timer reference to SpawningTimers in MenuManager
+            MenuManager.Instance.SpawningTimers.Add(0f);
         }
+        // If the game tries to spawn a 5th player
         else
         {
-            PlayersLives.Add(GameManager.Instance.ParamData.PARAM_Player_Lives);
+            Destroy(_player.gameObject);
         }
 
-        MenuManager.Instance.AddPlayer(Players.IndexOf(_player));
-        GameManager.Instance.PlayerScores.Add(0);
-
-        // Set action map on Gameplay if player is spawning InPlay
-        if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
-        {
-            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
-        }
-
-        // Spawn the player
-        SpawnPlayer(_player);
-
-        // Add its timer reference to SpawningTimers in MenuManager
-        MenuManager.Instance.SpawningTimers.Add(0f);
     }
 
 
