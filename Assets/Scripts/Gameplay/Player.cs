@@ -56,26 +56,33 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Awake()
     {
-        // Keep the player game object between scenes
-        DontDestroyOnLoad(gameObject);
+        if (PlayersManager.Instance.Players.Count < 4)
+        {
+            // Keep the player game object between scenes
+            DontDestroyOnLoad(gameObject);
 
-        // Call init methods
-        InitReferences();
-        InitVariables();
-        InitParameters();
+            // Call init methods
+            InitReferences();
+            InitVariables();
+            InitParameters();
 
-        // Init player controls
-        gameObject.GetComponent<PlayerControls>().Init();
+            // Init player controls
+            gameObject.GetComponent<PlayerControls>().Init();
 
-        // Get a random skin at start -> TODO: Select skin
-        skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
-        ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
+            // Get a random skin at start -> TODO: Select skin
+            skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
+            ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
 
-        // Init player color and add to PlayersManager Players references
-        InitIndicatorColor();
+            // Init player color and add to PlayersManager Players references
+            InitIndicatorColor();
 
-        // Add player to the PlayersManager
-        PlayersManager.Instance.AddPlayer(this);
+            // Add player to the PlayersManager
+            PlayersManager.Instance.AddPlayer(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 
@@ -122,7 +129,7 @@ public class Player : MonoBehaviour
     {
         Face_SpriteRenderer.sprite = CharSkin.SpriteFace;
         Outline_SpriteRenderer.sprite = CharSkin.SpriteFace;
-        
+
         for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
             Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;
