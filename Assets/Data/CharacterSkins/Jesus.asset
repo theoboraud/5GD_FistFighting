@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33d4beee9101bf340bd6b5b249a1ce3b, type: 3}
-  m_Name: JesusFart
+  m_Name: Jesus
   m_EditorClassIdentifier: 
-  Name: JesusFart
-  SpriteFace: {fileID: 21300000, guid: 519c2f747d89c48f3a34c0e9f4eae944, type: 3}
-  SpriteArm: {fileID: 21300000, guid: c29484a4134edb44c9eacfe2acffba3d, type: 3}
+  Name: Jesus
+  SpriteFace: {fileID: 21300000, guid: de10e53213b844127971f42a0b6b5f15, type: 3}
+  SpriteArm: {fileID: 21300000, guid: fee2b7eec6d30461ab91b990a56fa1e3, type: 3}
