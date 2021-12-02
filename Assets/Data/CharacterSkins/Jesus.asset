@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33d4beee9101bf340bd6b5b249a1ce3b, type: 3}
-  m_Name: JesusFart
+  m_Name: Jesus
   m_EditorClassIdentifier: 
   Name: JesusFart
   SpriteFace: {fileID: 21300000, guid: 519c2f747d89c48f3a34c0e9f4eae944, type: 3}
