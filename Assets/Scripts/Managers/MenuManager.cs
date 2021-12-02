@@ -336,6 +336,7 @@ public class MenuManager : MonoBehaviour
     public void Reset()
     {
         PrintScoreScreen(false);
+        MainMenu.Deactivate();
 
         // For each player
         for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
