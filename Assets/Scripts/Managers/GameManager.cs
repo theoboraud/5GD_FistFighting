@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            GlobalGameState = GlobalGameState.MainMenu;
         }
         else
         {
