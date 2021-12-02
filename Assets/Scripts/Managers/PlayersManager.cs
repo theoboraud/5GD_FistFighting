@@ -130,7 +130,7 @@ public class PlayersManager : MonoBehaviour
         }
         PlayersSpawned.Add(_player);
 
-        if (!PlayersLives[Players.IndexOf(_player)] < GameManager.Instance.ParamData.PARAM_Player_Lives)
+        if (PlayersLives[Players.IndexOf(_player)] < GameManager.Instance.ParamData.PARAM_Player_Lives)
         {
             _player.InvincibilityForSeconds(2f);
         }
