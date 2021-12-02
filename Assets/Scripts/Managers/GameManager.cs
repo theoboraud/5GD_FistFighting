@@ -71,7 +71,8 @@ public class GameManager : MonoBehaviour
             LevelManager.Instance.LoadNextLevel();
 
             // Change game state
-            GlobalGameState = GlobalGameState.InPlay;
+            Invoke("SetStateToInPlay", 0.1f);
+
         }
     }
 
@@ -150,6 +151,13 @@ public class GameManager : MonoBehaviour
         {
             GlobalGameState = GlobalGameState.ScoreScreen;
         }
+    }
+
+    private void SetStateToInPlay()
+    {
+
+        GlobalGameState = GlobalGameState.InPlay;
+
     }
 
 

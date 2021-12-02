@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Jesus
   SpriteFace: {fileID: 21300000, guid: de10e53213b844127971f42a0b6b5f15, type: 3}
-  SpriteArm: {fileID: 21300000, guid: fee2b7eec6d30461ab91b990a56fa1e3, type: 3}
+  SpriteArm: {fileID: 21300000, guid: 7a82e390c40ce4880bf8226b4e588993, type: 3}
