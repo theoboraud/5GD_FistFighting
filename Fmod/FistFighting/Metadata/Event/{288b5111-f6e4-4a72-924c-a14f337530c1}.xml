@@ -55,7 +55,7 @@
 			<destination>{fe907372-e4ff-43e3-9fb8-f79a7e70f6b3}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1a395f9e-534d-422b-ba77-f13eaec0ff27}</destination>
+			<destination>{1f255a4d-5b86-4dc8-8fea-20f0ce756aeb}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{107d3241-184f-4aea-b630-fc59be0bd03d}">
@@ -128,7 +128,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{1ed762cb-724a-4471-84ca-5136714f769e}">
 		<property name="volume">
-			<value>-13.5</value>
+			<value>-7.5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -159,6 +159,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e50a9589-c179-4a8a-8e6e-479ebe4ac7d2}">
+		<property name="volume">
+			<value>3</value>
+		</property>
 		<property name="name">
 			<value>Audio 2</value>
 		</property>
@@ -185,7 +188,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{86075c05-f531-470c-b6b4-4e4ae4e9e71a}">
 		<property name="volume">
-			<value>-18.5</value>
+			<value>-8.5</value>
 		</property>
 		<property name="name">
 			<value>Audio 3</value>
@@ -241,6 +244,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{0fc3c39c-470a-45b9-a312-f6467bad52f8}">
 		<relationship name="effects">
+			<destination>{adc6605d-97b2-4ba9-b562-75be534cbc1d}</destination>
 			<destination>{75b882a4-f21e-4866-b72a-30d323b57122}</destination>
 		</relationship>
 	</object>
@@ -265,6 +269,9 @@
 		<property name="distanceRolloffType">
 			<value>4</value>
 		</property>
+		<property name="maximumDistance">
+			<value>100</value>
+		</property>
 	</object>
 	<object class="AutomationPoint" id="{dfe58177-c1c2-42c6-a61b-f42226114781}">
 		<property name="position">
@@ -286,6 +293,11 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{f840ca65-b5e8-40e0-98d9-a516c4a92ade}" />
+	<object class="ThreeEQEffect" id="{adc6605d-97b2-4ba9-b562-75be534cbc1d}">
+		<property name="lowGain">
+			<value>6.5</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{75b882a4-f21e-4866-b72a-30d323b57122}" />
 	<object class="AutomationPoint" id="{86270e78-d19d-48ee-a43e-26a7f890c338}">
 		<property name="position">

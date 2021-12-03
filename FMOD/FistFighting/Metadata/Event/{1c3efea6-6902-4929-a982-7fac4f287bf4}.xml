@@ -54,7 +54,7 @@
 			<destination>{c322754d-8beb-44a0-b5fc-4af6570ecc3c}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1a395f9e-534d-422b-ba77-f13eaec0ff27}</destination>
+			<destination>{1f255a4d-5b86-4dc8-8fea-20f0ce756aeb}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{d9fb5884-1d8d-4be0-b611-7815f13b2059}">
@@ -114,13 +114,17 @@
 		<property name="timelockedOffset">
 			<value>0.017578125</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{d198a403-c0fd-40e8-9a5c-c748a5217441}</destination>
+			<destination>{5ffa3b32-ea80-40e9-a123-50042417d9f1}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{e6825902-2d03-4f1e-90c0-c199a64d5bbe}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{0b429d51-c71d-4056-86d8-41aba8838896}">
 		<property name="volume">
-			<value>-10.5</value>
+			<value>-2</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -157,6 +161,22 @@
 	</object>
 	<object class="MixerBusPanner" id="{1a36ff77-0a92-4ecd-80d0-ce72ddc940d4}" />
 	<object class="MixerBusFader" id="{28620a6a-e783-4811-907b-e11a66798db5}" />
+	<object class="RandomizerModulator" id="{d198a403-c0fd-40e8-9a5c-c748a5217441}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>12</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{5ffa3b32-ea80-40e9-a123-50042417d9f1}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="amount">
+			<value>5</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{9b51f83a-fb0d-419c-a1da-9ecec2b1d45f}">
 		<relationship name="effects">
 			<destination>{360ff1cb-9f78-4819-8521-4e10e6919e97}</destination>
@@ -174,6 +194,9 @@
 	<object class="ObjectSpatialiserEffect" id="{64298ecf-4da4-4eda-bc9e-b37c472fe93b}">
 		<property name="distanceRolloffType">
 			<value>4</value>
+		</property>
+		<property name="maximumDistance">
+			<value>100</value>
 		</property>
 	</object>
 	<object class="SFXReverbEffect" id="{360ff1cb-9f78-4819-8521-4e10e6919e97}" />

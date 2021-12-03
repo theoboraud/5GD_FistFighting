@@ -15,12 +15,14 @@ public class AudioManager : MonoBehaviour
         {
             AudioManager.audioManager = this;
         }
+        else
+        {
+            Destroy(this);
+        }
         if(PlayOnStart)
         {
             musicRef.Play();
         }
-
-        AudioManager.audioManager.PlayTrack("event:/Voices/Victory", this.transform.position);
     }
 
     public void PlayMusic()
