@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Horse
   SpriteFace: {fileID: 21300000, guid: 619cc3f2cbafa41e2ab2a6fddfd05c5d, type: 3}
   SpriteArm: {fileID: 21300000, guid: d3641d4e1db1a47f8a94a8e07e6ad4a6, type: 3}
+  StunSprite: {fileID: 21300000, guid: 92476c4b1ccd1994cabf3305b146649a, type: 3}

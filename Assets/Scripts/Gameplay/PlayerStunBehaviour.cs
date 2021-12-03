@@ -33,6 +33,7 @@ public class PlayerStunBehaviour : MonoBehaviour
     //Initialisation of StunState
     private void StartStunState()
     {
+        player.playerFeedbackManager.StartStunFeedback();
         boxCollider.sharedMaterial = bounce;
         particleSystemController.StartSystem();
         Debug.Log("We stunned baby!!!");
@@ -41,6 +42,7 @@ public class PlayerStunBehaviour : MonoBehaviour
     //The function that stops the stun state
     private void StopStunState()
     {
+        player.playerFeedbackManager.EndStunFeedback();
         player.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
         particleSystemController.StopSystem();

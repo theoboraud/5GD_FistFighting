@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerFeedbackManager : MonoBehaviour
 {
+    [SerializeField] Player player;
     [SerializeField] SpriteRenderer InvincibleVFX;
+    [SerializeField] SpriteRenderer AvatarFace;
 
     public void StartInvincibleFeedback()
     {
@@ -14,6 +16,16 @@ public class PlayerFeedbackManager : MonoBehaviour
     public void StopInvincibleFeedback()
     {
         StopAllCoroutines();
+    }
+
+    public void StartStunFeedback()
+    {
+        AvatarFace.sprite = player.CharSkin.StunSprite;
+    }
+
+    public void EndStunFeedback()
+    {
+        AvatarFace.sprite = player.CharSkin.SpriteFace;
     }
 
     IEnumerator InvincibleFlashAnim()
