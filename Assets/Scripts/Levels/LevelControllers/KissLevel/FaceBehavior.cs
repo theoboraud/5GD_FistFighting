@@ -8,6 +8,7 @@ public class FaceBehavior : MonoBehaviour
     public SpriteRenderer[] EyesOpen;
     public SpriteRenderer[] EyesClose;
     public MoveLeg MoveLeg;
+    
 
     private SpriteRenderer mouth;
 
