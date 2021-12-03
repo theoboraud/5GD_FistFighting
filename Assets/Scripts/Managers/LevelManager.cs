@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
 
             // If the scene is not the lobby, we will only launch this scene
-            if (SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 1)
+            if (SceneManager.GetActiveScene().buildIndex > 0)
             {
                 levelName = SceneManager.GetActiveScene().name;
                 Invoke("Reset", 0.1f);
@@ -201,6 +201,7 @@ public class LevelManager : MonoBehaviour
         MenuManager.Instance.Reset();
 
         GameManager.Instance.Feedback.ResetAllVFX();
+        Destroy(AudioManager.audioManager);
         GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
 
         PlayersManager.Instance.Reset();
