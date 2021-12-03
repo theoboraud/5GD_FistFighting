@@ -634,6 +634,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1720972917, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
+      propertyPath: CharacterSkins.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: ed824eb5aacdeee4d867789f4a5bd181, type: 2}
     - target: {fileID: 4825756672620167337, guid: cdde589cfa91a4efaaa0207cac3cb787, type: 3}
       propertyPath: m_Name
       value: PlayersManager
