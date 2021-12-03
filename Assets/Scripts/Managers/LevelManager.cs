@@ -122,7 +122,10 @@ public class LevelManager : MonoBehaviour
     public void LoadLobbyLevel()
     {
         // Players only have 1 life in the lobby
-        PlayersManager.Instance.ResetPlayersLives(1);
+        if (PlayersManager.Instance != null)
+        {
+            PlayersManager.Instance.ResetPlayersLives(1);
+        }
 
         LoadScene(0);
     }
@@ -180,6 +183,8 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
+            PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
+
             SceneManager.LoadScene(levelName);
 
             CurrentSceneIndex = SceneManager.sceneCountInBuildSettings;
@@ -203,7 +208,7 @@ public class LevelManager : MonoBehaviour
         Destroy(GameManager.Instance);
         Destroy(PlayersManager.Instance);
         Destroy(MenuManager.Instance);
-        LoadLobbyLevel();
+        Invoke("LoadLobbyLevel", 0.1f);
     }
 
     // #endregion
