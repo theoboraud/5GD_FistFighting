@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerArmController : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private List<ArmChecker> Arms = new List<ArmChecker>();
+    public List<ArmChecker> Arms = new List<ArmChecker>();
 
 
     /// <summary>
@@ -46,7 +46,7 @@ public class PlayerArmController : MonoBehaviour
 
 
     /// <summary>
-    ///
+    ///     Called when we start to extend the arm
     /// </summary>
     public void ExtendArm(int i)
     {
@@ -54,33 +54,48 @@ public class PlayerArmController : MonoBehaviour
         {
             Arms[i].anim.PlayAnimation();
             Arms[i].Cooldown = true;
+            // If we can hit a player, start the frame stack
+            if (Arms[i].Players.Count > 0)
+            {
+                Arms[i].FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+            }
+            else
+            {
+                ExtendedArm(i);
+            }
+        }
+    }
 
-            if (CheckIfRigidbodyInRange(i) && !CheckIfEnvironmentInRange(i))
-            {
-                LaunchForeignObject(i);
-            }
-            else if(CheckIfEnvironmentInRange(i) && CheckIfRigidbodyInRange(i))
-            {
-                RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
-                if(Vector2.Distance(this.transform.position, ray.point) < Arms[i].GetClosestRigidbodyPosition())
-                {
-                    LaunchThisAvatarFromGround(i);
-                }
-                else
-                {
-                    LaunchForeignObject(i);
-                }
-            }
-            else if (CheckIfEnvironmentInRange(i))
+
+    /// <summary>
+    ///     Call when the arm is extended (a.k.a. the frame stack has been emptied for this arm)
+    /// </summary>
+    public void ExtendedArm(int i)
+    {
+        if (CheckIfRigidbodyInRange(i) && !CheckIfEnvironmentInRange(i))
+        {
+            LaunchForeignObject(i);
+        }
+        else if(CheckIfEnvironmentInRange(i) && CheckIfRigidbodyInRange(i))
+        {
+            RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
+            if(Vector2.Distance(this.transform.position, ray.point) < Arms[i].GetClosestRigidbodyPosition())
             {
                 LaunchThisAvatarFromGround(i);
             }
             else
             {
-                if(!player.HoldingTrigger) LaunchThisAvatarFromAir(i);
+                LaunchForeignObject(i);
             }
         }
-
+        else if (CheckIfEnvironmentInRange(i))
+        {
+            LaunchThisAvatarFromGround(i);
+        }
+        else
+        {
+            if(!player.HoldingTrigger) LaunchThisAvatarFromAir(i);
+        }
     }
 
 

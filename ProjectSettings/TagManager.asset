@@ -9,6 +9,7 @@ TagManager:
   - Lethal
   - SpawnPoints
   - DynamicEnvironment
+  - DisableCollider
   layers:
   - Default
   - TransparentFX

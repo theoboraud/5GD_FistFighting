@@ -41,6 +41,7 @@ public class ParamData : ScriptableObject
     public float PARAM_Player_ArmHitForce;
     public float PARAM_Player_ArmCooldown;
     public float PARAM_Player_VelocityResetFactor;
+    public int PARAM_Player_ArmStartupFrame;
 
     [Header("DEPRECATED")]
     public float PARAM_Player_ArmExtendingTime;
