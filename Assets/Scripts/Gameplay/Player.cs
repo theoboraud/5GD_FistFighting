@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
     [System.NonSerialized] public CharacterSkin CharSkin;
     public PlayerArmController PlayerArmController;
-    [SerializeField] private PlayerFeedbackManager playerFeedbackManager;
+    public PlayerFeedbackManager playerFeedbackManager;
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     public SpriteRenderer Outline_SpriteRenderer;
