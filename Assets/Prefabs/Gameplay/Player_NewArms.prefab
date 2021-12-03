@@ -799,11 +799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26d6a919638149959e7146cb7485ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Arms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   PlayerArmController: {fileID: 4963761400113064789}
   playerFeedbackManager: {fileID: 697154811548519345}
   Face_SpriteRenderer: {fileID: 4023946081940462339}
@@ -977,6 +972,7 @@ MonoBehaviour:
   - {fileID: 8658859383725866709}
   - {fileID: 1146980566960427136}
   - {fileID: 3875975203341844277}
+  ArmsGoingToHit: []
 --- !u!114 &3286076153300636023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,6 +985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cd2882fab06b444b79c28f59ac3e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Path: 
 --- !u!1001 &435162874383215005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1056,6 +1053,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
       propertyPath: player
       value: 
@@ -1150,6 +1151,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arm_Down
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
       propertyPath: player
       value: 
@@ -1322,6 +1327,10 @@ PrefabInstance:
       value: Arm_Right
       objectReference: {fileID: 0}
     - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 5796460706983378298}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 5796460706983378298}
@@ -1419,6 +1428,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arm_Up
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 5796460706983378298}
     - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
       propertyPath: player
       value: 
