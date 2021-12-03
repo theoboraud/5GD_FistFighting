@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enums;
 
 public class ArmChecker : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class ArmChecker : MonoBehaviour
     private float cooldown_timer;
     public float holding_timer;
 
+    public int FrameStack = 0;
 
     /// <summary>
     ///
@@ -73,6 +75,22 @@ public class ArmChecker : MonoBehaviour
         else if(holding_timer == 0)
         {
             StopEverything();
+        }
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void FixedUpdate()
+    {
+        if (FrameStack > 0)
+        {
+            FrameStack -= 1;
+            if (FrameStack == 0)
+            {
+                player.PlayerArmController.ExtendedArm(player.PlayerArmController.Arms.IndexOf(this));
+            }
         }
     }
 

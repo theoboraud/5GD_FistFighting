@@ -14,7 +14,6 @@ public class PlayerControls : MonoBehaviour
 
     [Header("References")]
     public Player Player;                       // Player reference
-    private List<ArmBehaviour> arms;            // Player arms references
     private RotateBehaviour Rotate;              // Player rotate reference
     private PlayerInput playerInput;            // Player Input reference
     // All input action references
@@ -32,12 +31,6 @@ public class PlayerControls : MonoBehaviour
     public void Init()
     {
         Player = gameObject.GetComponent<Player>();
-
-        arms = new List<ArmBehaviour>();
-        foreach (ArmBehaviour _arm in Player.Arms)
-        {
-            arms.Add(_arm);
-        }
 
         Rotate = gameObject.GetComponent<RotateBehaviour>();
 
@@ -104,18 +97,6 @@ public class PlayerControls : MonoBehaviour
         if (_context.canceled || _context.interaction is TapInteraction)
         {
             Player.PlayerArmController.ExtendArm(3);
-        }
-    }
-
-    /// <summary>
-    ///     Called when rotating using the stick
-    /// </summary>
-    public void Gameplay_RotateStick(InputAction.CallbackContext _context)
-    {
-        // If the player is not dead
-        if (Player.PlayerGameState == PlayerGameState.Alive)
-        {
-            Player.Arms[3].Input_StopExtend();
         }
     }
 

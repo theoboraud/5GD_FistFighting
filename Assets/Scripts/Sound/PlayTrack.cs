@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayTrack : MonoBehaviour
 {
+    public string Path;
+
     public void PlayOneShot(string path)
     {
         AudioManager.audioManager.PlayTrack(path, this.transform.position);

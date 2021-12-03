@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [System.NonSerialized] public Rigidbody2D RB;       // Player rigidbody ref
-    public ArmBehaviour[] Arms = new ArmBehaviour[4];     // Array containing each arm behaviour script
     [System.NonSerialized] public CharacterSkin CharSkin;
     public PlayerArmController PlayerArmController;
     [SerializeField] private PlayerFeedbackManager playerFeedbackManager;
