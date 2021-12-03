@@ -214,6 +214,7 @@ public class PlayerArmController : MonoBehaviour
                 (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();
+            AudioManager.audioManager.PlayTrack("event:/Voices/Hurt", item.transform.position);
         }
 
         GameManager.Instance.Feedback.SpawnHitVFX
