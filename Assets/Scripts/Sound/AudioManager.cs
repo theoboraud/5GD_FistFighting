@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    
+
     public bool PlayOnStart = true;
     [SerializeField] FMODUnity.StudioEventEmitter musicRef;
-    public static AudioManager audioManager;
+    public static AudioManager Instance;
 
     private void Start()
     {
-        if(AudioManager.audioManager == null)
+        if (Instance == null)
         {
-            AudioManager.audioManager = this;
+            Instance = this;
         }
         else
         {
             Destroy(this);
         }
-        if(PlayOnStart)
+        if (PlayOnStart)
         {
             musicRef.Play();
         }
