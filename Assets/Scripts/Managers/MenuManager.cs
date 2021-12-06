@@ -344,6 +344,8 @@ public class MenuManager : MonoBehaviour
             Destroy(UI_PlayersLives[i].transform.parent.gameObject);
             Destroy(UI_SpawningTimers[i]);
         }
+        
+        Destroy(UI_StartingTimer);
 
     }
 }
