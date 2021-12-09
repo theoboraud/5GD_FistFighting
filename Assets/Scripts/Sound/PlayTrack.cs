@@ -8,6 +8,6 @@ public class PlayTrack : MonoBehaviour
 
     public void PlayOneShot(string path)
     {
-        AudioManager.audioManager.PlayTrack(path, this.transform.position);
+        AudioManager.Instance.PlayTrack(path, this.transform.position);
     }
 }

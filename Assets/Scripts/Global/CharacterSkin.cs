@@ -9,4 +9,7 @@ public class CharacterSkin : ScriptableObject
     public string Name;
     public Sprite SpriteFace;
     public Sprite SpriteArm;
+
+    [Header("Feedbacks")]
+    public Sprite StunSprite;
 }

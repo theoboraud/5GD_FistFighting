@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Courbet
   SpriteFace: {fileID: 21300000, guid: 7abd79e350d9c4cc0881ca15b2de1c52, type: 3}
   SpriteArm: {fileID: 21300000, guid: c29484a4134edb44c9eacfe2acffba3d, type: 3}
+  StunSprite: {fileID: 21300000, guid: 7abd79e350d9c4cc0881ca15b2de1c52, type: 3}

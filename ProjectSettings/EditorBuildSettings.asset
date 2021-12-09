@@ -44,22 +44,37 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/LD_PitWell.unity
     guid: 14f42857b1be18b40a5ca457b5d9b3ce
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/Battlefield/BattlefieldGround_1.unity
     guid: d015a2f7ad08f486fa1ef4cba6852067
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/Battlefield/BattlefieldPit_1.unity
     guid: e8d5c962c69664935b0797c4d231c69c
   - enabled: 1
+    path: Assets/Scenes/MainLevels/Test_DA/Test_DA_Dormir_Fatality.unity
+    guid: 0b43b814c50e7f44089728d6b6e0aefb
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/Test_DA/Test_DA_Kiss_Picasso.unity
+    guid: 12aef9c21f593d049a847c47a6f5b8f5
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/Test_DA/Test_DA_LD_BattlefieldSlides.unity
+    guid: 9f2316267dccb5d439f9d681ba8e6ca1
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/Test_DA/Test_DA_MonaLisa_PitArena.unity
+    guid: 6440baff170d9704c8761cf745de3db8
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/Test_DA/Test_DA_Mustache_PitWell.unity
+    guid: 6fdacfb67bcce5f409fcb9cfa81efa35
+  - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/Battlefield/BattlefieldPit_2.unity
     guid: db5c5e5cbe0004bd893d3e839245e876
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/Battlefield/BattlefieldPit_3.unity
     guid: b88feef18ec914213b7d2010f8a4fd57
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/Battlefield/BattlefieldPit_4.unity
     guid: eda0a3c58e7a44c1dad837e68fdf9ef9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/Battlefield/BattlefieldSlides_1.unity
     guid: 34c1a47ea7ba742dda7143e70bdd1e23
   m_configObjects:

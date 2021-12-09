@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Frida
   SpriteFace: {fileID: 21300000, guid: cf00b96f3224940b0a84eeda7363ff3f, type: 3}
   SpriteArm: {fileID: 21300000, guid: c29484a4134edb44c9eacfe2acffba3d, type: 3}
+  StunSprite: {fileID: 21300000, guid: cf00b96f3224940b0a84eeda7363ff3f, type: 3}
