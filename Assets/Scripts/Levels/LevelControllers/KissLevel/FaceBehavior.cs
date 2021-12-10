@@ -8,6 +8,7 @@ public class FaceBehavior : MonoBehaviour
     public SpriteRenderer[] EyesOpen;
     public SpriteRenderer[] EyesClose;
     public MoveLeg MoveLeg;
+    public KickLeg kickLeg;
 
     private SpriteRenderer mouth;
 
@@ -29,8 +30,13 @@ public class FaceBehavior : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             OnHurt();
+            Invoke("StartKickLeg",0.3f);
             Invoke("HurtPassed",3f);
         }
+    }
+    private void StartKickLeg()
+    {
+        kickLeg.StartKick();
     }
     private void OnHurt()
     {
