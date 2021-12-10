@@ -80,4 +80,12 @@ public class ParamData : ScriptableObject
     public bool PARAM_Player_UseFactorForRotation;
 
     // #endregion
+
+    // #region ================== PRIORITY PARAMETERS ==================
+    [Header("PRIORITY POINTS")]
+    public int PARAM_PRIO_FRAMESTACK;
+    public int PARAM_PRIO_VELOCITY;
+    public int PARAM_PRIO_HOLDFORCE;
+    public int PARAM_PRIO_AIRSTATE;
+    // #endregion
 }

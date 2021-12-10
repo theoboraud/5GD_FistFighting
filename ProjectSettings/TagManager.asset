@@ -18,12 +18,12 @@ TagManager:
   - Water
   - UI
   - StaticGround
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player1
+  - Player2
+  - Player3
+  - Player4
+  - Invincible
+  - DynamicObject
   - 
   - 
   - 
