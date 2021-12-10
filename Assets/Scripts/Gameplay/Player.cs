@@ -271,7 +271,7 @@ public class Player : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("Lethal") && PlayerGameState is PlayerGameState.InPlay)
+        if (_GO.CompareTag("Lethal") && PlayerGameState is PlayerGameState.Alive)
         {
             Kill();
         }
