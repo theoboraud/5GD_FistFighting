@@ -124,11 +124,6 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
-        if (LevelManager.Instance.GetSceneIndex() == 0)
-        {
-            Player.IsReady(!Player.GO_IsReady.activeSelf);
-        }
-
         else if (GameManager.Instance.GlobalGameState is GlobalGameState.PlayerWon && _context.canceled)
         {
             GameManager.Instance.ResetGame();
@@ -145,7 +140,14 @@ public class PlayerControls : MonoBehaviour
         }
         else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay && _context.canceled)
         {
-            MenuManager.Instance.PauseMenu.Activate();
+            if (LevelManager.Instance.GetSceneIndex() == 0)
+            {
+                Player.IsReady(!Player.GO_IsReady.activeSelf);
+            }
+            else
+            {
+                MenuManager.Instance.PauseMenu.Activate();
+            }
         }
     }
 
