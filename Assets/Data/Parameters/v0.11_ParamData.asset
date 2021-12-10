@@ -22,7 +22,7 @@ MonoBehaviour:
   PARAM_Player_ArmHitForce: 25
   PARAM_Player_ArmCooldown: 0.4
   PARAM_Player_VelocityResetFactor: 0.75
-  PARAM_Player_ArmStartupFrame: 4
+  PARAM_Player_ArmStartupFrame: 50
   PARAM_Player_ArmExtendingTime: 15
   PARAM_Player_ArmUnextendingTime: 15
   PARAM_Player_MaxTriggerHoldTime: 1

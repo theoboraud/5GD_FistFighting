@@ -62,6 +62,7 @@ public class PlayerArmController : MonoBehaviour
                 ArmChecker _arm = Arms[_armIndex];
                 ArmsGoingToHit.Add(_arm);
 
+                if(_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
                 if (_arm.Players.Count > 0)
                 {
                     for (int i = 0; i < _arm.Players.Count; i++)
@@ -74,7 +75,8 @@ public class PlayerArmController : MonoBehaviour
 
                                 if (_armPlayerHit.Players.Contains(player))
                                 {
-                                    ComparePlayersVelocity(_arm, _armPlayerHit);
+                                    Debug.Log("On Casse des Gueules !!!");
+                                    TimeToSeeWhoWinsThisClash(Arms[i], _armPlayerHit);
                                 }
                             }
                         }
@@ -98,22 +100,74 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     public void ComparePlayersVelocity(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
     {
-        if (_armPlayer1.Player.RB.velocity.x + _armPlayer1.Player.RB.velocity.y >= _armPlayer2.Player.RB.velocity.x + _armPlayer2.Player.RB.velocity.y)
+        if (_armPlayer1.Player.RB.velocity.magnitude > _armPlayer2.Player.RB.velocity.magnitude)
         {
             _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
         }
-        if (_armPlayer2.Player.RB.velocity.x + _armPlayer2.Player.RB.velocity.y >= _armPlayer1.Player.RB.velocity.x + _armPlayer1.Player.RB.velocity.y)
+        else if (_armPlayer2.Player.RB.velocity.magnitude > _armPlayer1.Player.RB.velocity.magnitude)
+        {
+            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+        }
+        else if (_armPlayer2.Player.RB.velocity.magnitude == _armPlayer1.Player.RB.velocity.magnitude)
+        {
+            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+        }
+    }
+
+    public void TimeToSeeWhoWinsThisClash(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
+    {
+        int player1Points = 0;
+        int player2Points = 0;
+
+        if (_armPlayer1.FrameStack < _armPlayer2.FrameStack)
+        {
+            player1Points += 1;
+        }
+        else if (_armPlayer1.FrameStack > _armPlayer2.FrameStack)
+        {
+            player2Points += 1;
+        }
+
+        if (_armPlayer1.Player.RB.velocity.magnitude * _armPlayer1.holding_timer > _armPlayer2.Player.RB.velocity.magnitude * _armPlayer2.holding_timer)
+        {
+            player1Points += 3;
+        }
+        else if (_armPlayer1.Player.RB.velocity.magnitude * _armPlayer1.holding_timer < _armPlayer2.Player.RB.velocity.magnitude * _armPlayer2.holding_timer)
+        {
+            player2Points += 3;
+        }
+
+        if (_armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir && _armPlayer2.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        {
+            player1Points += 3;
+        }
+        else if (_armPlayer2.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir && _armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        {
+            player2Points += 3;
+        }
+
+        if (player1Points > player2Points)
+        {
+            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+        }
+        else if (player1Points == player2Points)
+        {
+            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+        }
+        else if (player2Points>player1Points)
         {
             _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
         }
     }
-
 
     /// <summary>
     ///     Call when the arm is extended (a.k.a. the frame stack has been emptied for this arm)
     /// </summary>
     public void ExtendedArm(int _armIndex)
     {
+        Arms[_armIndex].FrameStack = 0;
         if (CheckIfRigidbodyInRange(_armIndex) && !CheckIfEnvironmentInRange(_armIndex))
         {
             LaunchForeignObject(_armIndex);
@@ -249,6 +303,8 @@ public class PlayerArmController : MonoBehaviour
 
         foreach (var item in Arms[_armIndex].Players)
         {
+            item.RB.velocity = Vector2.zero;
+            item.RB.angularVelocity = 0;
             item.RB.AddForce
                 (-Arms[_armIndex].transform.up *
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
