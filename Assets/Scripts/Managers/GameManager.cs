@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
             PlayersManager.Instance.PlayersDeathOrder.Clear();
             Feedback.ResetAllVFX();
             MenuManager.Instance.PrintScoreScreen(false);
+            MenuManager.Instance.NewGameRound();
 
             // Load the new level
             LevelManager.Instance.LoadNextLevel();

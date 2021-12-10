@@ -19,7 +19,7 @@ public class MenuManager : MonoBehaviour
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
     public List<Color> PlayerColors;                                                    // Reference to the player colors
-    public List<GameObject> UI_PlayersLives = new List<GameObject>();                   // Reference to the UI indicating the number of player lives
+    public List<PlayerUI> PlayersUI = new List<PlayerUI>();                        // Reference to the UI indicating the number of player lives
     public PauseMenu PauseMenu;                                                         // Reference to the PauseMenu script
 
     [Header("Menu Screens")]
@@ -271,8 +271,9 @@ public class MenuManager : MonoBehaviour
         PlayerScores[_playerIndex].gameObject.SetActive(true);
         PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
         PlayersManager.Instance.Players[_playerIndex].Outline_SpriteRenderer.color = PlayerColors[_playerIndex];
-        UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
-        UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
+        PlayersUI[_playerIndex].AddPlayerUI(_playerIndex, PlayerColors[_playerIndex]);
+        //UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
+        //UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
     }
 
 
@@ -309,26 +310,7 @@ public class MenuManager : MonoBehaviour
     {
         for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
         {
-            int _playerLives = PlayersManager.Instance.PlayersLives[i];
-            Text _text = UI_PlayersLives[i].GetComponent<Text>();
-
-            if (_playerLives > 0)
-            {
-                _text.text = _playerLives.ToString();
-            }
-            else
-            {
-                _text.text = "X";
-            }
-
-            if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1 && LevelManager.Instance.CurrentSceneIndex != 0)
-            {
-                _text.color = Color.red;
-            }
-            else
-            {
-                _text.color = Color.black;
-            }
+            PlayersUI[i].UpdateLivesUI();
         }
     }
 
@@ -341,10 +323,18 @@ public class MenuManager : MonoBehaviour
         // For each player
         for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
         {
-            Destroy(UI_PlayersLives[i].transform.parent.gameObject);
+            Destroy(PlayersUI[i].gameObject);
             Destroy(UI_SpawningTimers[i]);
         }
 
         Destroy(UI_StartingTimer);
+    }
+
+    public void NewGameRound()
+    {
+        for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
+        {
+            PlayersUI[i].Init();
+        }
     }
 }
