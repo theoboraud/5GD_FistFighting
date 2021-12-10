@@ -60,13 +60,12 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
-        if (GlobalGameState == GlobalGameState.ScoreScreen)
+        if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.GetSceneIndex() == 0)
         {
             // Still in the first level
             PlayersManager.Instance.PlayersDeathOrder.Clear();
             Feedback.ResetAllVFX();
             MenuManager.Instance.PrintScoreScreen(false);
-            MenuManager.Instance.NewGameRound();
 
             // Load the new level
             LevelManager.Instance.LoadNextLevel();
@@ -171,6 +170,8 @@ public class GameManager : MonoBehaviour
             {
                 PlayersManager.Instance.PlayersAlive[i].Kill();
             }
+
+            ScoreScreen();
         }
     }
 

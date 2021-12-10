@@ -142,7 +142,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (LevelManager.Instance.GetSceneIndex() == 0)
             {
-                Player.IsReady(!Player.GO_IsReady.activeSelf);
+                Player.IsReadyUI(!Player.GO_IsReady.activeSelf);
             }
             else
             {

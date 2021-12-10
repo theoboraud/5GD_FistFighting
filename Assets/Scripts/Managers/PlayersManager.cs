@@ -99,6 +99,9 @@ public class PlayersManager : MonoBehaviour
 
             // Add its timer reference to SpawningTimers in MenuManager
             MenuManager.Instance.SpawningTimers.Add(0f);
+
+            // Set the player to not ready
+            _player.IsReadyUI(false);
         }
         // If the game tries to spawn a 5th player
         else
@@ -171,7 +174,7 @@ public class PlayersManager : MonoBehaviour
     {
         for (int i = 0; i < Players.Count; i++)
         {
-            if (Players[i].PlayerGameState != PlayerGameState.Ready)
+            if (!Players[i].IsReady)
             {
                 return false;
             }
