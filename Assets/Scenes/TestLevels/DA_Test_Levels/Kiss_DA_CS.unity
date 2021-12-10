@@ -2506,6 +2506,7 @@ GameObject:
   - component: {fileID: 1331511918}
   - component: {fileID: 1331511920}
   - component: {fileID: 1331511919}
+  - component: {fileID: 1331511921}
   m_Layer: 6
   m_Name: KickLegRight
   m_TagString: StaticGround
@@ -2520,13 +2521,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331511917}
-  m_LocalRotation: {x: -0.000000052875276, y: -0.000000027575048, z: -0.7342672, w: 0.6788606}
-  m_LocalPosition: {x: 12.29, y: -6.07, z: 20.95709}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 15.83, y: -7.85, z: 20.95709}
   m_LocalScale: {x: 1.5, y: 1.5, z: 2.186831}
   m_Children: []
   m_Father: {fileID: 1827521527}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 625.50903}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!60 &1331511919
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2679,6 +2680,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1331511921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331511917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53635cfa664cd6b409c9c8b04e987447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLeftLeg: 0
+  KickForce: 4
 --- !u!1 &1403173317
 GameObject:
   m_ObjectHideFlags: 0
@@ -2811,6 +2826,7 @@ MonoBehaviour:
   - {fileID: 1450840319}
   - {fileID: 360857064}
   MoveLeg: {fileID: 948658854}
+  kickLeg: {fileID: 1570571741}
 --- !u!1 &1450840317
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,6 +3041,7 @@ MonoBehaviour:
   - {fileID: 604943703}
   - {fileID: 651719736}
   MoveLeg: {fileID: 2115330227}
+  kickLeg: {fileID: 1331511921}
 --- !u!1 &1560254151
 GameObject:
   m_ObjectHideFlags: 0
@@ -3067,6 +3084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1570571738}
   - component: {fileID: 1570571740}
+  - component: {fileID: 1570571741}
   - component: {fileID: 1570571739}
   m_Layer: 6
   m_Name: KickLegLeft
@@ -3082,13 +3100,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570571737}
-  m_LocalRotation: {x: -0, y: -0, z: 0.71561545, w: 0.6984945}
-  m_LocalPosition: {x: -10.32, y: -4.95, z: 21.270605}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -13.51, y: -7.6, z: 21.270605}
   m_LocalScale: {x: 1.5, y: 1.5, z: 0.8797009}
   m_Children: []
   m_Father: {fileID: 1827521527}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 91.387}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!60 &1570571739
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3098,7 +3116,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1570571737}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: ad90a1770bf679c419e9dd3e2d802c9c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3241,6 +3259,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1570571741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570571737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53635cfa664cd6b409c9c8b04e987447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLeftLeg: 1
+  KickForce: 4
 --- !u!1 &1579359885
 GameObject:
   m_ObjectHideFlags: 0
