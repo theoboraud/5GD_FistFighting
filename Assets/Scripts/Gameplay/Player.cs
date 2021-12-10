@@ -244,10 +244,7 @@ public class Player : MonoBehaviour
             RB.velocity = Vector3.zero;
             RB.angularVelocity = 0f;
 
-<<<<<<< Updated upstream
-=======
             IsReadyUI(false);
->>>>>>> Stashed changes
             PlayerGameState = PlayerGameState.Dead;
             PlayerArmController.Init();
 
