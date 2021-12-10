@@ -73,7 +73,7 @@ public class PlayerArmController : MonoBehaviour
 
                         if (_arm.Players[i].PlayerArmController.ArmsGoingToHit.Count > 0)
                         {
-                            for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; i++)
+                            for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; j++)
                             {
 
                                 //print("PlayersArmController: j is " + j.ToString());
