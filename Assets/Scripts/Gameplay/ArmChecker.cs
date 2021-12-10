@@ -9,7 +9,7 @@ public class ArmChecker : MonoBehaviour
     public List<Player> Players = new List<Player>();
     public bool StaticEnvironmentInRange = false;
     [Header("Reference")]
-    [SerializeField] private Player player;
+    public Player Player;
     [SerializeField] BoxCollider2D collider;
     public ArmAnimationController anim;
     public bool Cooldown = false;
@@ -46,7 +46,7 @@ public class ArmChecker : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        if(Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
         {
             collider.enabled = true;
         }
@@ -89,7 +89,7 @@ public class ArmChecker : MonoBehaviour
             FrameStack -= 1;
             if (FrameStack == 0)
             {
-                player.PlayerArmController.ExtendedArm(player.PlayerArmController.Arms.IndexOf(this));
+                Player.PlayerArmController.ExtendedArm(Player.PlayerArmController.Arms.IndexOf(this));
             }
         }
     }
@@ -156,8 +156,8 @@ public class ArmChecker : MonoBehaviour
         }
         if(collision.CompareTag("Player"))
         {
-            Player player = collision.GetComponent<Player>();
-            if(!Players.Contains(player) && player.PlayerGameState != Enums.PlayerGameState.Invincible) Players.Add(player);
+            Player Player = collision.GetComponent<Player>();
+            if(!Players.Contains(Player) && Player.PlayerGameState != Enums.PlayerGameState.Invincible) Players.Add(Player);
         }
         if (collision.CompareTag("StaticGround"))
         {
@@ -178,8 +178,8 @@ public class ArmChecker : MonoBehaviour
         }
         if (collision.CompareTag("Player"))
         {
-            Player player = collision.GetComponent<Player>();
-            if (Players.Contains(player)) Players.Remove(player);
+            Player Player = collision.GetComponent<Player>();
+            if (Players.Contains(Player)) Players.Remove(Player);
         }
         if(collision.CompareTag("StaticGround"))
         {

@@ -6,6 +6,7 @@ public class PlayerArmController : MonoBehaviour
 {
     [SerializeField] private Player player;
     public List<ArmChecker> Arms = new List<ArmChecker>();
+    public List<ArmChecker> ArmsGoingToHit = new List<ArmChecker>();
 
 
     /// <summary>
@@ -48,53 +49,46 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///     Called when we start to extend the arm
     /// </summary>
-    public void ExtendArm(int i)
+    public void ExtendArm(int _armIndex)
     {
-        if (Arms[i].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
+        if (Arms[_armIndex].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
         {
-            Arms[i].anim.PlayAnimation();
-            Arms[i].Cooldown = true;
+            Arms[_armIndex].anim.PlayAnimation();
+            Arms[_armIndex].Cooldown = true;
+
             // If we can hit a player, start the frame stack
-            if (Arms[i].Players.Count > 0)
+            if (Arms[_armIndex].Players.Count > 0)
             {
-                Arms[i].FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+                ArmChecker _arm = Arms[_armIndex];
+                ArmsGoingToHit.Add(_arm);
+
+                if (_arm.Players.Count > 0)
+                {
+                    for (int i = 0; i < _arm.Players.Count; i++)
+                    {
+                        if (_arm.Players[i].PlayerArmController.ArmsGoingToHit.Count > 0)
+                        {
+                            for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; i++)
+                            {
+                                ArmChecker _armPlayerHit = _arm.Players[i].PlayerArmController.ArmsGoingToHit[j];
+
+                                if (_armPlayerHit.Players.Contains(player))
+                                {
+                                    ComparePlayersVelocity(_arm, _armPlayerHit);
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+                }
             }
             else
             {
-                ExtendedArm(i);
+                ExtendedArm(_armIndex);
             }
-        }
-    }
-
-
-    /// <summary>
-    ///     Call when the arm is extended (a.k.a. the frame stack has been emptied for this arm)
-    /// </summary>
-    public void ExtendedArm(int i)
-    {
-        if (CheckIfRigidbodyInRange(i) && !CheckIfEnvironmentInRange(i))
-        {
-            LaunchForeignObject(i);
-        }
-        else if(CheckIfEnvironmentInRange(i) && CheckIfRigidbodyInRange(i))
-        {
-            RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
-            if(Vector2.Distance(this.transform.position, ray.point) < Arms[i].GetClosestRigidbodyPosition())
-            {
-                LaunchThisAvatarFromGround(i);
-            }
-            else
-            {
-                LaunchForeignObject(i);
-            }
-        }
-        else if (CheckIfEnvironmentInRange(i))
-        {
-            LaunchThisAvatarFromGround(i);
-        }
-        else
-        {
-            if(!player.HoldingTrigger) LaunchThisAvatarFromAir(i);
         }
     }
 
@@ -102,11 +96,59 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private bool CheckIfRigidbodyInRange(int i)
+    public void ComparePlayersVelocity(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
+    {
+        if (_armPlayer1.Player.RB.velocity.x + _armPlayer1.Player.RB.velocity.y >= _armPlayer2.Player.RB.velocity.x + _armPlayer2.Player.RB.velocity.y)
+        {
+            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+        }
+        if (_armPlayer2.Player.RB.velocity.x + _armPlayer2.Player.RB.velocity.y >= _armPlayer1.Player.RB.velocity.x + _armPlayer1.Player.RB.velocity.y)
+        {
+            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+        }
+    }
+
+
+    /// <summary>
+    ///     Call when the arm is extended (a.k.a. the frame stack has been emptied for this arm)
+    /// </summary>
+    public void ExtendedArm(int _armIndex)
+    {
+        if (CheckIfRigidbodyInRange(_armIndex) && !CheckIfEnvironmentInRange(_armIndex))
+        {
+            LaunchForeignObject(_armIndex);
+        }
+        else if(CheckIfEnvironmentInRange(_armIndex) && CheckIfRigidbodyInRange(_armIndex))
+        {
+            RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
+            if(Vector2.Distance(this.transform.position, ray.point) < Arms[_armIndex].GetClosestRigidbodyPosition())
+            {
+                LaunchThisAvatarFromGround(_armIndex);
+            }
+            else
+            {
+                LaunchForeignObject(_armIndex);
+            }
+        }
+        else if (CheckIfEnvironmentInRange(_armIndex))
+        {
+            LaunchThisAvatarFromGround(_armIndex);
+        }
+        else
+        {
+            if(!player.HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
+        }
+    }
+
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool CheckIfRigidbodyInRange(int _armIndex)
     {
         bool inRange = false;
 
-        if (Arms[i].Rigidbodies.Count > 0 || Arms[i].Players.Count > 0)
+        if (Arms[_armIndex].Rigidbodies.Count > 0 || Arms[_armIndex].Players.Count > 0)
         {
             inRange = true;
         }
@@ -118,11 +160,11 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private bool CheckIfEnvironmentInRange(int i)
+    private bool CheckIfEnvironmentInRange(int _armIndex)
     {
         bool inRange = false;
 
-        inRange = Arms[i].StaticEnvironmentInRange;
+        inRange = Arms[_armIndex].StaticEnvironmentInRange;
 
         return inRange;
     }
@@ -131,7 +173,7 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private void LaunchThisAvatarFromGround(int i)
+    private void LaunchThisAvatarFromGround(int _armIndex)
     {
         player.AirPushFactor = 1f;
 
@@ -139,16 +181,16 @@ public class PlayerArmController : MonoBehaviour
         player.RB.angularVelocity = 0;
 
         player.RB.AddForce
-            (Arms[i].transform.up *
+            (Arms[_armIndex].transform.up *
             GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
-            (Arms[i].holding_timer/GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1,2),
+            (Arms[_armIndex].holding_timer/GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1,2),
             ForceMode2D.Impulse);
         //Debug.Log(Arms[i].holding_timer);
-        RaycastHit2D ray = Physics2D.Raycast(Arms[i].transform.position, -Arms[i].transform.up, 2.1f);
+        RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f);
         GameManager.Instance.Feedback.SpawnHitVFX
             (ray.point,
-            Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
+            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
     }
 
@@ -156,7 +198,7 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private void LaunchThisAvatarFromAir(int i)
+    private void LaunchThisAvatarFromAir(int _armIndex)
     {
         // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
         player.AirPushFactor -= 0.01f;
@@ -173,18 +215,18 @@ public class PlayerArmController : MonoBehaviour
         }
 
         player.RB.AddForce
-            (Arms[i].transform.up *
+            (Arms[_armIndex].transform.up *
             player.AirPushFactor *
             GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
-            (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
+            (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
 
         if (player.AirPushFactor > 0f)
         {
             GameManager.Instance.Feedback.SpawnHitAvatarVFX
-                (Arms[i].transform.position + Arms[i].transform.up * -2,
-                Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
+                (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+                Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
                 Vector3.forward));
         }
     }
@@ -193,33 +235,46 @@ public class PlayerArmController : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    private void LaunchForeignObject(int i)
+    private void LaunchForeignObject(int _armIndex)
     {
-        foreach (var item in Arms[i].Rigidbodies)
+        foreach (var item in Arms[_armIndex].Rigidbodies)
         {
             item.AddForce
-                (-Arms[i].transform.up *
+                (-Arms[_armIndex].transform.up *
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
                 Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
-                (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
+                (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
         }
 
-        foreach (var item in Arms[i].Players)
+        foreach (var item in Arms[_armIndex].Players)
         {
             item.RB.AddForce
-                (-Arms[i].transform.up *
+                (-Arms[_armIndex].transform.up *
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
                 Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
-                (Arms[i].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
+                (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();
-            AudioManager.audioManager.PlayTrack("event:/Voices/Hurt", item.transform.position);
+            AudioManager.Instance.PlayTrack("event:/Voices/Hurt", item.transform.position);
         }
 
+        ArmsGoingToHit.Remove(Arms[_armIndex]);
+
         GameManager.Instance.Feedback.SpawnHitVFX
-            (Arms[i].transform.position + Arms[i].transform.up * -2,
-            Quaternion.AngleAxis(90 + Arms[i].transform.rotation.eulerAngles.z,
+            (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
+    }
+
+
+    public void IsHit()
+    {
+        for (int i = 0; i < ArmsGoingToHit.Count; i++)
+        {
+            ArmChecker _arm = ArmsGoingToHit[i];
+            _arm.FrameStack = 0;
+            ArmsGoingToHit.Remove(_arm);
+        }
     }
 }

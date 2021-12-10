@@ -345,5 +345,6 @@ public class MenuManager : MonoBehaviour
             Destroy(UI_SpawningTimers[i]);
         }
 
+        Destroy(UI_StartingTimer);
     }
 }

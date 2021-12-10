@@ -98,12 +98,15 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(_levelIndex);
         CurrentSceneIndex = _levelIndex;
 
-        if (_levelIndex != 0)
+        if (MenuManager.Instance != null)
         {
-            MenuManager.Instance.StartTimer();
-        }
+            if (_levelIndex != 0)
+            {
+                MenuManager.Instance.StartTimer();
+            }
 
-        MenuManager.Instance.UpdateLives();
+            MenuManager.Instance.UpdateLives();
+        }
     }
 
 
@@ -201,7 +204,10 @@ public class LevelManager : MonoBehaviour
         MenuManager.Instance.Reset();
 
         GameManager.Instance.Feedback.ResetAllVFX();
-        Destroy(AudioManager.audioManager);
+
+        AudioManager.Instance.StopMusic();
+        Destroy(AudioManager.Instance);
+
         GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
 
         PlayersManager.Instance.Reset();

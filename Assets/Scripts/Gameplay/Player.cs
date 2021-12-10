@@ -280,6 +280,7 @@ public class Player : MonoBehaviour
     public void Hit()
     {
         PlayerPhysicState = PlayerPhysicState.IsHit;
+        PlayerArmController.IsHit();
         StunTimer = 0;
     }
 
