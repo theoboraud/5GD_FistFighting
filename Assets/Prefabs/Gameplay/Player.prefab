@@ -813,6 +813,7 @@ MonoBehaviour:
   playerIndicator: {fileID: 3134858868951555129}
   UI_PlayerIndicator: {fileID: 7267137111546404118}
   BoxCollider: {fileID: 8023127552561660906}
+  GO_IsReady: {fileID: 7267137111546404118}
   OnExtendArm:
     m_PersistentCalls:
       m_Calls: []
