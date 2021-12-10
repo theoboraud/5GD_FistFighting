@@ -7,7 +7,18 @@ public class PlayerFeedbackManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] SpriteRenderer InvincibleVFX;
     [SerializeField] SpriteRenderer StunAccumulation;
+    [SerializeField] ParticleSystem StunAccumulationParticles;
     [SerializeField] SpriteRenderer AvatarFace;
+    [SerializeField] GameObject Plasters;
+
+    private float StunAlpha;
+
+    private void Start()
+    {
+        StunAlpha = StunAccumulation.color.a;
+        StunAccumulation.color = new Color(StunAccumulation.color.r, StunAccumulation.color.g, StunAccumulation.color.b, 0.0f);
+        StunAccumulationParticles.Stop();
+    }
 
     public void StartInvincibleFeedback()
     {
@@ -29,9 +40,18 @@ public class PlayerFeedbackManager : MonoBehaviour
         AvatarFace.sprite = player.CharSkin.SpriteFace;
     }
 
-    public void UpdateStunFeedback(int state)
+    public void UpdateStunFeedback(int stat)
     {
-        InvincibleVFX.color = new Color(InvincibleVFX.color.r, InvincibleVFX.color.g, InvincibleVFX.color.b, (state / 5) * InvincibleVFX.color.a);
+        StunAccumulation.color = new Color(StunAccumulation.color.r, StunAccumulation.color.g, StunAccumulation.color.b, ((float)stat / 5) * StunAlpha);
+        if (stat >= 3)
+        {
+            Plasters.SetActive(true);
+            StunAccumulationParticles.Play();
+        }
+        else { 
+            Plasters.SetActive(false);
+            StunAccumulationParticles.Stop();
+        }
     }
 
     IEnumerator InvincibleFlashAnim()

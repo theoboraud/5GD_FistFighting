@@ -40,6 +40,7 @@ public class PlayerStunBehaviour : MonoBehaviour
                 timer = 0f;
                 StunAccumulation--;
                 StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
+                player.playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
             }
         }
     }
@@ -49,10 +50,12 @@ public class PlayerStunBehaviour : MonoBehaviour
     {
         StunAccumulation++;
         StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
+        player.playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
+        Debug.Log(StunAccumulation);
+        timer = 0;
         player.playerFeedbackManager.StartStunFeedback();
         boxCollider.sharedMaterial = bounce;
         particleSystemController.StartSystem();
-        Debug.Log("We stunned baby!!!");
     }
 
     //The function that stops the stun state
@@ -62,6 +65,5 @@ public class PlayerStunBehaviour : MonoBehaviour
         player.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
         particleSystemController.StopSystem();
-        Debug.Log("We not stunned anymore!!");
     }
 }
