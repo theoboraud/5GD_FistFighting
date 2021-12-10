@@ -6,6 +6,7 @@ public class PlayerFeedbackManager : MonoBehaviour
 {
     [SerializeField] Player player;
     [SerializeField] SpriteRenderer InvincibleVFX;
+    [SerializeField] SpriteRenderer StunAccumulation;
     [SerializeField] SpriteRenderer AvatarFace;
 
     public void StartInvincibleFeedback()
