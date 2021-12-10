@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4235676397152477429}
   - component: {fileID: 4655751240631651836}
   m_Layer: 0
-  m_Name: Arm
+  m_Name: Sprite_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 2623607050116399580}
   - component: {fileID: 804318364494078550}
   m_Layer: 0
-  m_Name: Arm_New
+  m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,12 +190,13 @@ MonoBehaviour:
   Rigidbodies: []
   Players: []
   StaticEnvironmentInRange: 0
-  player: {fileID: 0}
+  Player: {fileID: 0}
   collider: {fileID: 8360031005243679331}
   anim: {fileID: 2623607050116399580}
   Cooldown: 0
   Holding: 0
   holding_timer: 0
+  FrameStack: 0
 --- !u!61 &6683747768370366081
 BoxCollider2D:
   m_ObjectHideFlags: 0

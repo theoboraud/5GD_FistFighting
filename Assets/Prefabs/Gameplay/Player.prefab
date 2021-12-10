@@ -359,13 +359,13 @@ GameObject:
   - component: {fileID: 173968281880517136}
   - component: {fileID: 2577257927384357683}
   - component: {fileID: 7505128116752065729}
-  m_Layer: 2
-  m_Name: UI_PlayerIndicator
+  m_Layer: 5
+  m_Name: UI_PlayerReady
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9082292954320240394
 RectTransform:
   m_ObjectHideFlags: 0
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7267137111546404118}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7817ac53e10f140fb8cf3330dd80781a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db257afa5f85a4164a4fb539e9f1878e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 4963761400113064789}
   - component: {fileID: 3286076153300636023}
   m_Layer: 7
-  m_Name: Player_NewArms
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

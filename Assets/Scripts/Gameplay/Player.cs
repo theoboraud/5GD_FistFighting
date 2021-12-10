@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject playerIndicator;
     [SerializeField] private GameObject UI_PlayerIndicator;
     [SerializeField] private BoxCollider2D BoxCollider;
+    [SerializeField] private GameObject GO_IsReady;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -72,9 +73,6 @@ public class Player : MonoBehaviour
             // Get a random skin at start -> TODO: Select skin
             skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
             ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
-
-            // Init player color and add to PlayersManager Players references
-            InitIndicatorColor();
 
             // Add player to the PlayersManager
             PlayersManager.Instance.AddPlayer(this);
@@ -136,34 +134,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void InitIndicatorColor()
-    {
-        switch (PlayersManager.Instance.Players.Count)
-        {
-            case 0:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.yellow;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.yellow;
-                break;
-            case 1:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.blue;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.blue;
-                break;
-            case 2:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.red;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.red;
-                break;
-            case 3:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.green;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.green;
-                break;
-            default:
-                break;
-        }
-    }
 
     // #endregion
 
@@ -301,7 +271,7 @@ public class Player : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("Lethal"))
+        if (_GO.CompareTag("Lethal") && PlayerGameState is PlayerGameState.InPlay)
         {
             Kill();
         }
