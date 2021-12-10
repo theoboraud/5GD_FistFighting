@@ -22,7 +22,7 @@ MonoBehaviour:
   PARAM_Player_ArmHitForce: 25
   PARAM_Player_ArmCooldown: 0.4
   PARAM_Player_VelocityResetFactor: 0.75
-  PARAM_Player_ArmStartupFrame: 50
+  PARAM_Player_ArmStartupFrame: 5
   PARAM_Player_ArmExtendingTime: 15
   PARAM_Player_ArmUnextendingTime: 15
   PARAM_Player_MaxTriggerHoldTime: 1
@@ -36,3 +36,7 @@ MonoBehaviour:
   PARAM_Player_RotationTorque_OnGround: 1000
   PARAM_Player_RotationForce_OnGround: 0
   PARAM_Player_UseFactorForRotation: 1
+  PARAM_PRIO_FRAMESTACK: 1
+  PARAM_PRIO_VELOCITY: 3
+  PARAM_PRIO_HOLDFORCE: 2
+  PARAM_PRIO_AIRSTATE: 2

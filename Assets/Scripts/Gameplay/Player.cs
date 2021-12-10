@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public float ForceIncreaseFactor;
 
     private int skinIndex;                         // Contains the index of the current skin
+    [System.NonSerialized] public string PlayerLayer;
 
     // #endregion
 
@@ -238,6 +239,11 @@ public class Player : MonoBehaviour
     {
         PlayerGameState = PlayerGameState.Invincible;
         playerFeedbackManager.StartInvincibleFeedback();
+        // TO DELETE
+        //Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player1"), LayerMask.NameToLayer("Player4"), true);
+        this.gameObject.layer = LayerMask.NameToLayer("Invincible");
+
+        // Stop the invincibility after _time
         Invoke("StopInvincibility", _time);
     }
 
@@ -246,6 +252,9 @@ public class Player : MonoBehaviour
     {
         PlayerGameState = PlayerGameState.Alive;
         playerFeedbackManager.StopInvincibleFeedback();
+        this.gameObject.layer = LayerMask.NameToLayer(PlayerLayer);
+        // TO DELETE
+        //Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player1"), LayerMask.NameToLayer("Player4"), false);
     }
 
 

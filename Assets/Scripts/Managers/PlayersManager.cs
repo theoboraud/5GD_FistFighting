@@ -88,6 +88,12 @@ public class PlayersManager : MonoBehaviour
                 _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
             }
 
+            // Set the layer of the player
+            int _playerIndex = PlayersManager.Instance.Players.IndexOf(_player) + 1;
+            string _playerLayer = "Player" + _playerIndex.ToString();
+            _player.gameObject.layer = LayerMask.NameToLayer(_playerLayer);
+            _player.PlayerLayer = _playerLayer;
+
             // Spawn the player
             SpawnPlayer(_player);
 
