@@ -124,7 +124,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
-        else if (GameManager.Instance.GlobalGameState is GlobalGameState.PlayerWon && _context.canceled)
+        if (GameManager.Instance.GlobalGameState is GlobalGameState.PlayerWon && _context.canceled)
         {
             GameManager.Instance.ResetGame();
         }
