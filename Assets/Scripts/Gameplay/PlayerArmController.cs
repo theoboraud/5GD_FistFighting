@@ -83,7 +83,7 @@ public class PlayerArmController : MonoBehaviour
                                 if (_armPlayerHit.Players.Contains(player))
                                 {
                                     Debug.Log("On Casse des Gueules !!!");
-                                    TimeToSeeWhoWinsThisClash(_arn, _armPlayerHit);
+                                    TimeToSeeWhoWinsThisClash(_arm, _armPlayerHit);
                                 }
                             }
                         }
