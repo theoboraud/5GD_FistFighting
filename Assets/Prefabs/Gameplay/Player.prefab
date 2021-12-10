@@ -811,7 +811,6 @@ MonoBehaviour:
   - {fileID: 5486271232133404602}
   Outline_SpriteRenderer: {fileID: 6499214333109951097}
   PlayerIndicator: {fileID: 3134858868951555129}
-  UI_PlayerIndicator: {fileID: 7267137111546404118}
   BoxCollider: {fileID: 8023127552561660906}
   GO_IsReady: {fileID: 7267137111546404118}
   OnExtendArm:
@@ -1074,6 +1073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+--- !u!212 &5086410343587226721 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4655751240631651836, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+  m_PrefabInstance: {fileID: 435162874383215005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8658859383725866709 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
@@ -1085,11 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fcc1e7aa3c4a048b5cb67120b20a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &5086410343587226721 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4655751240631651836, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
-  m_PrefabInstance: {fileID: 435162874383215005}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6542449854948978457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
@@ -1347,11 +1346,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
---- !u!212 &826066456709145985 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4655751240631651836, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
-  m_PrefabInstance: {fileID: 5470266090740033661}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3875975203341844277 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
@@ -1363,6 +1357,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fcc1e7aa3c4a048b5cb67120b20a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &826066456709145985 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4655751240631651836, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+  m_PrefabInstance: {fileID: 5470266090740033661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1669493130718228217 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6683747768370366084, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
