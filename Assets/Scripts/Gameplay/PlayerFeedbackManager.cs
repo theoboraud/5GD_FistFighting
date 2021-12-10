@@ -28,6 +28,11 @@ public class PlayerFeedbackManager : MonoBehaviour
         AvatarFace.sprite = player.CharSkin.SpriteFace;
     }
 
+    public void UpdateStunFeedback(int state)
+    {
+        InvincibleVFX.color = new Color(InvincibleVFX.color.r, InvincibleVFX.color.g, InvincibleVFX.color.b, (state / 5) * InvincibleVFX.color.a);
+    }
+
     IEnumerator InvincibleFlashAnim()
     {
         Color col = InvincibleVFX.color;
