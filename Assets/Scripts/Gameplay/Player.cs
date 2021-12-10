@@ -23,10 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     public SpriteRenderer Outline_SpriteRenderer;
-    [SerializeField] private GameObject playerIndicator;
-    [SerializeField] private GameObject UI_PlayerIndicator;
+    public GameObject PlayerIndicator;
     [SerializeField] private BoxCollider2D BoxCollider;
-    [SerializeField] private GameObject GO_IsReady;
+    public GameObject GO_IsReady;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -330,6 +329,30 @@ public class Player : MonoBehaviour
                 //HitObject_bool = false;
                 PlayerPhysicState = PlayerPhysicState.InAir;
             }
+        }
+    }
+
+
+    /// <summary>
+    ///     Indicate if the player is ready in the lobby
+    /// </summary>
+    public void IsReady(bool _bool)
+    {
+        GO_IsReady.SetActive(_bool);
+
+        if (_bool)
+        {
+            PlayerGameState = PlayerGameState.Ready;
+        }
+        else
+        {
+            PlayerGameState = PlayerGameState.Alive;
+        }
+
+        // If all players are ready, end the round
+        if (PlayersManager.Instance.AllPlayersReady())
+        {
+            GameManager.Instance.EndOfRound(null);
         }
     }
 

@@ -176,7 +176,6 @@ public class PlayersManager : MonoBehaviour
                 return false;
             }
         }
-
         return true;
     }
 

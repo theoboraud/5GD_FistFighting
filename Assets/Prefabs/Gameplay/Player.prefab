@@ -810,7 +810,7 @@ MonoBehaviour:
   - {fileID: 5086410343587226721}
   - {fileID: 5486271232133404602}
   Outline_SpriteRenderer: {fileID: 6499214333109951097}
-  playerIndicator: {fileID: 3134858868951555129}
+  PlayerIndicator: {fileID: 3134858868951555129}
   UI_PlayerIndicator: {fileID: 7267137111546404118}
   BoxCollider: {fileID: 8023127552561660906}
   GO_IsReady: {fileID: 7267137111546404118}
