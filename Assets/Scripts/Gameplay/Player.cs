@@ -243,6 +243,7 @@ public class Player : MonoBehaviour
             RB.velocity = Vector3.zero;
             RB.angularVelocity = 0f;
 
+            IsReady(false);
             PlayerGameState = PlayerGameState.Dead;
             PlayerArmController.Init();
 
