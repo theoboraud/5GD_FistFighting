@@ -140,7 +140,14 @@ public class PlayerControls : MonoBehaviour
         }
         else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay && _context.canceled)
         {
-            MenuManager.Instance.PauseMenu.Activate();
+            if (LevelManager.Instance.GetSceneIndex() == 0)
+            {
+                Player.IsReady(!Player.GO_IsReady.activeSelf);
+            }
+            else
+            {
+                MenuManager.Instance.PauseMenu.Activate();
+            }
         }
     }
 

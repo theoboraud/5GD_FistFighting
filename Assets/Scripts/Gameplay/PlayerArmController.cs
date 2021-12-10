@@ -51,32 +51,41 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     public void ExtendArm(int _armIndex)
     {
-        if (Arms[_armIndex].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
+        ArmChecker _arm = Arms[_armIndex];
+
+        if (_arm.Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
         {
-            Arms[_armIndex].anim.PlayAnimation();
-            Arms[_armIndex].Cooldown = true;
+            _arm.anim.PlayAnimation();
+            _arm.Cooldown = true;
 
             // If we can hit a player, start the frame stack
-            if (Arms[_armIndex].Players.Count > 0)
+            if (_arm.Players.Count > 0)
             {
-                ArmChecker _arm = Arms[_armIndex];
                 ArmsGoingToHit.Add(_arm);
 
-                if(_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+                if (_arm.FrameStack == 0)
+                {
+                    _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+                }
+
                 if (_arm.Players.Count > 0)
                 {
                     for (int i = 0; i < _arm.Players.Count; i++)
                     {
+                        print("PlayersArmController: i is " + i.ToString());
+                        print(_arm.Players[i]);
                         if (_arm.Players[i].PlayerArmController.ArmsGoingToHit.Count > 0)
                         {
                             for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; i++)
                             {
+                                print("PlayersArmController: j is " + j.ToString());
+                                print(_arm.Players[i].PlayerArmController.ArmsGoingToHit[j]);
                                 ArmChecker _armPlayerHit = _arm.Players[i].PlayerArmController.ArmsGoingToHit[j];
 
                                 if (_armPlayerHit.Players.Contains(player))
                                 {
                                     Debug.Log("On Casse des Gueules !!!");
-                                    TimeToSeeWhoWinsThisClash(Arms[i], _armPlayerHit);
+                                    TimeToSeeWhoWinsThisClash(_arm, _armPlayerHit);
                                 }
                             }
                         }
