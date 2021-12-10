@@ -122,29 +122,38 @@ public class PlayerArmController : MonoBehaviour
 
         if (_armPlayer1.FrameStack < _armPlayer2.FrameStack)
         {
-            player1Points += 1;
+            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK;
         }
         else if (_armPlayer1.FrameStack > _armPlayer2.FrameStack)
         {
-            player2Points += 1;
+            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK;
         }
 
-        if (_armPlayer1.Player.RB.velocity.magnitude * _armPlayer1.holding_timer > _armPlayer2.Player.RB.velocity.magnitude * _armPlayer2.holding_timer)
+        if (_armPlayer1.Player.RB.velocity.magnitude > _armPlayer2.Player.RB.velocity.magnitude)
         {
-            player1Points += 3;
+            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
         }
-        else if (_armPlayer1.Player.RB.velocity.magnitude * _armPlayer1.holding_timer < _armPlayer2.Player.RB.velocity.magnitude * _armPlayer2.holding_timer)
+        else if (_armPlayer1.Player.RB.velocity.magnitude < _armPlayer2.Player.RB.velocity.magnitude)
         {
-            player2Points += 3;
+            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
+        }
+
+        if(_armPlayer1.holding_timer > _armPlayer2.holding_timer)
+        {
+            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_HOLDFORCE;
+        }
+        else if(_armPlayer1.holding_timer < _armPlayer2.holding_timer)
+        {
+            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_HOLDFORCE;
         }
 
         if (_armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir && _armPlayer2.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
         {
-            player1Points += 3;
+            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_AIRSTATE;
         }
         else if (_armPlayer2.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir && _armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
         {
-            player2Points += 3;
+            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_AIRSTATE;
         }
 
         if (player1Points > player2Points)
