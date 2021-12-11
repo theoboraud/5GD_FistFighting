@@ -721,7 +721,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LD_BattlefieldPit
+  m_Text: LD_BattlefieldPit 1
 --- !u!222 &772271638
 CanvasRenderer:
   m_ObjectHideFlags: 0
