@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldGround.unity
     guid: 0143a14f6e4ed4d4ea47ae828b579e9a
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldPit.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldPit 2.unity
     guid: f78d16b7c3fc541419cf51599ea4d8a5
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/LD_BattlefieldSlides.unity
