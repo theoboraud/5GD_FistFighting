@@ -104,9 +104,9 @@ public class LevelManager : MonoBehaviour
             {
                 MenuManager.Instance.StartTimer();
             }
-
-            MenuManager.Instance.UpdateLives();
         }
+        
+        MenuManager.Instance.NewGameRound();
     }
 
 
@@ -194,7 +194,7 @@ public class LevelManager : MonoBehaviour
 
             MenuManager.Instance.StartTimer();
 
-            MenuManager.Instance.UpdateLives();
+            MenuManager.Instance.NewGameRound();
         }
     }
 

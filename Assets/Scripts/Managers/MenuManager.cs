@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
+    public GameObject UI_ReadyTimer;
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
@@ -30,6 +31,7 @@ public class MenuManager : MonoBehaviour
     private List<bool> playersReady = new List<bool>();
     private Menu activeMenu;
     private float startingTimer = 0f;                                                   // Contains the general spawn timer when starting a new level
+    [System.NonSerialized] public float ReadyTimer = 0f;
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
 
 
@@ -68,6 +70,26 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (ReadyTimer > 0f)
+        {
+            if (PlayersManager.Instance.AllPlayersReady())
+            {
+                ReadyTimer = UpdateTimer(ReadyTimer, UI_ReadyTimer.GetComponent<Text>());
+
+                if (ReadyTimer == 0f)
+                {
+                    UI_ReadyTimer.SetActive(false);
+                    GameManager.Instance.EndOfRound(null);
+                }
+            }
+            else
+            {
+                ReadyTimer = 0f;
+                UI_ReadyTimer.SetActive(false);
+            }
+
+        }
+
         if (startingTimer > 0f)
         {
             startingTimer = UpdateTimer(startingTimer, UI_StartingTimer.GetComponent<Text>());
@@ -172,78 +194,6 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    /*
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_MainMenu()
-    {
-        if (activeMenu != null)
-        {
-            activeMenu.Deactivate();
-        }
-        activeMenu = MainMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.MainMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_CharacterSelectMenu()
-    {
-        activeMenu.Deactivate();
-        activeMenu = CharacterSelectMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.CharacterSelectMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_OptionsMenu()
-    {
-        activeMenu.Deactivate();
-        activeMenu = OptionsMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.OptionsMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_LevelSelectMenu()
-    {
-        activeMenu.Deactivate();
-        activeMenu = LevelSelectMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.LevelSelectMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    private void DeactivateAllMenu()
-    {
-        MainMenu.Deactivate();
-        CharacterSelectMenu.Deactivate();
-        LevelSelectMenu.Deactivate();
-        OptionsMenu.Deactivate();
-    }*/
-
-
     /// <summary>
     ///
     /// </summary>
@@ -273,6 +223,7 @@ public class MenuManager : MonoBehaviour
         PlayersManager.Instance.Players[_playerIndex].PlayerIndicator.GetComponent<SpriteRenderer>().color = PlayerColors[_playerIndex];
         PlayersManager.Instance.Players[_playerIndex].Outline_SpriteRenderer.color = PlayerColors[_playerIndex];
         PlayersUI[_playerIndex].AddPlayerUI(_playerIndex, PlayerColors[_playerIndex]);
+        PlayersManager.Instance.Players[_playerIndex].IsReadyUI(false);
         //UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
         //UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
     }

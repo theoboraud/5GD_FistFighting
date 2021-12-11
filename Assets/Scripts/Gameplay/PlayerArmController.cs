@@ -67,16 +67,26 @@ public class PlayerArmController : MonoBehaviour
                 {
                     for (int i = 0; i < _arm.Players.Count; i++)
                     {
+
+                        //print("PlayersArmController: i is " + i.ToString());
+                        //print(_arm.Players[i]);
+
                         if (_arm.Players[i].PlayerArmController.ArmsGoingToHit.Count > 0)
                         {
-                            for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; i++)
+                            for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; j++)
                             {
+
+                                //print("PlayersArmController: j is " + j.ToString());
+                                //print(_arm.Players[i].PlayerArmController.ArmsGoingToHit[j]);
+
                                 ArmChecker _armPlayerHit = _arm.Players[i].PlayerArmController.ArmsGoingToHit[j];
 
                                 if (_armPlayerHit.Players.Contains(player))
                                 {
-                                    Debug.Log("On Casse des Gueules !!!");
-                                    TimeToSeeWhoWinsThisClash(Arms[i], _armPlayerHit);
+
+                                    //Debug.Log("On Casse des Gueules !!!");
+                                    TimeToSeeWhoWinsThisClash(_arm, _armPlayerHit);
+
                                 }
                             }
                         }

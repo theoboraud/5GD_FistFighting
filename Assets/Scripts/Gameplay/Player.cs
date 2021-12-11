@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public PlayerGameState PlayerGameState;
     [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
     [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
+    [System.NonSerialized] public bool IsReady = false;                     // Indicates if the player is ready in the lobby
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
     [System.NonSerialized] public bool HoldingTrigger = false;
@@ -243,6 +244,7 @@ public class Player : MonoBehaviour
             RB.velocity = Vector3.zero;
             RB.angularVelocity = 0f;
 
+            IsReadyUI(false);
             PlayerGameState = PlayerGameState.Dead;
             PlayerArmController.Init();
 
@@ -336,23 +338,24 @@ public class Player : MonoBehaviour
     /// <summary>
     ///     Indicate if the player is ready in the lobby
     /// </summary>
-    public void IsReady(bool _bool)
+    public void IsReadyUI(bool _bool)
     {
         GO_IsReady.SetActive(_bool);
 
         if (_bool)
         {
-            PlayerGameState = PlayerGameState.Ready;
+            IsReady = true;
         }
         else
         {
-            PlayerGameState = PlayerGameState.Alive;
+            IsReady = false;
         }
 
         // If all players are ready, end the round
         if (PlayersManager.Instance.AllPlayersReady())
         {
-            GameManager.Instance.EndOfRound(null);
+            MenuManager.Instance.ReadyTimer = 3f;
+            MenuManager.Instance.UI_ReadyTimer.SetActive(true);
         }
     }
 

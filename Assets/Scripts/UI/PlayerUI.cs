@@ -35,7 +35,7 @@ public class PlayerUI : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        if (LevelManager.Instance.GetSceneIndex() > 0)
+        if (LevelManager.Instance.CurrentSceneIndex > 0)
         {
             // Set the game objects visibility
             GO_Heart.SetActive(true);
