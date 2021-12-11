@@ -36,7 +36,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainLevels/LD_Valider/LD_FatesPits.unity
     guid: ee747740517f8824999fda03eaf2381c
   - enabled: 0
-    path: Assets/Scenes/MainLevels/LD_Valider/LD_Goals.unity
+    path: Assets/Scenes/MainLevels/LD_Valider/LD_Goals 2.unity
     guid: aa05e2c0587b30b42a46b90e11633cd5
   - enabled: 0
     path: Assets/Scenes/MainLevels/LD_Valider/LD_PitArena.unity
