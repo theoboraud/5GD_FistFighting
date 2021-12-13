@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
     public SpriteRenderer Outline_SpriteRenderer;
-    [SerializeField] private GameObject playerIndicator;
-    [SerializeField] private GameObject UI_PlayerIndicator;
+    public GameObject PlayerIndicator;
     [SerializeField] private BoxCollider2D BoxCollider;
+    public GameObject GO_IsReady;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public PlayerGameState PlayerGameState;
     [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
     [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
+    [System.NonSerialized] public bool IsReady = false;                     // Indicates if the player is ready in the lobby
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
     [System.NonSerialized] public bool HoldingTrigger = false;
@@ -72,9 +73,6 @@ public class Player : MonoBehaviour
             // Get a random skin at start -> TODO: Select skin
             skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
             ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
-
-            // Init player color and add to PlayersManager Players references
-            InitIndicatorColor();
 
             // Add player to the PlayersManager
             PlayersManager.Instance.AddPlayer(this);
@@ -136,34 +134,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void InitIndicatorColor()
-    {
-        switch (PlayersManager.Instance.Players.Count)
-        {
-            case 0:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.yellow;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.yellow;
-                break;
-            case 1:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.blue;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.blue;
-                break;
-            case 2:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.red;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.red;
-                break;
-            case 3:
-                playerIndicator.GetComponent<SpriteRenderer>().color = Color.green;
-                UI_PlayerIndicator.GetComponent<Image>().color = Color.green;
-                break;
-            default:
-                break;
-        }
-    }
 
     // #endregion
 
@@ -274,6 +244,7 @@ public class Player : MonoBehaviour
             RB.velocity = Vector3.zero;
             RB.angularVelocity = 0f;
 
+            IsReadyUI(false);
             PlayerGameState = PlayerGameState.Dead;
             PlayerArmController.Init();
 
@@ -301,7 +272,7 @@ public class Player : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("Lethal"))
+        if (_GO.CompareTag("Lethal") && PlayerGameState is PlayerGameState.Alive)
         {
             Kill();
         }
@@ -360,6 +331,31 @@ public class Player : MonoBehaviour
                 //HitObject_bool = false;
                 PlayerPhysicState = PlayerPhysicState.InAir;
             }
+        }
+    }
+
+
+    /// <summary>
+    ///     Indicate if the player is ready in the lobby
+    /// </summary>
+    public void IsReadyUI(bool _bool)
+    {
+        GO_IsReady.SetActive(_bool);
+
+        if (_bool)
+        {
+            IsReady = true;
+        }
+        else
+        {
+            IsReady = false;
+        }
+
+        // If all players are ready, end the round
+        if (PlayersManager.Instance.AllPlayersReady())
+        {
+            MenuManager.Instance.ReadyTimer = 3f;
+            MenuManager.Instance.UI_ReadyTimer.SetActive(true);
         }
     }
 

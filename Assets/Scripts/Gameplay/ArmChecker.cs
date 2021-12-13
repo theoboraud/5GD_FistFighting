@@ -8,6 +8,7 @@ public class ArmChecker : MonoBehaviour
     public List<Rigidbody2D> Rigidbodies = new List<Rigidbody2D>();
     public List<Player> Players = new List<Player>();
     public bool StaticEnvironmentInRange = false;
+
     [Header("Reference")]
     public Player Player;
     [SerializeField] BoxCollider2D collider;
@@ -19,6 +20,7 @@ public class ArmChecker : MonoBehaviour
     public float holding_timer;
 
     public int FrameStack = 0;
+
 
     /// <summary>
     ///

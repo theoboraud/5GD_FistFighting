@@ -15,11 +15,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
+    public GameObject UI_ReadyTimer;
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
     public List<Color> PlayerColors;                                                    // Reference to the player colors
-    public List<GameObject> UI_PlayersLives = new List<GameObject>();                   // Reference to the UI indicating the number of player lives
+    public List<PlayerUI> PlayersUI = new List<PlayerUI>();                        // Reference to the UI indicating the number of player lives
     public PauseMenu PauseMenu;                                                         // Reference to the PauseMenu script
 
     [Header("Menu Screens")]
@@ -30,6 +31,7 @@ public class MenuManager : MonoBehaviour
     private List<bool> playersReady = new List<bool>();
     private Menu activeMenu;
     private float startingTimer = 0f;                                                   // Contains the general spawn timer when starting a new level
+    [System.NonSerialized] public float ReadyTimer = 0f;
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
 
 
@@ -68,6 +70,26 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (ReadyTimer > 0f)
+        {
+            if (PlayersManager.Instance.AllPlayersReady())
+            {
+                ReadyTimer = UpdateTimer(ReadyTimer, UI_ReadyTimer.GetComponent<Text>());
+
+                if (ReadyTimer == 0f)
+                {
+                    UI_ReadyTimer.SetActive(false);
+                    GameManager.Instance.EndOfRound(null);
+                }
+            }
+            else
+            {
+                ReadyTimer = 0f;
+                UI_ReadyTimer.SetActive(false);
+            }
+
+        }
+
         if (startingTimer > 0f)
         {
             startingTimer = UpdateTimer(startingTimer, UI_StartingTimer.GetComponent<Text>());
@@ -172,78 +194,6 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    /*
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_MainMenu()
-    {
-        if (activeMenu != null)
-        {
-            activeMenu.Deactivate();
-        }
-        activeMenu = MainMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.MainMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_CharacterSelectMenu()
-    {
-        activeMenu.Deactivate();
-        activeMenu = CharacterSelectMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.CharacterSelectMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_OptionsMenu()
-    {
-        activeMenu.Deactivate();
-        activeMenu = OptionsMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.OptionsMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void GoTo_LevelSelectMenu()
-    {
-        activeMenu.Deactivate();
-        activeMenu = LevelSelectMenu;
-        activeMenu.Activate();
-
-        // Update GlobalGameState
-        GameManager.Instance.GlobalGameState = GlobalGameState.LevelSelectMenu;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    private void DeactivateAllMenu()
-    {
-        MainMenu.Deactivate();
-        CharacterSelectMenu.Deactivate();
-        LevelSelectMenu.Deactivate();
-        OptionsMenu.Deactivate();
-    }*/
-
-
     /// <summary>
     ///
     /// </summary>
@@ -270,9 +220,12 @@ public class MenuManager : MonoBehaviour
         UpdateLives();
         PlayerScores[_playerIndex].gameObject.SetActive(true);
         PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
+        PlayersManager.Instance.Players[_playerIndex].PlayerIndicator.GetComponent<SpriteRenderer>().color = PlayerColors[_playerIndex];
         PlayersManager.Instance.Players[_playerIndex].Outline_SpriteRenderer.color = PlayerColors[_playerIndex];
-        UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
-        UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
+        PlayersUI[_playerIndex].AddPlayerUI(_playerIndex, PlayerColors[_playerIndex]);
+        PlayersManager.Instance.Players[_playerIndex].IsReadyUI(false);
+        //UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
+        //UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
     }
 
 
@@ -309,26 +262,7 @@ public class MenuManager : MonoBehaviour
     {
         for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
         {
-            int _playerLives = PlayersManager.Instance.PlayersLives[i];
-            Text _text = UI_PlayersLives[i].GetComponent<Text>();
-
-            if (_playerLives > 0)
-            {
-                _text.text = _playerLives.ToString();
-            }
-            else
-            {
-                _text.text = "X";
-            }
-
-            if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1 && LevelManager.Instance.CurrentSceneIndex != 0)
-            {
-                _text.color = Color.red;
-            }
-            else
-            {
-                _text.color = Color.black;
-            }
+            PlayersUI[i].UpdateLivesUI();
         }
     }
 
@@ -341,10 +275,18 @@ public class MenuManager : MonoBehaviour
         // For each player
         for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
         {
-            Destroy(UI_PlayersLives[i].transform.parent.gameObject);
+            Destroy(PlayersUI[i].gameObject);
             Destroy(UI_SpawningTimers[i]);
         }
 
         Destroy(UI_StartingTimer);
+    }
+
+    public void NewGameRound()
+    {
+        for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
+        {
+            PlayersUI[i].Init();
+        }
     }
 }

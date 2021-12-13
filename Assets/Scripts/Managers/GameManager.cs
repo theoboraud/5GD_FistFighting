@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
-        if (GlobalGameState == GlobalGameState.ScoreScreen)
+        if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.GetSceneIndex() == 0)
         {
             // Still in the first level
             PlayersManager.Instance.PlayersDeathOrder.Clear();
@@ -96,23 +96,6 @@ public class GameManager : MonoBehaviour
             {
                 _winnerIndex = _indexRoundWinner;
             }
-            /*
-            // Update the score
-            int _maxReward = 3;
-            int _reward = _maxReward - (PlayersManager.Instance.PlayersDeathOrder.Count - 1);     // Initial reward is 3 - (count of PlayerDeathOrder - 1)
-            int _winnerIndex = -1;
-
-            for (int i = 0; i < PlayersManager.Instance.PlayersDeathOrder.Count; i++)
-            {
-                int _index = PlayersManager.Instance.Players.IndexOf(PlayersManager.Instance.PlayersDeathOrder[i]);
-                PlayerScores[_index] += _reward;
-                _reward += 1;
-
-                if (PlayerScores[_index] >= 10)
-                {
-                    _winnerIndex = _index;
-                }
-            }*/
 
             if (_winnerIndex > -1)
             {
@@ -178,6 +161,17 @@ public class GameManager : MonoBehaviour
         {
             RoundWinner = PlayersManager.Instance.Players[0];
             MenuManager.Instance.PrintWinnerScreen_Alone(true);
+        }
+
+        // TODO: Delete this, and implement a timer "3, 2, 1" when all players are ready to load a new level
+        if (LevelManager.Instance.GetSceneIndex() == 0)
+        {
+            for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
+            {
+                PlayersManager.Instance.PlayersAlive[i].Kill();
+            }
+
+            ScoreScreen();
         }
     }
 
