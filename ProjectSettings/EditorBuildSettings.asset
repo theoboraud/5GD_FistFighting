@@ -26,5 +26,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevels/LD_DA/LD_Deathball.unity
     guid: bcfb94dd09fe3a74096d25a7b2a4bb09
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_DA/LD_Fatality.unity
+    guid: 03915450952138c40ad8783fc4006f84
+  - enabled: 1
+    path: Assets/Scenes/MainLevels/LD_DA/LD_Kiss_Picasso.unity
+    guid: 9fae789e2a35d4c4ba7fa8b518fbdf47
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0de64b95d053841f9a437102b8dc658e, type: 2}
