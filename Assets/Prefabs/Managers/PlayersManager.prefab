@@ -102,11 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterSkins:
   - {fileID: 11400000, guid: 525864f9567d5a649b4c096802663100, type: 2}
-  - {fileID: 11400000, guid: cb216df2d97da1948b400d512e8c4085, type: 2}
-  - {fileID: 11400000, guid: b35568e09d7224fb48eeeb176c286a32, type: 2}
-  - {fileID: 11400000, guid: 6a1d3068b2cf044bf9be63a3491d8847, type: 2}
+  - {fileID: 11400000, guid: ed824eb5aacdeee4d867789f4a5bd181, type: 2}
   - {fileID: 11400000, guid: 6bc0f96afdb45456086b83947e400fd9, type: 2}
-  - {fileID: 11400000, guid: 0761619e1fac54ef8ab5f348f7826da0, type: 2}
-  - {fileID: 11400000, guid: cf640e2a623cd664fae42f2e89f8ee73, type: 2}
   - {fileID: 11400000, guid: 1073bd8887ad8443794cd9c203c1e948, type: 2}
   - {fileID: 11400000, guid: 781c1230201fb4d2997f230e19c947a3, type: 2}
