@@ -9,6 +9,10 @@ public class PlayerStunBehaviour : MonoBehaviour
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] PhysicsMaterial2D bounce;
     [SerializeField] ParticleSystemController particleSystemController;
+    [SerializeField] float timeToReduceStunAccumulation = 2;
+    [SerializeField] int StunAccumulation;
+
+    private float timer;
 
     private void Update()
     {
@@ -21,11 +25,22 @@ public class PlayerStunBehaviour : MonoBehaviour
             }
             player.StunTimer += Time.deltaTime;
             //Debug.Log(player.StunTimer);
-
+            float addedTimeBasedOnStunAccumulation = StunAccumulation * (0.2f * player.StunRecoveryTime);
             //Check if timer has gone above the required stun time
-            if (player.StunTimer >= player.StunRecoveryTime)
+            if (player.StunTimer >= player.StunRecoveryTime + addedTimeBasedOnStunAccumulation)
             {
                 StopStunState();
+            }
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            if(timer > timeToReduceStunAccumulation)
+            {
+                timer = 0f;
+                StunAccumulation--;
+                StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
+                player.playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
             }
         }
     }
@@ -33,10 +48,14 @@ public class PlayerStunBehaviour : MonoBehaviour
     //Initialisation of StunState
     private void StartStunState()
     {
+        StunAccumulation++;
+        StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
+        player.playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
+        Debug.Log(StunAccumulation);
+        timer = 0;
         player.playerFeedbackManager.StartStunFeedback();
         boxCollider.sharedMaterial = bounce;
         particleSystemController.StartSystem();
-        Debug.Log("We stunned baby!!!");
     }
 
     //The function that stops the stun state
@@ -46,6 +65,5 @@ public class PlayerStunBehaviour : MonoBehaviour
         player.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
         particleSystemController.StopSystem();
-        Debug.Log("We not stunned anymore!!");
     }
 }
