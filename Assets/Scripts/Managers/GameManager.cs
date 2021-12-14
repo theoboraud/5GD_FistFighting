@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
-            GlobalGameState = GlobalGameState.MainMenu;
+            Invoke("Init", 0.1f);
+
         }
         else
         {
@@ -48,6 +49,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    ///     Init all managers
+    /// </summary>
+    private void Init()
+    {
+        GlobalGameState = GlobalGameState.MainMenu;
+        LevelManager.Instance.Init();
+        MenuManager.Instance.Init();
+        PlayersManager.Instance.Init();
+    }
     // #endregion
 
 

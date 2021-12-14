@@ -43,24 +43,33 @@ public class LevelManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
-            // If the scene is not the lobby, we will only launch this scene
-            if (SceneManager.GetActiveScene().buildIndex > 0)
-            {
-                levelName = SceneManager.GetActiveScene().name;
-                Invoke("Reset", 0.1f);
-            }
-            else
-            {
-                // Init scene index and spawn points
-                CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-                // Init spawn points of the first level
-                InitSpawnPoints();
-            }
+            Init();
         }
         else
         {
             Destroy(this.gameObject);
+        }
+    }
+
+
+    /// <summary>
+    ///     Public init method
+    /// </summary>
+    public void Init()
+    {
+        // If the scene is not the lobby, we will only launch this scene
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
+            levelName = SceneManager.GetActiveScene().name;
+            Invoke("Reset", 0.1f);
+        }
+        else
+        {
+            // Init scene index and spawn points
+            CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+            // Init spawn points of the first level
+            InitSpawnPoints();
         }
     }
 
@@ -105,7 +114,7 @@ public class LevelManager : MonoBehaviour
                 MenuManager.Instance.StartTimer();
             }
         }
-        
+
         MenuManager.Instance.NewGameRound();
     }
 

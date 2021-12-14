@@ -354,6 +354,7 @@ public class Player : MonoBehaviour
         // If all players are ready, end the round
         if (PlayersManager.Instance.AllPlayersReady())
         {
+            //GameManager.Instance.EndOfRound(null);
             MenuManager.Instance.ReadyTimer = 3f;
             MenuManager.Instance.UI_ReadyTimer.SetActive(true);
         }

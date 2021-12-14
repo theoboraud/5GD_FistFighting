@@ -35,22 +35,31 @@ public class PlayersManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
-            // Init references
-            SkinsData = gameObject.GetComponent<SkinsData>();
-
-            // Init variables
-            Players = new List<Player>();
-            PlayersSpawned = new List<Player>();
-            PlayersAlive = new List<Player>();
-            PlayersDeathOrder = new List<Player>();
-
-            // Players have only 1 life in the lobby
-            ResetPlayersLives(1);
+            Init();
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+
+    /// <summary>
+    ///     Public init method
+    /// </summary>
+    public void Init()
+    {
+        // Init references
+        SkinsData = gameObject.GetComponent<SkinsData>();
+
+        // Init variables
+        Players = new List<Player>();
+        PlayersSpawned = new List<Player>();
+        PlayersAlive = new List<Player>();
+        PlayersDeathOrder = new List<Player>();
+
+        // Players have only 1 life in the lobby
+        ResetPlayersLives(1);
     }
 
     // #endregion
