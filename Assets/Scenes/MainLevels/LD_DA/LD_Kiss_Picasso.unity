@@ -1675,7 +1675,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 02cb962c58ea23b4aaa568cad3ebc806, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 12, y: 12}
@@ -1691,13 +1691,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713897864}
-  m_LocalRotation: {x: -0, y: -0, z: 0.31386146, w: -0.94946885}
-  m_LocalPosition: {x: -0.497693, y: 1.2391877, z: 0}
-  m_LocalScale: {x: 0.047659174, y: 0.07293091, z: 0.8964671}
+  m_LocalRotation: {x: -0, y: -0, z: 0.30189756, w: -0.95334035}
+  m_LocalPosition: {x: -0.498, y: 1.259, z: 0}
+  m_LocalScale: {x: 0.055114873, y: 0.058917545, z: 0.8720567}
   m_Children: []
   m_Father: {fileID: 1676014269}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -42.503}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35.143}
 --- !u!1 &880331378
 GameObject:
   m_ObjectHideFlags: 0
@@ -6868,7 +6868,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4340817956758900093}
   m_LocalRotation: {x: 0.012815781, y: -0.029352522, z: -0.10320026, w: 0.9941448}
-  m_LocalPosition: {x: 0.135, y: 1.257, z: 21.270605}
+  m_LocalPosition: {x: 0.151, y: 1.257, z: 21.270605}
   m_LocalScale: {x: 0.27128068, y: 0.33102465, z: 0.65901864}
   m_Children:
   - {fileID: 1450840318}
@@ -6951,15 +6951,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4635773149367407333}
-  m_LocalRotation: {x: -0, y: -0, z: 0.029036734, w: 0.99957836}
-  m_LocalPosition: {x: -0.59, y: 1.1110649, z: 21.270605}
+  m_LocalRotation: {x: -0, y: -0, z: 0.007193516, w: 0.99997413}
+  m_LocalPosition: {x: -0.56900024, y: 1.09, z: 21.270605}
   m_LocalScale: {x: 0.39748168, y: 0.3835787, z: 0.76382333}
   m_Children:
   - {fileID: 360857063}
   - {fileID: 4635773149683701723}
   m_Father: {fileID: 1403173319}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 3.328}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.824}
 --- !u!212 &4635773149367407335
 SpriteRenderer:
   m_ObjectHideFlags: 0
