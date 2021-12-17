@@ -2430,7 +2430,7 @@ PlatformEffector2D:
     m_Bits: 4294967295
   m_RotationalOffset: 0
   m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
+  m_UseOneWayGrouping: 1
   m_SurfaceArc: 180
   m_UseSideFriction: 0
   m_UseSideBounce: 0
