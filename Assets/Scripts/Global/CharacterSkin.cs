@@ -12,4 +12,7 @@ public class CharacterSkin : ScriptableObject
 
     [Header("Feedbacks")]
     public Sprite StunSprite;
+
+    [Header("Sound")]
+    public int VoiceParameter;
 }

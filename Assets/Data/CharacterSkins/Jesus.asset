@@ -16,3 +16,4 @@ MonoBehaviour:
   SpriteFace: {fileID: 21300000, guid: de10e53213b844127971f42a0b6b5f15, type: 3}
   SpriteArm: {fileID: 21300000, guid: f3c9974c77510c54c8f69b20f02486db, type: 3}
   StunSprite: {fileID: 21300000, guid: 0d8e102ae42f9de48b856d94d7d2536e, type: 3}
+  VoiceParameter: 1
