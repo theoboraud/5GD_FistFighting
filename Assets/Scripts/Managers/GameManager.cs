@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
             int _indexRoundWinner = PlayersManager.Instance.Players.IndexOf(RoundWinner);
             int _winnerIndex = -1;
             PlayerScores[_indexRoundWinner] += 1;
+            RoundWinner.VoiceController.PlayVictory();
 
             if (PlayerScores[_indexRoundWinner] >= 5)
             {

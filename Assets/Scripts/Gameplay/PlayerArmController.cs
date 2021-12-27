@@ -332,7 +332,7 @@ public class PlayerArmController : MonoBehaviour
                 (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();
-            AudioManager.Instance.PlayTrack("event:/Voices/Hurt", item.transform.position);
+            player.playerFeedbackManager.LastPlayerHit = item;
         }
 
         ArmsGoingToHit.Remove(Arms[_armIndex]);

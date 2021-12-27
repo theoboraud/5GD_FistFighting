@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="EventFolder" id="{521109c0-666c-43ae-8c03-25f8521a6e54}">
+	<object class="EventFolder" id="{491cfcf4-ead2-4473-ba23-b9485faccca8}">
 		<property name="name">
-			<value>Alien</value>
+			<value>Frida</value>
 		</property>
 		<relationship name="folder">
 			<destination>{f2c8bd04-d998-4596-96a8-351160ee6c37}</destination>

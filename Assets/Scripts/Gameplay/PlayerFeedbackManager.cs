@@ -10,6 +10,8 @@ public class PlayerFeedbackManager : MonoBehaviour
     [SerializeField] ParticleSystem StunAccumulationParticles;
     [SerializeField] SpriteRenderer AvatarFace;
     [SerializeField] GameObject Plasters;
+    [SerializeField] PlayerVoiceController VoiceController;
+    public Player LastPlayerHit;
 
     private float StunAlpha;
 
@@ -20,6 +22,15 @@ public class PlayerFeedbackManager : MonoBehaviour
         StunAccumulationParticles.Stop();
     }
 
+    private void Update()
+    {
+        if(LastPlayerHit != null && LastPlayerHit.PlayerGameState == Enums.PlayerGameState.Dead)
+        {
+            VoiceController.PlayPush();
+            LastPlayerHit = null;
+        }
+    }
+
     public void StartInvincibleFeedback()
     {
         StartCoroutine(InvincibleFlashAnim());
@@ -27,12 +38,14 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     public void StopInvincibleFeedback()
     {
+        InvincibleVFX.color = new Color(1, 1, 1, 0);
         StopAllCoroutines();
     }
 
     public void StartStunFeedback()
     {
         AvatarFace.sprite = player.CharSkin.StunSprite;
+        VoiceController.PlayHurt();
     }
 
     public void EndStunFeedback()
