@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{94735235-6faa-4612-ba1d-49d2e291e965}">
+		<property name="assetPath">
+			<value>CartoonPunch6.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.61133786848072558</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6caa0bc0-a240-4a11-8aab-0b09d1f7f2d6}</destination>
+		</relationship>
+	</object>
+</objects>
