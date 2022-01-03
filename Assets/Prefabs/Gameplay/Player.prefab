@@ -365,7 +365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9082292954320240394
 RectTransform:
   m_ObjectHideFlags: 0
@@ -704,6 +704,7 @@ MonoBehaviour:
   AvatarFace: {fileID: 4023946081940462339}
   Plasters: {fileID: 2818663735909605286}
   VoiceController: {fileID: 7652953489558374462}
+  LastPlayerHit: {fileID: 0}
 --- !u!114 &5655228929501688058
 MonoBehaviour:
   m_ObjectHideFlags: 0
