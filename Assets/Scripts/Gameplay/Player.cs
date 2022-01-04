@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public GameObject PlayerIndicator;
     [SerializeField] private BoxCollider2D BoxCollider;
     public GameObject GO_IsReady;
+    public PlayerVoiceController VoiceController;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
