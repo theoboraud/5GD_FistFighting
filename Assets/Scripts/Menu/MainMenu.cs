@@ -107,7 +107,7 @@ public class MainMenu : MonoBehaviour
 
     public void Activate()
     {
-        Invoke("Init", 0.1f);
+        Invoke("Init", 0.2f);
         this.gameObject.SetActive(true);
         GameManager.Instance.MenuMode(GlobalGameState.MainMenu);
     }
