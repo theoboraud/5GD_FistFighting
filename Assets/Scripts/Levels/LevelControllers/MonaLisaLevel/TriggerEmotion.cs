@@ -12,8 +12,11 @@ public class TriggerEmotion : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Image.enabled = true;
-        Invoke("CloseImage",1f);
+        if (collision.CompareTag("Player"))
+        {
+            Image.enabled = true;
+            Invoke("CloseImage", 1f);
+        }
     }
     private void CloseImage()
     {
