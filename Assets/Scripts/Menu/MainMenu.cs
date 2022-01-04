@@ -8,21 +8,25 @@ using Enums;
 public class MainMenu : MonoBehaviour
 {
     public List<Button> Buttons = new List<Button>();
+    public GameObject Selector;
     private Button activeButton;
     private int activeButtonIndex = 0;
+    [SerializeField] private float selectedIncrementation = 50;
 
 
     public void Init()
     {
         activeButtonIndex = 0;
         SelectActiveButton();
+        Selector.transform.position = new Vector3(Buttons[0].transform.position.x - selectedIncrementation, Buttons[0].transform.position.y, Buttons[0].transform.position.z);
     }
 
 
     private void SelectActiveButton()
     {
         activeButton = Buttons[activeButtonIndex];
-
+        Selector.transform.position = activeButton.transform.position;
+        activeButton.transform.position = new Vector3(activeButton.transform.position.x + selectedIncrementation, activeButton.transform.position.y, activeButton.transform.position.z);
         EventSystem.current.SetSelectedGameObject(activeButton.gameObject);
     }
 
@@ -30,6 +34,7 @@ public class MainMenu : MonoBehaviour
     public virtual void UnselectActiveButton()
     {
         EventSystem.current.SetSelectedGameObject(null);
+        activeButton.transform.position = new Vector3(activeButton.transform.position.x - selectedIncrementation, activeButton.transform.position.y, activeButton.transform.position.z);
         activeButton = null;
     }
 
@@ -76,7 +81,19 @@ public class MainMenu : MonoBehaviour
     }
 
 
+    public void ButtonHistory()
+    {
+        // TODO
+    }
+
+
     public void ButtonOptions()
+    {
+        // TODO
+    }
+
+
+    public void ButtonCredits()
     {
         // TODO
     }
@@ -90,7 +107,7 @@ public class MainMenu : MonoBehaviour
 
     public void Activate()
     {
-        Init();
+        Invoke("Init", 0.1f);
         this.gameObject.SetActive(true);
         GameManager.Instance.MenuMode(GlobalGameState.MainMenu);
     }
