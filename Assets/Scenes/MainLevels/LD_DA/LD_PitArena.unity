@@ -767,6 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9c93ae41a9f8049ac84bc7d01ba7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonalisaBehavierGo: {fileID: 638795246}
 --- !u!61 &328516691
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2135,6 +2136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9c93ae41a9f8049ac84bc7d01ba7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonalisaBehavierGo: {fileID: 638795246}
 --- !u!61 &972146536
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2288,6 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9c93ae41a9f8049ac84bc7d01ba7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonalisaBehavierGo: {fileID: 638795246}
 --- !u!61 &1043166366
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4491,6 +4494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9c93ae41a9f8049ac84bc7d01ba7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonalisaBehavierGo: {fileID: 638795246}
 --- !u!61 &2139457935
 BoxCollider2D:
   m_ObjectHideFlags: 0

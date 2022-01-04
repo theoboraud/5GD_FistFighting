@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TriggerEmotion : MonoBehaviour
 {
+    public GameObject MonalisaBehavierGo;
     private SpriteRenderer Image;
     private void Start()
     {
@@ -15,11 +16,13 @@ public class TriggerEmotion : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Image.enabled = true;
+            MonalisaBehavierGo.SetActive(false);
             Invoke("CloseImage", 1f);
         }
     }
     private void CloseImage()
     {
         Image.enabled = false;
+        MonalisaBehavierGo.SetActive(true);
     }
 }
