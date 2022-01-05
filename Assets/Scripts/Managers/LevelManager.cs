@@ -191,6 +191,8 @@ public class LevelManager : MonoBehaviour
 
             PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
 
+            if (_nextSceneIndex != 0) AudioManager.Instance.ChangeParam(2);
+            else AudioManager.Instance.ChangeParam(1);
             LoadScene(_nextSceneIndex);
         }
         else
