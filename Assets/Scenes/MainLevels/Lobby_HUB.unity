@@ -130,10 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1606660122, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
-      propertyPath: WinSound
-      value: 
-      objectReference: {fileID: 1761480537}
     - target: {fileID: 1814137963291488322, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1783,41 +1779,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700151211}
   m_CullTransparentMesh: 1
---- !u!1 &1761480536 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7771527687371490547, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
-  m_PrefabInstance: {fileID: 9580290}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1761480537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761480536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -684401290
-      Data2: 1329469374
-      Data3: -587962958
-      Data4: 344459067
-    Path: event:/UI/Winner
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &1865358866
 GameObject:
   m_ObjectHideFlags: 0

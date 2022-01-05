@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 1606660122}
   - component: {fileID: 1606660123}
   - component: {fileID: 1761480540}
+  - component: {fileID: 1761480541}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayOnStart: 1
   musicRef: {fileID: 1606660123}
+  WinSound: {fileID: 1761480541}
   ParamRef: {fileID: 1761480540}
 --- !u!114 &1606660123
 MonoBehaviour:
@@ -188,3 +190,33 @@ MonoBehaviour:
   parameter: MusicState
   TriggerEvent: 0
   value: 0
+--- !u!114 &1761480541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7771527687371490547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -684401290
+      Data2: 1329469374
+      Data3: -587962958
+      Data4: 344459067
+    Path: event:/UI/Winner
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
