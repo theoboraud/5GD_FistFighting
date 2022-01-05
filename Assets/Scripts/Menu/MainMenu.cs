@@ -16,9 +16,10 @@ public class MainMenu : MonoBehaviour
 
     public void Init()
     {
+        UnselectActiveButton();
         activeButtonIndex = 0;
         SelectActiveButton();
-        Selector.transform.position = new Vector3(Buttons[0].transform.position.x - selectedIncrementation, Buttons[0].transform.position.y, Buttons[0].transform.position.z);
+        //Selector.transform.position = new Vector3(Buttons[0].transform.position.x - selectedIncrementation, Buttons[0].transform.position.y, Buttons[0].transform.position.z);
     }
 
 
@@ -34,8 +35,11 @@ public class MainMenu : MonoBehaviour
     public virtual void UnselectActiveButton()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        activeButton.transform.position = new Vector3(activeButton.transform.position.x - selectedIncrementation, activeButton.transform.position.y, activeButton.transform.position.z);
-        activeButton = null;
+        if (activeButton != null)
+        {
+            activeButton.transform.position = new Vector3(activeButton.transform.position.x - selectedIncrementation, activeButton.transform.position.y, activeButton.transform.position.z);
+            activeButton = null;
+        }
     }
 
 
@@ -107,9 +111,9 @@ public class MainMenu : MonoBehaviour
 
     public void Activate()
     {
-        Invoke("Init", 0.2f);
         this.gameObject.SetActive(true);
         GameManager.Instance.MenuMode(GlobalGameState.MainMenu);
+        Invoke("Init", 0.2f);
     }
 
 
