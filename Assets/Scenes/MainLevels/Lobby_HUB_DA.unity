@@ -388,14 +388,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5000119284742653717, guid: 59d11f326fa5e4075934eed94c199472, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7277826122171232301, guid: 59d11f326fa5e4075934eed94c199472, type: 3}
-      propertyPath: selectedIncrementation
-      value: 50
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59d11f326fa5e4075934eed94c199472, type: 3}
 --- !u!1001 &57877327
