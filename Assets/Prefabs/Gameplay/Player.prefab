@@ -1405,6 +1405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StunAccumulation
       objectReference: {fileID: 0}
+    - target: {fileID: 7904725831403028821, guid: cdb19d7460c8d96479b35a4152bf20b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdb19d7460c8d96479b35a4152bf20b4, type: 3}
 --- !u!198 &6669229707048227844 stripped
