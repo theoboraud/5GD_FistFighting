@@ -85,7 +85,7 @@ public class PlayerArmController : MonoBehaviour
                                 {
 
                                     //Debug.Log("On Casse des Gueules !!!");
-                                    TimeToSeeWhoWinsThisClash(_arm, _armPlayerHit);
+                                    ArmClash(_arm, _armPlayerHit);
 
                                 }
                             }
@@ -125,7 +125,7 @@ public class PlayerArmController : MonoBehaviour
         }
     }
 
-    public void TimeToSeeWhoWinsThisClash(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
+    public void ArmClash(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
     {
         int player1Points = 0;
         int player2Points = 0;
@@ -180,6 +180,7 @@ public class PlayerArmController : MonoBehaviour
             _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
         }
     }
+
 
     /// <summary>
     ///     Call when the arm is extended (a.k.a. the frame stack has been emptied for this arm)
