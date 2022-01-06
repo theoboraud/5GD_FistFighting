@@ -42,7 +42,11 @@ public class PlayerArmController : MonoBehaviour
     public void HoldArm(int i)
     {
         if (player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit && Arms[i].Cooldown == false)
+        {
             Arms[i].StartHolding();
+            player.VoiceController.PlayHold();
+        }
+            
     }
 
 
@@ -55,6 +59,7 @@ public class PlayerArmController : MonoBehaviour
         {
             Arms[_armIndex].anim.PlayAnimation();
             Arms[_armIndex].Cooldown = true;
+            player.VoiceController.StopHold();
 
             // If we can hit a player, start the frame stack
             if (Arms[_armIndex].Players.Count > 0)
