@@ -141,6 +141,15 @@ public class LevelManager : MonoBehaviour
 
 
     /// <summary>
+    ///     Load the outro scene
+    /// </summary>
+    public void LoadOutroScene()
+    {
+        LoadScene(1);
+    }
+
+
+    /// <summary>
     ///     Load a random level from Build Settings, except the first one
     /// </summary>
     public void LoadRandomLevel()
@@ -190,6 +199,7 @@ public class LevelManager : MonoBehaviour
 
             if (_nextSceneIndex > 2) AudioManager.Instance.ChangeParam(2);
             else if (_nextSceneIndex == 0) AudioManager.Instance.ChangeParam(1);
+            else AudioManager.Instance.ChangeParam(0);
             LoadScene(_nextSceneIndex);
         }
         else
