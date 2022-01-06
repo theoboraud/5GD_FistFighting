@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private BoxCollider2D BoxCollider;
     public GameObject GO_IsReady;
     public PlayerVoiceController VoiceController;
+    public FeedbackFaceControler FaceControler;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -48,7 +49,7 @@ public class Player : MonoBehaviour
 
     private int skinIndex;                         // Contains the index of the current skin
     [System.NonSerialized] public string PlayerLayer;
-    private bool IsBouncing = false;
+    
     // #endregion
 
 
@@ -283,21 +284,20 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.EndOfRound(this);
         }
-        //detecte colision avec le décor
-        if (_GO.CompareTag("StaticGround") && PlayerPhysicState != PlayerPhysicState.OnGround && !IsBouncing)
+        //detecte colision avec le décor  
+        if (PlayerPhysicState == PlayerPhysicState.OnGround && FaceControler.CanShake)
         {
-            IsBouncing = true;
-            StartCoroutine("StartBounceSpritePlayer");
+            FaceControler.ShakeFace();
+            FaceControler.CanShake = false;
         }
     }
-
 
     /// <summary>
     ///     Check if hit a StaticGround object from the bottom, with raycast
     /// </summary>
     private bool IsGrounded()
     {
-        float extraDistance = 0.1f;
+        float extraDistance = 0.25f;
         RaycastHit2D raycastHit = Physics2D.Raycast(BoxCollider.bounds.center, Vector2.down, BoxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
 
         // DEBUG TEST
@@ -338,6 +338,7 @@ public class Player : MonoBehaviour
             {
                 //HitObject_bool = false;
                 PlayerPhysicState = PlayerPhysicState.InAir;
+                FaceControler.CanShake = true;
             }
         }
     }
@@ -368,13 +369,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator StartBounceSpritePlayer()
-    {
-        //transform.DOPunchPosition(_collision.GetContact(0).normal*0.1f,0.1f,4,0,false);
-        yield return new WaitForSeconds(1f);
-        IsBouncing = false;
-        yield return null;
-    }
+    //public IEnumerator StartBounceSpritePlayer()
+    //{
+    //    //transform.DOPunchPosition(_collision.GetContact(0).normal*0.1f,0.1f,4,0,false);
+    //    yield return new WaitForSeconds(1f);
+    //    IsBouncing = false;
+    //    yield return null;
+    //}
 
     // #endregion
 }
