@@ -28,6 +28,7 @@ public class ArmAnimationController : MonoBehaviour
         animator.SetBool("Extend", false);
         animator.SetBool("Hold", false);
         animator.SetBool("HoldMax", false);
+        transform.localScale.Set(2, 2, 1);
     }
 
 }

@@ -53,6 +53,10 @@ public class PlayerArmController : MonoBehaviour
     {
         if (Arms[_armIndex].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
         {
+            //Declenchement animation
+            float ArmScaleFactor = player.RB.velocity.magnitude;
+            Arms[_armIndex].transform.localScale = new Vector3(2 * ArmScaleFactor, 2 * ArmScaleFactor, 1);
+
             Arms[_armIndex].anim.PlayAnimation();
             Arms[_armIndex].Cooldown = true;
 
