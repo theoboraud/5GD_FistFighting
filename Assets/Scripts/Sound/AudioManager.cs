@@ -42,6 +42,11 @@ public class AudioManager : MonoBehaviour
         WinSound.Play();
     }
 
+    public void StopWinSound()
+    {
+        WinSound.Stop();
+    }
+
     public void ChangeParam(float _value)
     {
         ParamRef.value = _value;

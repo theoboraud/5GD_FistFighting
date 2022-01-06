@@ -58,7 +58,7 @@ public class LevelManager : MonoBehaviour
     public void Init()
     {
         // If the scene is not the lobby, we will only launch this scene
-        if (SceneManager.GetActiveScene().buildIndex > 0)
+        if (SceneManager.GetActiveScene().buildIndex > 2)
         {
             levelName = SceneManager.GetActiveScene().name;
             Invoke("Reset", 0.1f);
@@ -66,10 +66,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             // Init scene index and spawn points
-            CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-            // Init spawn points of the first level
-            InitSpawnPoints();
+            CurrentSceneIndex = 0;
         }
     }
 
@@ -109,7 +106,7 @@ public class LevelManager : MonoBehaviour
 
         if (MenuManager.Instance != null)
         {
-            if (_levelIndex != 0)
+            if (_levelIndex > 2)
             {
                 MenuManager.Instance.StartTimer();
             }
@@ -139,7 +136,17 @@ public class LevelManager : MonoBehaviour
             PlayersManager.Instance.ResetPlayersLives(1);
         }
 
-        LoadScene(0);
+        LoadScene(2);
+    }
+
+
+    /// <summary>
+    ///     Load the outro scene
+    /// </summary>
+    public void LoadOutroScene()
+    {
+        LoadScene(1);
+        AudioManager.Instance.StopMusic();
     }
 
 
@@ -152,7 +159,7 @@ public class LevelManager : MonoBehaviour
 
         while(_randomSceneIndex == CurrentSceneIndex)
         {
-            _randomSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+            _randomSceneIndex = Random.Range(3, SceneManager.sceneCountInBuildSettings);
         }
 
         LoadScene(_randomSceneIndex);
@@ -167,32 +174,33 @@ public class LevelManager : MonoBehaviour
         if (levelName == "")
         {
             // If not lobby level, add it to the levels played
-            if (CurrentSceneIndex != 0)
+            if (CurrentSceneIndex > 2)
             {
                 LevelsPlayed.Add(CurrentSceneIndex);
             }
 
             // If we played every level, empty the list
-            if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 2)
+            if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 3)
             {
                 LevelsPlayed.Clear();
             }
 
             // Get a random scene index not yet in LevelsPlayed
-            int _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+            int _nextSceneIndex = Random.Range(3, SceneManager.sceneCountInBuildSettings);
 
             if (LevelsPlayed.Count > 0)
             {
                 while (LevelsPlayed.Contains(_nextSceneIndex))
                 {
-                    _nextSceneIndex = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+                    _nextSceneIndex = Random.Range(3, SceneManager.sceneCountInBuildSettings);
                 }
             }
 
             PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
 
-            if (_nextSceneIndex != 0) AudioManager.Instance.ChangeParam(2);
-            else AudioManager.Instance.ChangeParam(1);
+            if (_nextSceneIndex > 2) AudioManager.Instance.ChangeParam(2);
+            else if (_nextSceneIndex == 0) AudioManager.Instance.ChangeParam(1);
+            else AudioManager.Instance.ChangeParam(0);
             LoadScene(_nextSceneIndex);
         }
         else
@@ -213,6 +221,8 @@ public class LevelManager : MonoBehaviour
     public void Reset()
     {
         MenuManager.Instance.Reset();
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.StopWinSound();
 
         GameManager.Instance.Feedback.ResetAllVFX();
 

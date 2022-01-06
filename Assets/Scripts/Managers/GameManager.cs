@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public int IndexWinner;
     [System.NonSerialized] public Player RoundWinner;                                   // Winning player of the round reference
 
-
-
     // #endregion
 
 
@@ -60,6 +58,7 @@ public class GameManager : MonoBehaviour
         MenuManager.Instance.Init();
         PlayersManager.Instance.Init();
     }
+
     // #endregion
 
 
@@ -96,7 +95,7 @@ public class GameManager : MonoBehaviour
         MenuManager.Instance.PrintWinnerScreen_Alone(false);
         PlayersManager.Instance.ResetSpawnedPlayers();
 
-        if (LevelManager.Instance.CurrentSceneIndex > 0)
+        if (LevelManager.Instance.CurrentSceneIndex > 2)
         {
             GlobalGameState = GlobalGameState.Null;
 
@@ -115,10 +114,14 @@ public class GameManager : MonoBehaviour
             {
                 IndexWinner = _winnerIndex;
                 PlayerHasWon = true;
+                MenuManager.Instance.UI.SetActive(false);
+            }
+            else
+            {
+                // Print out the score screen
+                MenuManager.Instance.PrintScoreScreen(true);
             }
 
-            // Print out the score screen
-            MenuManager.Instance.PrintScoreScreen(true);
             Invoke("SetStateToScoreScreen", 0.1f);
 
             // Reset the RoundWinner
@@ -142,7 +145,8 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerHasWon)
         {
-            GlobalGameState = GlobalGameState.PlayerWon;
+            GlobalGameState = GlobalGameState.Outro;
+            LevelManager.Instance.LoadOutroScene();
         }
         else
         {
@@ -178,7 +182,7 @@ public class GameManager : MonoBehaviour
         }
 
         // TODO: Delete this, and implement a timer "3, 2, 1" when all players are ready to load a new level
-        if (LevelManager.Instance.GetSceneIndex() == 0)
+        if (LevelManager.Instance.GetSceneIndex() == 2)
         {
             for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
             {

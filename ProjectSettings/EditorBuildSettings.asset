@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/IntroAnim.unity
+    guid: e92e2d4b04258c64fab8ad523fed4053
+  - enabled: 1
+    path: Assets/Scenes/EndSequenceAnim.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
     path: Assets/Scenes/MainLevels/Lobby_HUB_DA.unity
     guid: 2c7f9ae4dae46fe459c70676c67d2f7b
   - enabled: 1

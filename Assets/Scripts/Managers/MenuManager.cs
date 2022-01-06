@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject Text_Scoreboard;
     [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
+    public GameObject UI;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public GameObject UI_ReadyTimer;
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
@@ -165,7 +166,7 @@ public class MenuManager : MonoBehaviour
         UI_SpawningTimers[_playerIndex].SetActive(true);
 
         // Update the scale according to the camera distance
-        float _newScale = 22f / Camera.main.orthographicSize;
+        float _newScale = (22f / Camera.main.orthographicSize) * 1.1f;
         UI_SpawningTimers[_playerIndex].GetComponent<RectTransform>().localScale = new Vector3(_newScale, _newScale, _newScale);
 
         // Init the timer value
