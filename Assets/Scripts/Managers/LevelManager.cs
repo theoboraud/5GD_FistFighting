@@ -180,7 +180,7 @@ public class LevelManager : MonoBehaviour
             }
 
             // If we played every level, empty the list
-            if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 4)
+            if (LevelsPlayed.Count >= SceneManager.sceneCountInBuildSettings - 3)
             {
                 LevelsPlayed.Clear();
             }
@@ -221,6 +221,8 @@ public class LevelManager : MonoBehaviour
     public void Reset()
     {
         MenuManager.Instance.Reset();
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.StopWinSound();
 
         GameManager.Instance.Feedback.ResetAllVFX();
 
