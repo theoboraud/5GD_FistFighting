@@ -124,7 +124,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
-        if (GameManager.Instance.GlobalGameState is GlobalGameState.PlayerWon && _context.canceled)
+        if (GameManager.Instance.GlobalGameState is GlobalGameState.Outro && _context.canceled)
         {
             GameManager.Instance.ResetGame();
         }
@@ -157,7 +157,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_NextCharacter(InputAction.CallbackContext _context)
     {
-        if (LevelManager.Instance.CurrentSceneIndex == 0 && _context.interaction is PressInteraction && _context.started)
+        if (LevelManager.Instance.CurrentSceneIndex == 2 && _context.interaction is PressInteraction && _context.started)
         {
             Player.NextCharacter();
         }
@@ -169,7 +169,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     public void Gameplay_PreviousCharacter(InputAction.CallbackContext _context)
     {
-        if (LevelManager.Instance.CurrentSceneIndex == 0 && _context.interaction is PressInteraction && _context.started)
+        if (LevelManager.Instance.CurrentSceneIndex == 2 && _context.interaction is PressInteraction && _context.started)
         {
             Player.PreviousCharacter();
         }

@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             RoundWinner.VoiceController.PlayVictory();
             AudioManager.Instance.PlayWinSound();
 
-            if (PlayerScores[_indexRoundWinner] >= 5)
+            if (PlayerScores[_indexRoundWinner] >= 1)
             {
                 _winnerIndex = _indexRoundWinner;
             }
@@ -114,10 +114,14 @@ public class GameManager : MonoBehaviour
             {
                 IndexWinner = _winnerIndex;
                 PlayerHasWon = true;
+                Destroy(MenuManager.Instance.gameObject);
+            }
+            else
+            {
+                // Print out the score screen
+                MenuManager.Instance.PrintScoreScreen(true);
             }
 
-            // Print out the score screen
-            MenuManager.Instance.PrintScoreScreen(true);
             Invoke("SetStateToScoreScreen", 0.1f);
 
             // Reset the RoundWinner
@@ -141,7 +145,8 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerHasWon)
         {
-            GlobalGameState = GlobalGameState.PlayerWon;
+            GlobalGameState = GlobalGameState.Outro;
+            LevelManager.Instance.LoadOutroScene();
         }
         else
         {
