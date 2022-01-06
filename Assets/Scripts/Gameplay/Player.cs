@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private BoxCollider2D BoxCollider;
     public GameObject GO_IsReady;
     public PlayerVoiceController VoiceController;
+    public FeedbackFaceControler FaceControler;
 
     [Header("Events for FMOD")]
     public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -282,6 +283,11 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.EndOfRound(this);
         }
+        if(PlayerPhysicState == PlayerPhysicState.OnGround && FaceControler.CanShake)
+        {
+            FaceControler.ShakeFace();
+            FaceControler.CanShake = false;
+        }
     }
 
 
@@ -290,7 +296,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private bool IsGrounded()
     {
-        float extraDistance = 0.1f;
+        float extraDistance = 0.25f;
         RaycastHit2D raycastHit = Physics2D.Raycast(BoxCollider.bounds.center, Vector2.down, BoxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
 
         // DEBUG TEST
@@ -303,7 +309,7 @@ public class Player : MonoBehaviour
         {
             rayColor = Color.red;
         }
-        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance),rayColor);
+        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance), rayColor);
 
         if (raycastHit.collider != null)
         {
@@ -331,6 +337,7 @@ public class Player : MonoBehaviour
             {
                 //HitObject_bool = false;
                 PlayerPhysicState = PlayerPhysicState.InAir;
+                FaceControler.CanShake = true;
             }
         }
     }
