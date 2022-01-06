@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c7c9a9f5-1d9f-41c9-af53-d43d4d27c6d5}">
+		<property name="assetPath">
+			<value>Kiera_Victory0.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.0211791383219953</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6caa0bc0-a240-4a11-8aab-0b09d1f7f2d6}</destination>
+		</relationship>
+	</object>
+</objects>

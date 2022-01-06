@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{5d3cf6e4-333e-4ea8-86e0-96f8d7eb9586}">
+		<property name="assetPath">
+			<value>Explosions, Real, Deep Low SND5808 3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.6193958333333334</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6caa0bc0-a240-4a11-8aab-0b09d1f7f2d6}</destination>
+		</relationship>
+	</object>
+</objects>
