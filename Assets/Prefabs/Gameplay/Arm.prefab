@@ -195,6 +195,7 @@ MonoBehaviour:
   anim: {fileID: 2623607050116399580}
   Cooldown: 0
   Holding: 0
+  renderer: {fileID: 4655751240631651836}
   holding_timer: 0
   FrameStack: 0
 --- !u!61 &6683747768370366081

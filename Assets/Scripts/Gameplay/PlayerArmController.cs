@@ -58,8 +58,10 @@ public class PlayerArmController : MonoBehaviour
         if (Arms[_armIndex].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
         {
             //Declenchement animation
-            float ArmScaleFactor = player.RB.velocity.magnitude;
-            Arms[_armIndex].transform.localScale = new Vector3(2 * ArmScaleFactor, 2 * ArmScaleFactor, 1);
+            float ArmScaleFactor = GetPrioPoints(Arms[_armIndex]);
+            Arms[_armIndex].renderer.transform.localScale = new Vector3
+                (Mathf.Lerp(1, 1.3f, ArmScaleFactor/ (3)), 
+                Mathf.Lerp(1, 1.3f, ArmScaleFactor / (3)));
 
             Arms[_armIndex].anim.PlayAnimation();
             Arms[_armIndex].Cooldown = true;
@@ -190,6 +192,27 @@ public class PlayerArmController : MonoBehaviour
         }
     }
 
+    public int GetPrioPoints(ArmChecker _armPlayer1)
+    {
+        int player1Points = 0;
+
+
+        if (_armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        {
+            player1Points += 1;
+        }
+        if (_armPlayer1.Player.RB.velocity.magnitude > 0.2f)
+        {
+            player1Points += 1;
+        }
+        if(_armPlayer1.holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+        {
+            player1Points += 1;
+        }
+
+        return player1Points;
+    }
+
 
     /// <summary>
     ///     Call when the arm is extended (a.k.a. the frame stack has been emptied for this arm)
@@ -197,6 +220,13 @@ public class PlayerArmController : MonoBehaviour
     public void ExtendedArm(int _armIndex)
     {
         Arms[_armIndex].FrameStack = 0;
+        if(Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+        {
+            GameManager.Instance.Feedback.SpawnChargedHit
+            (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
+            Vector3.forward));
+        }
         if (CheckIfRigidbodyInRange(_armIndex) && !CheckIfEnvironmentInRange(_armIndex))
         {
             LaunchForeignObject(_armIndex);
@@ -349,8 +379,10 @@ public class PlayerArmController : MonoBehaviour
 
         ArmsGoingToHit.Remove(Arms[_armIndex]);
 
-        GameManager.Instance.Feedback.SpawnHitVFX
-            (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+        int strength = (int)Mathf.Lerp(0,2,GetPrioPoints(Arms[_armIndex])/ (3));
+
+        GameManager.Instance.Feedback.SpawnPlayerHit
+            (Mathf.Clamp(strength,0,2), Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
     }

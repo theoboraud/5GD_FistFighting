@@ -8,6 +8,10 @@ public class FeedbackManager : MonoBehaviour
     [SerializeField] GameObject hitVFX;
     [SerializeField] GameObject hitAvatarVFX;
     [SerializeField] GameObject ExpulsionVFX;
+    [SerializeField] GameObject Debris;
+    [SerializeField] GameObject[] HitPlayer;
+    [SerializeField] GameObject ChargedHit;
+    [SerializeField] GameObject GroundBounce;
 
     [Header("Variables")]
     private List<GameObject> allVFX = new List<GameObject>();
@@ -40,6 +44,30 @@ public class FeedbackManager : MonoBehaviour
         Quaternion rotation = Quaternion.AngleAxis(Vector3.Angle(ExpulsionVFX.transform.up - position, (centerPos - position).normalized), Vector3.forward);
         GameObject _go = Instantiate(ExpulsionVFX, position, rotation * ExpulsionVFX.transform.rotation, this.transform);
         _go.transform.rotation = Quaternion.LookRotation(centerPos - position);
+        allVFX.Add(_go);
+    }
+
+    public void SpawnChargedHit(Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(ChargedHit, position, rotation, this.transform);
+        allVFX.Add(_go);
+    }
+
+    public void SpawnPlayerHit(int strength, Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(HitPlayer[strength], position, rotation, this.transform);
+        allVFX.Add(_go);
+    }
+
+    public void SpawnDebris(Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(Debris, position, rotation, this.transform);
+        allVFX.Add(_go);
+    }
+
+    public void SpawnGroundBounce(Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(GroundBounce, position, rotation, this.transform);
         allVFX.Add(_go);
     }
 

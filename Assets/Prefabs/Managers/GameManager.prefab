@@ -43,9 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fc312843252db4fb7248ea0a97397e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVFX: {fileID: 2203765180277896203, guid: b94f042af2c870946b891f0623842116, type: 3}
-  hitAvatarVFX: {fileID: 7864977891443810783, guid: ff0fcb878232b38408d0d99d8e18ee43, type: 3}
+  hitVFX: {fileID: 8147151920517733370, guid: 03efb9344c553cb478490072eb754798, type: 3}
+  hitAvatarVFX: {fileID: 6383959862024415063, guid: a0479664b8e345d4b9fea6240e43afb4, type: 3}
   ExpulsionVFX: {fileID: 5295859907447675650, guid: 90f9f55340b23094b86229cd00849528, type: 3}
+  Debris: {fileID: 8457151468660531831, guid: f6a4eb33fd8fc01499cee527156e7376, type: 3}
+  HitPlayer:
+  - {fileID: 6796215379687016899, guid: 32fd58d85c301154b996358e94e9ca71, type: 3}
+  - {fileID: 5994201097990839300, guid: 36216be1bbf83b848976a3a143716e2a, type: 3}
+  - {fileID: 18227765078161172, guid: 4ea1aa5d525da894aa41eab9bf7999a7, type: 3}
+  ChargedHit: {fileID: 5902228076064297953, guid: d36a9dab7ddb2bf4da0bf833b5b192a5, type: 3}
+  GroundBounce: {fileID: 2763997736016841256, guid: 7bf1f37cbda1c9643b04d991dee713be, type: 3}
 --- !u!1 &1814137963291488322
 GameObject:
   m_ObjectHideFlags: 0
