@@ -220,13 +220,7 @@ public class PlayerArmController : MonoBehaviour
     public void ExtendedArm(int _armIndex)
     {
         Arms[_armIndex].FrameStack = 0;
-        if(Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
-        {
-            GameManager.Instance.Feedback.SpawnChargedHit
-            (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
-            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
-            Vector3.forward));
-        }
+        
         if (CheckIfRigidbodyInRange(_armIndex) && !CheckIfEnvironmentInRange(_armIndex))
         {
             LaunchForeignObject(_armIndex);
@@ -303,8 +297,15 @@ public class PlayerArmController : MonoBehaviour
         RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f);
         GameManager.Instance.Feedback.SpawnHitVFX
             (ray.point,
-            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
+            Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
+        if(Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+        {
+            GameManager.Instance.Feedback.SpawnChargedHit
+            (ray.point,
+            Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
+            Vector3.forward));
+        }
     }
 
 
@@ -341,6 +342,13 @@ public class PlayerArmController : MonoBehaviour
                 (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
                 Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
                 Vector3.forward));
+            if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+            {
+                GameManager.Instance.Feedback.SpawnChargedHit
+                (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+                Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
+                Vector3.forward));
+            }
         }
     }
 
@@ -385,6 +393,14 @@ public class PlayerArmController : MonoBehaviour
             (Mathf.Clamp(strength,0,2), Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
+
+        if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+        {
+            GameManager.Instance.Feedback.SpawnChargedHit
+            (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
+            Vector3.forward));
+        }
     }
 
 
