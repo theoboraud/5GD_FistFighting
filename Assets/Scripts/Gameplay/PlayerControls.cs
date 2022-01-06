@@ -140,7 +140,7 @@ public class PlayerControls : MonoBehaviour
         }
         else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay && _context.canceled)
         {
-            if (LevelManager.Instance.GetSceneIndex() == 0)
+            if (LevelManager.Instance.GetSceneIndex() == 2)
             {
                 Player.IsReadyUI(!Player.GO_IsReady.activeSelf);
             }
