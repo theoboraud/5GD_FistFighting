@@ -28,4 +28,14 @@ public class PlayerVoiceController : MonoBehaviour
         studioEventEmitters[2].Play();
         studioEventEmitters[2].SetParameter(studioEventEmitters[2].Params[0].ID, player.CharSkin.VoiceParameter);
     }
+
+    public void PlayHold()
+    {
+        studioEventEmitters[3].Play();
+    }
+
+    public void StopHold()
+    {
+        studioEventEmitters[3].Stop();
+    }
 }

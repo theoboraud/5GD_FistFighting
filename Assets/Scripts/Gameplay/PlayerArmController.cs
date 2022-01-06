@@ -42,7 +42,11 @@ public class PlayerArmController : MonoBehaviour
     public void HoldArm(int i)
     {
         if (player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit && Arms[i].Cooldown == false)
+        {
             Arms[i].StartHolding();
+            player.VoiceController.PlayHold();
+        }
+            
     }
 
 
@@ -59,6 +63,7 @@ public class PlayerArmController : MonoBehaviour
 
             Arms[_armIndex].anim.PlayAnimation();
             Arms[_armIndex].Cooldown = true;
+            player.VoiceController.StopHold();
 
             // If we can hit a player, start the frame stack
             if (Arms[_armIndex].Players.Count > 0)
@@ -317,12 +322,15 @@ public class PlayerArmController : MonoBehaviour
     {
         foreach (var item in Arms[_armIndex].Rigidbodies)
         {
-            item.AddForce
-                (-Arms[_armIndex].transform.up *
-                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
-                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
-                (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
-                ForceMode2D.Impulse);
+            if (item!=null)
+            {
+                item.AddForce
+                    (-Arms[_armIndex].transform.up *
+                    GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
+                    Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
+                    (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
+                    ForceMode2D.Impulse);
+            }
         }
 
         foreach (var item in Arms[_armIndex].Players)
