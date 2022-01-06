@@ -231,6 +231,7 @@ public class MenuManager : MonoBehaviour
         PlayersManager.Instance.Players[_playerIndex].Outline_SpriteRenderer.color = PlayerColors[_playerIndex];
         PlayersUI[_playerIndex].AddPlayerUI(_playerIndex, PlayerColors[_playerIndex]);
         PlayersManager.Instance.Players[_playerIndex].IsReadyUI(false);
+        Text_SpawningTimers[_playerIndex].GetComponent<Text>().color = PlayerColors[_playerIndex];
         //UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
         //UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
     }
