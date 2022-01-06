@@ -146,6 +146,7 @@ public class LevelManager : MonoBehaviour
     public void LoadOutroScene()
     {
         LoadScene(1);
+        AudioManager.Instance.StopMusic();
     }
 
 
