@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public int IndexWinner;
     [System.NonSerialized] public Player RoundWinner;                                   // Winning player of the round reference
 
-
-
     // #endregion
 
 
@@ -55,11 +53,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Init()
     {
-        GlobalGameState = GlobalGameState.MainMenu;
+        GlobalGameState = GlobalGameState.Intro;
         LevelManager.Instance.Init();
         MenuManager.Instance.Init();
         PlayersManager.Instance.Init();
     }
+
     // #endregion
 
 

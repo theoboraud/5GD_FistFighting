@@ -2,6 +2,7 @@ namespace Enums
 {
     public enum GlobalGameState
     {
+        Intro,
         InPlay,
         InPause,
         WinnerScreen,
@@ -9,6 +10,7 @@ namespace Enums
         PlayerWon,
         MainMenu,
         OptionsMenu,
+        Outro,
         Null,
     }
 
