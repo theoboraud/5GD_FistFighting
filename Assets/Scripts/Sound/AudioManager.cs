@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour
 
     public bool PlayOnStart = true;
     [SerializeField] FMODUnity.StudioEventEmitter musicRef;
+    [SerializeField] FMODUnity.StudioEventEmitter WinSound;
+    [SerializeField] FMODUnity.StudioGlobalParameterTrigger ParamRef;
     public static AudioManager Instance;
 
     private void Start()
@@ -35,9 +37,15 @@ public class AudioManager : MonoBehaviour
         musicRef.Stop();
     }
 
+    public void PlayWinSound()
+    {
+        WinSound.Play();
+    }
+
     public void ChangeParam(float _value)
     {
-        musicRef.SetParameter(musicRef.Params[0].ID, _value);
+        ParamRef.value = _value;
+        ParamRef.TriggerParameters();
     }
 
     public void PlayTrack(string eventPath, Vector3 position)

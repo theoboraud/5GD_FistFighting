@@ -52,7 +52,7 @@ public class PlayerUI : MonoBehaviour
             GO_Cross.SetActive(false);
         }
 
-        UpdateLivesUI();
+        Invoke("UpdateLivesUI", 0.3f);
     }
 
 
@@ -75,14 +75,15 @@ public class PlayerUI : MonoBehaviour
                 Eliminated();
             }
 
-            if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1)
+            // Deprecated
+            /*if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1)
             {
                 nbLives.color = Color.red;
             }
             else
             {
                 nbLives.color = Color.black;
-            }
+            }*/
         }
     }
 

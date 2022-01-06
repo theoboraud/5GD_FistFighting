@@ -239,7 +239,7 @@ public class MenuManager : MonoBehaviour
     public void PrintScoreScreen(bool _bool)
     {
         ScoreScreen.SetActive(_bool);
-
+        AudioManager.Instance.ChangeParam(1);
         if (_bool)
         {
             for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
