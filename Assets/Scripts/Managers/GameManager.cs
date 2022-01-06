@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
             {
                 IndexWinner = _winnerIndex;
                 PlayerHasWon = true;
-                Destroy(MenuManager.Instance.gameObject);
+                MenuManager.Instance.UI.SetActive(false);
             }
             else
             {

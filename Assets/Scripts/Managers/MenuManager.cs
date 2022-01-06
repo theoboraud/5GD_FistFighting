@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject Text_Scoreboard;
     [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
+    public GameObject UI;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public GameObject UI_ReadyTimer;
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player

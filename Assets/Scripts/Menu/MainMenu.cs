@@ -34,9 +34,9 @@ public class MainMenu : MonoBehaviour
 
     public virtual void UnselectActiveButton()
     {
-        EventSystem.current.SetSelectedGameObject(null);
         if (activeButton != null)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             activeButton.transform.position = new Vector3(activeButton.transform.position.x - selectedIncrementation, activeButton.transform.position.y, activeButton.transform.position.z);
             activeButton = null;
         }
