@@ -313,12 +313,15 @@ public class PlayerArmController : MonoBehaviour
     {
         foreach (var item in Arms[_armIndex].Rigidbodies)
         {
-            item.AddForce
-                (-Arms[_armIndex].transform.up *
-                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
-                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
-                (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
-                ForceMode2D.Impulse);
+            if (item!=null)
+            {
+                item.AddForce
+                    (-Arms[_armIndex].transform.up *
+                    GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
+                    Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
+                    (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
+                    ForceMode2D.Impulse);
+            }
         }
 
         foreach (var item in Arms[_armIndex].Players)

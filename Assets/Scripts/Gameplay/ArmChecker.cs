@@ -127,9 +127,12 @@ public class ArmChecker : MonoBehaviour
         {
             for (int i = 0; i < Rigidbodies.Count; i++)
             {
-                if(Vector2.Distance(this.transform.position, Rigidbodies[i].transform.position) < shortestDist)
+                if (Rigidbodies[i]!=null)
                 {
-                    shortestDist = Vector3.Distance(this.transform.position, Rigidbodies[i].transform.position);
+                    if (Vector2.Distance(this.transform.position, Rigidbodies[i].transform.position) < shortestDist)
+                    {
+                        shortestDist = Vector3.Distance(this.transform.position, Rigidbodies[i].transform.position);
+                    }
                 }
             }
         }

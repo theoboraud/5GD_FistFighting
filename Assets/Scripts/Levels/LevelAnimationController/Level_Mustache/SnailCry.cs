@@ -10,7 +10,7 @@ public class SnailCry : MonoBehaviour
     private bool isColl = false;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isColl)
+        if (!isColl&&collision.gameObject.CompareTag("Player"))
         {
             Cry.SetActive(true);
             ThrowEgg();
