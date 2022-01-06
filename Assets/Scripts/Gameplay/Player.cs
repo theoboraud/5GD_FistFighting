@@ -6,7 +6,6 @@ using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Enums;
-using DG.Tweening;
 
 /// <summary>
 ///     Class used to spawn the player arms during gameplay
@@ -49,7 +48,7 @@ public class Player : MonoBehaviour
 
     private int skinIndex;                         // Contains the index of the current skin
     [System.NonSerialized] public string PlayerLayer;
-    
+
     // #endregion
 
 
@@ -284,13 +283,13 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.EndOfRound(this);
         }
-        //detecte colision avec le décor  
-        if (PlayerPhysicState == PlayerPhysicState.OnGround && FaceControler.CanShake)
+        if(PlayerPhysicState == PlayerPhysicState.OnGround && FaceControler.CanShake)
         {
             FaceControler.ShakeFace();
             FaceControler.CanShake = false;
         }
     }
+
 
     /// <summary>
     ///     Check if hit a StaticGround object from the bottom, with raycast
@@ -310,7 +309,7 @@ public class Player : MonoBehaviour
         {
             rayColor = Color.red;
         }
-        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance),rayColor);
+        Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance), rayColor);
 
         if (raycastHit.collider != null)
         {
@@ -368,14 +367,6 @@ public class Player : MonoBehaviour
             MenuManager.Instance.UI_ReadyTimer.SetActive(true);
         }
     }
-
-    //public IEnumerator StartBounceSpritePlayer()
-    //{
-    //    //transform.DOPunchPosition(_collision.GetContact(0).normal*0.1f,0.1f,4,0,false);
-    //    yield return new WaitForSeconds(1f);
-    //    IsBouncing = false;
-    //    yield return null;
-    //}
 
     // #endregion
 }
