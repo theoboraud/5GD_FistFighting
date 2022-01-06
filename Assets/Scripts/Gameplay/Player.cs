@@ -6,7 +6,6 @@ using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Enums;
-using DG.Tweening;
 
 /// <summary>
 ///     Class used to spawn the player arms during gameplay
@@ -48,7 +47,7 @@ public class Player : MonoBehaviour
 
     private int skinIndex;                         // Contains the index of the current skin
     [System.NonSerialized] public string PlayerLayer;
-    private bool IsBouncing = false;
+
     // #endregion
 
 
@@ -283,12 +282,6 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.EndOfRound(this);
         }
-        //detecte colision avec le décor
-        if (_GO.CompareTag("StaticGround") && PlayerPhysicState != PlayerPhysicState.OnGround && !IsBouncing)
-        {
-            IsBouncing = true;
-            StartCoroutine("StartBounceSpritePlayer");
-        }
     }
 
 
@@ -366,14 +359,6 @@ public class Player : MonoBehaviour
             MenuManager.Instance.ReadyTimer = 3f;
             MenuManager.Instance.UI_ReadyTimer.SetActive(true);
         }
-    }
-
-    public IEnumerator StartBounceSpritePlayer()
-    {
-        //transform.DOPunchPosition(_collision.GetContact(0).normal*0.1f,0.1f,4,0,false);
-        yield return new WaitForSeconds(1f);
-        IsBouncing = false;
-        yield return null;
     }
 
     // #endregion

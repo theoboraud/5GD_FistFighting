@@ -15,6 +15,7 @@ public class ArmChecker : MonoBehaviour
     public ArmAnimationController anim;
     public bool Cooldown = false;
     public bool Holding = false;
+    public SpriteRenderer renderer;
 
     private float cooldown_timer;
     public float holding_timer;
