@@ -20,6 +20,7 @@ public class EyesController : MonoBehaviour
     }
     private void Update()
     {
+        playersAlive = PlayersManager.Instance.PlayersAlive;
         if (playersAlive != null && playersAlive.Count != 0)
         {
             if (playersAlive[ran]!=null && playersAlive.Count!=0)
