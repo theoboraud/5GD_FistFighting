@@ -35,7 +35,10 @@ public class EyesController : MonoBehaviour
                 }
                 else
                 {
-                    ran = Random.Range(0, playersAlive.Count);
+                    if (playersAlive.Count>=0)
+                    {
+                        ran = Random.Range(0, playersAlive.Count);
+                    }
                 }
             }
         }
