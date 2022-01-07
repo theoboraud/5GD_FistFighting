@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             RoundWinner.VoiceController.PlayVictory();
             AudioManager.Instance.PlayWinSound();
 
-            if (PlayerScores[_indexRoundWinner] >= 1)
+            if (PlayerScores[_indexRoundWinner] >= 5)
             {
                 _winnerIndex = _indexRoundWinner;
             }
