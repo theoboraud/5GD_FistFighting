@@ -22,7 +22,7 @@ public class EyesController : MonoBehaviour
     {
         if (playersAlive != null && playersAlive.Count != 0)
         {
-            if (playersAlive[ran]!=null)
+            if (playersAlive[ran]!=null && playersAlive.Count!=0)
             {
                 if (playersAlive[ran].PlayerGameState is PlayerGameState.Alive)
                 {
