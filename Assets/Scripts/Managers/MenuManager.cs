@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     [System.NonSerialized] public static MenuManager Instance;
     [SerializeField] private GameObject WinnerScreen;
     [SerializeField] private GameObject WinnerScreen_Alone;
-    [SerializeField] private GameObject ScoreScreen;
+    public GameObject ScoreScreen;
     [SerializeField] private GameObject Text_Scoreboard;
     [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
@@ -252,14 +252,14 @@ public class MenuManager : MonoBehaviour
 
         if (GameManager.Instance.PlayerHasWon)
         {
-            int _indexWinner = GameManager.Instance.IndexWinner;
+            /*int _indexWinner = GameManager.Instance.IndexWinner;
             Text_Scoreboard.SetActive(false);
             Text_PlayerHasWon.SetActive(true);
             Text_PlayerHasWon.GetComponent<Text>().color = PlayerColors[_indexWinner];
 
             _indexWinner += 1;
             string _playerWon = "J" + _indexWinner.ToString() + " has won!";
-            Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;
+            Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;*/
         }
     }
 

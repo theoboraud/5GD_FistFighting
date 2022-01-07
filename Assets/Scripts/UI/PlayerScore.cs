@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerScore : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject scoreText;                                          // Reference to the player score text game object (J1, J2...)
-    [SerializeField] private List<GameObject> scoreTokenFillers = new List<GameObject>();   // References to all token fillers game objects
+    [SerializeField] private GameObject playerFace;                                         // Reference to the player face GameObject
+    [SerializeField] private GameObject playerOutline;
+    [SerializeField] private List<GameObject> scorePos = new List<GameObject>();            // References to all score pos game objects
 
     [Header("Variables")]
     private int playerScoreValue;      // Contains the current score value
@@ -18,24 +20,17 @@ public class PlayerScore : MonoBehaviour
     /// </summary>
     public void SetColor(Color _color)
     {
-        // Set the color of the player score text
-        scoreText.GetComponent<Text>().color = _color;
-
-        // Set the color for each token filler
-        for (int i = 0; i < scoreTokenFillers.Count; i++)
-        {
-            scoreTokenFillers[i].GetComponent<Image>().color = _color;
-        }
+        playerOutline.GetComponent<Image>().color = _color;
     }
 
-    
+
     /// <summary>
     ///     Reset the score and the score tokens to 0
     /// </summary>
     public void ResetScore()
     {
         playerScoreValue = 0;
-        UpdateScoreTokens();
+        UpdateScorePos();
     }
 
 
@@ -44,24 +39,25 @@ public class PlayerScore : MonoBehaviour
     /// </summary>
     public void SetScore(int _newValue)
     {
-        playerScoreValue = Mathf.Clamp(_newValue, 0, scoreTokenFillers.Count);
-        UpdateScoreTokens();
+        playerScoreValue = Mathf.Clamp(_newValue, 0, 5);
+        UpdateScorePos();
     }
 
 
     /// <summary>
-    ///     Update the score tokens fillers depending on the current score value
+    ///     Update the pos of the face depending on the score value
     /// </summary>
-    private void UpdateScoreTokens()
+    private void UpdateScorePos()
     {
-        for (int i = 0; i < playerScoreValue; i++)
-        {
-            scoreTokenFillers[i].SetActive(true);
-        }
+        playerFace.transform.DOMoveX(scorePos[playerScoreValue - 1].transform.position.x, 1f, false);
+        playerOutline.transform.DOMoveX(scorePos[playerScoreValue - 1].transform.position.x, 1f, false);
+        Invoke("Shake", 1f);
+    }
 
-        for (int i = playerScoreValue; i < scoreTokenFillers.Count; i++)
-        {
-            scoreTokenFillers[i].SetActive(false);
-        }
+
+    private void Shake()
+    {
+        playerFace.transform.DOShakePosition(0.3f, 1f, 1, 90f, false, true);
+        playerOutline.transform.DOShakePosition(0.3f, 1f, 1, 90f, false, true);
     }
 }

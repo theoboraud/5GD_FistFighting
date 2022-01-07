@@ -131,7 +131,14 @@ public class PlayerControls : MonoBehaviour
 
         else if (GameManager.Instance.GlobalGameState is GlobalGameState.ScoreScreen && _context.canceled)
         {
-            GameManager.Instance.NewGameRound();
+            if (GameManager.Instance.PlayerHasWon)
+            {
+                LevelManager.Instance.LoadOutroScene();
+            }
+            else
+            {
+                GameManager.Instance.NewGameRound();
+            }
         }
 
         else if (GameManager.Instance.GlobalGameState is GlobalGameState.WinnerScreen && _context.canceled)

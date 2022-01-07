@@ -147,6 +147,16 @@ public class LevelManager : MonoBehaviour
     {
         LoadScene(1);
         AudioManager.Instance.StopMusic();
+        GameManager.Instance.Feedback.ResetAllVFX();
+
+        Invoke("OutroGameState", 0.1f);
+    }
+
+
+    private void OutroGameState()
+    {
+        MenuManager.Instance.ScoreScreen.SetActive(false);
+        GameManager.Instance.GlobalGameState = GlobalGameState.Outro;
     }
 
 
