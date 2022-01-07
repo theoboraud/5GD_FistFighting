@@ -200,7 +200,7 @@ public class LevelManager : MonoBehaviour
 
             if (LevelsPlayed.Count > 0)
             {
-                while (LevelsPlayed.Contains(_nextSceneIndex))
+                while (LevelsPlayed.Contains(_nextSceneIndex) || _nextSceneIndex == CurrentSceneIndex)
                 {
                     _nextSceneIndex = Random.Range(3, SceneManager.sceneCountInBuildSettings);
                 }
