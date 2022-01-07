@@ -13,7 +13,8 @@ public class PlayerScore : MonoBehaviour
     public Player Player;
 
     [Header("Variables")]
-    private int playerScoreValue;      // Contains the current score value
+    private int newScore = 0;
+    private int playerScoreValue = 0;      // Contains the current score value
 
 
     /// <summary>
@@ -41,6 +42,7 @@ public class PlayerScore : MonoBehaviour
     public void ResetScore()
     {
         SetFace();
+        newScore = 0;
         playerScoreValue = 0;
         UpdateScorePos();
     }
@@ -52,7 +54,7 @@ public class PlayerScore : MonoBehaviour
     public void SetScore(int _newValue)
     {
         SetFace();
-        playerScoreValue = Mathf.Clamp(_newValue, 0, 5);
+        newScore = Mathf.Clamp(_newValue, 0, 5);
         UpdateScorePos();
     }
 
@@ -62,9 +64,13 @@ public class PlayerScore : MonoBehaviour
     /// </summary>
     private void UpdateScorePos()
     {
-        playerFace.transform.DOMoveX(scorePos[playerScoreValue - 1].transform.position.x, 1f, false);
-        playerOutline.transform.DOMoveX(scorePos[playerScoreValue - 1].transform.position.x, 1f, false);
-        Invoke("Shake", 1f);
+        if (newScore != playerScoreValue)
+        {
+            playerScoreValue = newScore;
+            playerFace.transform.DOMoveX(scorePos[playerScoreValue - 1].transform.position.x, 1f, false);
+            playerOutline.transform.DOMoveX(scorePos[playerScoreValue - 1].transform.position.x, 1f, false);
+            Invoke("Shake", 1f);
+        }
     }
 
 
