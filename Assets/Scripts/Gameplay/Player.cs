@@ -72,12 +72,12 @@ public class Player : MonoBehaviour
             // Init player controls
             gameObject.GetComponent<PlayerControls>().Init();
 
+            // Add player to the PlayersManager
+            PlayersManager.Instance.AddPlayer(this);
+
             // Get a random skin at start -> TODO: Select skin
             skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
             ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
-
-            // Add player to the PlayersManager
-            PlayersManager.Instance.AddPlayer(this);
         }
         else
         {
@@ -134,6 +134,8 @@ public class Player : MonoBehaviour
         {
             Arms_SpriteRenderers[i].sprite = CharSkin.SpriteArm;
         }
+
+        //MenuManager.Instance.PlayerScores[PlayersManager.Instance.Players.IndexOf(this)].SetFace(this);
     }
 
 

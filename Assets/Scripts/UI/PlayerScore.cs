@@ -10,6 +10,7 @@ public class PlayerScore : MonoBehaviour
     [SerializeField] private GameObject playerFace;                                         // Reference to the player face GameObject
     [SerializeField] private GameObject playerOutline;
     [SerializeField] private List<GameObject> scorePos = new List<GameObject>();            // References to all score pos game objects
+    public Player Player;
 
     [Header("Variables")]
     private int playerScoreValue;      // Contains the current score value
@@ -25,10 +26,21 @@ public class PlayerScore : MonoBehaviour
 
 
     /// <summary>
+    ///     Set the skin of the player
+    /// </summary>
+    public void SetFace()
+    {
+        playerFace.GetComponent<Image>().sprite = Player.CharSkin.SpriteFace;
+        playerOutline.GetComponent<Image>().sprite = Player.CharSkin.SpriteFace;
+    }
+
+
+    /// <summary>
     ///     Reset the score and the score tokens to 0
     /// </summary>
     public void ResetScore()
     {
+        SetFace();
         playerScoreValue = 0;
         UpdateScorePos();
     }
@@ -39,6 +51,7 @@ public class PlayerScore : MonoBehaviour
     /// </summary>
     public void SetScore(int _newValue)
     {
+        SetFace();
         playerScoreValue = Mathf.Clamp(_newValue, 0, 5);
         UpdateScorePos();
     }

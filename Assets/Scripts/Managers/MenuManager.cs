@@ -228,6 +228,7 @@ public class MenuManager : MonoBehaviour
         UpdateLives();
         PlayerScores[_playerIndex].gameObject.SetActive(true);
         PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
+        PlayerScores[_playerIndex].Player = PlayersManager.Instance.Players[_playerIndex];
         PlayersManager.Instance.Players[_playerIndex].PlayerIndicator.GetComponent<SpriteRenderer>().color = PlayerColors[_playerIndex];
         PlayersManager.Instance.Players[_playerIndex].Outline_SpriteRenderer.color = PlayerColors[_playerIndex];
         PlayersUI[_playerIndex].AddPlayerUI(_playerIndex, PlayerColors[_playerIndex]);
