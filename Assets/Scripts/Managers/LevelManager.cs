@@ -60,13 +60,18 @@ public class LevelManager : MonoBehaviour
         // If the scene is not the lobby, we will only launch this scene
         if (SceneManager.GetActiveScene().buildIndex > 2)
         {
+            CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            
+            #if UNITY_EDITOR
             levelName = SceneManager.GetActiveScene().name;
+            #endif
+
             Invoke("Reset", 0.1f);
         }
         else
         {
             // Init scene index and spawn points
-            CurrentSceneIndex = 0;
+            CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         }
     }
 
@@ -246,7 +251,10 @@ public class LevelManager : MonoBehaviour
         Destroy(GameManager.Instance);
         Destroy(PlayersManager.Instance);
         Destroy(MenuManager.Instance);
-        Invoke("LoadLobbyLevel", 0.1f);
+        if (CurrentSceneIndex != 2)
+        {
+            Invoke("LoadLobbyLevel", 0.1f);
+        }
     }
 
     // #endregion

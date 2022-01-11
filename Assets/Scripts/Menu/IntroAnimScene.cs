@@ -5,13 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class IntroAnimScene : MonoBehaviour
 {
-    private void Awake()
-    {
-        Invoke("EndAnimIntro", 21) ;
-    }
+    public bool stopAnim = false;
+    public FMODUnity.StudioEventEmitter introSound;
 
-    public void EndAnimIntro()
+    private void Update()
     {
-        SceneManager.LoadScene(2);
+        if (stopAnim)
+        {
+            SceneManager.LoadScene(3);
+            introSound.Stop();
+            stopAnim = false;
+        }
     }
 }
