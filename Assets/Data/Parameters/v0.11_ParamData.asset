@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c177950889744f196ea1187d28a726, type: 3}
   m_Name: v0.11_ParamData
   m_EditorClassIdentifier: 
-  PARAM_Player_Lives: 2
+  PARAM_Player_Lives: 3
   PARAM_Player_Mass: 1
   PARAM_Player_GravityScale: 2.5
   PARAM_Player_LinearDrag: 0

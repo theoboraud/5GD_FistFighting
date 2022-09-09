@@ -9,7 +9,7 @@ public class PlayerUI : MonoBehaviour
     [Header("References")]
     //[SerializeField] private GameObject scoreText;                                          // Reference to the player score text game object (J1, J2...)
     //[SerializeField] private List<GameObject> scoreTokenFillers = new List<GameObject>();   // References to all token fillers game objects
-    [SerializeField] private GameObject GO_Heart;
+    [SerializeField] private List<GameObject> GO_Hearts = new List<GameObject>();
     [SerializeField] private GameObject GO_NbLives;
     [SerializeField] private Text nbLives;
     [SerializeField] private GameObject GO_Cross;
@@ -38,8 +38,10 @@ public class PlayerUI : MonoBehaviour
         if (LevelManager.Instance.CurrentSceneIndex > 0)
         {
             // Set the game objects visibility
-            GO_Heart.SetActive(true);
-            GO_NbLives.SetActive(true);
+            GO_Hearts[0].SetActive(true);
+            GO_Hearts[1].SetActive(true);
+            GO_Hearts[2].SetActive(true);
+            //GO_NbLives.SetActive(true);
             GO_Cross.SetActive(false);
 
             // Reset the number of lives
@@ -47,8 +49,10 @@ public class PlayerUI : MonoBehaviour
         }
         else
         {
-            GO_Heart.SetActive(false);
-            GO_NbLives.SetActive(false);
+            GO_Hearts[0].SetActive(false);
+            GO_Hearts[1].SetActive(false);
+            GO_Hearts[2].SetActive(false);
+            //GO_NbLives.SetActive(false);
             GO_Cross.SetActive(false);
         }
 
@@ -68,10 +72,28 @@ public class PlayerUI : MonoBehaviour
             if (_playerLives > 0)
             {
                 nbLives.text = _playerLives.ToString();
+                if (_playerLives == 3)
+                {
+                    SetHeart(GO_Hearts[0], true);
+                    SetHeart(GO_Hearts[1], true);
+                    SetHeart(GO_Hearts[2], true);
+                }
+                if (_playerLives == 2)
+                {
+                    SetHeart(GO_Hearts[0], true);
+                    SetHeart(GO_Hearts[1], true);
+                    SetHeart(GO_Hearts[2], false);
+                }
+                if (_playerLives == 1)
+                {
+                    SetHeart(GO_Hearts[0], true);
+                    SetHeart(GO_Hearts[1], false);
+                    SetHeart(GO_Hearts[2], false);
+                }
             }
             else
             {
-                nbLives.text = "";
+                //nbLives.text = "";
                 Eliminated();
             }
 
@@ -93,8 +115,31 @@ public class PlayerUI : MonoBehaviour
     /// </summary>
     public void Eliminated()
     {
-        GO_Heart.SetActive(false);
-        GO_NbLives.SetActive(false);
+        SetHeart(GO_Hearts[0], false);
+        SetHeart(GO_Hearts[1], false);
+        SetHeart(GO_Hearts[2], false);
+        //GO_NbLives.SetActive(false);
         GO_Cross.SetActive(true);
+    }
+
+    /// <summary>
+    ///     Change heart display
+    /// </summary>
+    public void SetHeart(GameObject heartGO, bool isAlive)
+    {
+        Image img = heartGO.GetComponent<Image>();
+
+        if (isAlive)
+        {
+            Color color = Color.white;
+            color.a = 1f;
+            img.color = color;
+        }
+        else
+        {
+            Color color = Color.black;
+            color.a = 0.3f;
+            img.color = color;
+        }
     }
 }
