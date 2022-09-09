@@ -77,8 +77,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ButtonReset()
     {
-        Deactivate();
-        LevelManager.Instance.Reset();
+        //Deactivate();
+        //LevelManager.Instance.Reset();
     }
 
 
