@@ -43,8 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a412d54ba774894aec3c285dda8470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  introSceneName: IntroAnim
+  lobbySceneName: Lobby_HUB_DA
+  outroSceneName: EndSequenAnim
+  playableSceneNames:
+  - LD_BattlefieldSlides
+  - LD_Deathball
+  - LD_Fatality
+  - LD_FatesCliff
+  - LD_FatesPits
+  - LD_Kiss_Picasso
+  - LD_PitArena
+  - LD_PitWell
