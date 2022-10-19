@@ -17,10 +17,10 @@ public class IntroAnimScene : MonoBehaviour
         leftMouseClick.Enable();
     }
 
-    private void EndIntro()
+    public void EndIntro()
     {
-        SceneManager.LoadScene(3);
         introSound.Stop();
         stopAnim = false;
+        SceneManager.LoadScene(2);
     }
 }
