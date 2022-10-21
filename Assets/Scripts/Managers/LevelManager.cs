@@ -27,6 +27,14 @@ public class LevelManager : MonoBehaviour
     [System.NonSerialized] public string CurrentSceneName;        // Name of the current scene
     private List<string> LevelsPlayed = new List<string>();
 
+    [System.Serializable]
+    public class GameModeLevel
+    {
+        public string modeName;
+        public List<string> levelNames = new List<string>();
+    }
+
+    public List<GameModeLevel> gameModeLevels = new List<GameModeLevel>();
     // TODO Implement level classes to load data ?
     //[System.NonSerialized] public List<LevelData> Levels;
     //[System.NonSerialized] public LevelData Level;

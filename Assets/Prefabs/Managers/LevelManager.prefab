@@ -55,3 +55,7 @@ MonoBehaviour:
   - LD_Kiss_Picasso
   - LD_PitArena
   - LD_PitWell
+  gameModeLevels:
+  - modeName: TeamVersusGameMode
+    levelNames:
+    - LD_SuceMaBite
