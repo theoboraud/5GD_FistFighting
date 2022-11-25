@@ -179,10 +179,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1814137963291488381, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: GameModes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1814137963291488381, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
       propertyPath: gameModes.Array.size
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1814137963291488381, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: GameModes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b1308e1fe0b77342a8a8d18f1015f12, type: 2}
+    m_RemovedComponents:
+    - {fileID: 3543040828677336589, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
 --- !u!4 &9580291 stripped
 Transform:

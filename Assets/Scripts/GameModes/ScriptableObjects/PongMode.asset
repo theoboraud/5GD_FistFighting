@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950fb09bd1b12294db54e04ebe12b879, type: 3}
+  m_Name: PongMode
+  m_EditorClassIdentifier: 
+  minNbPlayers: 0
+  maxNbPlayers: 0
+  levelName:
+  - LD_SuceMabite2
+  OnRoundEnd:
+    m_PersistentCalls:
+      m_Calls: []

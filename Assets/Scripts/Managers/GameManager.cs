@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     public ParamData ParamData;                                     // Game parameters customizable directly via the ParamData file
     public FeedbackManager Feedback;                                // Feedback manager reference, used to instantiate VFX and audio effects
 
-    [Header("Game Modes")]
-    public GameMode GameMode;
+    [Header("Game modes")]
+    public List<GameMode> GameModes = new List<GameMode>();
 
     [Header("Variables")]
     [System.NonSerialized] public List<int> PlayerScores = new List<int>();             // Score value of each player

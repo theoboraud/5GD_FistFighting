@@ -1,21 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class GameMode : MonoBehaviour
+public class GameMode : ScriptableObject
 {
-    private string modeName;
-    private string levelName;
+    [SerializeField]
+    protected int minNbPlayers;
+    [SerializeField]
+    protected int maxNbPlayers;
 
-    // Load level
-    public void LoadLevel()
+    [SerializeField]
+    protected List<string> levelName = new List<string>();
+
+    private List<string> loadedLevels = new List<string>();
+
+    [SerializeField]
+    protected UnityEvent OnRoundEnd;
+
+
+    // Returns the next level to load
+    public string GetNextLevel()
+    {
+        return "";
+    }
+
+    // Init game mode once the level has been loaded
+    public virtual void InitGameMode()
     {
 
     }
 
-    // Init game mode
-    public void InitGameMode()
+    // Check if the round should end
+    public virtual void OnPlayerDeath()
     {
-
+        /*if (PlayersManager.instance.Players.Count <= 1)
+        {
+            OnRoundEnd();
+        }*/
     }
 }
