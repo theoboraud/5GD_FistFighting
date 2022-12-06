@@ -4,13 +4,19 @@ using UnityEngine;
 using DG.Tweening;
 public class DeathBallController : MonoBehaviour
 {
+    [Tooltip("Death ball moving speed, from 0-1, if >=1, the ball will teleport to next position directly")] 
     public float MoveSpeed;
 
     private Transform deathBall;
     private Transform deathBallDestinations;
     private List<Transform> destinationsList;
 
+    private Vector3 startPosition;
     private int indexDestination;
+    private int lockDestinationIndex = 4; //Index for destination lock count, init for 4 (4 destination in use)
+    private float lerpScale = 0;
+
+    private bool canMove;
     private void Start()
     {
         init();
@@ -28,17 +34,34 @@ public class DeathBallController : MonoBehaviour
             _ballDestination.GetComponent<SpriteRenderer>().enabled = false;
         }
         indexDestination = 0;
+        startPosition = deathBall.position;
 
-        BallMove();
+        canMove = true;
     }
     private void BallMove()
     {
         deathBall.DOMove(destinationsList[indexDestination].position, MoveSpeed).SetEase(Ease.Linear).SetSpeedBased().OnComplete(ChangeDestination);
     }
 
+    private void Update()
+    {
+        if (canMove)
+        {
+            deathBall.position = Vector3.Lerp(startPosition, destinationsList[indexDestination].position,lerpScale);
+            lerpScale += MoveSpeed;
+
+            if (lerpScale>=1)
+            {
+                lerpScale = 0;
+                startPosition = destinationsList[indexDestination].position;
+                ChangeDestination();
+            }
+        }
+    }
+
     private void ChangeDestination()
     {
-        if (indexDestination < destinationsList.Count-1)
+        if (indexDestination < lockDestinationIndex-1)
         {
             indexDestination += 1;
         }
@@ -46,6 +69,10 @@ public class DeathBallController : MonoBehaviour
         {
             indexDestination = 0;
         }
-        BallMove();
-    }    
+    }
+    
+    public void UnlockDestinations()
+    {
+        lockDestinationIndex = destinationsList.Count;
+    }
 }
