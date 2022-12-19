@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public ParamData ParamData;                                     // Game parameters customizable directly via the ParamData file
     public FeedbackManager Feedback;                                // Feedback manager reference, used to instantiate VFX and audio effects
 
+    [Header("Game Modes")]
+    public GameMode GameMode;
+
     [Header("Variables")]
     [System.NonSerialized] public List<int> PlayerScores = new List<int>();             // Score value of each player
     [System.NonSerialized] public bool PlayerHasWon = false;                            // Whether or not a player has won
@@ -71,7 +74,7 @@ public class GameManager : MonoBehaviour
     public void NewGameRound()
     {
         // TODO: Implement loading screen...
-        if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.GetSceneIndex() == 0)
+        if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.IsIntroScene())
         {
             // Still in the first level
             PlayersManager.Instance.PlayersDeathOrder.Clear();
@@ -83,7 +86,6 @@ public class GameManager : MonoBehaviour
 
             // Change game state
             Invoke("SetStateToInPlay", 0.1f);
-
         }
     }
 
@@ -172,7 +174,7 @@ public class GameManager : MonoBehaviour
         }
 
         // TODO: Delete this, and implement a timer "3, 2, 1" when all players are ready to load a new level
-        if (LevelManager.Instance.GetSceneIndex() == 2)
+        if (LevelManager.Instance.IsLobbyScene())
         {
             for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
             {
