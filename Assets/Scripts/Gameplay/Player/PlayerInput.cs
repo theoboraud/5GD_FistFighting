@@ -8,14 +8,14 @@ using Enums;
 /// <summary>
 ///     Class used for player controls
 /// </summary>
-public class PlayerControls : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     // #region ============== CLASS VARIABLES ==============
 
     [Header("References")]
     public Player Player;                       // Player reference
     private RotateBehaviour Rotate;              // Player rotate reference
-    private PlayerInput playerInput;            // Player Input reference
+    private UnityEngine.InputSystem.PlayerInput playerInput;            // Player Input reference
     // All input action references
     private InputAction action_rotate;
 
@@ -34,7 +34,7 @@ public class PlayerControls : MonoBehaviour
 
         Rotate = gameObject.GetComponent<RotateBehaviour>();
 
-        playerInput = gameObject.GetComponent<PlayerInput>();
+        playerInput = gameObject.GetComponent<UnityEngine.InputSystem.PlayerInput>();
 
         // Assign each action to corresponding inputs
         //action_upArm = playerInput.actions["UpArm"];
@@ -56,11 +56,11 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.started)
         {
-            Player.PlayerArmController.HoldArm(0);
+            Player._armController.HoldArm(0);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player.PlayerArmController.ExtendArm(0);
+            Player._armController.ExtendArm(0);
         }
     }
 
@@ -68,11 +68,11 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.started)
         {
-            Player.PlayerArmController.HoldArm(1);
+            Player._armController.HoldArm(1);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player.PlayerArmController.ExtendArm(1);
+            Player._armController.ExtendArm(1);
         }
     }
 
@@ -80,11 +80,11 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.started)
         {
-            Player.PlayerArmController.HoldArm(2);
+            Player._armController.HoldArm(2);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player.PlayerArmController.ExtendArm(2);
+            Player._armController.ExtendArm(2);
         }
     }
 
@@ -92,11 +92,11 @@ public class PlayerControls : MonoBehaviour
     {
         if (_context.started)
         {
-            Player.PlayerArmController.HoldArm(3);
+            Player._armController.HoldArm(3);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player.PlayerArmController.ExtendArm(3);
+            Player._armController.ExtendArm(3);
         }
     }
 

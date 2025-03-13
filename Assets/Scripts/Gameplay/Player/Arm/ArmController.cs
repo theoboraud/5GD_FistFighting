@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerArmController : MonoBehaviour
+public class ArmController : MonoBehaviour
 {
     [SerializeField] private Player player;
     public List<ArmChecker> Arms = new List<ArmChecker>();
@@ -82,15 +82,15 @@ public class PlayerArmController : MonoBehaviour
                         //print("PlayersArmController: i is " + i.ToString());
                         //print(_arm.Players[i]);
 
-                        if (_arm.Players[i].PlayerArmController.ArmsGoingToHit.Count > 0)
+                        if (_arm.Players[i]._armController.ArmsGoingToHit.Count > 0)
                         {
-                            for (int j = 0; j < _arm.Players[i].PlayerArmController.ArmsGoingToHit.Count; j++)
+                            for (int j = 0; j < _arm.Players[i]._armController.ArmsGoingToHit.Count; j++)
                             {
 
                                 //print("PlayersArmController: j is " + j.ToString());
-                                //print(_arm.Players[i].PlayerArmController.ArmsGoingToHit[j]);
+                                //print(_arm.Players[i].ArmController.ArmsGoingToHit[j]);
 
-                                ArmChecker _armPlayerHit = _arm.Players[i].PlayerArmController.ArmsGoingToHit[j];
+                                ArmChecker _armPlayerHit = _arm.Players[i]._armController.ArmsGoingToHit[j];
 
                                 if (_armPlayerHit.Players.Contains(player))
                                 {
@@ -123,16 +123,16 @@ public class PlayerArmController : MonoBehaviour
     {
         if (_armPlayer1.Player.RB.linearVelocity.magnitude > _armPlayer2.Player.RB.linearVelocity.magnitude)
         {
-            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
         }
         else if (_armPlayer2.Player.RB.linearVelocity.magnitude > _armPlayer1.Player.RB.linearVelocity.magnitude)
         {
-            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
         }
         else if (_armPlayer2.Player.RB.linearVelocity.magnitude == _armPlayer1.Player.RB.linearVelocity.magnitude)
         {
-            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
-            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
+            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
         }
     }
 
@@ -179,16 +179,16 @@ public class PlayerArmController : MonoBehaviour
 
         if (player1Points > player2Points)
         {
-            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
+            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
         }
         else if (player1Points == player2Points)
         {
-            _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
-            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
+            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
         }
         else if (player2Points>player1Points)
         {
-            _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
+            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
         }
     }
 

@@ -94,7 +94,7 @@ public class PlayersManager : MonoBehaviour
             // Set action map on Gameplay if player is spawning InPlay
             if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
             {
-                _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
+                _player.GetComponent<UnityEngine.InputSystem.PlayerInput>().SwitchCurrentActionMap("Gameplay");
             }
 
             // Set the layer of the player
@@ -147,11 +147,7 @@ public class PlayersManager : MonoBehaviour
             PlayersAlive.Add(_player);
         }
         PlayersSpawned.Add(_player);
-
-        if (PlayersLives[Players.IndexOf(_player)] < GameManager.Instance.ParamData.PARAM_Player_Lives)
-        {
-            _player.InvincibilityForSeconds(2f);
-        }
+        
     }
 
 
@@ -249,7 +245,7 @@ public class PlayersManager : MonoBehaviour
         {
             for (int i = 0; i < Players.Count; i++)
             {
-                Players[i].GetComponent<PlayerInput>().SwitchCurrentActionMap(_newMode);
+                Players[i].GetComponent<UnityEngine.InputSystem.PlayerInput>().SwitchCurrentActionMap(_newMode);
             }
         }
         else

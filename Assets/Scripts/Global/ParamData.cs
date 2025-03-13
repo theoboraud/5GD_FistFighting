@@ -29,6 +29,7 @@ public class ParamData : ScriptableObject
     public float PARAM_Player_LinearDrag;
     public float PARAM_Player_AngularDrag;
     public float PARAM_Player_StunRecoveryTime;
+    public float PLAYER_INVINCIBILITY = 2;
 
     // #endregion
 

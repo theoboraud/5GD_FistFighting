@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FeedbackFaceControler : MonoBehaviour
+public class FeedbackFaceController : MonoBehaviour
 {
     public bool CanShake = true;
     private bool IsShaking = false;

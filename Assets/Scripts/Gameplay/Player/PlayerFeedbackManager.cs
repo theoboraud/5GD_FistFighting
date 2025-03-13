@@ -1,19 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
+using Enums;
 using UnityEngine;
 
 public class PlayerFeedbackManager : MonoBehaviour
 {
-    [SerializeField] Player player;
+    private Player _player;
+    private PlayerController _playerController;
+    private PlayerStates _playerStates;
+    
     [SerializeField] SpriteRenderer InvincibleVFX;
     [SerializeField] SpriteRenderer StunAccumulation;
     [SerializeField] ParticleSystem StunAccumulationParticles;
     [SerializeField] SpriteRenderer AvatarFace;
     [SerializeField] GameObject Plasters;
     [SerializeField] PlayerVoiceController VoiceController;
+    public FeedbackFaceController FaceController;
     public Player LastPlayerHit;
 
     private float StunAlpha;
+
+    private void OnEnable()
+    {
+	    _player = GetComponent<Player>();
+	    _playerController = GetComponent<PlayerController>();
+	    _playerStates = GetComponent<PlayerStates>();
+
+	    InitCallBacks();
+    }
+
+    private void OnDisable()
+    {
+	    RemoveCallBacks();
+    }
+
+    private void InitCallBacks()
+    {
+	    _player.onKilled += KilledFeedback;
+	    _playerController.onCollisionEnter += CollisionFeedback;
+	    _playerController.onAir += IsInAir;
+    }
+
+    private void RemoveCallBacks()
+    {
+	    _player.onKilled -= KilledFeedback;
+	    _playerController.onCollisionEnter -= CollisionFeedback;
+	    _playerController.onAir -= IsInAir;
+    }
 
     private void Start()
     {
@@ -44,13 +79,13 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     public void StartStunFeedback()
     {
-        AvatarFace.sprite = player.CharSkin.StunSprite;
+        AvatarFace.sprite = _player.CharSkin.StunSprite;
         VoiceController.PlayHurt();
     }
 
     public void EndStunFeedback()
     {
-        AvatarFace.sprite = player.CharSkin.SpriteFace;
+        AvatarFace.sprite = _player.CharSkin.SpriteFace;
     }
 
     public void UpdateStunFeedback(int stat)
@@ -79,5 +114,25 @@ public class PlayerFeedbackManager : MonoBehaviour
             else if (col.a >= 1) i = -1;
             yield return null;
         }
+    }
+
+    private void KilledFeedback()
+    {
+	    GameManager.Instance.Feedback.ShakeCamera(0.5f, 0.7f);
+	    GameManager.Instance.Feedback.SpawnExpulsionVFX(this.transform.position);
+    }
+
+    private void CollisionFeedback()
+    {
+	    if(_playerStates.playerPhysicState == PlayerPhysicState.OnGround && FaceController.CanShake)
+	    {
+		    FaceController.ShakeFace();
+		    FaceController.CanShake = false;
+	    }
+    }
+
+    private void IsInAir()
+    {
+	    FaceController.CanShake = true;
     }
 }

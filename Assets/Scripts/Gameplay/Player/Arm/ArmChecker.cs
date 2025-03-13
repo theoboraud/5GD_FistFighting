@@ -92,7 +92,7 @@ public class ArmChecker : MonoBehaviour
             FrameStack -= 1;
             if (FrameStack == 0)
             {
-                Player.PlayerArmController.ExtendedArm(Player.PlayerArmController.Arms.IndexOf(this));
+                Player._armController.ExtendedArm(Player._armController.Arms.IndexOf(this));
             }
         }
     }
