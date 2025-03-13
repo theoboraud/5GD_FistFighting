@@ -45,7 +45,7 @@ public class DashBehaviour : MonoBehaviour
     {
         if(isDashing)
         {
-            RB.velocity = dashDirection * CONSTANT_dashSpeed;
+            RB.linearVelocity = dashDirection * CONSTANT_dashSpeed;
         }
     }
 
@@ -96,7 +96,7 @@ public class DashBehaviour : MonoBehaviour
 
         isDashing = false;
         RB.gravityScale = _gravity;
-        RB.velocity = dashDirection * CONSTANT_endOfDashSpeed;
+        RB.linearVelocity = dashDirection * CONSTANT_endOfDashSpeed;
         dashDirection = Vector2.zero;
 
         // Call the cooldown coroutine

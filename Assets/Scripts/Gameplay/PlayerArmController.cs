@@ -121,15 +121,15 @@ public class PlayerArmController : MonoBehaviour
     /// </summary>
     public void ComparePlayersVelocity(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
     {
-        if (_armPlayer1.Player.RB.velocity.magnitude > _armPlayer2.Player.RB.velocity.magnitude)
+        if (_armPlayer1.Player.RB.linearVelocity.magnitude > _armPlayer2.Player.RB.linearVelocity.magnitude)
         {
             _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
         }
-        else if (_armPlayer2.Player.RB.velocity.magnitude > _armPlayer1.Player.RB.velocity.magnitude)
+        else if (_armPlayer2.Player.RB.linearVelocity.magnitude > _armPlayer1.Player.RB.linearVelocity.magnitude)
         {
             _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
         }
-        else if (_armPlayer2.Player.RB.velocity.magnitude == _armPlayer1.Player.RB.velocity.magnitude)
+        else if (_armPlayer2.Player.RB.linearVelocity.magnitude == _armPlayer1.Player.RB.linearVelocity.magnitude)
         {
             _armPlayer2.Player.PlayerArmController.ExtendedArm(_armPlayer2.Player.PlayerArmController.Arms.IndexOf(_armPlayer2));
             _armPlayer1.Player.PlayerArmController.ExtendedArm(_armPlayer1.Player.PlayerArmController.Arms.IndexOf(_armPlayer1));
@@ -150,11 +150,11 @@ public class PlayerArmController : MonoBehaviour
             player2Points += GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK;
         }
 
-        if (_armPlayer1.Player.RB.velocity.magnitude > _armPlayer2.Player.RB.velocity.magnitude)
+        if (_armPlayer1.Player.RB.linearVelocity.magnitude > _armPlayer2.Player.RB.linearVelocity.magnitude)
         {
             player1Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
         }
-        else if (_armPlayer1.Player.RB.velocity.magnitude < _armPlayer2.Player.RB.velocity.magnitude)
+        else if (_armPlayer1.Player.RB.linearVelocity.magnitude < _armPlayer2.Player.RB.linearVelocity.magnitude)
         {
             player2Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
         }
@@ -201,7 +201,7 @@ public class PlayerArmController : MonoBehaviour
         {
             player1Points += 1;
         }
-        if (_armPlayer1.Player.RB.velocity.magnitude > 0.2f)
+        if (_armPlayer1.Player.RB.linearVelocity.magnitude > 0.2f)
         {
             player1Points += 1;
         }
@@ -284,7 +284,7 @@ public class PlayerArmController : MonoBehaviour
     {
         player.AirPushFactor = 1f;
 
-        player.RB.velocity = Vector2.zero;
+        player.RB.linearVelocity = Vector2.zero;
         player.RB.angularVelocity = 0;
 
         player.RB.AddForce
@@ -324,7 +324,7 @@ public class PlayerArmController : MonoBehaviour
         // Only reset the velocity if the player can jump
         else
         {
-            player.RB.velocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+            player.RB.linearVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
             player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
         }
 
@@ -373,7 +373,7 @@ public class PlayerArmController : MonoBehaviour
 
         foreach (var item in Arms[_armIndex].Players)
         {
-            item.RB.velocity = Vector2.zero;
+            item.RB.linearVelocity = Vector2.zero;
             item.RB.angularVelocity = 0;
             item.RB.AddForce
                 (-Arms[_armIndex].transform.up *

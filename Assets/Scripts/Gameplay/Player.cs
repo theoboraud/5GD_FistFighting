@@ -116,8 +116,8 @@ public class Player : MonoBehaviour
     {
         RB.mass = GameManager.Instance.ParamData.PARAM_Player_Mass;
         RB.gravityScale = GameManager.Instance.ParamData.PARAM_Player_GravityScale;
-        RB.drag = GameManager.Instance.ParamData.PARAM_Player_LinearDrag;
-        RB.angularDrag = GameManager.Instance.ParamData.PARAM_Player_AngularDrag;
+        RB.linearDamping = GameManager.Instance.ParamData.PARAM_Player_LinearDrag;
+        RB.angularDamping = GameManager.Instance.ParamData.PARAM_Player_AngularDrag;
         StunRecoveryTime = GameManager.Instance.ParamData.PARAM_Player_StunRecoveryTime;
     }
 
@@ -199,7 +199,7 @@ public class Player : MonoBehaviour
         this.transform.position = _targetPos;
         // Reset rotation and velocity
         this.transform.rotation = Quaternion.identity;
-        RB.velocity = new Vector2(0f, 0f);
+        RB.linearVelocity = new Vector2(0f, 0f);
 
         RB.simulated = true;
         PlayerGameState = PlayerGameState.Alive;
@@ -245,7 +245,7 @@ public class Player : MonoBehaviour
             this.transform.position = new Vector3(1000, 1000, 0);
 
             RB.simulated = false;
-            RB.velocity = Vector3.zero;
+            RB.linearVelocity = Vector3.zero;
             RB.angularVelocity = 0f;
 
             IsReadyUI(false);
