@@ -10,4 +10,20 @@ public enum GameEvent
     //SpawnPoints
     OnSpawnPointsInit,
 
+    //Player
+    OnHit,
+    OnPlayerInit,
+    OnPlayerKilled,
+    OnPlayerSpawn,
+    OnPlayerHit,
+    OnInvinciblityStart,
+    OnInvinciblityStop,
+
+    //PlayerController
+    OnStunStart,
+    OnStunStop,
+    OnPlayerCollisionEnter,
+    OnGround,
+    OnAir,
+
 }

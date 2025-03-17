@@ -15,12 +15,12 @@ public class Player : MonoBehaviour
 {
 	#region EVENTS
 
-	public event CallBack onInit;
-	public event CallBack onSpawn;
-	public event CallBack onHit;
-	public event CallBack onKilled;
-	public event CallBack onInvincibilityStart;
-	public event CallBack onInvincibilityStop;
+	//public event CallBack onInit;
+	//public event CallBack onSpawn;
+	//public event CallBack onHit;
+	//public event CallBack onKilled;
+	//public event CallBack onInvincibilityStart;
+	//public event CallBack onInvincibilityStop;
 	
 	#endregion
 
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 	    _playerController = GetComponent<PlayerController>();
 	    _playerData = GetComponent<PlayerData>();
 
-	    onInit?.Invoke();
+        EventCenter.Invoke(GameEvent.OnPlayerInit);
 	    
         if (PlayersManager.Instance.Players.Count < 4)
         {
@@ -159,20 +159,20 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Spawn(Vector3 _targetPos)
     {
-	    onSpawn?.Invoke();
+        EventCenter.Invoke(GameEvent.OnPlayerSpawn);
         Face_SpriteRenderer.enabled = true;
         this.transform.position = _targetPos;
 
         if (_playerData.nbDeath > 0)
         {
-	        onInvincibilityStart?.Invoke();
+            EventCenter.Invoke(GameEvent.OnInvinciblityStart);
 	        Invoke(nameof(StopInvincibility), GlobalSettings.PlayerInvincibility);
         }
     }
 
     private void StopInvincibility()
     {
-	    onInvincibilityStop?.Invoke();
+        EventCenter.Invoke(GameEvent.OnInvinciblityStop);
     }
 
 
@@ -183,8 +183,8 @@ public class Player : MonoBehaviour
     {
         if (PlayersManager.Instance.PlayersAlive.Contains(this))
         {
-	        onKilled?.Invoke();
-	        
+            EventCenter.Invoke(GameEvent.OnPlayerKilled);
+
             Face_SpriteRenderer.enabled = false;
             this.transform.position = new Vector3(1000, 1000, 0);
 
@@ -203,10 +203,8 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Hit()
     {
-	    onHit?.Invoke();
+        EventCenter.Invoke(GameEvent.OnPlayerHit);
     }
-
-
     
 
 

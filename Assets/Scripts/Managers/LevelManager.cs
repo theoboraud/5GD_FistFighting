@@ -166,8 +166,6 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(_sceneName);
 
-        InitSpawnPoints();
-
         if (playableSceneNames.Contains(_sceneName))
         {
             EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Playable);

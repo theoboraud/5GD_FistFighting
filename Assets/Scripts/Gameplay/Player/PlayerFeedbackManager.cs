@@ -38,16 +38,17 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void InitCallBacks()
     {
-	    _player.onKilled += KilledFeedback;
-	    _playerController.onCollisionEnter += CollisionFeedback;
-	    _playerController.onAir += IsInAir;
+        EventCenter.Subscribe(GameEvent.OnPlayerKilled, KilledFeedback);
+        EventCenter.Subscribe(GameEvent.OnPlayerCollisionEnter, CollisionFeedback);
+        EventCenter.Subscribe(GameEvent.OnAir, IsInAir);
+
     }
 
     private void RemoveCallBacks()
     {
-	    _player.onKilled -= KilledFeedback;
-	    _playerController.onCollisionEnter -= CollisionFeedback;
-	    _playerController.onAir -= IsInAir;
+        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, KilledFeedback);
+        EventCenter.Unsubscribe(GameEvent.OnPlayerCollisionEnter, CollisionFeedback);
+        EventCenter.Unsubscribe(GameEvent.OnAir, IsInAir);
     }
 
     private void Start()

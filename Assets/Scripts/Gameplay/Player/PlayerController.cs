@@ -6,13 +6,13 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
 	#region EVENTS
-	
-	public event CallBack onStunStart;
-	public event CallBack onStunStop;
-	public event CallBack onCollisionEnter;
-	public event CallBack onGround;
-	public event CallBack onAir;
-	
+
+	//public event CallBack onStunStart;
+	//public event CallBack onStunStop;
+	//public event CallBack onCollisionEnter;
+	//public event CallBack onGround;
+	//public event CallBack onAir;
+
 	#endregion
 	[Header("References")]
 	private Rigidbody2D _rb;       // Player rigidbody ref
@@ -67,19 +67,19 @@ public class PlayerController : MonoBehaviour
 
 	private void InitCallBacks()
 	{
-		_player.onInit += Init;
-		_player.onSpawn += Spawn;
-		_player.onHit += Hit;
-		_player.onKilled += Kill;
+		EventCenter.Subscribe(GameEvent.OnPlayerInit, Init);
+        EventCenter.Subscribe(GameEvent.OnPlayerSpawn, Spawn);
+		EventCenter.Subscribe(GameEvent.OnPlayerHit, Hit);
+        EventCenter.Subscribe(GameEvent.OnPlayerKilled, Kill);
 	}
 
 	private void RemoveCallBacks()
 	{
-		_player.onInit -= Init;
-		_player.onSpawn -= Spawn;
-		_player.onHit -= Hit;
-		_player.onKilled -= Kill;
-	}
+        EventCenter.Unsubscribe(GameEvent.OnPlayerInit, Init);
+        EventCenter.Unsubscribe(GameEvent.OnPlayerSpawn, Spawn);
+        EventCenter.Unsubscribe(GameEvent.OnPlayerHit, Hit);
+        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, Kill);
+    }
 
 	private void Spawn()
 	{
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 			GameManager.Instance.EndOfRound(_player);
 		}
 
-		onCollisionEnter?.Invoke();
+		EventCenter.Invoke(GameEvent.OnPlayerCollisionEnter);
 	}
 	
 	/// <summary>
@@ -159,12 +159,12 @@ public class PlayerController : MonoBehaviour
 		{
 			if (IsGrounded())
 			{
-				onGround?.Invoke();
+				EventCenter.Invoke(GameEvent.OnGround);
 				AirPushFactor = 1f;
 			}
 			else
 			{
-				onAir?.Invoke();
+                EventCenter.Invoke(GameEvent.OnAir);
 			}
 		}
 	}
