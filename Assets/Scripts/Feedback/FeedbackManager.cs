@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Global Feedback Manager, handle all clobal feedback
+/// ??We have to separate these VFX functions for single players to there own PlayerFeedbackManager//TODO
+/// </summary>
 public class FeedbackManager : MonoBehaviour
 {
     [Header("References")]
@@ -15,6 +19,29 @@ public class FeedbackManager : MonoBehaviour
 
     [Header("Variables")]
     private List<GameObject> allVFX = new List<GameObject>();
+
+    public void OnEnable()
+    {
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+
+    private void SubsribeEvents()
+    {
+        EventCenter.Subscribe(GameEvent.OnNewGameRound, ResetAllVFX);
+        EventCenter.Subscribe(GameEvent.OnGameReset, ResetAllVFX);
+        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+    }
+
+    private void UnsribeEvents()
+    {
+        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, ResetAllVFX);
+        EventCenter.Unsubscribe(GameEvent.OnGameReset, ResetAllVFX);
+        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+    }
 
     public void ResetAllVFX()
     {
@@ -73,8 +100,16 @@ public class FeedbackManager : MonoBehaviour
 
     public void ShakeCamera(float duration, float amount)
     {
-        SimpleCameraShake SCS = FindObjectOfType<SimpleCameraShake>();
+        SimpleCameraShake SCS = FindFirstObjectByType<SimpleCameraShake>();
         SCS.shakeAmount = amount;
         SCS.shakeDuration = duration;
+    }
+
+    private void OnSceneLoad(GameScene _scene)
+    {
+        if (_scene == GameScene.Outro)
+        {
+            ResetAllVFX();
+        }
     }
 }

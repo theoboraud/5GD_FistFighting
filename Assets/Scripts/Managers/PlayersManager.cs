@@ -62,6 +62,28 @@ public class PlayersManager : MonoBehaviour
         ResetPlayersLives(1);
     }
 
+    public void OnEnable()
+    {
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+    private void SubsribeEvents()
+    {
+        EventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        EventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+    }
+
+    private void UnsribeEvents()
+    {
+        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        EventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+    }
+
     // #endregion
 
 
@@ -139,7 +161,7 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer(Player _player)
     {
-        _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].transform.position);
+        _player.Spawn(LevelManager.Instance.SpawnPoints[Players.IndexOf(_player)].position);
 
         // Add the player to PlayersAlive references in PlayerManager
         if (!PlayersAlive.Contains(_player))
@@ -271,5 +293,22 @@ public class PlayersManager : MonoBehaviour
         PlayersDeathOrder.Clear();
     }
 
+    //Call when game manager start a NEW GAME ROUND
+    private void OnNewGameRound()
+    {
+        PlayersDeathOrder.Clear();
+    }
+
+    private void OnSceneLoad(GameScene _scene)
+    {
+        if (_scene == GameScene.Playable)
+        {
+            ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
+        }
+        else if(_scene == GameScene.Lobby)
+        {
+            ResetPlayersLives(1);
+        }
+    }
     // #endregion
 }

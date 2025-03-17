@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Enums;
 
+public enum GameScene
+{
+    Lobby,
+    Playable,
+    Intro,
+    Outro,
+}
+
 /// <summary>
 ///     Class used as a level reference : contains the different spawn points, number of spawned player, scene index...
 ///     Also used to load and end levels and scenes, spawn players, etc...
@@ -22,7 +30,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<string> playableSceneNames = new List<string>();
 
     [Header("Variables")]
-    [System.NonSerialized] public List<GameObject> SpawnPoints;     // Current level spawn points
+    [System.NonSerialized] public List<Transform> SpawnPoints;     // Current level spawn points
     [System.NonSerialized] public int CurrentSceneIndex = 0;        // Index of the current scene (in Build Settings)
     [System.NonSerialized] public string CurrentSceneName;        // Name of the current scene
     private List<string> LevelsPlayed = new List<string>();
@@ -86,31 +94,41 @@ public class LevelManager : MonoBehaviour
             // Init scene index and spawn points
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         CurrentSceneName = SceneManager.GetActiveScene().name;
+
     }
 
+    public void OnEnable()
+    {
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+
+    private void SubsribeEvents()
+    {
+        EventCenter.Subscribe(GameEvent.OnNewGameRound,LoadNextLevel) ;
+        EventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        EventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
+    }
+
+    private void UnsribeEvents()
+    {
+        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, LoadNextLevel);
+        EventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        EventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
+    }
     // #endregion
-
-
 
     // #region ==================== LEVEL FUNCTIONS ====================
 
     /// <summary>
     ///     Init current level spawn points by loading them
     /// </summary>
-    public void InitSpawnPoints()
+    public void InitSpawnPoints(List<Transform> _spawnPoints)
     {
-        SpawnPoints = new List<GameObject>();
-        GameObject _GO_SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints")[0];
-
-        foreach (Transform _child in _GO_SpawnPoints.transform)
-        {
-            SpawnPoints.Add(_child.gameObject);
-        }
-
-        if (MenuManager.Instance != null)
-        {
-            MenuManager.Instance.InitSpawnTimerPos();
-        }
+        SpawnPoints = _spawnPoints;
     }
 
 
@@ -147,18 +165,29 @@ public class LevelManager : MonoBehaviour
     public void LoadScene(string _sceneName)
     {
         SceneManager.LoadScene(_sceneName);
-        //CurrentSceneIndex = _levelIndex;
-        CurrentSceneName = _sceneName;
 
-        if (MenuManager.Instance != null)
+        InitSpawnPoints();
+
+        if (playableSceneNames.Contains(_sceneName))
         {
-            if (playableSceneNames.Contains(_sceneName))
-            {
-                MenuManager.Instance.StartTimer();
-            }
+            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Playable);
+        }
+        else if(_sceneName == lobbySceneName)
+        {
+            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Lobby);
+        }
+        else if (_sceneName == introSceneName)
+        {
+            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Intro);
+
+        }
+        else if(_sceneName == outroSceneName)
+        {
+            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Outro);
         }
 
-        MenuManager.Instance.NewGameRound();
+            //CurrentSceneIndex = _levelIndex;
+            CurrentSceneName = _sceneName;
     }
 
 
@@ -176,12 +205,6 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadLobbyLevel()
     {
-        // Players only have 1 life in the lobby
-        if (PlayersManager.Instance != null)
-        {
-            PlayersManager.Instance.ResetPlayersLives(1);
-        }
-
         LoadScene(lobbySceneName);
     }
 
@@ -192,19 +215,7 @@ public class LevelManager : MonoBehaviour
     public void LoadOutroScene()
     {
         LoadScene(outroSceneName);
-        AudioManager.Instance.StopMusic();
-        GameManager.Instance.Feedback.ResetAllVFX();
-
-        Invoke("OutroGameState", 0.1f);
     }
-
-
-    private void OutroGameState()
-    {
-        MenuManager.Instance.ScoreScreen.SetActive(false);
-        GameManager.Instance.GlobalGameState = GlobalGameState.Outro;
-    }
-
 
     /// <summary>
     ///     Load a random level from Build Settings, except the first one
@@ -220,7 +231,6 @@ public class LevelManager : MonoBehaviour
 
         LoadScene(_randomScene);
     }
-
 
     /// <summary>
     ///     Load the next level of the list, except the first one
@@ -251,47 +261,24 @@ public class LevelManager : MonoBehaviour
                     _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
                 }
             }
-
-            PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
-
-            if (playableSceneNames.Contains(CurrentSceneName)) AudioManager.Instance.ChangeParam(2);
-            else if (CurrentSceneName == lobbySceneName) AudioManager.Instance.ChangeParam(1);
-            else AudioManager.Instance.ChangeParam(0);
             LoadScene(_nextScene);
         }
         else
         {
-            PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
+            //PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
 
-            SceneManager.LoadScene(CurrentSceneName);
+            //SceneManager.LoadScene(CurrentSceneName);
 
-            CurrentSceneIndex = SceneManager.sceneCountInBuildSettings;
+            //CurrentSceneIndex = SceneManager.sceneCountInBuildSettings;
 
-            MenuManager.Instance.StartTimer();
+            //MenuManager.Instance.StartTimer();
 
-            MenuManager.Instance.NewGameRound();
+            //MenuManager.Instance.ResetPlayersUI();
         }
     }
 
-
     public void Reset()
     {
-        MenuManager.Instance.Reset();
-        AudioManager.Instance.StopMusic();
-        AudioManager.Instance.StopWinSound();
-
-        GameManager.Instance.Feedback.ResetAllVFX();
-
-        AudioManager.Instance.StopMusic();
-        Destroy(AudioManager.Instance);
-
-        GameManager.Instance.GlobalGameState = GlobalGameState.InPlay;
-
-        PlayersManager.Instance.Reset();
-
-        Destroy(GameManager.Instance);
-        Destroy(PlayersManager.Instance);
-        Destroy(MenuManager.Instance);
         if (CurrentSceneName != lobbySceneName)
         {
             Invoke("LoadLobbyLevel", 0.1f);

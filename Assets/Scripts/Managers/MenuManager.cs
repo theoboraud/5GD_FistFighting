@@ -59,19 +59,34 @@ public class MenuManager : MonoBehaviour
     public void Init()
     {
         // Init the active menu as the main menu
-        InitMenu();
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    private void InitMenu()
-    {
-        //DeactivateAllMenu();
         MainMenu.Activate();
     }
 
+
+    public void OnEnable()
+    {
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+
+    private void SubsribeEvents()
+    {
+        EventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        EventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        EventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
+    }
+
+    private void UnsribeEvents()
+    {
+        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        EventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        EventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
+    }
 
     /// <summary>
     ///
@@ -131,11 +146,11 @@ public class MenuManager : MonoBehaviour
     /// <summary>
     ///
     /// </summary>
-    public void InitSpawnTimerPos()
+    public void InitSpawnTimerPos(List<Transform> _spawnPoints)
     {
         for (int i = 0; i < UI_SpawningTimers.Count; i++)
         {
-            Vector3 _screenPos = Camera.main.WorldToScreenPoint(LevelManager.Instance.SpawnPoints[i].transform.position);
+            Vector3 _screenPos = Camera.main.WorldToScreenPoint(_spawnPoints[i].position);
             UI_SpawningTimers[i].GetComponent<RectTransform>().position = _screenPos;
         }
     }
@@ -292,11 +307,33 @@ public class MenuManager : MonoBehaviour
         Destroy(UI_StartingTimer);
     }
 
-    public void NewGameRound()
+    /// <summary>
+    /// ??It have not be here //TODO
+    /// </summary>
+    public void ResetPlayersUI()
     {
         for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
         {
             PlayersUI[i].Init();
         }
     }
+
+    private void OnNewGameRound()
+    {
+        PrintScoreScreen(false);
+    }
+
+    private void OnSceneLoad(GameScene _scene)
+    {
+        ResetPlayersUI();
+        if (_scene == GameScene.Playable)
+        {
+            StartTimer();
+        }
+        else if(_scene == GameScene.Outro)
+        {
+            ScoreScreen.SetActive(false);
+        }
+    }
+
 }

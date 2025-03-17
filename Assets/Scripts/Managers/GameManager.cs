@@ -28,6 +28,13 @@ public class GameManager : MonoBehaviour
     // #endregion
 
 
+    // #region ==================== Events ========================
+    //GameEvent.OnNewGameRound
+    //GameEvent.OnGameReset
+
+
+
+    //#endregion
 
     // #region ==================== UNITY FUNCTIONS ====================
 
@@ -62,6 +69,25 @@ public class GameManager : MonoBehaviour
         PlayersManager.Instance.Init();
     }
 
+    public void OnEnable()
+    {
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+
+    private void SubsribeEvents()
+    {
+        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
+    }
+
+    private void UnsribeEvents()
+    {
+        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
+    }
+
     // #endregion
 
 
@@ -76,19 +102,11 @@ public class GameManager : MonoBehaviour
         // TODO: Implement loading screen...
         if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.IsIntroScene())
         {
-            // Still in the first level
-            PlayersManager.Instance.PlayersDeathOrder.Clear();
-            Feedback.ResetAllVFX();
-            MenuManager.Instance.PrintScoreScreen(false);
-
-            // Load the new level
-            LevelManager.Instance.LoadNextLevel();
-
+            EventCenter.Invoke(GameEvent.OnNewGameRound);
             // Change game state
             Invoke("SetStateToInPlay", 0.1f);
         }
     }
-
 
     public void ScoreScreen()
     {
@@ -137,7 +155,7 @@ public class GameManager : MonoBehaviour
                 PlayersManager.Instance.PlayersAlive[i].Kill();
             }
 
-            Invoke("NewGameRound", 0.1f);
+            Invoke("ResetPlayersUI", 0.1f);
         }
     }
 
@@ -191,9 +209,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
-        LevelManager.Instance.Reset();
+        EventCenter.Invoke(GameEvent.OnGameReset);
+        GlobalGameState = GlobalGameState.InPlay;
     }
-
 
     /// <summary>
     ///     Quit the game application
@@ -205,7 +223,6 @@ public class GameManager : MonoBehaviour
         #endif
         Application.Quit();
     }
-
 
     public void PlayMode()
     {
@@ -220,5 +237,12 @@ public class GameManager : MonoBehaviour
         PlayersManager.Instance.ChangeMode("Menu");
     }
 
+    private void OnSceneLoad(GameScene _scene)
+    {
+        if (_scene == GameScene.Outro)
+        {
+            GlobalGameState = GlobalGameState.Outro;
+        }
+    }
     // #endregion
 }

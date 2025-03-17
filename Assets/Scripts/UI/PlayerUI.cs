@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Enums;
 
+/// <summary>
+/// UI of player, show player's lives
+/// ??We have to separate players UI under control of their own player's class//TODO
+/// </summary>
+
 public class PlayerUI : MonoBehaviour
 {
     [Header("References")]

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class SpawnPoints : MonoBehaviour
 {
-    private void Awake()
+    private void OnEnable()
     {
-        if (LevelManager.Instance != null)
+        List<Transform> SpawnPoints = new List<Transform>();
+
+        foreach (Transform _child in transform)
         {
-            LevelManager.Instance.InitSpawnPoints();
+            SpawnPoints.Add(_child);
         }
+
+        EventCenter.Invoke<List<Transform>>(GameEvent.OnSpawnPointsInit, SpawnPoints);
     }
 }

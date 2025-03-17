@@ -27,6 +27,27 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+
+    private void SubsribeEvents()
+    {
+        EventCenter.Subscribe(GameEvent.OnGameReset, StopMusic);
+        EventCenter.Subscribe(GameEvent.OnGameReset, StopWinSound);
+    }
+
+    private void UnsribeEvents()
+    {
+        EventCenter.Unsubscribe(GameEvent.OnGameReset, StopMusic);
+        EventCenter.Unsubscribe(GameEvent.OnGameReset, StopWinSound);
+    }
+
     public void PlayMusic()
     {
         musicRef.Play();
@@ -56,5 +77,26 @@ public class AudioManager : MonoBehaviour
     public void PlayTrack(string eventPath, Vector3 position)
     {
         FMODUnity.RuntimeManager.PlayOneShot(eventPath, position);
+    }
+
+    private void OnSceneLoad(GameScene _scene)
+    {
+        switch (_scene)
+        {
+            case GameScene.Lobby:
+                ChangeParam(1);
+                break;
+            case GameScene.Playable:
+                ChangeParam(2);
+                break;
+            case GameScene.Intro:
+                break;
+            case GameScene.Outro:
+                StopMusic();
+                break;
+            default:
+                ChangeParam(0);
+                break;
+        }
     }
 }
