@@ -1,3 +1,6 @@
+/// <summary>
+/// Global Game Events
+/// </summary>
 public enum GameEvent
 {
     //GameManager
@@ -9,7 +12,13 @@ public enum GameEvent
 
     //SpawnPoints
     OnSpawnPointsInit,
+}
 
+/// <summary>
+/// Local Events for player
+/// </summary>
+public enum PlayerEvent
+{
     //Player
     OnHit,
     OnPlayerInit,
@@ -26,4 +35,8 @@ public enum GameEvent
     OnGround,
     OnAir,
 
+    //PlayerState
+    OnGameStateChange,
+    OnPhysicStateChange,
+    OnRotateStateChange,
 }

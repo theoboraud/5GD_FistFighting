@@ -1,13 +1,36 @@
+using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject.SpaceFighter;
 
 public class ArmController : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    private Player _player;
     public List<ArmChecker> Arms = new List<ArmChecker>();
     public List<ArmChecker> ArmsGoingToHit = new List<ArmChecker>();
 
+    private PlayerPhysicState physicState; //Owner player's physic state
+    private bool bIsOnHit; //If owner player is on hit
+    public void OnEnable()
+    {
+        _player = GetComponentInParent<Player>();
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+    private void SubsribeEvents()
+    {
+        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnHit);
+
+    }
+
+    private void UnsribeEvents()
+    {
+        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnHit);
+    }
 
     /// <summary>
     ///
@@ -22,16 +45,22 @@ public class ArmController : MonoBehaviour
 
 
     /// <summary>
-    ///
+    ///When player get hit
     /// </summary>
-    private void Update()
+    private void OnHit(PlayerPhysicState _newPhysicState)
     {
-        if (player.PlayerPhysicState == Enums.PlayerPhysicState.IsHit)
+        physicState = _newPhysicState;
+        if (_newPhysicState == Enums.PlayerPhysicState.IsHit)
         {
+            bIsOnHit = true;
             for (int i = 0; i < Arms.Count; i++)
             {
                 Arms[i].StopEverything();
             }
+        }
+        else
+        {
+            bIsOnHit = false;
         }
     }
 
@@ -41,10 +70,10 @@ public class ArmController : MonoBehaviour
     /// </summary>
     public void HoldArm(int i)
     {
-        if (player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit && Arms[i].Cooldown == false)
+        if (!bIsOnHit && Arms[i].Cooldown == false)
         {
             Arms[i].StartHolding();
-            player.VoiceController.PlayHold();
+            _player.VoiceController.PlayHold();
         }
             
     }
@@ -55,7 +84,7 @@ public class ArmController : MonoBehaviour
     /// </summary>
     public void ExtendArm(int _armIndex)
     {
-        if (Arms[_armIndex].Cooldown == false && player.PlayerPhysicState != Enums.PlayerPhysicState.IsHit)
+        if (Arms[_armIndex].Cooldown == false && !bIsOnHit)
         {
             //Declenchement animation
             float ArmScaleFactor = GetPrioPoints(Arms[_armIndex]);
@@ -65,7 +94,7 @@ public class ArmController : MonoBehaviour
 
             Arms[_armIndex].anim.PlayAnimation();
             Arms[_armIndex].Cooldown = true;
-            player.VoiceController.StopHold();
+            _player.VoiceController.StopHold();
 
             // If we can hit a player, start the frame stack
             if (Arms[_armIndex].Players.Count > 0)
@@ -92,7 +121,7 @@ public class ArmController : MonoBehaviour
 
                                 ArmChecker _armPlayerHit = _arm.Players[i]._armController.ArmsGoingToHit[j];
 
-                                if (_armPlayerHit.Players.Contains(player))
+                                if (_armPlayerHit.Players.Contains(_player))
                                 {
 
                                     //Debug.Log("On Casse des Gueules !!!");
@@ -243,7 +272,7 @@ public class ArmController : MonoBehaviour
         }
         else
         {
-            if(!player.HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
+            if(!_player.HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
         }
     }
 
@@ -282,12 +311,12 @@ public class ArmController : MonoBehaviour
     /// </summary>
     private void LaunchThisAvatarFromGround(int _armIndex)
     {
-        player.AirPushFactor = 1f;
+        _player.AirPushFactor = 1f;
 
-        player.RB.linearVelocity = Vector2.zero;
-        player.RB.angularVelocity = 0;
+        _player.RB.linearVelocity = Vector2.zero;
+        _player.RB.angularVelocity = 0;
 
-        player.RB.AddForce
+        _player.RB.AddForce
             (Arms[_armIndex].transform.up *
             GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
@@ -315,28 +344,28 @@ public class ArmController : MonoBehaviour
     private void LaunchThisAvatarFromAir(int _armIndex)
     {
         // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
-        player.AirPushFactor -= 0.01f;
+        _player.AirPushFactor -= 0.01f;
         float _maxAirPushFactor = 1f - (GameManager.Instance.ParamData.PARAM_Player_AirControlJumpNumber * 0.01f);
-        if (player.AirPushFactor < _maxAirPushFactor)
+        if (_player.AirPushFactor < _maxAirPushFactor)
         {
-            player.AirPushFactor = 0f;
+            _player.AirPushFactor = 0f;
         }
         // Only reset the velocity if the player can jump
         else
         {
-            player.RB.linearVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
-            player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+            _player.RB.linearVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+            _player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
         }
 
-        player.RB.AddForce
+        _player.RB.AddForce
             (Arms[_armIndex].transform.up *
-            player.AirPushFactor *
+            _player.AirPushFactor *
             GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
             (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
 
-        if (player.AirPushFactor > 0f)
+        if (_player.AirPushFactor > 0f)
         {
             GameManager.Instance.Feedback.SpawnHitAvatarVFX
                 (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
@@ -382,7 +411,7 @@ public class ArmController : MonoBehaviour
                 (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();
-            player.playerFeedbackManager.LastPlayerHit = item;
+            _player.playerFeedbackManager.LastPlayerHit = item;
         }
 
         ArmsGoingToHit.Remove(Arms[_armIndex]);

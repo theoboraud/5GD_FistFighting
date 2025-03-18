@@ -38,14 +38,14 @@ public class AudioManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        EventCenter.Subscribe(GameEvent.OnGameReset, StopMusic);
-        EventCenter.Subscribe(GameEvent.OnGameReset, StopWinSound);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, StopMusic);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, StopWinSound);
     }
 
     private void UnsribeEvents()
     {
-        EventCenter.Unsubscribe(GameEvent.OnGameReset, StopMusic);
-        EventCenter.Unsubscribe(GameEvent.OnGameReset, StopWinSound);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, StopMusic);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, StopWinSound);
     }
 
     public void PlayMusic()

@@ -72,16 +72,16 @@ public class PlayersManager : MonoBehaviour
     }
     private void SubsribeEvents()
     {
-        EventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
-        EventCenter.Subscribe(GameEvent.OnGameReset, Reset);
-        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Instance.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     private void UnsribeEvents()
     {
-        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
-        EventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
-        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     // #endregion

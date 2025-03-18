@@ -74,18 +74,18 @@ public class MenuManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        EventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
-        EventCenter.Subscribe(GameEvent.OnGameReset, Reset);
-        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
-        EventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
     }
 
     private void UnsribeEvents()
     {
-        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
-        EventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
-        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
-        EventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
     }
 
     /// <summary>

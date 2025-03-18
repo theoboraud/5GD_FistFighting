@@ -31,16 +31,16 @@ public class FeedbackManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        EventCenter.Subscribe(GameEvent.OnNewGameRound, ResetAllVFX);
-        EventCenter.Subscribe(GameEvent.OnGameReset, ResetAllVFX);
-        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound, ResetAllVFX);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, ResetAllVFX);
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     private void UnsribeEvents()
     {
-        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, ResetAllVFX);
-        EventCenter.Unsubscribe(GameEvent.OnGameReset, ResetAllVFX);
-        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, ResetAllVFX);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetAllVFX);
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     public void ResetAllVFX()

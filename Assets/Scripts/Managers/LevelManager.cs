@@ -108,16 +108,16 @@ public class LevelManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        EventCenter.Subscribe(GameEvent.OnNewGameRound,LoadNextLevel) ;
-        EventCenter.Subscribe(GameEvent.OnGameReset, Reset);
-        EventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound,LoadNextLevel) ;
+        GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
     }
 
     private void UnsribeEvents()
     {
-        EventCenter.Unsubscribe(GameEvent.OnNewGameRound, LoadNextLevel);
-        EventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
-        EventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, LoadNextLevel);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
     }
     // #endregion
 
@@ -168,20 +168,20 @@ public class LevelManager : MonoBehaviour
 
         if (playableSceneNames.Contains(_sceneName))
         {
-            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Playable);
+            GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Playable);
         }
         else if(_sceneName == lobbySceneName)
         {
-            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Lobby);
+            GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Lobby);
         }
         else if (_sceneName == introSceneName)
         {
-            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Intro);
+            GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Intro);
 
         }
         else if(_sceneName == outroSceneName)
         {
-            EventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Outro);
+            GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Outro);
         }
 
             //CurrentSceneIndex = _levelIndex;

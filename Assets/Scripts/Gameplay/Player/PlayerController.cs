@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	private PlayerInput _playerInput;
 	private PlayerStates _playerStates;
 	private Player _player;
+	private PlayerData _playerData;
 	
 	[SerializeField] private BoxCollider2D BoxCollider;
 
@@ -46,7 +47,10 @@ public class PlayerController : MonoBehaviour
 	private void OnEnable()
 	{
 		_player = GetComponent<Player>();
-		_playerInput = GetComponent<PlayerInput>();
+		_playerData = GetComponent<PlayerData>();
+        _playerStates = GetComponent<PlayerStates>();
+
+        _playerInput = GetComponent<PlayerInput>();
 		_rb = GetComponent<Rigidbody2D>();
 		
 		InitCallBacks();
@@ -61,33 +65,48 @@ public class PlayerController : MonoBehaviour
 	{
 		// Init parameters
 		GlobalSettings.ApplyPhysicsSettings(_rb);
-		
-		_playerStates.Init();
 	}
 
 	private void InitCallBacks()
 	{
-		EventCenter.Subscribe(GameEvent.OnPlayerInit, Init);
-        EventCenter.Subscribe(GameEvent.OnPlayerSpawn, Spawn);
-		EventCenter.Subscribe(GameEvent.OnPlayerHit, Hit);
-        EventCenter.Subscribe(GameEvent.OnPlayerKilled, Kill);
-	}
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerInit, Init);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerSpawn, Spawn);
+		_player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange,OnPlayerGameStateChange);
+        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
+    }
 
 	private void RemoveCallBacks()
 	{
-        EventCenter.Unsubscribe(GameEvent.OnPlayerInit, Init);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerSpawn, Spawn);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerHit, Hit);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, Kill);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerInit, Init);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerSpawn, Spawn);
+        _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
+        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
 	private void Spawn()
 	{
+		_playerStates.PlayerGameState = PlayerGameState.Alive;
 		this.transform.rotation = Quaternion.identity;
 		_rb.linearVelocity = new Vector2(0f, 0f);
 		_rb.simulated = true;
+        gameObject.layer = LayerMask.NameToLayer($"Player{_playerData.playerIndex}");
+    }
+
+	private void OnPlayerGameStateChange(PlayerGameState _gameState)
+	{
+		if (_gameState == PlayerGameState.Dead)
+		{
+			Kill();
+		}
 	}
 
+	private void OnPlayerPhysicStateChange(PlayerPhysicState _physicState)
+	{
+		if (_physicState == PlayerPhysicState.IsHit)
+		{
+			Hit();
+        }
+	}
 	private void Kill()
 	{
 		_rb.simulated = false;
@@ -110,7 +129,7 @@ public class PlayerController : MonoBehaviour
 	{
 		GameObject _GO = _collision.gameObject;
 
-		if (_GO.CompareTag("Lethal") && _playerStates.playerGameState == PlayerGameState.Alive)
+		if (_GO.CompareTag("Lethal") && _playerStates.PlayerGameState == PlayerGameState.Alive)
 		{
 			_player.Kill();
 		}
@@ -120,7 +139,7 @@ public class PlayerController : MonoBehaviour
 			GameManager.Instance.EndOfRound(_player);
 		}
 
-		EventCenter.Invoke(GameEvent.OnPlayerCollisionEnter);
+		_player.EventCenter.Invoke(PlayerEvent.OnPlayerCollisionEnter);
 	}
 	
 	/// <summary>
@@ -155,17 +174,17 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (_playerStates.playerPhysicState != PlayerPhysicState.IsHit)
+		if (_playerStates.PlayerPhysicState != PlayerPhysicState.IsHit)
 		{
 			if (IsGrounded())
 			{
-				EventCenter.Invoke(GameEvent.OnGround);
+				_playerStates.PlayerPhysicState = PlayerPhysicState.OnGround;
 				AirPushFactor = 1f;
 			}
 			else
 			{
-                EventCenter.Invoke(GameEvent.OnAir);
-			}
+                _playerStates.PlayerPhysicState = PlayerPhysicState.InAir;
+            }
 		}
 	}
 }

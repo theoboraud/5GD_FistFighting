@@ -38,17 +38,18 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void InitCallBacks()
     {
-        EventCenter.Subscribe(GameEvent.OnPlayerKilled, KilledFeedback);
-        EventCenter.Subscribe(GameEvent.OnPlayerCollisionEnter, CollisionFeedback);
-        EventCenter.Subscribe(GameEvent.OnAir, IsInAir);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
 
+        _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
+        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
     private void RemoveCallBacks()
     {
-        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, KilledFeedback);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerCollisionEnter, CollisionFeedback);
-        EventCenter.Unsubscribe(GameEvent.OnAir, IsInAir);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
+
+        _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
+        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
     private void Start()
@@ -60,10 +61,37 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void Update()
     {
-        if(LastPlayerHit != null && LastPlayerHit.PlayerGameState == Enums.PlayerGameState.Dead)
+        //TODO
+        //!!Here we need to check or call by an event, in place of follow in update
+        if(LastPlayerHit != null && LastPlayerHit.PlayerGameState == Enums.PlayerGameState.Dead) 
         {
             VoiceController.PlayPush();
             LastPlayerHit = null;
+        }
+        //!!NeedChange
+    }
+    private void OnPlayerGameStateChange(PlayerGameState _gameState)
+    {
+        if (_gameState == PlayerGameState.Invincible)
+        {
+            StartInvincibleFeedback();
+        }
+        else
+        {
+            StopInvincibleFeedback();
+        }
+
+        if (_gameState == PlayerGameState.Dead)
+        {
+            KilledFeedback();
+        }
+    }
+
+    private void OnPlayerPhysicStateChange(PlayerPhysicState _physicState)
+    {
+        if (_physicState == PlayerPhysicState.InAir)
+        {
+            IsInAir();
         }
     }
 
@@ -125,7 +153,7 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void CollisionFeedback()
     {
-	    if(_playerStates.playerPhysicState == PlayerPhysicState.OnGround && FaceController.CanShake)
+	    if(_playerStates.PlayerPhysicState == PlayerPhysicState.OnGround && FaceController.CanShake)
 	    {
 		    FaceController.ShakeFace();
 		    FaceController.CanShake = false;
