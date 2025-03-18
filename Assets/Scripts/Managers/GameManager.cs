@@ -80,12 +80,12 @@ public class GameManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        EventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
     }
 
     private void UnsribeEvents()
     {
-        EventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
     }
 
     // #endregion
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         // TODO: Implement loading screen...
         if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.IsIntroScene())
         {
-            EventCenter.Invoke(GameEvent.OnNewGameRound);
+            GEventCenter.Invoke(GameEvent.OnNewGameRound);
             // Change game state
             Invoke("SetStateToInPlay", 0.1f);
         }
@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
-        EventCenter.Invoke(GameEvent.OnGameReset);
+        GEventCenter.Invoke(GameEvent.OnGameReset);
         GlobalGameState = GlobalGameState.InPlay;
     }
 

@@ -13,6 +13,6 @@ public class SpawnPoints : MonoBehaviour
             SpawnPoints.Add(_child);
         }
 
-        EventCenter.Invoke<List<Transform>>(GameEvent.OnSpawnPointsInit, SpawnPoints);
+        GEventCenter.Invoke<List<Transform>>(GameEvent.OnSpawnPointsInit, SpawnPoints);
     }
 }

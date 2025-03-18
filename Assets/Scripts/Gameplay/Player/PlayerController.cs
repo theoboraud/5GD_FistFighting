@@ -67,18 +67,18 @@ public class PlayerController : MonoBehaviour
 
 	private void InitCallBacks()
 	{
-		EventCenter.Subscribe(GameEvent.OnPlayerInit, Init);
-        EventCenter.Subscribe(GameEvent.OnPlayerSpawn, Spawn);
-		EventCenter.Subscribe(GameEvent.OnPlayerHit, Hit);
-        EventCenter.Subscribe(GameEvent.OnPlayerKilled, Kill);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerInit, Init);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerSpawn, Spawn);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerHit, Hit);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerKilled, Kill);
 	}
 
 	private void RemoveCallBacks()
 	{
-        EventCenter.Unsubscribe(GameEvent.OnPlayerInit, Init);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerSpawn, Spawn);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerHit, Hit);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, Kill);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerInit, Init);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerSpawn, Spawn);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerHit, Hit);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerKilled, Kill);
     }
 
 	private void Spawn()
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 	{
 		GameObject _GO = _collision.gameObject;
 
-		if (_GO.CompareTag("Lethal") && _playerStates.playerGameState == PlayerGameState.Alive)
+		if (_GO.CompareTag("Lethal") && _playerStates.PlayerGameState == PlayerGameState.Alive)
 		{
 			_player.Kill();
 		}
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 			GameManager.Instance.EndOfRound(_player);
 		}
 
-		EventCenter.Invoke(GameEvent.OnPlayerCollisionEnter);
+		_player.EventCenter.Invoke(PlayerEvent.OnPlayerCollisionEnter);
 	}
 	
 	/// <summary>
@@ -155,16 +155,16 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (_playerStates.playerPhysicState != PlayerPhysicState.IsHit)
+		if (_playerStates.PlayerPhysicState != PlayerPhysicState.IsHit)
 		{
 			if (IsGrounded())
 			{
-				EventCenter.Invoke(GameEvent.OnGround);
+				_player.EventCenter.Invoke(PlayerEvent.OnGround);
 				AirPushFactor = 1f;
 			}
 			else
 			{
-                EventCenter.Invoke(GameEvent.OnAir);
+                _player.EventCenter.Invoke(PlayerEvent.OnAir);
 			}
 		}
 	}

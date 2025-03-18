@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
-/// Event processing center
+/// Event processing center template
 /// </summary>
-public class EventCenter
+public class EventCenter<TEvent> where TEvent : struct, IConvertible
 {
-    private static Dictionary<GameEvent, Delegate> m_EventTable = new Dictionary<GameEvent, Delegate>();// Define a dictionary for storing event codes and delegates
+    private Dictionary<TEvent, Delegate> m_EventTable = new Dictionary<TEvent, Delegate>();// Define a dictionary for storing event codes and delegates
 
     /// <summary>
     /// Simplify the program, instead of adding listeners
     /// </summary>
-    private static void OnSubscribing(GameEvent eventType, Delegate callBack)
+    private void OnSubscribing(TEvent eventType, Delegate callBack)
     {
         if (!m_EventTable.ContainsKey(eventType)) //Judge whether the event code is included in the event list, if not, add the event code to the event list
         {
@@ -32,7 +30,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToAdd>
-    public static void Subscribe(GameEvent eventType, CallBack callBack)
+    public void Subscribe(TEvent eventType, CallBack callBack)
     {
         OnSubscribing(eventType, callBack);
         //If there is no exception, associate the delegate with the original delegate and store it in the event code
@@ -44,7 +42,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToAdd>
-    public static void Subscribe<T>(GameEvent eventType, CallBack<T> callBack)
+    public void Subscribe<T>(TEvent eventType, CallBack<T> callBack)
     {
         OnSubscribing(eventType, callBack);
         //If there is no exception, associate the delegate with the original delegate and store it in the event code
@@ -56,7 +54,7 @@ public class EventCenter
     /// </summary>
     ///  <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToAdd>
-    public static void Subscribe<T, X>(GameEvent eventType, CallBack<T, X> callBack)
+    public void Subscribe<T, X>(TEvent eventType, CallBack<T, X> callBack)
     {
         OnSubscribing(eventType, callBack);
         //If there is no exception, associate the delegate with the original delegate and store it in the event code
@@ -68,7 +66,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToAdd>
-    public static void Subscribe<T, X, Y>(GameEvent eventType, CallBack<T, X, Y> callBack)
+    public void Subscribe<T, X, Y>(TEvent eventType, CallBack<T, X, Y> callBack)
     {
         OnSubscribing(eventType, callBack);
         //If there is no exception, associate the delegate with the original delegate and store it in the event code
@@ -80,7 +78,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToAdd>
-    public static void Subscribe<T, X, Y, Z>(GameEvent eventType, CallBack<T, X, Y, Z> callBack)
+    public void Subscribe<T, X, Y, Z>(TEvent eventType, CallBack<T, X, Y, Z> callBack)
     {
         OnSubscribing(eventType, callBack);
         //If there is no exception, associate the delegate with the original delegate and store it in the event code
@@ -92,7 +90,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToAdd>
-    public static void Subscribe<T, X, Y, Z, W>(GameEvent eventType, CallBack<T, X, Y, Z, W> callBack)
+    public void Subscribe<T, X, Y, Z, W>(TEvent eventType, CallBack<T, X, Y, Z, W> callBack)
     {
         OnSubscribing(eventType, callBack);
         //If there is no exception, associate the delegate with the original delegate and store it in the event code
@@ -104,7 +102,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></param>
-    private static void OnUnsubscribing(GameEvent eventType, Delegate callBack)
+    private void OnUnsubscribing(TEvent eventType, Delegate callBack)
     {
         if (m_EventTable.ContainsKey(eventType))//Judge whether the event code is included in the event list
         {
@@ -130,7 +128,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToRemove>
-    public static void Unsubscribe(GameEvent eventType, CallBack callBack)
+    public void Unsubscribe(TEvent eventType, CallBack callBack)
     {
         OnUnsubscribing(eventType, callBack);
         //If there is no exception, remove the delegate from the event code
@@ -142,7 +140,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToRemove>
-    public static void Unsubscribe<T>(GameEvent eventType, CallBack<T> callBack)
+    public void Unsubscribe<T>(TEvent eventType, CallBack<T> callBack)
     {
         OnUnsubscribing(eventType, callBack);
         //If there is no exception, remove the delegate from the event code
@@ -154,7 +152,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToRemove>
-    public static void Unsubscribe<T, X>(GameEvent eventType, CallBack<T, X> callBack)
+    public void Unsubscribe<T, X>(TEvent eventType, CallBack<T, X> callBack)
     {
         OnUnsubscribing(eventType, callBack);
         //If there is no exception, remove the delegate from the event code
@@ -166,7 +164,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToRemove>
-    public static void Unsubscribe<T, X, Y>(GameEvent eventType, CallBack<T, X, Y> callBack)
+    public void Unsubscribe<T, X, Y>(TEvent eventType, CallBack<T, X, Y> callBack)
     {
         OnUnsubscribing(eventType, callBack);
         //If there is no exception, remove the delegate from the event code
@@ -178,7 +176,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToRemove>
-    public static void Unsubscribe<T, X, Y, Z>(GameEvent eventType, CallBack<T, X, Y, Z> callBack)
+    public void Unsubscribe<T, X, Y, Z>(TEvent eventType, CallBack<T, X, Y, Z> callBack)
     {
         OnUnsubscribing(eventType, callBack);
         //If there is no exception, remove the delegate from the event code
@@ -190,7 +188,7 @@ public class EventCenter
     /// </summary>
     /// <param name="eventType"></eventCode>
     /// <param name="callBack"></DelegateToRemove>
-    public static void Unsubscribe<T, X, Y, Z, W>(GameEvent eventType, CallBack<T, X, Y, Z, W> callBack)
+    public void Unsubscribe<T, X, Y, Z, W>(TEvent eventType, CallBack<T, X, Y, Z, W> callBack)
     {
         OnUnsubscribing(eventType, callBack);
         //If there is no exception, remove the delegate from the event code
@@ -200,7 +198,7 @@ public class EventCenter
     /// <summary>
     ///SendToListener listener fonction/No Parameters
     /// </summary>
-    public static void Invoke(GameEvent eventType)
+    public void Invoke(TEvent eventType)
     {
         Delegate d;
         if (m_EventTable.TryGetValue(eventType, out d)) //Extract the delegate in the event code from the event list and store it in delegate d. The return value is bool type, to determine whether the event code exists in the event list
@@ -224,7 +222,7 @@ public class EventCenter
     /// <summary>
     /// SendToListener listener fonction/Single Parameter
     /// </summary>
-    public static void Invoke<T>(GameEvent eventType, T arg)
+    public void Invoke<T>(TEvent eventType, T arg)
     {
         Delegate d;
         if (m_EventTable.TryGetValue(eventType, out d)) //Extract the delegate in the event code from the event list and store it in delegate d. The return value is bool type, to determine whether the event code exists in the event list
@@ -248,7 +246,7 @@ public class EventCenter
     /// <summary>
     /// SendToListener listener fonction/Double Parameters
     /// </summary>
-    public static void Invoke<T, X>(GameEvent eventType, T arg1, X arg2)
+    public void Invoke<T, X>(TEvent eventType, T arg1, X arg2)
     {
         Delegate d;
         if (m_EventTable.TryGetValue(eventType, out d)) //Extract the delegate in the event code from the event list and store it in delegate d. The return value is bool type, to determine whether the event code exists in the event list
@@ -273,7 +271,7 @@ public class EventCenter
     /// <summary>
     /// SendToListener listener fonction/Three Parameters
     /// </summary>
-    public static void Invoke<T, X, Y>(GameEvent eventType, T arg1, X arg2, Y arg3)
+    public void Invoke<T, X, Y>(TEvent eventType, T arg1, X arg2, Y arg3)
     {
         Delegate d;
         if (m_EventTable.TryGetValue(eventType, out d)) //Extract the delegate in the event code from the event list and store it in delegate d. The return value is bool type, to determine whether the event code exists in the event list
@@ -297,7 +295,7 @@ public class EventCenter
     /// <summary>
     /// SendToListener listener fonction/Four Parameters
     /// </summary>
-    public static void Invoke<T, X, Y, Z>(GameEvent eventType, T arg1, X arg2, Y arg3, Z arg4)
+    public void Invoke<T, X, Y, Z>(TEvent eventType, T arg1, X arg2, Y arg3, Z arg4)
     {
         Delegate d;
         if (m_EventTable.TryGetValue(eventType, out d)) //Extract the delegate in the event code from the event list and store it in delegate d. The return value is bool type, to determine whether the event code exists in the event list
@@ -321,7 +319,7 @@ public class EventCenter
     /// <summary>
     /// SendToListener listener fonction/Five Parameters
     /// </summary>
-    public static void Invoke<T, X, Y, Z, W>(GameEvent eventType, T arg1, X arg2, Y arg3, Z arg4, W arg5)
+    public void Invoke<T, X, Y, Z, W>(TEvent eventType, T arg1, X arg2, Y arg3, Z arg4, W arg5)
     {
         Delegate d;
         if (m_EventTable.TryGetValue(eventType, out d)) //Extract the delegate in the event code from the event list and store it in delegate d. The return value is bool type, to determine whether the event code exists in the event list

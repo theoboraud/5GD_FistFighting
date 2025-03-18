@@ -13,16 +13,17 @@ using UnityEngine.Serialization;
 /// </summary>
 public class Player : MonoBehaviour
 {
-	#region EVENTS
+    #region EVENTS
 
-	//public event CallBack onInit;
-	//public event CallBack onSpawn;
-	//public event CallBack onHit;
-	//public event CallBack onKilled;
-	//public event CallBack onInvincibilityStart;
-	//public event CallBack onInvincibilityStop;
-	
-	#endregion
+    //public event CallBack onInit;
+    //public event CallBack onSpawn;
+    //public event CallBack onHit;
+    //public event CallBack onKilled;
+    //public event CallBack onInvincibilityStart;
+    //public event CallBack onInvincibilityStop;
+    public EventCenter<PlayerEvent> EventCenter { get; private set; }
+
+    #endregion
 
     // #region ==================== CLASS VARIABLES ====================
 
@@ -54,6 +55,11 @@ public class Player : MonoBehaviour
 
     // #region ==================== INIT FUNCTIONS ====================
 
+    private void Awake()
+    {
+        EventCenter = new EventCenter<PlayerEvent>();
+    }
+
     /// <summary>
     ///     Init variables
     /// </summary>
@@ -62,7 +68,7 @@ public class Player : MonoBehaviour
 	    _playerController = GetComponent<PlayerController>();
 	    _playerData = GetComponent<PlayerData>();
 
-        EventCenter.Invoke(GameEvent.OnPlayerInit);
+        EventCenter.Invoke(PlayerEvent.OnPlayerInit);
 	    
         if (PlayersManager.Instance.Players.Count < 4)
         {
@@ -159,20 +165,20 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Spawn(Vector3 _targetPos)
     {
-        EventCenter.Invoke(GameEvent.OnPlayerSpawn);
+        EventCenter.Invoke(PlayerEvent.OnPlayerSpawn);
         Face_SpriteRenderer.enabled = true;
         this.transform.position = _targetPos;
 
         if (_playerData.nbDeath > 0)
         {
-            EventCenter.Invoke(GameEvent.OnInvinciblityStart);
+            EventCenter.Invoke(PlayerEvent.OnInvinciblityStart);
 	        Invoke(nameof(StopInvincibility), GlobalSettings.PlayerInvincibility);
         }
     }
 
     private void StopInvincibility()
     {
-        EventCenter.Invoke(GameEvent.OnInvinciblityStop);
+        EventCenter.Invoke(PlayerEvent.OnInvinciblityStop);
     }
 
 
@@ -183,7 +189,7 @@ public class Player : MonoBehaviour
     {
         if (PlayersManager.Instance.PlayersAlive.Contains(this))
         {
-            EventCenter.Invoke(GameEvent.OnPlayerKilled);
+            EventCenter.Invoke(PlayerEvent.OnPlayerKilled);
 
             Face_SpriteRenderer.enabled = false;
             this.transform.position = new Vector3(1000, 1000, 0);
@@ -203,7 +209,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Hit()
     {
-        EventCenter.Invoke(GameEvent.OnPlayerHit);
+        EventCenter.Invoke(PlayerEvent.OnPlayerHit);
     }
     
 

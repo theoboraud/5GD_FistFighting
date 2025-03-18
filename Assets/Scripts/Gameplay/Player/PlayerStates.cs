@@ -5,18 +5,52 @@ using UnityEngine;
 public class PlayerStates : MonoBehaviour
 {
 	private PlayerData _playerData;
-	
-	public PlayerGameState playerGameState;
-	public PlayerPhysicState playerPhysicState;
-	public PlayerRotateState playerRotateState;
+    private Player _player;
+    public PlayerGameState PlayerGameState
+    {
+        get { return PlayerGameState; }
+        set
+        {
+            if (PlayerGameState != value)
+            {
+                PlayerGameState = value;
+                _player.EventCenter.Invoke<PlayerGameState>(PlayerEvent.OnGameStateChange, PlayerGameState);
+            }
+        }
+    }
+    public PlayerPhysicState PlayerPhysicState
+	    {
+        get { return PlayerPhysicState; }
+        set
+        {
+            if (PlayerPhysicState != value)
+            {
+                PlayerPhysicState = value;
+                _player.EventCenter.Invoke<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, PlayerPhysicState);
+            }
+        }
+    }
+    public PlayerRotateState PlayerRotateState
+	    {
+        get { return PlayerRotateState; }
+        set
+        {
+            if (PlayerRotateState != value)
+            {
+                PlayerRotateState = value;
+                _player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, PlayerRotateState);
+            }
+        }
+    }
 
-	public bool IsReady = false;
+    public bool IsReady = false;
 
 	private void OnEnable()
 	{
 		_playerData = GetComponent<PlayerData>();
+        _player = GetComponent<Player>();
 
-		InitCallBacks();
+        InitCallBacks();
 	}
 
 	private void OnDisable()
@@ -26,63 +60,64 @@ public class PlayerStates : MonoBehaviour
 
 	private void InitCallBacks()
 	{
-        EventCenter.Subscribe(GameEvent.OnPlayerInit, Init);
-        EventCenter.Subscribe(GameEvent.OnPlayerSpawn, SetPlayerAlive);
-        EventCenter.Subscribe(GameEvent.OnPlayerHit, SetPhysicHit);
-        EventCenter.Subscribe(GameEvent.OnPlayerKilled, SetPlayerDead);
-        EventCenter.Subscribe(GameEvent.OnInvinciblityStart, SetPlayerInvincible);
-        EventCenter.Subscribe(GameEvent.OnInvinciblityStop, SetPlayerAlive);
-        EventCenter.Subscribe(GameEvent.OnGround, SetPlayerGround);
-        EventCenter.Subscribe(GameEvent.OnAir, SetPlayerAir);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerInit, Init);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerSpawn, SetPlayerAlive);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerHit, SetPhysicHit);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerKilled, SetPlayerDead);
+        _player.EventCenter.Subscribe(PlayerEvent.OnInvinciblityStart, SetPlayerInvincible);
+        _player.EventCenter.Subscribe(PlayerEvent.OnInvinciblityStop, SetPlayerAlive);
+        _player.EventCenter.Subscribe(PlayerEvent.OnGround, SetPlayerGround);
+        _player.EventCenter.Subscribe(PlayerEvent.OnAir, SetPlayerAir);
 	}
 
 	private void RemoveCallBacks()
 	{
-        EventCenter.Unsubscribe(GameEvent.OnPlayerInit, Init);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerSpawn, SetPlayerAlive);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerHit, SetPhysicHit);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, SetPlayerDead);
-        EventCenter.Unsubscribe(GameEvent.OnInvinciblityStart, SetPlayerInvincible);
-        EventCenter.Unsubscribe(GameEvent.OnInvinciblityStop, SetPlayerAlive);
-        EventCenter.Unsubscribe(GameEvent.OnGround, SetPlayerGround);
-        EventCenter.Unsubscribe(GameEvent.OnAir, SetPlayerAir);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerInit, Init);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerSpawn, SetPlayerAlive);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerHit, SetPhysicHit);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerKilled, SetPlayerDead);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnInvinciblityStart, SetPlayerInvincible);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnInvinciblityStop, SetPlayerAlive);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnGround, SetPlayerGround);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnAir, SetPlayerAir);
     }
 
 	public void Init()
 	{
-		playerGameState = PlayerGameState.Alive;
-		playerPhysicState = PlayerPhysicState.InAir;
+		PlayerGameState = PlayerGameState.Alive;
+		PlayerPhysicState = PlayerPhysicState.InAir;
 	}
 
 	private void SetPlayerAlive()
 	{
-		playerGameState = PlayerGameState.Alive;
+		PlayerGameState = PlayerGameState.Alive;
 		gameObject.layer = LayerMask.NameToLayer($"Player{_playerData.playerIndex}");
 	}
 
 	private void SetPlayerDead()
 	{
-		playerGameState = PlayerGameState.Dead;
+		PlayerGameState = PlayerGameState.Dead;
 	}
 	
 	private void SetPlayerInvincible()
 	{
-		playerGameState = PlayerGameState.Invincible;
+		PlayerGameState = PlayerGameState.Invincible;
 		gameObject.layer = LayerMask.NameToLayer("Invincible");
 	}
 
 	private void SetPhysicHit()
 	{
-		playerPhysicState = PlayerPhysicState.IsHit;
+		PlayerPhysicState = PlayerPhysicState.IsHit;
 	}
 
 	private void SetPlayerGround()
 	{
-		playerPhysicState = PlayerPhysicState.OnGround;
+		PlayerPhysicState = PlayerPhysicState.OnGround;
 	}
 
 	private void SetPlayerAir()
 	{
-		playerPhysicState = PlayerPhysicState.InAir;
+		PlayerPhysicState = PlayerPhysicState.InAir;
 	}
+
 }

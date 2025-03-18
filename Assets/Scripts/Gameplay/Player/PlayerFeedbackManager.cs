@@ -38,17 +38,17 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void InitCallBacks()
     {
-        EventCenter.Subscribe(GameEvent.OnPlayerKilled, KilledFeedback);
-        EventCenter.Subscribe(GameEvent.OnPlayerCollisionEnter, CollisionFeedback);
-        EventCenter.Subscribe(GameEvent.OnAir, IsInAir);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerKilled, KilledFeedback);
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
+        _player.EventCenter.Subscribe(PlayerEvent.OnAir, IsInAir);
 
     }
 
     private void RemoveCallBacks()
     {
-        EventCenter.Unsubscribe(GameEvent.OnPlayerKilled, KilledFeedback);
-        EventCenter.Unsubscribe(GameEvent.OnPlayerCollisionEnter, CollisionFeedback);
-        EventCenter.Unsubscribe(GameEvent.OnAir, IsInAir);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerKilled, KilledFeedback);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnAir, IsInAir);
     }
 
     private void Start()
@@ -125,7 +125,7 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void CollisionFeedback()
     {
-	    if(_playerStates.playerPhysicState == PlayerPhysicState.OnGround && FaceController.CanShake)
+	    if(_playerStates.PlayerPhysicState == PlayerPhysicState.OnGround && FaceController.CanShake)
 	    {
 		    FaceController.ShakeFace();
 		    FaceController.CanShake = false;
