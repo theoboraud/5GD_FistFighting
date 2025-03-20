@@ -9,7 +9,7 @@ public class TestMovePlateform : MonoBehaviour
     {
         MoveRight();
 
-        playersManager = GameObject.FindObjectOfType<PlayersManager>();
+        playersManager = GameObject.FindFirstObjectByType<PlayersManager>();
     }
 
     //private void OnCollisionStay2D(Collision2D collision)

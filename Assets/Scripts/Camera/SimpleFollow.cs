@@ -22,7 +22,7 @@ public class SimpleFollow : MonoBehaviour
     /// <summary>
     ///     Move camera position to target position considering the given offset
     /// </summary>
-    private void Update()
+    private void LateUpdate()
     {
         this.transform.position = Target.position + Offset;
     }

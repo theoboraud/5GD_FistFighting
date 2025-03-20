@@ -80,12 +80,12 @@ public class GameManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     private void UnsribeEvents()
     {
-        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, LoadNextLevel);
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     // #endregion

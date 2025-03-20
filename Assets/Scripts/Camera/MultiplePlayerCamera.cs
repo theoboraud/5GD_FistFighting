@@ -8,7 +8,7 @@ public class MultiplePlayerCamera : MonoBehaviour
     [SerializeField] private Vector2 MinMaxCameraSize = new Vector2(7, 15);
     [SerializeField] private float ZoomFactor;
 
-    private void Update()
+    private void LateUpdate()
     {
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize,Mathf.Lerp(MinMaxCameraSize.x, MinMaxCameraSize.y, Mathf.Clamp(CalculateGreatestDistance() / ZoomFactor, 0,1)), 0.01f);
         this.transform.position = Vector3.Lerp(this.transform.position, GetAverageCameraPosition(), 0.01f);
@@ -50,6 +50,4 @@ public class MultiplePlayerCamera : MonoBehaviour
         }
 
     }
-
-
 }
