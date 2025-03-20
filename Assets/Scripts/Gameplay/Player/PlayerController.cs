@@ -187,4 +187,14 @@ public class PlayerController : MonoBehaviour
             }
 		}
 	}
+
+	public ArmController GetArmController()
+	{
+		return _armController;
+	}
+
+	public Rigidbody2D GetRB()
+	{
+		return _rb;
+	}
 }

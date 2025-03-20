@@ -14,6 +14,7 @@ public class RotateBehaviour : MonoBehaviour
     [Header("References")]
     public Rigidbody2D RB;                                                  // Rigidbody2D reference
     public Player Player;
+    private PlayerStates _playerStates;
 
     [Header("Parameters")]
     private float rotationTorque_InAir;                                     // Rotation torque parameter value in air
@@ -38,6 +39,8 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+	    _playerStates = GetComponent<PlayerStates>();
+	    
         InitParameters();
         InitVariables();
     }
@@ -76,7 +79,7 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     public void Input_Rotating(float _inputValue)
     {
-        if (Player.PlayerGameState == PlayerGameState.Alive || Player.PlayerGameState == PlayerGameState.Invincible)
+        if (_playerStates.PlayerGameState == PlayerGameState.Alive || _playerStates.PlayerGameState == PlayerGameState.Invincible)
         {
             if (useFactorForRotation)
             {
@@ -86,17 +89,17 @@ public class RotateBehaviour : MonoBehaviour
             // If the stick is pushed to the right side, then the player will rotate to the right
             if (_inputValue > 0f)
             {
-                Player.PlayerRotateState = PlayerRotateState.RotatingRight;
+	            _playerStates.PlayerRotateState = PlayerRotateState.RotatingRight;
             }
             // If the stick is pushed to the left side, then the player will rotate to the left
             else if (_inputValue < 0f)
             {
-                Player.PlayerRotateState = PlayerRotateState.RotatingLeft;
+	            _playerStates.PlayerRotateState = PlayerRotateState.RotatingLeft;
             }
             // Else, set the player state to ready
             else
             {
-                Player.PlayerRotateState = PlayerRotateState.Ready;
+	            _playerStates.PlayerRotateState = PlayerRotateState.Ready;
             }
         }
     }
@@ -118,18 +121,18 @@ public class RotateBehaviour : MonoBehaviour
         torqueValue = rotationTorque_InAir;
         forceValue = rotationForce_InAir;
 
-        if (Player.PlayerRotateState is PlayerRotateState.RotatingRight)
+        if (_playerStates.PlayerRotateState is PlayerRotateState.RotatingRight)
         {
             _torqueDir = -1f;
             _forceDir = Vector3.right;
         }
-        else if (Player.PlayerRotateState is PlayerRotateState.RotatingLeft)
+        else if (_playerStates.PlayerRotateState is PlayerRotateState.RotatingLeft)
         {
             _torqueDir = 1f;
             _forceDir = -Vector3.right;
         }
 
-        if (Player.PlayerPhysicState is PlayerPhysicState.OnGround)
+        if (_playerStates.PlayerPhysicState is PlayerPhysicState.OnGround)
         {
             _forceDir = Vector3.up;
             torqueValue = rotationTorque_OnGround;
