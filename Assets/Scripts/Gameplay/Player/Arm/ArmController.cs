@@ -7,6 +7,8 @@ using Zenject.SpaceFighter;
 public class ArmController : MonoBehaviour
 {
     private Player _player;
+    private PlayerController _playerController;
+    private PlayerFeedbackManager _playerFeedbackManager;
     public List<ArmChecker> Arms = new List<ArmChecker>();
     public List<ArmChecker> ArmsGoingToHit = new List<ArmChecker>();
 
@@ -15,6 +17,8 @@ public class ArmController : MonoBehaviour
     public void OnEnable()
     {
         _player = GetComponentInParent<Player>();
+        _playerController = GetComponentInParent<PlayerController>();
+        _playerFeedbackManager = GetComponentInParent<PlayerFeedbackManager>();
         SubsribeEvents();
     }
     public void OnDisable()
@@ -111,15 +115,15 @@ public class ArmController : MonoBehaviour
                         //print("PlayersArmController: i is " + i.ToString());
                         //print(_arm.Players[i]);
 
-                        if (_arm.Players[i]._armController.ArmsGoingToHit.Count > 0)
+                        if (_arm.Players[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count > 0)
                         {
-                            for (int j = 0; j < _arm.Players[i]._armController.ArmsGoingToHit.Count; j++)
+                            for (int j = 0; j < _arm.Players[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count; j++)
                             {
 
                                 //print("PlayersArmController: j is " + j.ToString());
                                 //print(_arm.Players[i].ArmController.ArmsGoingToHit[j]);
 
-                                ArmChecker _armPlayerHit = _arm.Players[i]._armController.ArmsGoingToHit[j];
+                                ArmChecker _armPlayerHit = _arm.Players[i].GetPlayerController().GetArmController().ArmsGoingToHit[j];
 
                                 if (_armPlayerHit.Players.Contains(_player))
                                 {
@@ -150,18 +154,18 @@ public class ArmController : MonoBehaviour
     /// </summary>
     public void ComparePlayersVelocity(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
     {
-        if (_armPlayer1.Player.RB.linearVelocity.magnitude > _armPlayer2.Player.RB.linearVelocity.magnitude)
+        if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > _armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
         {
-            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
+            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
         }
-        else if (_armPlayer2.Player.RB.linearVelocity.magnitude > _armPlayer1.Player.RB.linearVelocity.magnitude)
+        else if (_armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > _armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
         {
-            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
+            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
         }
-        else if (_armPlayer2.Player.RB.linearVelocity.magnitude == _armPlayer1.Player.RB.linearVelocity.magnitude)
+        else if (Mathf.Approximately(_armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude, _armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude))
         {
-            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
-            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
+            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
+            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
         }
     }
 
@@ -179,11 +183,11 @@ public class ArmController : MonoBehaviour
             player2Points += GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK;
         }
 
-        if (_armPlayer1.Player.RB.linearVelocity.magnitude > _armPlayer2.Player.RB.linearVelocity.magnitude)
+        if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > _armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
         {
             player1Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
         }
-        else if (_armPlayer1.Player.RB.linearVelocity.magnitude < _armPlayer2.Player.RB.linearVelocity.magnitude)
+        else if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude < _armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
         {
             player2Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
         }
@@ -197,27 +201,27 @@ public class ArmController : MonoBehaviour
             player2Points += GameManager.Instance.ParamData.PARAM_PRIO_HOLDFORCE;
         }
 
-        if (_armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir && _armPlayer2.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        if (_armPlayer1.GetPlayer().IsInAir() && _armPlayer2.GetPlayer().IsInAir())
         {
             player1Points += GameManager.Instance.ParamData.PARAM_PRIO_AIRSTATE;
         }
-        else if (_armPlayer2.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir && _armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        else if (_armPlayer2.GetPlayer().IsInAir() && _armPlayer1.GetPlayer().IsInAir())
         {
             player2Points += GameManager.Instance.ParamData.PARAM_PRIO_AIRSTATE;
         }
 
         if (player1Points > player2Points)
         {
-            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
+            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
         }
         else if (player1Points == player2Points)
         {
-            _armPlayer1.Player._armController.ExtendedArm(_armPlayer1.Player._armController.Arms.IndexOf(_armPlayer1));
-            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
+            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
+            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
         }
         else if (player2Points>player1Points)
         {
-            _armPlayer2.Player._armController.ExtendedArm(_armPlayer2.Player._armController.Arms.IndexOf(_armPlayer2));
+            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
         }
     }
 
@@ -226,11 +230,11 @@ public class ArmController : MonoBehaviour
         int player1Points = 0;
 
 
-        if (_armPlayer1.Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        if (_armPlayer1.GetPlayer().IsInAir())
         {
             player1Points += 1;
         }
-        if (_armPlayer1.Player.RB.linearVelocity.magnitude > 0.2f)
+        if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > 0.2f)
         {
             player1Points += 1;
         }
@@ -272,7 +276,7 @@ public class ArmController : MonoBehaviour
         }
         else
         {
-            if(!_player.HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
+            if(!_player.GetPlayerController().HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
         }
     }
 
@@ -311,12 +315,12 @@ public class ArmController : MonoBehaviour
     /// </summary>
     private void LaunchThisAvatarFromGround(int _armIndex)
     {
-        _player.AirPushFactor = 1f;
+        _player.GetPlayerController().AirPushFactor = 1f;
 
-        _player.RB.linearVelocity = Vector2.zero;
-        _player.RB.angularVelocity = 0;
+        _player.GetPlayerController().GetRB().linearVelocity = Vector2.zero;
+        _player.GetPlayerController().GetRB().angularVelocity = 0;
 
-        _player.RB.AddForce
+        _player.GetPlayerController().GetRB().AddForce
             (Arms[_armIndex].transform.up *
             GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
@@ -344,28 +348,28 @@ public class ArmController : MonoBehaviour
     private void LaunchThisAvatarFromAir(int _armIndex)
     {
         // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
-        _player.AirPushFactor -= 0.01f;
+        _playerController.AirPushFactor -= 0.01f;
         float _maxAirPushFactor = 1f - (GameManager.Instance.ParamData.PARAM_Player_AirControlJumpNumber * 0.01f);
-        if (_player.AirPushFactor < _maxAirPushFactor)
+        if (_playerController.AirPushFactor < _maxAirPushFactor)
         {
-            _player.AirPushFactor = 0f;
+            _playerController.AirPushFactor = 0f;
         }
         // Only reset the velocity if the player can jump
         else
         {
-            _player.RB.linearVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
-            _player.RB.angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+            _playerController.GetRB().linearVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
+            _playerController.GetRB().angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
         }
 
-        _player.RB.AddForce
+        _playerController.GetRB().AddForce
             (Arms[_armIndex].transform.up *
-            _player.AirPushFactor *
+             _playerController.AirPushFactor *
             GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
             (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
 
-        if (_player.AirPushFactor > 0f)
+        if (_playerController.AirPushFactor > 0f)
         {
             GameManager.Instance.Feedback.SpawnHitAvatarVFX
                 (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
@@ -402,16 +406,16 @@ public class ArmController : MonoBehaviour
 
         foreach (var item in Arms[_armIndex].Players)
         {
-            item.RB.linearVelocity = Vector2.zero;
-            item.RB.angularVelocity = 0;
-            item.RB.AddForce
+            item.GetPlayerController().GetRB().linearVelocity = Vector2.zero;
+            item.GetPlayerController().GetRB().angularVelocity = 0;
+            item.GetPlayerController().GetRB().AddForce
                 (-Arms[_armIndex].transform.up *
                 GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
                 Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
                 (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
                 ForceMode2D.Impulse);
             item.Hit();
-            _player.playerFeedbackManager.LastPlayerHit = item;
+            _playerFeedbackManager.LastPlayerHit = item;
         }
 
         ArmsGoingToHit.Remove(Arms[_armIndex]);

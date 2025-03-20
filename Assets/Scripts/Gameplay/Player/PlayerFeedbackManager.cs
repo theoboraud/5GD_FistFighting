@@ -25,6 +25,7 @@ public class PlayerFeedbackManager : MonoBehaviour
     private void OnEnable()
     {
 	    _player = GetComponent<Player>();
+	    
 	    _playerController = GetComponent<PlayerController>();
 	    _playerStates = GetComponent<PlayerStates>();
 
@@ -39,7 +40,6 @@ public class PlayerFeedbackManager : MonoBehaviour
     private void InitCallBacks()
     {
         _player.EventCenter.Subscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
-
         _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
         _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
@@ -63,7 +63,7 @@ public class PlayerFeedbackManager : MonoBehaviour
     {
         //TODO
         //!!Here we need to check or call by an event, in place of follow in update
-        if(LastPlayerHit != null && LastPlayerHit.PlayerGameState == Enums.PlayerGameState.Dead) 
+        if(LastPlayerHit != null && LastPlayerHit.IsDead()) 
         {
             VoiceController.PlayPush();
             LastPlayerHit = null;
@@ -108,13 +108,13 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     public void StartStunFeedback()
     {
-        AvatarFace.sprite = _player.CharSkin.StunSprite;
+        AvatarFace.sprite = _player.GetSkin().StunSprite;
         VoiceController.PlayHurt();
     }
 
     public void EndStunFeedback()
     {
-        AvatarFace.sprite = _player.CharSkin.SpriteFace;
+        AvatarFace.sprite = _player.GetSkin().SpriteFace;
     }
 
     public void UpdateStunFeedback(int stat)

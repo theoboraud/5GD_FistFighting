@@ -5,7 +5,9 @@ using Enums;
 
 public class PlayerStunBehaviour : MonoBehaviour
 {
-    [SerializeField] Player player;
+    private PlayerFeedbackManager _playerFeedbackManager;
+    private PlayerController _playerController;
+    private PlayerStates _playerStates;
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] PhysicsMaterial2D bounce;
     [SerializeField] ParticleSystemController particleSystemController;
@@ -14,20 +16,28 @@ public class PlayerStunBehaviour : MonoBehaviour
 
     private float timer;
 
+    private void Awake()
+    {
+	    _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
+	    _playerController = GetComponent<PlayerController>();
+		_playerStates = GetComponent<PlayerStates>();
+		
+    }
+
     private void Update()
     {
-        if (player.PlayerPhysicState == PlayerPhysicState.IsHit)
+        if (_playerStates.PlayerPhysicState == PlayerPhysicState.IsHit)
         {
             //Check if material is applied to know whether it's the beginning of the Stun State
             if (!boxCollider.sharedMaterial)
             {
                 StartStunState();
             }
-            player.StunTimer += Time.deltaTime;
+            _playerController.StunTimer += Time.deltaTime;
             //Debug.Log(player.StunTimer);
-            float addedTimeBasedOnStunAccumulation = StunAccumulation * (0.2f * player.StunRecoveryTime);
+            float addedTimeBasedOnStunAccumulation = StunAccumulation * (0.2f * _playerController.StunRecoveryTime);
             //Check if timer has gone above the required stun time
-            if (player.StunTimer >= GlobalSettings.StunRecoveryTime + addedTimeBasedOnStunAccumulation)
+            if (_playerController.StunTimer >= GlobalSettings.StunRecoveryTime + addedTimeBasedOnStunAccumulation)
             {
                 StopStunState();
             }
@@ -40,7 +50,7 @@ public class PlayerStunBehaviour : MonoBehaviour
                 timer = 0f;
                 StunAccumulation--;
                 StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
-                player.playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
+                _playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
             }
         }
     }
@@ -50,10 +60,10 @@ public class PlayerStunBehaviour : MonoBehaviour
     {
         StunAccumulation++;
         StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
-        player.playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
+        _playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
         Debug.Log(StunAccumulation);
         timer = 0;
-        player.playerFeedbackManager.StartStunFeedback();
+        _playerFeedbackManager.StartStunFeedback();
         boxCollider.sharedMaterial = bounce;
         particleSystemController.StartSystem();
     }
@@ -61,8 +71,8 @@ public class PlayerStunBehaviour : MonoBehaviour
     //The function that stops the stun state
     private void StopStunState()
     {
-        player.playerFeedbackManager.EndStunFeedback();
-        player.PlayerPhysicState = PlayerPhysicState.InAir;
+	    _playerFeedbackManager.EndStunFeedback();
+	    _playerController.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
         particleSystemController.StopSystem();
     }

@@ -44,8 +44,8 @@ public class Player : MonoBehaviour
     public GameObject GO_IsReady;
     public PlayerVoiceController VoiceController;
     public FeedbackFaceController FaceController;
-    
-    
+
+    public bool isReady = false;
     
                            // Contains the index of the current skin
     
@@ -221,14 +221,7 @@ public class Player : MonoBehaviour
     {
         GO_IsReady.SetActive(_bool);
 
-        if (_bool)
-        {
-            IsReady = true;
-        }
-        else
-        {
-            IsReady = false;
-        }
+        isReady = _bool;
 
         // If all players are ready, end the round
         if (PlayersManager.Instance.AllPlayersReady())
@@ -240,4 +233,48 @@ public class Player : MonoBehaviour
     }
 
     // #endregion
+    
+    public CharacterSkin GetSkin()
+    {
+	    return _skin;
+    }
+
+    public PlayerController GetPlayerController()
+    {
+	    return _playerController;
+    }
+    
+    #region Get States
+
+    public bool IsAlive()
+    {
+	    return _playerStates.PlayerGameState == PlayerGameState.Alive;
+    }
+    
+    public bool IsDead()
+    {
+	    return _playerStates.PlayerGameState == PlayerGameState.Dead;
+    }
+
+    public bool IsInvincible()
+    {
+	    return _playerStates.PlayerGameState == PlayerGameState.Invincible;
+    }
+
+    public bool IsInAir()
+    {
+	    return _playerStates.PlayerPhysicState == PlayerPhysicState.InAir;
+    }
+
+    public bool IsGrounded()
+    {
+	    return _playerStates.PlayerPhysicState == PlayerPhysicState.OnGround;
+    }
+    
+    public bool IsHit()
+    {
+	    return _playerStates.PlayerPhysicState == PlayerPhysicState.IsHit;
+}
+    
+    #endregion
 }

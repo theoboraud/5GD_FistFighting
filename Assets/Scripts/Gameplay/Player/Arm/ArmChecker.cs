@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
+using Unity.Burst.Intrinsics;
 
 public class ArmChecker : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class ArmChecker : MonoBehaviour
     public bool StaticEnvironmentInRange = false;
 
     [Header("Reference")]
-    public Player Player;
+    private Player _player;
+    private ArmController _armController;
     [SerializeField] BoxCollider2D collider;
     public ArmAnimationController anim;
     public bool Cooldown = false;
@@ -22,7 +24,12 @@ public class ArmChecker : MonoBehaviour
 
     public int FrameStack = 0;
 
-
+    private void OnEnable()
+    {
+	    _player = GetComponent<Player>();
+	    _armController = GetComponent<ArmController>();
+    }
+    
     /// <summary>
     ///
     /// </summary>
@@ -49,7 +56,7 @@ public class ArmChecker : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(Player.PlayerPhysicState == Enums.PlayerPhysicState.InAir)
+        if(_player.IsInAir())
         {
             collider.enabled = true;
         }
@@ -92,7 +99,7 @@ public class ArmChecker : MonoBehaviour
             FrameStack -= 1;
             if (FrameStack == 0)
             {
-                Player._armController.ExtendedArm(Player._armController.Arms.IndexOf(this));
+	            _armController.ExtendedArm(_armController.Arms.IndexOf(this));
             }
         }
     }
@@ -162,8 +169,8 @@ public class ArmChecker : MonoBehaviour
         }
         if(collision.CompareTag("Player"))
         {
-            Player Player = collision.GetComponent<Player>();
-            if(!Players.Contains(Player) && Player.PlayerGameState != Enums.PlayerGameState.Invincible) Players.Add(Player);
+            Player player = collision.GetComponent<Player>();
+            if(!Players.Contains(player) && player.IsInvincible()) Players.Add(player);
         }
         if (collision.CompareTag("StaticGround"))
         {
@@ -184,12 +191,17 @@ public class ArmChecker : MonoBehaviour
         }
         if (collision.CompareTag("Player"))
         {
-            Player Player = collision.GetComponent<Player>();
-            if (Players.Contains(Player)) Players.Remove(Player);
+            Player player = collision.GetComponent<Player>();
+            if (Players.Contains(player)) Players.Remove(player);
         }
         if(collision.CompareTag("StaticGround"))
         {
             StaticEnvironmentInRange = false;
         }
+    }
+
+    public Player GetPlayer()
+    {
+	    return _player;
     }
 }

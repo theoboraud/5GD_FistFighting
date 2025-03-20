@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.Interactions;
 public class PlayerSelector : MonoBehaviour
 {
     [Header("Status")]
-    [System.NonSerialized] public Player Player;
+    [System.NonSerialized] public Player player;
     [System.NonSerialized] public bool Validated;
 
     [Header("UI References")]
@@ -27,11 +27,11 @@ public class PlayerSelector : MonoBehaviour
 
     public void Init()
     {
-        if (Player != null)
+        if (player != null)
         {
             index = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count);
-            Player.ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(Mathf.Abs(index)));
-            SkinName.text = Player.CharSkin.Name;
+            player.ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(Mathf.Abs(index)));
+            SkinName.text = player.GetSkin().Name;
         }
     }
 
@@ -39,16 +39,16 @@ public class PlayerSelector : MonoBehaviour
     {
         index += -1;
         index %= PlayersManager.Instance.SkinsData.CharacterSkins.Count;
-        Player.ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(Mathf.Abs(index)));
-        SkinName.text = Player.CharSkin.Name;
+        player.ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(Mathf.Abs(index)));
+        SkinName.text = player.GetSkin().Name;
     }
 
     public void ChangeSkinRight()
     {
         index += 1;
         index %= PlayersManager.Instance.SkinsData.CharacterSkins.Count;
-        Player.ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(Mathf.Abs(index)));
-        SkinName.text = Player.CharSkin.Name;
+        player.ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(Mathf.Abs(index)));
+        SkinName.text = player.GetSkin().Name;
     }
 
     public void ValidateSkin()

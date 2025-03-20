@@ -201,7 +201,7 @@ public class PlayersManager : MonoBehaviour
     {
         for (int i = 0; i < Players.Count; i++)
         {
-            if (!Players[i].IsReady)
+            if (!Players[i].isReady)
             {
                 return false;
             }
