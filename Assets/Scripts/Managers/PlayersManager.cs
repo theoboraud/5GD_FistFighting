@@ -72,7 +72,7 @@ public class PlayersManager : MonoBehaviour
     }
     private void SubsribeEvents()
     {
-        GEventCenter.Instance.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Subscribe.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
