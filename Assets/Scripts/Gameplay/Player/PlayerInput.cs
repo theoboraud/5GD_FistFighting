@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using Enums;
+using System;
+using UnityEngine.UIElements;
 
 /// <summary>
-///     Class used for player controls
+///     Class Manager player inputs
 /// </summary>
 public class PlayerInput : MonoBehaviour
 {
     // #region ============== CLASS VARIABLES ==============
 
-    [Header("References")]
     private Player _player;                       // Player reference
-    private ArmController _armController;
-    private RotateBehaviour _rotate;              // Player rotate reference
     private UnityEngine.InputSystem.PlayerInput playerInput;            // Player Input reference
     // All input action references
     private InputAction action_rotate;
@@ -25,26 +24,34 @@ public class PlayerInput : MonoBehaviour
 
 
     // #region ============== INIT FUNCTIONS ==============
+    private void OnEnable()
+    {
+        Init();
+    }
+    private void OnDisable()
+    {
+        RemoveCallBacks();
+    }
+
 
     /// <summary>
-    ///     Init references
+    /// Init references
     /// </summary>
-    public void Init()
+    private void Init()
     {
-	    _player = gameObject.GetComponent<Player>();
-		_armController = gameObject.GetComponent<ArmController>();
-        _rotate = gameObject.GetComponent<RotateBehaviour>();
+	    _player = GetComponent<Player>();
 
-        playerInput = gameObject.GetComponent<UnityEngine.InputSystem.PlayerInput>();
+        playerInput = GetComponent<UnityEngine.InputSystem.PlayerInput>();
 
-        // Assign each action to corresponding inputs
-        //action_upArm = playerInput.actions["UpArm"];
-        //action_rightArm = playerInput.actions["RightArm"];
-        //action_downArm = playerInput.actions["DownArm"];
-        //action_leftArm = playerInput.actions["LeftArm"];
         action_rotate = playerInput.actions["Rotate"];
-        //action_start = playerInput.actions["Start"];
-        //action_holdTrigger = playerInput.actions["HoldTrigger"];
+        playerInput.actions["Rotate"].performed += OnRotatePerformed;
+        playerInput.actions["Rotate"].canceled += OnRotateCanceled;
+    }
+
+    private void RemoveCallBacks()
+    {
+        playerInput.actions["Rotate"].performed -= OnRotatePerformed;
+        playerInput.actions["Rotate"].canceled -= OnRotateCanceled;
     }
 
     // #endregion
@@ -57,11 +64,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-	        _armController.HoldArm(0);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 0);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-	        _armController.ExtendArm(0);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 0);
         }
     }
 
@@ -69,11 +76,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-	        _armController.HoldArm(1);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 1);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-	        _armController.ExtendArm(1);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 1);
         }
     }
 
@@ -81,11 +88,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-            _armController.HoldArm(2);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 2);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            _armController.ExtendArm(2);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 2);
         }
     }
 
@@ -93,30 +100,26 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-            _armController.HoldArm(3);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 3);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            _armController.ExtendArm(3);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 3);
         }
     }
-
-
-    /// <summary>
-    ///     Called when rotating using the stick
-    /// </summary>
-    public void Gameplay_Rotate(InputAction.CallbackContext _context)
-    {
-        //Rotate.Input_Rotating(_context.ReadValue<float>());
-    }
-
 
     /// <summary>
     ///     Called for checking sticks value
     /// </summary>
-    private void Update()
+    private void OnRotatePerformed(InputAction.CallbackContext context)
     {
-        _rotate.Input_Rotating(action_rotate.ReadValue<float>());
+        float rotateInput = context.ReadValue<float>();
+        _player.EventCenter.Invoke<float>(PlayerEvent.OnRotate,rotateInput);
+    }
+
+    private void OnRotateCanceled(InputAction.CallbackContext context)
+    {
+        _player.EventCenter.Invoke<float>(PlayerEvent.OnRotate, 0);
     }
 
 

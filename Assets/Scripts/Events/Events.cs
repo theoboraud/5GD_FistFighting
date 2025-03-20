@@ -39,4 +39,9 @@ public enum PlayerEvent
     OnGameStateChange,
     OnPhysicStateChange,
     OnRotateStateChange,
+
+    //PlayerInput
+    OnExtendArm,
+    OnHoldArm,
+    OnRotate,
 }

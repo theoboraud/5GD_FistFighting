@@ -11,9 +11,8 @@ public class RotateBehaviour : MonoBehaviour
 
     // #region ==================== CLASS VARIABLES ====================
 
-    [Header("References")]
-    public Rigidbody2D RB;                                                  // Rigidbody2D reference
-    public Player Player;
+    private Rigidbody2D _rigidBody;                                                  // Rigidbody2D reference
+    private Player _player;
     private PlayerStates _playerStates;
 
     [Header("Parameters")]
@@ -37,14 +36,26 @@ public class RotateBehaviour : MonoBehaviour
     /// <summary>
     ///     Init all class variables
     /// </summary>
-    private void Awake()
+
+    public void OnEnable()
     {
-	    _playerStates = GetComponent<PlayerStates>();
-	    
-        InitParameters();
         InitVariables();
+        InitParameters();
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+    private void SubsribeEvents()
+    {
+        _player.EventCenter.Subscribe<float>(PlayerEvent.OnRotate, Input_Rotating);
     }
 
+    private void UnsribeEvents()
+    {
+        _player.EventCenter.Unsubscribe<float>(PlayerEvent.OnRotate, Input_Rotating);
+    }
 
     /// <summary>
     ///     Init parameters
@@ -65,6 +76,8 @@ public class RotateBehaviour : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _player = GetComponent<Player>();
         rotationFactor = 1f;
     }
 
@@ -139,8 +152,8 @@ public class RotateBehaviour : MonoBehaviour
             forceValue = rotationForce_OnGround;
         }
 
-        RB.AddTorque(_torqueDir * torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
-        RB.AddForce(_forceDir * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+        _rigidBody.AddTorque(_torqueDir * torqueValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
+        _rigidBody.AddForce(_forceDir * forceValue * rotationFactor * Time.fixedDeltaTime, ForceMode2D.Force);
 
         //RB.angularVelocity = Mathf.Clamp(RB.angularVelocity, 0f, 1f);
     }

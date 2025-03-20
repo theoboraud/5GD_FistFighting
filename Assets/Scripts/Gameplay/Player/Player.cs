@@ -9,7 +9,7 @@ using Enums;
 using UnityEngine.Serialization;
 
 /// <summary>
-///     Class used to spawn the player arms during gameplay
+/// Main class of each player, manager all player's data, game state,and behaviours
 /// </summary>
 public class Player : MonoBehaviour
 {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using Enums;
 
 public class PlayerVoiceController : MonoBehaviour
 {
@@ -18,6 +19,25 @@ public class PlayerVoiceController : MonoBehaviour
     {
 	    _player = GetComponent<Player>();
 	    _charSkin = _player.GetSkin();
+    }
+
+    public void OnEnable()
+    {
+        _player = GetComponentInParent<Player>();
+        SubsribeEvents();
+    }
+    public void OnDisable()
+    {
+        UnsribeEvents();
+    }
+    private void SubsribeEvents()
+    {
+        _player.EventCenter.Subscribe<int>(PlayerEvent.OnHoldArm, PlayHold);
+    }
+
+    private void UnsribeEvents()
+    {
+        _player.EventCenter.Unsubscribe<int>(PlayerEvent.OnHoldArm, PlayHold);
     }
 
     public void PlayHurt()
@@ -38,7 +58,7 @@ public class PlayerVoiceController : MonoBehaviour
         studioEventEmitters[2].SetParameter(studioEventEmitters[2].Params[0].ID, _charSkin.VoiceParameter);
     }
 
-    public void PlayHold()
+    public void PlayHold(int armIndex)
     {
         studioEventEmitters[3].Play();
     }

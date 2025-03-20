@@ -3,6 +3,9 @@ using Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Controller class for player, excute all player's input behaviours, and moving/physic states
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
 	#region EVENTS
@@ -112,8 +115,6 @@ public class PlayerController : MonoBehaviour
 		_rb.simulated = false;
 		_rb.linearVelocity = Vector3.zero;
 		_rb.angularVelocity = 0f;
-		
-		_armController.Init();
 	}
 
 	private void Hit()

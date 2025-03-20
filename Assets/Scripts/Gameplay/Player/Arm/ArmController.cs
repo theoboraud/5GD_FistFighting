@@ -28,16 +28,28 @@ public class ArmController : MonoBehaviour
     private void SubsribeEvents()
     {
         _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnHit);
-
+        _player.EventCenter.Subscribe<int>(PlayerEvent.OnHoldArm, HoldArm);
+        _player.EventCenter.Subscribe<int>(PlayerEvent.OnExtendArm, ExtendArm);
+        _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
     }
 
     private void UnsribeEvents()
     {
         _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnHit);
+        _player.EventCenter.Unsubscribe<int>(PlayerEvent.OnHoldArm, HoldArm);
+        _player.EventCenter.Unsubscribe<int>(PlayerEvent.OnExtendArm, ExtendArm);
+        _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
     }
 
+    private void OnPlayerGameStateChange(PlayerGameState _gameState)
+    {
+        if (_gameState == PlayerGameState.Dead)
+        {
+            Init(); //Init Arms On player Dead
+        }
+    }
     /// <summary>
-    ///
+    ///Init all arms
     /// </summary>
     public void Init()
     {
@@ -77,9 +89,7 @@ public class ArmController : MonoBehaviour
         if (!bIsOnHit && Arms[i].Cooldown == false)
         {
             Arms[i].StartHolding();
-            _player.VoiceController.PlayHold();
         }
-            
     }
 
 
