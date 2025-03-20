@@ -16,6 +16,6 @@ public class EndScreen : MonoBehaviour
 
     public void SetFaceForWinner(Player _winner)
     {
-        face.sprite = _winner.CharSkin.SpriteFace;
+        face.sprite = _winner.GetSkin().SpriteFace;
     }
 }

@@ -31,8 +31,8 @@ public class PlayerScore : MonoBehaviour
     /// </summary>
     public void SetFace()
     {
-        playerFace.GetComponent<Image>().sprite = Player.CharSkin.SpriteFace;
-        playerOutline.GetComponent<Image>().sprite = Player.CharSkin.SpriteFace;
+        playerFace.GetComponent<Image>().sprite = Player.GetSkin().SpriteFace;
+        playerOutline.GetComponent<Image>().sprite = Player.GetSkin().SpriteFace;
     }
 
 

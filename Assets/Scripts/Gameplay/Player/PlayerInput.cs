@@ -13,8 +13,9 @@ public class PlayerInput : MonoBehaviour
     // #region ============== CLASS VARIABLES ==============
 
     [Header("References")]
-    public Player Player;                       // Player reference
-    private RotateBehaviour Rotate;              // Player rotate reference
+    private Player _player;                       // Player reference
+    private ArmController _armController;
+    private RotateBehaviour _rotate;              // Player rotate reference
     private UnityEngine.InputSystem.PlayerInput playerInput;            // Player Input reference
     // All input action references
     private InputAction action_rotate;
@@ -30,9 +31,9 @@ public class PlayerInput : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        Player = gameObject.GetComponent<Player>();
-
-        Rotate = gameObject.GetComponent<RotateBehaviour>();
+	    _player = gameObject.GetComponent<Player>();
+		_armController = gameObject.GetComponent<ArmController>();
+        _rotate = gameObject.GetComponent<RotateBehaviour>();
 
         playerInput = gameObject.GetComponent<UnityEngine.InputSystem.PlayerInput>();
 
@@ -56,11 +57,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-            Player._armController.HoldArm(0);
+	        _armController.HoldArm(0);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player._armController.ExtendArm(0);
+	        _armController.ExtendArm(0);
         }
     }
 
@@ -68,11 +69,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-            Player._armController.HoldArm(1);
+	        _armController.HoldArm(1);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player._armController.ExtendArm(1);
+	        _armController.ExtendArm(1);
         }
     }
 
@@ -80,11 +81,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-            Player._armController.HoldArm(2);
+            _armController.HoldArm(2);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player._armController.ExtendArm(2);
+            _armController.ExtendArm(2);
         }
     }
 
@@ -92,11 +93,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (_context.started)
         {
-            Player._armController.HoldArm(3);
+            _armController.HoldArm(3);
         }
         if (_context.canceled || _context.interaction is TapInteraction)
         {
-            Player._armController.ExtendArm(3);
+            _armController.ExtendArm(3);
         }
     }
 
@@ -115,7 +116,7 @@ public class PlayerInput : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        Rotate.Input_Rotating(action_rotate.ReadValue<float>());
+        _rotate.Input_Rotating(action_rotate.ReadValue<float>());
     }
 
 
@@ -149,7 +150,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (LevelManager.Instance.IsLobbyScene())
             {
-                Player.IsReadyUI(!Player.GO_IsReady.activeSelf);
+	            _player.IsReadyUI(!_player.GO_IsReady.activeSelf);
             }
             else
             {
@@ -166,7 +167,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (LevelManager.Instance.CurrentSceneIndex == 2 && _context.interaction is PressInteraction && _context.started)
         {
-            Player.NextCharacter();
+	        _player.NextCharacter();
         }
     }
 
@@ -178,7 +179,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (LevelManager.Instance.CurrentSceneIndex == 2 && _context.interaction is PressInteraction && _context.started)
         {
-            Player.PreviousCharacter();
+	        _player.PreviousCharacter();
         }
     }
 
@@ -212,9 +213,9 @@ public class PlayerInput : MonoBehaviour
     {
         // Allows players to kill themselves if testing in the editor
         #if UNITY_EDITOR
-        if (_context.started && Player.PlayerGameState is PlayerGameState.Alive)
+        if (_context.started && !_player.IsDead())
         {
-            Player.Kill();
+	        _player.Kill();
         }
         #endif
     }
