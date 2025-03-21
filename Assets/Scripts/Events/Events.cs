@@ -12,6 +12,9 @@ public enum GameEvent
 
     //SpawnPoints
     OnSpawnPointsInit,
+
+    //Player
+    OnPlayerDead,
 }
 
 /// <summary>
@@ -39,6 +42,7 @@ public enum PlayerEvent
     OnGameStateChange,
     OnPhysicStateChange,
     OnRotateStateChange,
+    OnArmStateChange,
 
     //PlayerInput
     OnExtendArm,

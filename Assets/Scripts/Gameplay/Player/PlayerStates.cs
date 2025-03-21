@@ -30,6 +30,9 @@ public class PlayerStates : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// TODO
+    /// </summary>
     public PlayerRotateState PlayerRotateState
 	    {
         get { return PlayerRotateState; }
@@ -40,6 +43,20 @@ public class PlayerStates : MonoBehaviour
                 PlayerRotateState = value;
                 _player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, PlayerRotateState);
             }
+        }
+    }
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    public PlayerArmState PlayerArmState
+    {
+        get { return PlayerArmState; }
+        set
+        {
+            if (PlayerArmState != value)
+                PlayerArmState = value;
+            _player.EventCenter.Invoke<PlayerArmState>(PlayerEvent.OnArmStateChange, PlayerArmState);
         }
     }
 

@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
-            Invoke("Init", 0.1f);
+            Invoke("InitArm", 0.1f);
 
         }
         else

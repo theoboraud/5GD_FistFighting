@@ -20,6 +20,7 @@ public class ArmController : MonoBehaviour
         _playerController = GetComponentInParent<PlayerController>();
         _playerFeedbackManager = GetComponentInParent<PlayerFeedbackManager>();
         SubsribeEvents();
+        InitArms();
     }
     public void OnDisable()
     {
@@ -27,7 +28,7 @@ public class ArmController : MonoBehaviour
     }
     private void SubsribeEvents()
     {
-        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnHit);
+        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
         _player.EventCenter.Subscribe<int>(PlayerEvent.OnHoldArm, HoldArm);
         _player.EventCenter.Subscribe<int>(PlayerEvent.OnExtendArm, ExtendArm);
         _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
@@ -35,7 +36,7 @@ public class ArmController : MonoBehaviour
 
     private void UnsribeEvents()
     {
-        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnHit);
+        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
         _player.EventCenter.Unsubscribe<int>(PlayerEvent.OnHoldArm, HoldArm);
         _player.EventCenter.Unsubscribe<int>(PlayerEvent.OnExtendArm, ExtendArm);
         _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
@@ -45,17 +46,17 @@ public class ArmController : MonoBehaviour
     {
         if (_gameState == PlayerGameState.Dead)
         {
-            Init(); //Init Arms On player Dead
+            InitArms(); //Init Arms On player Dead
         }
     }
     /// <summary>
     ///Init all arms
     /// </summary>
-    public void Init()
+    public void InitArms()
     {
         for (int i = 0; i < Arms.Count; i++)
         {
-            Arms[i].Init();
+            Arms[i].InitArm();
         }
     }
 
@@ -63,7 +64,7 @@ public class ArmController : MonoBehaviour
     /// <summary>
     ///When player get hit
     /// </summary>
-    private void OnHit(PlayerPhysicState _newPhysicState)
+    private void OnPlayerPhysicStateChange(PlayerPhysicState _newPhysicState)
     {
         physicState = _newPhysicState;
         if (_newPhysicState == Enums.PlayerPhysicState.IsHit)
@@ -72,6 +73,12 @@ public class ArmController : MonoBehaviour
             for (int i = 0; i < Arms.Count; i++)
             {
                 Arms[i].StopEverything();
+            }
+            for (int i = 0; i < ArmsGoingToHit.Count; i++)
+            {
+                ArmChecker _arm = ArmsGoingToHit[i];
+                _arm.FrameStack = 0;
+                ArmsGoingToHit.Remove(_arm);
             }
         }
         else
@@ -94,48 +101,50 @@ public class ArmController : MonoBehaviour
 
 
     /// <summary>
-    ///     Called when we start to extend the arm
+    /// Called when we start to extend the arm
     /// </summary>
     public void ExtendArm(int _armIndex)
     {
-        if (Arms[_armIndex].Cooldown == false && !bIsOnHit)
+        ArmChecker _arm = Arms[_armIndex];
+
+        if (_arm.Cooldown == false && !bIsOnHit)
         {
             //Declenchement animation
-            float ArmScaleFactor = GetPrioPoints(Arms[_armIndex]);
-            Arms[_armIndex].renderer.transform.localScale = new Vector3
+            float ArmScaleFactor = GetPrioPoints(_arm);
+            _arm._renderer.transform.localScale = new Vector3
                 (Mathf.Lerp(1, 1.3f, ArmScaleFactor/ (3)), 
                 Mathf.Lerp(1, 1.3f, ArmScaleFactor / (3)));
 
-            Arms[_armIndex].anim.PlayAnimation();
-            Arms[_armIndex].Cooldown = true;
+            _arm.anim.PlayAnimation();
+            _arm.Cooldown = true;
             _player.VoiceController.StopHold();
 
             // If we can hit a player, start the frame stack
-            if (Arms[_armIndex].Players.Count > 0)
+            if (_arm.GetContactPlayers().Count > 0)
             {
-                ArmChecker _arm = Arms[_armIndex];
+
                 ArmsGoingToHit.Add(_arm);
 
                 if(_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
-                if (_arm.Players.Count > 0)
+                if (_arm.GetContactPlayers().Count > 0)
                 {
-                    for (int i = 0; i < _arm.Players.Count; i++)
+                    for (int i = 0; i < _arm.GetContactPlayers().Count; i++)
                     {
 
                         //print("PlayersArmController: i is " + i.ToString());
                         //print(_arm.Players[i]);
 
-                        if (_arm.Players[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count > 0)
+                        if (_arm.GetContactPlayers()[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count > 0)
                         {
-                            for (int j = 0; j < _arm.Players[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count; j++)
+                            for (int j = 0; j < _arm.GetContactPlayers()[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count; j++)
                             {
 
                                 //print("PlayersArmController: j is " + j.ToString());
                                 //print(_arm.Players[i].ArmController.ArmsGoingToHit[j]);
 
-                                ArmChecker _armPlayerHit = _arm.Players[i].GetPlayerController().GetArmController().ArmsGoingToHit[j];
+                                ArmChecker _armPlayerHit = _arm.GetContactPlayers()[i].GetPlayerController().GetArmController().ArmsGoingToHit[j];
 
-                                if (_armPlayerHit.Players.Contains(_player))
+                                if (_armPlayerHit.GetContactPlayers().Contains(_player))
                                 {
 
                                     //Debug.Log("On Casse des Gueules !!!");
@@ -159,25 +168,7 @@ public class ArmController : MonoBehaviour
     }
 
 
-    /// <summary>
-    ///
-    /// </summary>
-    public void ComparePlayersVelocity(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
-    {
-        if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > _armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
-        {
-            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
-        }
-        else if (_armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > _armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
-        {
-            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
-        }
-        else if (Mathf.Approximately(_armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude, _armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude))
-        {
-            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
-            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
-        }
-    }
+
 
     public void ArmClash(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
     {
@@ -262,16 +253,18 @@ public class ArmController : MonoBehaviour
     /// </summary>
     public void ExtendedArm(int _armIndex)
     {
-        Arms[_armIndex].FrameStack = 0;
+        ArmChecker arm = Arms[_armIndex];
+        arm.FrameStack = 0;
         
-        if (CheckIfRigidbodyInRange(_armIndex) && !CheckIfEnvironmentInRange(_armIndex))
+        if (arm.IsRigidbodyInRange() && !arm.IsEnvironmentInRange())
         {
             LaunchForeignObject(_armIndex);
         }
-        else if(CheckIfEnvironmentInRange(_armIndex) && CheckIfRigidbodyInRange(_armIndex))
+        else if(arm.IsEnvironmentInRange() && arm.IsRigidbodyInRange())
         {
-            RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
-            if(Vector2.Distance(this.transform.position, ray.point) < Arms[_armIndex].GetClosestRigidbodyPosition())
+            RaycastHit2D ray = Physics2D.Raycast(arm.transform.position, -arm.transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
+            float nearestDis = arm.GetClosestRigidbodyPosition();
+            if (Vector2.Distance(this.transform.position, ray.point) < nearestDis)
             {
                 LaunchThisAvatarFromGround(_armIndex);
             }
@@ -280,7 +273,7 @@ public class ArmController : MonoBehaviour
                 LaunchForeignObject(_armIndex);
             }
         }
-        else if (CheckIfEnvironmentInRange(_armIndex))
+        else if (arm.IsEnvironmentInRange())
         {
             LaunchThisAvatarFromGround(_armIndex);
         }
@@ -289,36 +282,6 @@ public class ArmController : MonoBehaviour
             if(!_player.GetPlayerController().HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
         }
     }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    private bool CheckIfRigidbodyInRange(int _armIndex)
-    {
-        bool inRange = false;
-
-        if (Arms[_armIndex].Rigidbodies.Count > 0 || Arms[_armIndex].Players.Count > 0)
-        {
-            inRange = true;
-        }
-
-        return inRange;
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-    private bool CheckIfEnvironmentInRange(int _armIndex)
-    {
-        bool inRange = false;
-
-        inRange = Arms[_armIndex].StaticEnvironmentInRange;
-
-        return inRange;
-    }
-
 
     /// <summary>
     ///
@@ -397,11 +360,11 @@ public class ArmController : MonoBehaviour
 
 
     /// <summary>
-    ///
+    ///Hit arm triggered objects 
     /// </summary>
     private void LaunchForeignObject(int _armIndex)
     {
-        foreach (var item in Arms[_armIndex].Rigidbodies)
+        foreach (var item in Arms[_armIndex].GetContactObjects())
         {
             if (item!=null)
             {
@@ -414,7 +377,7 @@ public class ArmController : MonoBehaviour
             }
         }
 
-        foreach (var item in Arms[_armIndex].Players)
+        foreach (var item in Arms[_armIndex].GetContactPlayers())
         {
             item.GetPlayerController().GetRB().linearVelocity = Vector2.zero;
             item.GetPlayerController().GetRB().angularVelocity = 0;
@@ -446,14 +409,4 @@ public class ArmController : MonoBehaviour
         }
     }
 
-
-    public void IsHit()
-    {
-        for (int i = 0; i < ArmsGoingToHit.Count; i++)
-        {
-            ArmChecker _arm = ArmsGoingToHit[i];
-            _arm.FrameStack = 0;
-            ArmsGoingToHit.Remove(_arm);
-        }
-    }
 }

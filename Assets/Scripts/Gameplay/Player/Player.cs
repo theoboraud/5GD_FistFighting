@@ -202,6 +202,8 @@ public class Player : MonoBehaviour
 
             // Remove the player from the PlayersAlive reference in PlayersManager
             PlayersManager.Instance.KillPlayer(this);
+
+            GEventCenter.Invoke<Player>(GameEvent.OnPlayerDead, this);
         }
     }
 

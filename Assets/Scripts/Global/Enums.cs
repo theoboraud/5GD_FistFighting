@@ -42,7 +42,8 @@ namespace Enums
         Extended,
         Unextending,
         Ready,
-        NotReady
+        NotReady,
+        Hold
     }
 
     public enum PlayerRotateState

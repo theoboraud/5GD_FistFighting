@@ -119,7 +119,6 @@ public class PlayerController : MonoBehaviour
 
 	private void Hit()
 	{
-		_armController.IsHit();
 		StunTimer = 0;
 	}
 	
