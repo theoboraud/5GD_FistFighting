@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: gameModes.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7771527687371490547, guid: 7834c2a454f7b4349a818c215e1f5c94, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

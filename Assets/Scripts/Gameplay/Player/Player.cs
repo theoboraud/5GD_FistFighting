@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Enums;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using System.Reflection;
 
 /// <summary>
 /// Main class of each player, manager all player's data, game state,and behaviours
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     //public event CallBack onInvincibilityStart;
     //public event CallBack onInvincibilityStop;
     public EventCenter<PlayerEvent> EventCenter { get; private set; }
+    public PlayerData PlayerData { get ; private set ; }
+    public PlayerStates PlayerStates { get ; private set; }
 
     #endregion
 
@@ -32,15 +35,13 @@ public class Player : MonoBehaviour
     [Header("References")]
     private PlayerController _playerController;
     private PlayerFeedbackManager _playerFeedbackManager;
-    private PlayerData _playerData;
-    private PlayerStates _playerStates;
     [SerializeField] private CharacterSkin _skin;
-    private int skinIndex;  
-    
+    private int skinIndex;
+
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
-    
-    
+
+
     public SpriteRenderer Outline_SpriteRenderer;
     public GameObject PlayerIndicator;
     public GameObject GO_IsReady;
@@ -48,9 +49,9 @@ public class Player : MonoBehaviour
     public FeedbackFaceController FaceController;
 
     public bool isReady = false;
-    
-                           // Contains the index of the current skin
-    
+
+    // Contains the index of the current skin
+
     [System.NonSerialized] public string PlayerLayer;
 
     // #endregion
@@ -58,43 +59,49 @@ public class Player : MonoBehaviour
 
     // #region ==================== INIT FUNCTIONS ====================
 
-    private void Awake()
+    /// <summary>
+    /// Init by Player Manager at Game round Start
+    /// </summary>
+    public void StartInit(int _playerIndex)
     {
         EventCenter = new EventCenter<PlayerEvent>();
-    }
 
+        PlayerData = new PlayerData(this);
+        PlayerStates = new PlayerStates(this);
+
+        _playerController = GetComponent<PlayerController>();
+        _playerController.Init();
+
+        ///This we have to do in PlayerManager, TODO
+        if (PlayersManager.Instance.Players.Count < 4)
+        {
+            // Keep the player game object between scenes
+            DontDestroyOnLoad(gameObject);
+
+            // Add player to the PlayersManager
+            PlayersManager.Instance.AddPlayer(this);
+
+
+            // Get a random skin at start -> TODO: Select skin
+            skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
+            ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        PlayerData.PlayerIndex = _playerIndex;
+        gameObject.layer = LayerMask.NameToLayer($"Player{_playerIndex+1}");
+    }
+    
     /// <summary>
-    ///     Init variables
+    /// Call on a new level start
     /// </summary>
-    public void OnEnable()
+    public void InitPlayer()
     {
-	    _playerController = GetComponent<PlayerController>();
-	    _playerData = GetComponent<PlayerData>();
-	    _playerStates = GetComponent<PlayerStates>();
-    }
+        PlayerData.PlayerLives = GameManager.Instance.ParamData.PARAM_Player_Lives;
 
-    private void Start()
-    {
-	    EventCenter.Invoke(PlayerEvent.OnPlayerInit);
-	    if (PlayersManager.Instance.Players.Count < 4)
-	    {
-		    // Keep the player game object between scenes
-		    DontDestroyOnLoad(gameObject);
-            
-		    // Add player to the PlayersManager
-		    PlayersManager.Instance.AddPlayer(this);
-            
-
-		    // Get a random skin at start -> TODO: Select skin
-		    skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
-		    ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
-	    }
-	    else
-	    {
-		    Destroy(this.gameObject);
-	    }
-	    
-	    _playerData.OnPlayerIndexChanged.AddListener(PlayerIndexChanged);
     }
 
 
@@ -175,10 +182,10 @@ public class Player : MonoBehaviour
         Face_SpriteRenderer.enabled = true;
         this.transform.position = _targetPos;
 
-        if (_playerData.nbDeath > 0)
+        if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
         {
             //Set player invincible
-            _playerStates.PlayerGameState = PlayerGameState.Invincible;
+            PlayerStates.PlayerGameState = PlayerGameState.Invincible;
             gameObject.layer = LayerMask.NameToLayer("Invincible");
             Invoke(nameof(StopInvincibility), GlobalSettings.PlayerInvincibility);
         }
@@ -195,21 +202,19 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Kill()
     {
-        if (PlayersManager.Instance.PlayersAlive.Contains(this))
-        {
-            Face_SpriteRenderer.enabled = false;
-            this.transform.position = new Vector3(1000, 1000, 0);
+        if (PlayerStates.PlayerGameState is PlayerGameState.Dead) return;
 
-            
-            IsReadyUI(false);
+        Face_SpriteRenderer.enabled = false;
+        this.transform.position = new Vector3(1000, 1000, 0);
 
-            _playerStates.PlayerGameState = PlayerGameState.Dead;
+        PlayerData.PlayerLives -= 1;
 
-            // Remove the player from the PlayersAlive reference in PlayersManager
-            PlayersManager.Instance.KillPlayer(this);
+        IsReadyUI(false);
 
-            GEventCenter.Invoke<Player>(GameEvent.OnPlayerDead, this);
-        }
+        PlayerStates.PlayerGameState = PlayerGameState.Dead;
+
+        //Broadcast global of player dead
+        GEventCenter.Invoke<Player>(GameEvent.OnPlayerDead, this);
     }
 
 
@@ -218,9 +223,9 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Hit()
     {
-        _playerStates.PlayerPhysicState = PlayerPhysicState.IsHit;
+        PlayerStates.PlayerPhysicState = PlayerPhysicState.IsHit;
     }
-    
+
     /// <summary>
     ///     Indicate if the player is ready in the lobby
     /// </summary>
@@ -240,53 +245,49 @@ public class Player : MonoBehaviour
     }
 
     // #endregion
-    
+
     public CharacterSkin GetSkin()
     {
-	    return _skin;
+        return _skin;
     }
 
     public PlayerController GetPlayerController()
     {
-	    return _playerController;
+        return _playerController;
     }
-    
+
     #region Get States
 
     public bool IsAlive()
     {
-	    return _playerStates.PlayerGameState == PlayerGameState.Alive;
+        return PlayerStates.PlayerGameState == PlayerGameState.Alive;
     }
-    
+
     public bool IsDead()
     {
-	    return _playerStates.PlayerGameState == PlayerGameState.Dead;
+        return PlayerStates.PlayerGameState == PlayerGameState.Dead;
     }
 
     public bool IsInvincible()
     {
-	    return _playerStates.PlayerGameState == PlayerGameState.Invincible;
+        return PlayerStates.PlayerGameState == PlayerGameState.Invincible;
     }
 
     public bool IsInAir()
     {
-	    return _playerStates.PlayerPhysicState == PlayerPhysicState.InAir;
+        return PlayerStates.PlayerPhysicState == PlayerPhysicState.InAir;
     }
 
     public bool IsGrounded()
     {
-	    return _playerStates.PlayerPhysicState == PlayerPhysicState.OnGround;
+        return PlayerStates.PlayerPhysicState == PlayerPhysicState.OnGround;
     }
-    
+
     public bool IsHit()
     {
-	    return _playerStates.PlayerPhysicState == PlayerPhysicState.IsHit;
-}
-    
+        return PlayerStates.PlayerPhysicState == PlayerPhysicState.IsHit;
+    }
+
     #endregion
 
-    private void PlayerIndexChanged(int index)
-    {
-	    gameObject.layer = LayerMask.NameToLayer($"Player{index}");
-    }
 }

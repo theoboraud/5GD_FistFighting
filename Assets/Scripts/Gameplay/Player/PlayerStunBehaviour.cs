@@ -6,8 +6,8 @@ using Enums;
 public class PlayerStunBehaviour : MonoBehaviour
 {
     private PlayerFeedbackManager _playerFeedbackManager;
+    private Player _player;
     private PlayerController _playerController;
-    private PlayerStates _playerStates;
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] PhysicsMaterial2D bounce;
     [SerializeField] ParticleSystemController particleSystemController;
@@ -18,15 +18,14 @@ public class PlayerStunBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        _player = GetComponent<Player>();
 	    _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
 	    _playerController = GetComponent<PlayerController>();
-		_playerStates = GetComponent<PlayerStates>();
-		
     }
 
     private void Update()
     {
-        if (_playerStates.PlayerPhysicState == PlayerPhysicState.IsHit)
+        if (_player.PlayerStates.PlayerPhysicState == PlayerPhysicState.IsHit)
         {
             //Check if material is applied to know whether it's the beginning of the Stun State
             if (!boxCollider.sharedMaterial)

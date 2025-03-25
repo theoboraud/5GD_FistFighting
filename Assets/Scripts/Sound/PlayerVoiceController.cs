@@ -40,29 +40,29 @@ public class PlayerVoiceController : MonoBehaviour
 
     public void PlayHurt()
     {
-        studioEventEmitters[0].Play();
-        studioEventEmitters[0].SetParameter(studioEventEmitters[0].Params[0].ID, _player.GetSkin().VoiceParameter);
+        //studioEventEmitters[0].Play();
+        //studioEventEmitters[0].SetParameter(studioEventEmitters[0].Params[0].ID, _player.GetSkin().VoiceParameter);
     }
 
     public void PlayPush()
     {
-        studioEventEmitters[1].Play();
-        studioEventEmitters[1].SetParameter(studioEventEmitters[1].Params[0].ID, _player.GetSkin().VoiceParameter);
+        //studioEventEmitters[1].Play();
+        //studioEventEmitters[1].SetParameter(studioEventEmitters[1].Params[0].ID, _player.GetSkin().VoiceParameter);
     }
 
     public void PlayVictory()
     {
-        studioEventEmitters[2].Play();
-        studioEventEmitters[2].SetParameter(studioEventEmitters[2].Params[0].ID, _player.GetSkin().VoiceParameter);
+        //studioEventEmitters[2].Play();
+        //studioEventEmitters[2].SetParameter(studioEventEmitters[2].Params[0].ID, _player.GetSkin().VoiceParameter);
     }
 
     public void PlayHold(int armIndex)
     {
-        studioEventEmitters[3].Play();
+        //studioEventEmitters[3].Play();
     }
 
     public void StopHold()
     {
-        studioEventEmitters[3].Stop();
+        //studioEventEmitters[3].Stop();
     }
 }

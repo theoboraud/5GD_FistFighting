@@ -7,7 +7,7 @@ using Enums;
 public class PlayersManager : MonoBehaviour
 {
     // #region ==================== CLASS VARIABLES ====================
-
+    [SerializeField]
     [Header("References")]
     [System.NonSerialized] public static PlayersManager Instance;               // Singleton reference
     [System.NonSerialized] public SkinsData SkinsData;                          // SkinData reference for loading skins
@@ -16,9 +16,9 @@ public class PlayersManager : MonoBehaviour
     [System.NonSerialized] public List<Player> Players;                         // All players references
     [System.NonSerialized] public List<Player> PlayersSpawned;                  // All players spawned currently
     [System.NonSerialized] public List<Player> PlayersAlive;                    // All players alive in the current game
-    [System.NonSerialized] public List<Player> PlayersDeathOrder;               // All players that died in the current game, in the death order
-    [System.NonSerialized] public List<int> PlayersLives = new List<int>();     // Nb of lives for each player
 
+
+    PlayerInputManager _playerInputManager;
     // #endregion
 
 
@@ -34,8 +34,6 @@ public class PlayersManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-
-            Init();
         }
         else
         {
@@ -49,6 +47,8 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        _playerInputManager = GetComponent<PlayerInputManager>();
+
         // Init references
         SkinsData = gameObject.GetComponent<SkinsData>();
 
@@ -56,17 +56,30 @@ public class PlayersManager : MonoBehaviour
         Players = new List<Player>();
         PlayersSpawned = new List<Player>();
         PlayersAlive = new List<Player>();
-        PlayersDeathOrder = new List<Player>();
+
+        SubsribeEvents();
 
         // Players have only 1 life in the lobby
         ResetPlayersLives(1);
     }
 
-    public void OnEnable()
+    /// <summary>
+    /// Listen event of on player joined call by input manager
+    /// </summary>
+    /// <param name="playerInput"></param>
+    private void OnPlayerJoined(PlayerInput playerInput)
     {
-        SubsribeEvents();
+        Debug.Log("New Player Joined: " + playerInput.playerIndex);
+        Player newPlayer = playerInput.GetComponent<Player>();
+
+        if (newPlayer != null)
+        {
+            newPlayer.StartInit(playerInput.playerIndex);
+            Players.Add(newPlayer);
+        }
     }
-    public void OnDisable()
+
+    public void OnDestroy()
     {
         UnsribeEvents();
     }
@@ -75,6 +88,8 @@ public class PlayersManager : MonoBehaviour
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Subscribe<Player>(GameEvent.OnPlayerDead, OnPlayerKilled);
+        _playerInputManager.onPlayerJoined += OnPlayerJoined;
     }
 
     private void UnsribeEvents()
@@ -82,6 +97,8 @@ public class PlayersManager : MonoBehaviour
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerDead, OnPlayerKilled);
+        _playerInputManager.onPlayerJoined -= OnPlayerJoined;
     }
 
     // #endregion
@@ -100,18 +117,9 @@ public class PlayersManager : MonoBehaviour
         {
             // Add the player for every manager and init its values
             Players.Add(_player);
-            // Set lives to starting value
-            if (LevelManager.Instance.CurrentSceneIndex == 0)
-            {
-                PlayersLives.Add(1);
-            }
-            else
-            {
-                PlayersLives.Add(GameManager.Instance.ParamData.PARAM_Player_Lives);
-            }
 
             MenuManager.Instance.AddPlayer(Players.IndexOf(_player));
-            GameManager.Instance.PlayerScores.Add(0);
+            GameManager.Instance.PlayerScores.Add(0);//TODO
 
             // Set action map on Gameplay if player is spawning InPlay
             if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
@@ -151,7 +159,7 @@ public class PlayersManager : MonoBehaviour
         for (int i = 0; i < Players.Count; i++)
         {
             // Reinit player lives
-            PlayersLives[i] = _lives;
+            Players[i].PlayerData.PlayerLives = _lives;
         }
     }
 
@@ -211,18 +219,16 @@ public class PlayersManager : MonoBehaviour
 
 
     /// <summary>
-    ///     Kill a given player
+    ///Remove reference in player alive list
     /// </summary>
-    public void KillPlayer(Player _player)
+    public void OnPlayerKilled(Player _player)
     {
         // The player loses a life
-        PlayersLives[Players.IndexOf(_player)] -= 1;
         MenuManager.Instance.UpdateLives();
         PlayersSpawned.Remove(_player);
 
-        if (PlayersLives[Players.IndexOf(_player)] <= 0)
+        if (_player.PlayerData.PlayerLives<= 0)
         {
-            PlayersDeathOrder.Add(_player);
             PlayersAlive.Remove(_player);
 
             if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
@@ -290,13 +296,12 @@ public class PlayersManager : MonoBehaviour
         Players.Clear();
         PlayersSpawned.Clear();
         PlayersAlive.Clear();
-        PlayersDeathOrder.Clear();
     }
 
     //Call when game manager start a NEW GAME ROUND
     private void OnNewGameRound()
     {
-        PlayersDeathOrder.Clear();
+
     }
 
     private void OnSceneLoad(GameScene _scene)

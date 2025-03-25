@@ -55,16 +55,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        InitGame();
+    }
 
     /// <summary>
     ///     Init all managers
     /// </summary>
-    private void Init()
+    private void InitGame()
     {
         GlobalGameState = GlobalGameState.MainMenu;
+
+        PlayersManager.Instance.Init();
         LevelManager.Instance.Init();
         MenuManager.Instance.Init();
-        PlayersManager.Instance.Init();
     }
 
     public void OnEnable()

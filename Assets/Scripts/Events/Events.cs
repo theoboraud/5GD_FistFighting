@@ -24,7 +24,6 @@ public enum PlayerEvent
 {
     //Player
     OnHit,
-    OnPlayerInit,
     OnPlayerKilled,
     OnPlayerSpawn,
     OnPlayerHit,

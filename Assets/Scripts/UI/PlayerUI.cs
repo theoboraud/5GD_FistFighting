@@ -22,6 +22,8 @@ public class PlayerUI : MonoBehaviour
     [Header("Variables")]
     [System.NonSerialized] public int PlayerIndex;
 
+    private Player _player;
+
 
     /// <summary>
     ///     Add the PlayerUI
@@ -40,6 +42,7 @@ public class PlayerUI : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        _player = GetComponent<Player>();
         if (LevelManager.Instance.CurrentSceneIndex > 0)
         {
             // Set the game objects visibility
@@ -72,7 +75,7 @@ public class PlayerUI : MonoBehaviour
     {
         if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
         {
-            int _playerLives = PlayersManager.Instance.PlayersLives[PlayerIndex];
+            int _playerLives = _player.PlayerData.PlayerLives;
 
             if (_playerLives > 0)
             {

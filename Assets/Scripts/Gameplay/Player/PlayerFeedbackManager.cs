@@ -8,8 +8,6 @@ using UnityEngine;
 public class PlayerFeedbackManager : MonoBehaviour
 {
     private Player _player;
-    private PlayerController _playerController;
-    private PlayerStates _playerStates;
     
     [SerializeField] SpriteRenderer InvincibleVFX;
     [SerializeField] SpriteRenderer StunAccumulation;
@@ -25,12 +23,7 @@ public class PlayerFeedbackManager : MonoBehaviour
     private void OnEnable()
     {
 	    _player = GetComponent<Player>();
-	    _feedbackFaceController = GetComponentInChildren<FeedbackFaceController>();
-	    
-	    _playerController = GetComponent<PlayerController>();
-	    _playerStates = GetComponent<PlayerStates>();
-
-	    
+	    _feedbackFaceController = GetComponentInChildren<FeedbackFaceController>();    
     }
 
     private void OnDisable()
@@ -155,7 +148,7 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void CollisionFeedback()
     {
-	    if(_playerStates.PlayerPhysicState == PlayerPhysicState.OnGround && _feedbackFaceController.CanShake)
+	    if(_player.PlayerStates.PlayerPhysicState == PlayerPhysicState.OnGround && _feedbackFaceController.CanShake)
 	    {
 		    _feedbackFaceController.ShakeFace();
 		    _feedbackFaceController.CanShake = false;

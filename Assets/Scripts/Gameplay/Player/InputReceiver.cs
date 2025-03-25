@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 /// <summary>
 ///     Class Manager player inputs
 /// </summary>
-public class PlayerInput : MonoBehaviour
+public class InputReceiver : MonoBehaviour
 {
     // #region ============== CLASS VARIABLES ==============
 
@@ -128,6 +128,7 @@ public class PlayerInput : MonoBehaviour
     /// </summary>
     public void Gameplay_Start(InputAction.CallbackContext _context)
     {
+        Debug.Log(GameManager.Instance.GlobalGameState);
         if (GameManager.Instance.GlobalGameState is GlobalGameState.Outro && _context.canceled)
         {
             GameManager.Instance.ResetGame();

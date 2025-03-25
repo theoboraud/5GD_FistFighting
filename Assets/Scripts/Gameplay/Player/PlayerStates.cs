@@ -2,15 +2,18 @@
 using Enums;
 using UnityEngine;
 
-public class PlayerStates : MonoBehaviour
+public class PlayerStates
 {
-	private PlayerData _playerData;
     private Player _player;
     private PlayerGameState _playerGameState;
     private PlayerPhysicState _playerPhysicState;
     private PlayerRotateState _playerRotateState;
     private PlayerArmState _playerArmState;
-    
+
+    public PlayerStates(Player _myPlayer)
+    {
+        _player = _myPlayer;
+    }
     public PlayerGameState PlayerGameState
     {
         get { return _playerGameState; }
@@ -35,18 +38,20 @@ public class PlayerStates : MonoBehaviour
             }
         }
     }
+    
     /// <summary>
     /// TODO
     /// </summary>
     public PlayerRotateState PlayerRotateState
-	    {
+	{
         get { return _playerRotateState; }
         set
         {
             if (_playerRotateState != value)
             {
 	            _playerRotateState = value;
-                _player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, _playerRotateState);
+                //Broadcast of rotate state change, not in use
+                //_player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, _playerRotateState);
             }
         }
     }
@@ -66,30 +71,6 @@ public class PlayerStates : MonoBehaviour
     }
 
     public bool IsReady = false;
-
-	private void OnEnable()
-	{
-		_playerData = GetComponent<PlayerData>();
-        _player = GetComponent<Player>();
-
-        InitCallBacks();
-	}
-
-	private void OnDisable()
-	{
-		RemoveCallBacks();
-	}
-
-	private void InitCallBacks()
-	{
-        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerInit, Init);;
-	}
-
-	private void RemoveCallBacks()
-	{
-        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerInit, Init);
-    }
-
 	public void Init()
 	{
 		PlayerGameState = PlayerGameState.Alive;

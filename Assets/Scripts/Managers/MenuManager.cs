@@ -59,7 +59,7 @@ public class MenuManager : MonoBehaviour
     public void Init()
     {
         // Init the active menu as the main menu
-        MainMenu.Activate();
+        //MainMenu.Activate();
     }
 
 
@@ -285,7 +285,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void UpdateLives()
     {
-        for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
+        for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
         {
             PlayersUI[i].UpdateLivesUI();
         }
@@ -312,7 +312,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void ResetPlayersUI()
     {
-        for (int i = 0; i < PlayersManager.Instance.PlayersLives.Count; i++)
+        for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
         {
             PlayersUI[i].Init();
         }

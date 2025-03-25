@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
         }
         if (PlayOnStart)
         {
-            musicRef.Play();
+            PlayMusic();
         }
     }
 
@@ -40,38 +40,40 @@ public class AudioManager : MonoBehaviour
     {
         GEventCenter.Subscribe(GameEvent.OnGameReset, StopMusic);
         GEventCenter.Subscribe(GameEvent.OnGameReset, StopWinSound);
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     private void UnsribeEvents()
     {
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, StopMusic);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, StopWinSound);
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
     }
 
     public void PlayMusic()
     {
-        musicRef.Play();
+       // musicRef.Play();
     }
 
     public void StopMusic()
     {
-        musicRef.Stop();
+       // musicRef.Stop();
     }
 
     public void PlayWinSound()
     {
-        WinSound.Play();
+      //  WinSound.Play();
     }
 
     public void StopWinSound()
     {
-        WinSound.Stop();
+        //WinSound.Stop();
     }
 
     public void ChangeParam(float _value)
     {
-        ParamRef.value = _value;
-        ParamRef.TriggerParameters();
+        //ParamRef.value = _value;
+        //ParamRef.TriggerParameters();
     }
 
     public void PlayTrack(string eventPath, Vector3 position)

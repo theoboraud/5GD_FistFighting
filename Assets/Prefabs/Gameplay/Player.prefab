@@ -786,9 +786,7 @@ GameObject:
   - component: {fileID: 8230067169135093452}
   - component: {fileID: 8023127552561660906}
   - component: {fileID: 4963761400113064789}
-  - component: {fileID: 5630624496471268355}
   - component: {fileID: 810358377125494597}
-  - component: {fileID: 6610104440751224988}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1115,7 +1113,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Suicice[/Keyboard/k]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Menu
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &3996649375659255604
@@ -1275,19 +1273,6 @@ MonoBehaviour:
   - {fileID: 1146980566960427136}
   - {fileID: 3875975203341844277}
   ArmsHittingPlayers: []
---- !u!114 &5630624496471268355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638854206922542603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f326056f6044a4f989e9df7254d81bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsReady: 0
 --- !u!114 &810358377125494597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,22 +1289,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &6610104440751224988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638854206922542603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7497da9d0fb84bfcbb2aa867bd083e69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nbDeath: 0
-  OnPlayerIndexChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &435162874383215005
@@ -1406,6 +1375,10 @@ PrefabInstance:
       propertyPath: Cooldown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 5486271232133404602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1504,6 +1477,10 @@ PrefabInstance:
       propertyPath: Cooldown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 5486271232133404602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1776,6 +1753,10 @@ PrefabInstance:
       propertyPath: Cooldown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 826066456709145985}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1882,6 +1863,10 @@ PrefabInstance:
       propertyPath: Cooldown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9088388222987605832, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 5486271232133404602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

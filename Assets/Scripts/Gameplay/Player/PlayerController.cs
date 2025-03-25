@@ -8,192 +8,180 @@ using UnityEngine.Events;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-	#region EVENTS
+    #region EVENTS
 
-	//public event CallBack onStunStart;
-	//public event CallBack onStunStop;
-	//public event CallBack onCollisionEnter;
-	//public event CallBack onGround;
-	//public event CallBack onAir;
+    //public event CallBack onStunStart;
+    //public event CallBack onStunStop;
+    //public event CallBack onCollisionEnter;
+    //public event CallBack onGround;
+    //public event CallBack onAir;
 
-	#endregion
-	[Header("References")]
-	private Rigidbody2D _rb;       // Player rigidbody ref
-	private ArmController _armController;
-	private PlayerFeedbackManager _playerFeedbackManager;
-	private PlayerInput _playerInput;
-	private PlayerStates _playerStates;
-	private Player _player;
-	private PlayerData _playerData;
-	
-	private BoxCollider2D _boxCollider;
+    #endregion
+    [Header("References")]
+    private Rigidbody2D _rb;       // Player rigidbody ref
+    private ArmController _armController;
+    private PlayerFeedbackManager _playerFeedbackManager;
+    private Player _player;
 
-	[Header("Events for FMOD")]
-	public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
-	public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
+    private BoxCollider2D _boxCollider;
 
-	[Header("Variables")]
-	[System.NonSerialized] public PlayerGameState PlayerGameState;
-	[System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
-	[System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
-	[System.NonSerialized] public bool IsReady = false;                     // Indicates if the player is ready in the lobby
-	[System.NonSerialized] public float AirPushFactor = 1f;
-	[System.NonSerialized] public bool HitObject_bool = false;
-	[System.NonSerialized] public bool HoldingTrigger = false;
+    [Header("Events for FMOD")]
+    public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
+    public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
 
-	[System.NonSerialized] public float StunRecoveryTime;
-	[System.NonSerialized] public float StunTimer;
-	[System.NonSerialized] public float ForceIncreaseFactor;
+    [Header("Variables")]
+    [System.NonSerialized] public PlayerGameState PlayerGameState;
+    [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
+    [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
+    [System.NonSerialized] public bool IsReady = false;                     // Indicates if the player is ready in the lobby
+    [System.NonSerialized] public float AirPushFactor = 1f;
+    [System.NonSerialized] public bool HitObject_bool = false;
+    [System.NonSerialized] public bool HoldingTrigger = false;
 
-	private int skinIndex;                         // Contains the index of the current skin
+    [System.NonSerialized] public float StunRecoveryTime;
+    [System.NonSerialized] public float StunTimer;
+    [System.NonSerialized] public float ForceIncreaseFactor;
 
-	private void OnEnable()
-	{
-		_player = GetComponent<Player>();
-		_playerData = GetComponent<PlayerData>();
-        _playerStates = GetComponent<PlayerStates>();
+    private int skinIndex;                         // Contains the index of the current skin
+
+    private void OnDestroy()
+    {
+        RemoveCallBacks();
+    }
+
+    public void Init()
+    {
+        _player = GetComponent<Player>();
         _boxCollider = GetComponent<BoxCollider2D>();
-        _playerInput = GetComponent<PlayerInput>();
-		_rb = GetComponent<Rigidbody2D>();
-		
-		InitCallBacks();
-	}
-	
-	private void OnDisable()
-	{
-		RemoveCallBacks();
-	}
+        _rb = GetComponent<Rigidbody2D>();
+        // Init parameters
+        GlobalSettings.ApplyPhysicsSettings(_rb);
 
-	public void Init()
-	{
-		// Init parameters
-		GlobalSettings.ApplyPhysicsSettings(_rb);
-	}
+        InitCallBacks();
+    }
 
-	private void InitCallBacks()
-	{
-        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerInit, Init);
+    private void InitCallBacks()
+    {
         _player.EventCenter.Subscribe(PlayerEvent.OnPlayerSpawn, Spawn);
-		_player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange,OnPlayerGameStateChange);
+        _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
         _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
-	private void RemoveCallBacks()
-	{
-        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerInit, Init);
+    private void RemoveCallBacks()
+    {
         _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerSpawn, Spawn);
         _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
         _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
-	private void Spawn()
-	{
-		_playerStates.PlayerGameState = PlayerGameState.Alive;
-		this.transform.rotation = Quaternion.identity;
-		_rb.linearVelocity = new Vector2(0f, 0f);
-		_rb.simulated = true;
+    private void Spawn()
+    {
+        _player.PlayerStates.PlayerGameState = PlayerGameState.Alive;
+        this.transform.rotation = Quaternion.identity;
+        _rb.linearVelocity = new Vector2(0f, 0f);
+        _rb.simulated = true;
     }
 
-	private void OnPlayerGameStateChange(PlayerGameState _gameState)
-	{
-		if (_gameState == PlayerGameState.Dead)
-		{
-			Kill();
-		}
-	}
-
-	private void OnPlayerPhysicStateChange(PlayerPhysicState _physicState)
-	{
-		if (_physicState == PlayerPhysicState.IsHit)
-		{
-			Hit();
+    private void OnPlayerGameStateChange(PlayerGameState _gameState)
+    {
+        if (_gameState == PlayerGameState.Dead)
+        {
+            Kill();
         }
-	}
-	private void Kill()
-	{
-		_rb.simulated = false;
-		_rb.linearVelocity = Vector3.zero;
-		_rb.angularVelocity = 0f;
-	}
+    }
 
-	private void Hit()
-	{
-		StunTimer = 0;
-	}
-	
-	/// <summary>
-	///     Check if hit a lethal object or an arrival
-	/// </summary>
-	private void OnCollisionEnter2D(Collision2D _collision)
-	{
-		GameObject _GO = _collision.gameObject;
+    private void OnPlayerPhysicStateChange(PlayerPhysicState _physicState)
+    {
+        if (_physicState == PlayerPhysicState.IsHit)
+        {
+            Hit();
+        }
+    }
+    private void Kill()
+    {
+        _rb.simulated = false;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = 0f;
+    }
 
-		if (_GO.CompareTag("Lethal") && _playerStates.PlayerGameState == PlayerGameState.Alive)
-		{
-			_player.Kill();
-		}
+    private void Hit()
+    {
+        StunTimer = 0;
+    }
 
-		if (_GO.CompareTag("Arrival"))
-		{
-			GameManager.Instance.EndOfRound(_player);
-		}
+    /// <summary>
+    ///     Check if hit a lethal object or an arrival
+    /// </summary>
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        GameObject _GO = _collision.gameObject;
 
-		_player.EventCenter.Invoke(PlayerEvent.OnPlayerCollisionEnter);
-	}
-	
-	/// <summary>
-	///     Check if hit a StaticGround object from the bottom, with raycast
-	/// </summary>
-	private bool IsGrounded()
-	{
-		float extraDistance = 0.25f;
-		RaycastHit2D raycastHit = Physics2D.Raycast(_boxCollider.bounds.center, Vector2.down, _boxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
+        if (_GO.CompareTag("Lethal") && _player.PlayerStates.PlayerGameState == PlayerGameState.Alive)
+        {
+            _player.Kill();
+        }
 
-		// DEBUG TEST
-		Color rayColor;
-		if (raycastHit.collider != null)
-		{
-			rayColor = Color.green;
-		}
-		else
-		{
-			rayColor = Color.red;
-		}
-		Debug.DrawRay(_boxCollider.bounds.center, Vector2.down * (_boxCollider.bounds.extents.y + extraDistance), rayColor);
+        if (_GO.CompareTag("Arrival"))
+        {
+            GameManager.Instance.EndOfRound(_player);
+        }
 
-		if (raycastHit.collider != null)
-		{
-			return raycastHit.collider.gameObject.CompareTag("StaticGround");
-		}
-		return false;
-	}
-	
-	/// <summary>
-	///     Set the player physic state to OnGround if hitting the ground, otherwise its InAir
-	/// </summary>
-	private void Update()
-	{
-		if (_playerStates.PlayerPhysicState != PlayerPhysicState.IsHit)
-		{
-			if (IsGrounded())
-			{
-				_playerStates.PlayerPhysicState = PlayerPhysicState.OnGround;
-				AirPushFactor = 1f;
-			}
-			else
-			{
-                _playerStates.PlayerPhysicState = PlayerPhysicState.InAir;
+        _player.EventCenter.Invoke(PlayerEvent.OnPlayerCollisionEnter);
+    }
+
+    /// <summary>
+    ///     Check if hit a StaticGround object from the bottom, with raycast
+    /// </summary>
+    private bool IsGrounded()
+    {
+        float extraDistance = 0.25f;
+        RaycastHit2D raycastHit = Physics2D.Raycast(_boxCollider.bounds.center, Vector2.down, _boxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
+
+        // DEBUG TEST
+        Color rayColor;
+        if (raycastHit.collider != null)
+        {
+            rayColor = Color.green;
+        }
+        else
+        {
+            rayColor = Color.red;
+        }
+        Debug.DrawRay(_boxCollider.bounds.center, Vector2.down * (_boxCollider.bounds.extents.y + extraDistance), rayColor);
+
+        if (raycastHit.collider != null)
+        {
+            return raycastHit.collider.gameObject.CompareTag("StaticGround");
+        }
+        return false;
+    }
+
+    /// <summary>
+    ///     Set the player physic state to OnGround if hitting the ground, otherwise its InAir
+    /// </summary>
+    private void Update()
+    {
+        if (_player.PlayerStates.PlayerPhysicState != PlayerPhysicState.IsHit)
+        {
+            if (IsGrounded())
+            {
+                _player.PlayerStates.PlayerPhysicState = PlayerPhysicState.OnGround;
+                AirPushFactor = 1f;
             }
-		}
-	}
+            else
+            {
+                _player.PlayerStates.PlayerPhysicState = PlayerPhysicState.InAir;
+            }
+        }
+    }
 
-	public ArmController GetArmController()
-	{
-		return _armController;
-	}
+    public ArmController GetArmController()
+    {
+        return _armController;
+    }
 
-	public Rigidbody2D GetRB()
-	{
-		return _rb;
-	}
+    public Rigidbody2D GetRB()
+    {
+        return _rb;
+    }
 }

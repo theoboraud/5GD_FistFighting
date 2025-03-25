@@ -33,7 +33,7 @@ public class DeathBall : MonoBehaviour
         {
             m_spriteRenderer.sprite = AngrySprite;
             m_deathBallController.MoveSpeed *=3;
-            if (m_PlayersManager.PlayersLives.Count<=2 && !isUpgradeDiff) //If there is less than 2 players lives in current game
+            if (m_PlayersManager.PlayersAlive.Count<=2 && !isUpgradeDiff) //If there is less than 2 players lives in current game
             {
                 m_deathBallController.UnlockDestinations();//We'll unlock all destinations and change ball's track
                 m_deathBallController.MoveSpeed *= 2; //And We'll upgrade move speed to double
