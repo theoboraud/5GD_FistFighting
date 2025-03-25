@@ -30,8 +30,8 @@ public class ArmChecker : MonoBehaviour
 
     private void OnEnable()
     {
-	    _player = GetComponent<Player>();
-	    _armController = GetComponent<ArmController>();
+	    _player = GetComponentInParent<Player>();
+	    _armController = GetComponentInParent<ArmController>();
     }
     
     /// <summary>
@@ -156,6 +156,7 @@ public class ArmChecker : MonoBehaviour
             Player player = collision.GetComponent<Player>();
             RemoveContactPlayer(player);
         }
+
         if(collision.CompareTag("StaticGround"))
         {
             StaticEnvironmentInRange = false;
@@ -207,10 +208,24 @@ public class ArmChecker : MonoBehaviour
     }
 
     #region Public Functions
+    /// <summary>
+    /// Get owner player of this arm
+    /// </summary>
+    /// <returns></returns>
     public Player GetPlayer()
     {
         return _player;
     }
+    public ArmController GetArmController()
+    {
+        return _armController;
+    }
+
+    public Rigidbody2D GetRB()
+    {
+        return _player.GetPlayerController().GetRB();
+    }
+
     /// <summary>
     /// Get players in contact
     /// </summary>
@@ -255,6 +270,46 @@ public class ArmChecker : MonoBehaviour
 
         return shortestDist;
     }
+
+    /// <summary>
+    /// Handle situation of arm clash
+    /// </summary>
+    public void CheckArmClash()
+    {
+        foreach (Player otherPlayer in contactPlayers)
+        {
+            foreach (var otherArm in otherPlayer.GetPlayerController().GetArmController().Arms)
+            {
+                if (otherArm.contactPlayers.Contains(_player))
+                {
+                    //Debug.Log("On Casse des Gueules !!!");
+                    //Invoke Arm Clash
+                    InteractionManager.Instance.ArmClash(this, otherArm);
+                }
+            }
+        }
+    }
+
+    public int GetPrioPoints()
+    {
+        int prioPoints = 0;
+
+        if (_player.IsInAir())
+        {
+            prioPoints += 1;
+        }
+        if (GetRB().linearVelocity.magnitude > 0.2f)
+        {
+            prioPoints += 1;
+        }
+        if (holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+        {
+            prioPoints += 1;
+        }
+
+        return prioPoints;
+    }
+
     /// <summary>
     /// Check if there are rigidbody objects(includ other player) in range of this arm
     /// </summary>

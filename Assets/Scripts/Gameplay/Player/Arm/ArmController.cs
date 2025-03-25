@@ -10,7 +10,10 @@ public class ArmController : MonoBehaviour
     private PlayerController _playerController;
     private PlayerFeedbackManager _playerFeedbackManager;
     public List<ArmChecker> Arms = new List<ArmChecker>();
-    public List<ArmChecker> ArmsGoingToHit = new List<ArmChecker>();
+    /// <summary>
+    /// List of Arms hitting other players
+    /// </summary>
+    public List<ArmChecker> ArmsHittingPlayers = new List<ArmChecker>();
 
     private PlayerPhysicState physicState; //Owner player's physic state
     private bool bIsOnHit; //If owner player is on hit
@@ -54,9 +57,9 @@ public class ArmController : MonoBehaviour
     /// </summary>
     public void InitArms()
     {
-        for (int i = 0; i < Arms.Count; i++)
+        foreach (var arm in Arms)
         {
-            Arms[i].InitArm();
+            arm.InitArm();
         }
     }
 
@@ -74,12 +77,12 @@ public class ArmController : MonoBehaviour
             {
                 Arms[i].StopEverything();
             }
-            for (int i = 0; i < ArmsGoingToHit.Count; i++)
+            for (int i = 0; i < ArmsHittingPlayers.Count; i++)
             {
-                ArmChecker _arm = ArmsGoingToHit[i];
+                ArmChecker _arm = ArmsHittingPlayers[i];
                 _arm.FrameStack = 0;
-                ArmsGoingToHit.Remove(_arm);
             }
+            ArmsHittingPlayers.Clear();
         }
         else
         {
@@ -110,9 +113,9 @@ public class ArmController : MonoBehaviour
         if (_arm.Cooldown == false && !bIsOnHit)
         {
             //Declenchement animation
-            float ArmScaleFactor = GetPrioPoints(_arm);
+            float ArmScaleFactor = _arm.GetPrioPoints();
             _arm._renderer.transform.localScale = new Vector3
-                (Mathf.Lerp(1, 1.3f, ArmScaleFactor/ (3)), 
+                (Mathf.Lerp(1, 1.3f, ArmScaleFactor / (3)),
                 Mathf.Lerp(1, 1.3f, ArmScaleFactor / (3)));
 
             _arm.anim.PlayAnimation();
@@ -123,128 +126,21 @@ public class ArmController : MonoBehaviour
             if (_arm.GetContactPlayers().Count > 0)
             {
 
-                ArmsGoingToHit.Add(_arm);
+                ArmsHittingPlayers.Add(_arm);
 
-                if(_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
-                if (_arm.GetContactPlayers().Count > 0)
-                {
-                    for (int i = 0; i < _arm.GetContactPlayers().Count; i++)
-                    {
-
-                        //print("PlayersArmController: i is " + i.ToString());
-                        //print(_arm.Players[i]);
-
-                        if (_arm.GetContactPlayers()[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count > 0)
-                        {
-                            for (int j = 0; j < _arm.GetContactPlayers()[i].GetPlayerController().GetArmController().ArmsGoingToHit.Count; j++)
-                            {
-
-                                //print("PlayersArmController: j is " + j.ToString());
-                                //print(_arm.Players[i].ArmController.ArmsGoingToHit[j]);
-
-                                ArmChecker _armPlayerHit = _arm.GetContactPlayers()[i].GetPlayerController().GetArmController().ArmsGoingToHit[j];
-
-                                if (_armPlayerHit.GetContactPlayers().Contains(_player))
-                                {
-
-                                    //Debug.Log("On Casse des Gueules !!!");
-                                    ArmClash(_arm, _armPlayerHit);
-
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
-                }
+                if (_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+                _arm.CheckArmClash();
             }
             else
             {
-                ExtendedArm(_armIndex);
+                _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
             }
         }
-    }
-
-
-
-
-    public void ArmClash(ArmChecker _armPlayer1, ArmChecker _armPlayer2)
-    {
-        int player1Points = 0;
-        int player2Points = 0;
-
-        if (_armPlayer1.FrameStack < _armPlayer2.FrameStack)
+        else
         {
-            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK;
-        }
-        else if (_armPlayer1.FrameStack > _armPlayer2.FrameStack)
-        {
-            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK;
+            ExtendedArm(_armIndex);
         }
 
-        if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > _armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
-        {
-            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
-        }
-        else if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude < _armPlayer2.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude)
-        {
-            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_VELOCITY;
-        }
-
-        if(_armPlayer1.holding_timer > _armPlayer2.holding_timer)
-        {
-            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_HOLDFORCE;
-        }
-        else if(_armPlayer1.holding_timer < _armPlayer2.holding_timer)
-        {
-            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_HOLDFORCE;
-        }
-
-        if (_armPlayer1.GetPlayer().IsInAir() && _armPlayer2.GetPlayer().IsInAir())
-        {
-            player1Points += GameManager.Instance.ParamData.PARAM_PRIO_AIRSTATE;
-        }
-        else if (_armPlayer2.GetPlayer().IsInAir() && _armPlayer1.GetPlayer().IsInAir())
-        {
-            player2Points += GameManager.Instance.ParamData.PARAM_PRIO_AIRSTATE;
-        }
-
-        if (player1Points > player2Points)
-        {
-            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
-        }
-        else if (player1Points == player2Points)
-        {
-            _armPlayer1.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer1.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer1));
-            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
-        }
-        else if (player2Points>player1Points)
-        {
-            _armPlayer2.GetPlayer().GetPlayerController().GetArmController().ExtendedArm(_armPlayer2.GetPlayer().GetPlayerController().GetArmController().Arms.IndexOf(_armPlayer2));
-        }
-    }
-
-    public int GetPrioPoints(ArmChecker _armPlayer1)
-    {
-        int player1Points = 0;
-
-
-        if (_armPlayer1.GetPlayer().IsInAir())
-        {
-            player1Points += 1;
-        }
-        if (_armPlayer1.GetPlayer().GetPlayerController().GetRB().linearVelocity.magnitude > 0.2f)
-        {
-            player1Points += 1;
-        }
-        if(_armPlayer1.holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
-        {
-            player1Points += 1;
-        }
-
-        return player1Points;
     }
 
 
@@ -255,12 +151,12 @@ public class ArmController : MonoBehaviour
     {
         ArmChecker arm = Arms[_armIndex];
         arm.FrameStack = 0;
-        
+
         if (arm.IsRigidbodyInRange() && !arm.IsEnvironmentInRange())
         {
             LaunchForeignObject(_armIndex);
         }
-        else if(arm.IsEnvironmentInRange() && arm.IsRigidbodyInRange())
+        else if (arm.IsEnvironmentInRange() && arm.IsRigidbodyInRange())
         {
             RaycastHit2D ray = Physics2D.Raycast(arm.transform.position, -arm.transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
             float nearestDis = arm.GetClosestRigidbodyPosition();
@@ -279,7 +175,7 @@ public class ArmController : MonoBehaviour
         }
         else
         {
-            if(!_player.GetPlayerController().HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
+            if (!_player.GetPlayerController().HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
         }
     }
 
@@ -297,7 +193,7 @@ public class ArmController : MonoBehaviour
             (Arms[_armIndex].transform.up *
             GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
             Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
-            (Arms[_armIndex].holding_timer/GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1,2),
+            (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
             ForceMode2D.Impulse);
         //Debug.Log(Arms[i].holding_timer);
         RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f);
@@ -305,7 +201,7 @@ public class ArmController : MonoBehaviour
             (ray.point,
             Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
-        if(Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
+        if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
         {
             GameManager.Instance.Feedback.SpawnChargedHit
             (ray.point,
@@ -366,7 +262,7 @@ public class ArmController : MonoBehaviour
     {
         foreach (var item in Arms[_armIndex].GetContactObjects())
         {
-            if (item!=null)
+            if (item != null)
             {
                 item.AddForce
                     (-Arms[_armIndex].transform.up *
@@ -391,12 +287,12 @@ public class ArmController : MonoBehaviour
             _playerFeedbackManager.LastPlayerHit = item;
         }
 
-        ArmsGoingToHit.Remove(Arms[_armIndex]);
+        ArmsHittingPlayers.Remove(Arms[_armIndex]);
 
-        int strength = (int)Mathf.Lerp(0,2,GetPrioPoints(Arms[_armIndex])/ (3));
+        int strength = (int)Mathf.Lerp(0, 2, Arms[_armIndex].GetPrioPoints() / (3));
 
         GameManager.Instance.Feedback.SpawnPlayerHit
-            (Mathf.Clamp(strength,0,2), Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
+            (Mathf.Clamp(strength, 0, 2), Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
 
