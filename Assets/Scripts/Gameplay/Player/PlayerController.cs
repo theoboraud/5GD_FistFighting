@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	private Player _player;
 	private PlayerData _playerData;
 	
-	[SerializeField] private BoxCollider2D BoxCollider;
+	private BoxCollider2D _boxCollider;
 
 	[Header("Events for FMOD")]
 	public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 		_player = GetComponent<Player>();
 		_playerData = GetComponent<PlayerData>();
         _playerStates = GetComponent<PlayerStates>();
-
+        _boxCollider = GetComponent<BoxCollider2D>();
         _playerInput = GetComponent<PlayerInput>();
 		_rb = GetComponent<Rigidbody2D>();
 		
@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour
 		this.transform.rotation = Quaternion.identity;
 		_rb.linearVelocity = new Vector2(0f, 0f);
 		_rb.simulated = true;
-        gameObject.layer = LayerMask.NameToLayer($"Player{_playerData.playerIndex}");
     }
 
 	private void OnPlayerGameStateChange(PlayerGameState _gameState)
@@ -148,7 +147,7 @@ public class PlayerController : MonoBehaviour
 	private bool IsGrounded()
 	{
 		float extraDistance = 0.25f;
-		RaycastHit2D raycastHit = Physics2D.Raycast(BoxCollider.bounds.center, Vector2.down, BoxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
+		RaycastHit2D raycastHit = Physics2D.Raycast(_boxCollider.bounds.center, Vector2.down, _boxCollider.bounds.extents.y + extraDistance, LayerMask.GetMask("StaticGround"));
 
 		// DEBUG TEST
 		Color rayColor;
@@ -160,7 +159,7 @@ public class PlayerController : MonoBehaviour
 		{
 			rayColor = Color.red;
 		}
-		Debug.DrawRay(BoxCollider.bounds.center, Vector2.down * (BoxCollider.bounds.extents.y + extraDistance), rayColor);
+		Debug.DrawRay(_boxCollider.bounds.center, Vector2.down * (_boxCollider.bounds.extents.y + extraDistance), rayColor);
 
 		if (raycastHit.collider != null)
 		{

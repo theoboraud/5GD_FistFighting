@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Enums;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Main class of each player, manager all player's data, game state,and behaviours
@@ -69,29 +71,31 @@ public class Player : MonoBehaviour
 	    _playerController = GetComponent<PlayerController>();
 	    _playerData = GetComponent<PlayerData>();
 	    _playerStates = GetComponent<PlayerStates>();
-
-        EventCenter.Invoke(PlayerEvent.OnPlayerInit);
-	    
-        if (PlayersManager.Instance.Players.Count < 4)
-        {
-            // Keep the player game object between scenes
-            DontDestroyOnLoad(gameObject);
-            
-            // Add player to the PlayersManager
-            PlayersManager.Instance.AddPlayer(this);
-            
-
-            // Get a random skin at start -> TODO: Select skin
-            skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
-            ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
     }
 
-    
+    private void Start()
+    {
+	    EventCenter.Invoke(PlayerEvent.OnPlayerInit);
+	    if (PlayersManager.Instance.Players.Count < 4)
+	    {
+		    // Keep the player game object between scenes
+		    DontDestroyOnLoad(gameObject);
+            
+		    // Add player to the PlayersManager
+		    PlayersManager.Instance.AddPlayer(this);
+            
+
+		    // Get a random skin at start -> TODO: Select skin
+		    skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
+		    ChangeSkin(PlayersManager.Instance.SkinsData.GetSkin(skinIndex));
+	    }
+	    else
+	    {
+		    Destroy(this.gameObject);
+	    }
+	    
+	    _playerData.OnPlayerIndexChanged.AddListener(PlayerIndexChanged);
+    }
 
 
     /// <summary>
@@ -280,4 +284,9 @@ public class Player : MonoBehaviour
 }
     
     #endregion
+
+    private void PlayerIndexChanged(int index)
+    {
+	    gameObject.layer = LayerMask.NameToLayer($"Player{index}");
+    }
 }

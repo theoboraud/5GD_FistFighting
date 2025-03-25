@@ -17,7 +17,7 @@ public class ArmChecker : MonoBehaviour
     [Header("Reference")]
     private Player _player;
     private ArmController _armController;
-    [SerializeField] BoxCollider2D _collider;
+    private BoxCollider2D _collider;
     public ArmAnimationController anim;
     public bool Cooldown = false;
     public bool Holding = false;
@@ -32,6 +32,7 @@ public class ArmChecker : MonoBehaviour
     {
 	    _player = GetComponentInParent<Player>();
 	    _armController = GetComponentInParent<ArmController>();
+	    _collider = GetComponent<BoxCollider2D>();
     }
     
     /// <summary>

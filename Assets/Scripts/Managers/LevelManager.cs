@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<string> playableSceneNames = new List<string>();
 
     [Header("Variables")]
-    [System.NonSerialized] public List<Transform> SpawnPoints;     // Current level spawn points
+    public List<Transform> SpawnPoints;     // Current level spawn points
     [System.NonSerialized] public int CurrentSceneIndex = 0;        // Index of the current scene (in Build Settings)
     [System.NonSerialized] public string CurrentSceneName;        // Name of the current scene
     private List<string> LevelsPlayed = new List<string>();

@@ -8,8 +8,7 @@ using Enums;
 public class PlayerVoiceController : MonoBehaviour
 {
     [SerializeField] Player _player;
-
-    private CharacterSkin _charSkin;
+    
     //The first is the "Hurt" event
     //Secon is the "Push" event
     //Third is the "Victory" event
@@ -18,7 +17,6 @@ public class PlayerVoiceController : MonoBehaviour
     private void Awake()
     {
 	    _player = GetComponent<Player>();
-	    _charSkin = _player.GetSkin();
     }
 
     public void OnEnable()
@@ -43,19 +41,19 @@ public class PlayerVoiceController : MonoBehaviour
     public void PlayHurt()
     {
         studioEventEmitters[0].Play();
-        studioEventEmitters[0].SetParameter(studioEventEmitters[0].Params[0].ID, _charSkin.VoiceParameter);
+        studioEventEmitters[0].SetParameter(studioEventEmitters[0].Params[0].ID, _player.GetSkin().VoiceParameter);
     }
 
     public void PlayPush()
     {
         studioEventEmitters[1].Play();
-        studioEventEmitters[1].SetParameter(studioEventEmitters[1].Params[0].ID, _charSkin.VoiceParameter);
+        studioEventEmitters[1].SetParameter(studioEventEmitters[1].Params[0].ID, _player.GetSkin().VoiceParameter);
     }
 
     public void PlayVictory()
     {
         studioEventEmitters[2].Play();
-        studioEventEmitters[2].SetParameter(studioEventEmitters[2].Params[0].ID, _charSkin.VoiceParameter);
+        studioEventEmitters[2].SetParameter(studioEventEmitters[2].Params[0].ID, _player.GetSkin().VoiceParameter);
     }
 
     public void PlayHold(int armIndex)

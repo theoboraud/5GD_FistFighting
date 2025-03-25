@@ -6,27 +6,32 @@ public class PlayerStates : MonoBehaviour
 {
 	private PlayerData _playerData;
     private Player _player;
+    private PlayerGameState _playerGameState;
+    private PlayerPhysicState _playerPhysicState;
+    private PlayerRotateState _playerRotateState;
+    private PlayerArmState _playerArmState;
+    
     public PlayerGameState PlayerGameState
     {
-        get { return PlayerGameState; }
+        get { return _playerGameState; }
         set
         {
-            if (PlayerGameState != value)
+            if (_playerGameState != value)
             {
-                PlayerGameState = value;
-                _player.EventCenter.Invoke<PlayerGameState>(PlayerEvent.OnGameStateChange, PlayerGameState);
+	            _playerGameState = value;
+                _player.EventCenter.Invoke<PlayerGameState>(PlayerEvent.OnGameStateChange, _playerGameState);
             }
         }
     }
     public PlayerPhysicState PlayerPhysicState
 	    {
-        get { return PlayerPhysicState; }
+        get { return _playerPhysicState; }
         set
         {
-            if (PlayerPhysicState != value)
+            if (_playerPhysicState != value)
             {
-                PlayerPhysicState = value;
-                _player.EventCenter.Invoke<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, PlayerPhysicState);
+	            _playerPhysicState = value;
+                _player.EventCenter.Invoke<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, _playerPhysicState);
             }
         }
     }
@@ -35,13 +40,13 @@ public class PlayerStates : MonoBehaviour
     /// </summary>
     public PlayerRotateState PlayerRotateState
 	    {
-        get { return PlayerRotateState; }
+        get { return _playerRotateState; }
         set
         {
-            if (PlayerRotateState != value)
+            if (_playerRotateState != value)
             {
-                PlayerRotateState = value;
-                _player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, PlayerRotateState);
+	            _playerRotateState = value;
+                _player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, _playerRotateState);
             }
         }
     }
@@ -51,12 +56,12 @@ public class PlayerStates : MonoBehaviour
     /// </summary>
     public PlayerArmState PlayerArmState
     {
-        get { return PlayerArmState; }
+        get { return _playerArmState; }
         set
         {
-            if (PlayerArmState != value)
-                PlayerArmState = value;
-            _player.EventCenter.Invoke<PlayerArmState>(PlayerEvent.OnArmStateChange, PlayerArmState);
+            if (_playerArmState != value)
+	            _playerArmState = value;
+            _player.EventCenter.Invoke<PlayerArmState>(PlayerEvent.OnArmStateChange, _playerArmState);
         }
     }
 
