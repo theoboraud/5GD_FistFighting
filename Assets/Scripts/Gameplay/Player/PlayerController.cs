@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D _rb;       // Player rigidbody ref
 	private ArmController _armController;
 	private PlayerFeedbackManager _playerFeedbackManager;
-	private PlayerInput _playerInput;
+	private PlayerControls _playerInput;
 	private PlayerStates _playerStates;
 	private Player _player;
 	private PlayerData _playerData;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 		_playerData = GetComponent<PlayerData>();
         _playerStates = GetComponent<PlayerStates>();
         _boxCollider = GetComponent<BoxCollider2D>();
-        _playerInput = GetComponent<PlayerInput>();
+        _playerInput = GetComponent<PlayerControls>();
 		_rb = GetComponent<Rigidbody2D>();
 		
 		InitCallBacks();

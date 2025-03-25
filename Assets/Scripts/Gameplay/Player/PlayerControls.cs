@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 /// <summary>
 ///     Class Manager player inputs
 /// </summary>
-public class PlayerInput : MonoBehaviour
+public class PlayerControls : MonoBehaviour
 {
     // #region ============== CLASS VARIABLES ==============
 
