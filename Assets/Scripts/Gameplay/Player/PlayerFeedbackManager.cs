@@ -17,7 +17,7 @@ public class PlayerFeedbackManager : MonoBehaviour
     [SerializeField] SpriteRenderer AvatarFace;
     [SerializeField] GameObject Plasters;
     [SerializeField] PlayerVoiceController VoiceController;
-    public FeedbackFaceController FaceController;
+    private FeedbackFaceController _feedbackFaceController;
     public Player LastPlayerHit;
 
     private float StunAlpha;
@@ -25,11 +25,12 @@ public class PlayerFeedbackManager : MonoBehaviour
     private void OnEnable()
     {
 	    _player = GetComponent<Player>();
+	    _feedbackFaceController = GetComponentInChildren<FeedbackFaceController>();
 	    
 	    _playerController = GetComponent<PlayerController>();
 	    _playerStates = GetComponent<PlayerStates>();
 
-	    InitCallBacks();
+	    
     }
 
     private void OnDisable()
@@ -54,6 +55,7 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void Start()
     {
+	    InitCallBacks();
         StunAlpha = StunAccumulation.color.a;
         StunAccumulation.color = new Color(StunAccumulation.color.r, StunAccumulation.color.g, StunAccumulation.color.b, 0.0f);
         StunAccumulationParticles.Stop();
@@ -153,15 +155,15 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void CollisionFeedback()
     {
-	    if(_playerStates.PlayerPhysicState == PlayerPhysicState.OnGround && FaceController.CanShake)
+	    if(_playerStates.PlayerPhysicState == PlayerPhysicState.OnGround && _feedbackFaceController.CanShake)
 	    {
-		    FaceController.ShakeFace();
-		    FaceController.CanShake = false;
+		    _feedbackFaceController.ShakeFace();
+		    _feedbackFaceController.CanShake = false;
 	    }
     }
 
     private void IsInAir()
     {
-	    FaceController.CanShake = true;
+	    _feedbackFaceController.CanShake = true;
     }
 }

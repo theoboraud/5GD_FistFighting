@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
     {
 	    _playerController = GetComponent<PlayerController>();
 	    _playerData = GetComponent<PlayerData>();
+	    _playerStates = GetComponent<PlayerStates>();
 
         EventCenter.Invoke(PlayerEvent.OnPlayerInit);
 	    

@@ -78,6 +78,7 @@ public class RotateBehaviour : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _player = GetComponent<Player>();
+        _playerStates = GetComponent<PlayerStates>();
         rotationFactor = 1f;
     }
 
