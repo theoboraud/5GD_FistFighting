@@ -10,11 +10,8 @@ using UnityEngine.UIElements;
 /// <summary>
 ///     Class Manager player inputs
 /// </summary>
-<<<<<<<< HEAD:Assets/Scripts/Gameplay/Player/InputReceiver.cs
+
 public class InputReceiver : MonoBehaviour
-========
-public class PlayerControls : MonoBehaviour
->>>>>>>> 2ef27ab93bcf93b4fa652e490777cc49ce8a049e:Assets/Scripts/Gameplay/Player/PlayerControls.cs
 {
     // #region ============== CLASS VARIABLES ==============
 
