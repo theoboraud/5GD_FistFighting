@@ -75,6 +75,7 @@ public class PlayerUI : MonoBehaviour
     {
         if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
         {
+	        if (_player == null) return;
             int _playerLives = _player.PlayerData.PlayerLives;
 
             if (_playerLives > 0)

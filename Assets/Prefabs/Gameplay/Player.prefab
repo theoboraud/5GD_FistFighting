@@ -1113,7 +1113,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Suicice[/Keyboard/k]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
+  m_DefaultActionMap: Menu
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &3996649375659255604

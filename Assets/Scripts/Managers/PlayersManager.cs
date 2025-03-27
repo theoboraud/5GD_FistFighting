@@ -18,7 +18,7 @@ public class PlayersManager : MonoBehaviour
     [System.NonSerialized] public List<Player> PlayersAlive;                    // All players alive in the current game
 
 
-    PlayerInputManager _playerInputManager;
+    private PlayerInputManager _playerInputManager;
     // #endregion
 
 
@@ -30,6 +30,11 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+	    _playerInputManager = GetComponent<PlayerInputManager>();
+
+	    // Init references
+	    SkinsData = gameObject.GetComponent<SkinsData>();
+	    
         if (Instance == null)
         {
             Instance = this;
@@ -47,11 +52,6 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        _playerInputManager = GetComponent<PlayerInputManager>();
-
-        // Init references
-        SkinsData = gameObject.GetComponent<SkinsData>();
-
         // Init variables
         Players = new List<Player>();
         PlayersSpawned = new List<Player>();
@@ -79,7 +79,7 @@ public class PlayersManager : MonoBehaviour
         }
     }
 
-    public void OnDestroy()
+    public void OnDisable()
     {
         UnsribeEvents();
     }

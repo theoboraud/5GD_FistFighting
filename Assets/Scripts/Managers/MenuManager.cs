@@ -59,7 +59,7 @@ public class MenuManager : MonoBehaviour
     public void Init()
     {
         // Init the active menu as the main menu
-        //MainMenu.Activate();
+        MainMenu.Activate();
     }
 
 

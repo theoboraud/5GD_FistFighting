@@ -113,7 +113,7 @@ public class MainMenu : MonoBehaviour
     {
         this.gameObject.SetActive(true);
         GameManager.Instance.MenuMode(GlobalGameState.MainMenu);
-        Invoke("InitArm", 0.5f);
+        //Invoke("InitArm", 0.5f);
     }
 
 

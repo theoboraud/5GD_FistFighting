@@ -95,7 +95,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""name"": ""UpArm"",
                     ""type"": ""Button"",
                     ""id"": ""fcab80f8-4ef8-436a-b9ac-47bdb9f0940f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold,Tap"",
                     ""initialStateCheck"": false
@@ -457,7 +457,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""name"": ""Up"",
                     ""type"": ""Button"",
                     ""id"": ""d98e8f0c-a8f4-4d6e-b850-f6f13a195f6d"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
@@ -466,7 +466,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""name"": ""Right"",
                     ""type"": ""Button"",
                     ""id"": ""db964beb-1635-4caf-9408-abe3c5d62938"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false

@@ -9,9 +9,10 @@
                     "name": "UpArm",
                     "type": "Button",
                     "id": "fcab80f8-4ef8-436a-b9ac-47bdb9f0940f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold,Tap"
+                    "interactions": "Hold,Tap",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "RightArm",
@@ -19,7 +20,8 @@
                     "id": "f5a59a6b-d516-487f-9f63-03abca681aa4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold,Tap"
+                    "interactions": "Hold,Tap",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "DownArm",
@@ -27,7 +29,8 @@
                     "id": "1f4c73e5-a746-46f9-8637-62cf654bf789",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold,Tap"
+                    "interactions": "Hold,Tap",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "LeftArm",
@@ -35,7 +38,8 @@
                     "id": "c155569e-ed1f-4db0-b151-a5ddfb2bbdb6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold,Tap"
+                    "interactions": "Hold,Tap",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Start",
@@ -43,7 +47,8 @@
                     "id": "5bb21308-0bf5-47e7-aee5-4e34a0f6c259",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Rotate",
@@ -51,7 +56,8 @@
                     "id": "3f80a269-a7d4-4850-a9d9-a10c48f2dc5a",
                     "expectedControlType": "Digital",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "NextCharacter",
@@ -59,7 +65,8 @@
                     "id": "118f1003-80c9-499b-acd7-2f74c7a0cec8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "PreviousCharacter",
@@ -67,7 +74,8 @@
                     "id": "3598f70b-141f-49d5-90d6-16454bb80950",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "UseItem",
@@ -75,7 +83,8 @@
                     "id": "5e7bd1d8-3657-4d41-957f-f825128e1b4d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Suicice",
@@ -83,7 +92,8 @@
                     "id": "eaeff884-a5ca-4dfb-bb5c-35602a07df0f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -361,17 +371,19 @@
                     "name": "Up",
                     "type": "Button",
                     "id": "d98e8f0c-a8f4-4d6e-b850-f6f13a195f6d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Right",
                     "type": "Button",
                     "id": "db964beb-1635-4caf-9408-abe3c5d62938",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Down",
@@ -379,7 +391,8 @@
                     "id": "aadcdc37-9e6d-4ce8-9811-bde53f46496b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Left",
@@ -387,7 +400,8 @@
                     "id": "6a1b0798-a88e-4a9f-bbc3-c6bc2c691022",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Validate",
@@ -395,7 +409,8 @@
                     "id": "32eded2b-1eca-45ff-a008-a4c21e0384a9",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
