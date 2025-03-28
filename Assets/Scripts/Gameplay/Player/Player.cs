@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     private PlayerController _playerController;
     private PlayerFeedbackManager _playerFeedbackManager;
+    private PlayerUI _playerUI;
     [SerializeField] private CharacterSkin _skin;
     private int skinIndex;
 
@@ -93,15 +94,6 @@ public class Player : MonoBehaviour
 
         PlayerData.PlayerIndex = _playerIndex;
         gameObject.layer = LayerMask.NameToLayer($"Player{_playerIndex+1}");
-    }
-    
-    /// <summary>
-    /// Call on a new level start
-    /// </summary>
-    public void InitPlayer()
-    {
-        PlayerData.PlayerLives = GameManager.Instance.ParamData.PARAM_Player_Lives;
-
     }
 
 
@@ -193,7 +185,8 @@ public class Player : MonoBehaviour
 
     private void StopInvincibility()
     {
-        EventCenter.Invoke(PlayerEvent.OnInvinciblityStop);
+        PlayerStates.PlayerGameState = PlayerGameState.Alive;
+        gameObject.layer = LayerMask.NameToLayer($"Player{PlayerData.PlayerIndex + 1}");
     }
 
 

@@ -8,7 +8,8 @@ public class PlayerStates
     private PlayerGameState _playerGameState;
     private PlayerPhysicState _playerPhysicState;
     private PlayerRotateState _playerRotateState;
-    private PlayerArmState _playerArmState;
+    //Not In Use
+    //private PlayerArmState _playerArmState;
 
     public PlayerStates(Player _myPlayer)
     {
@@ -59,16 +60,16 @@ public class PlayerStates
     /// <summary>
     /// TODO
     /// </summary>
-    public PlayerArmState PlayerArmState
-    {
-        get { return _playerArmState; }
-        set
-        {
-            if (_playerArmState != value)
-	            _playerArmState = value;
-            _player.EventCenter.Invoke<PlayerArmState>(PlayerEvent.OnArmStateChange, _playerArmState);
-        }
-    }
+    //public PlayerArmState PlayerArmState
+    //{
+    //    get { return _playerArmState; }
+    //    set
+    //    {
+    //        if (_playerArmState != value)
+	   //         _playerArmState = value;
+    //        _player.EventCenter.Invoke<PlayerArmState>(PlayerEvent.OnArmStateChange, _playerArmState);
+    //    }
+    //}
 
     public bool IsReady = false;
 	public void Init()

@@ -23,19 +23,11 @@ public enum GameEvent
 public enum PlayerEvent
 {
     //Player
-    OnHit,
-    OnPlayerKilled,
     OnPlayerSpawn,
     OnPlayerHit,
-    OnInvinciblityStart,
-    OnInvinciblityStop,
 
     //PlayerController
-    OnStunStart,
-    OnStunStop,
     OnPlayerCollisionEnter,
-    OnGround,
-    OnAir,
 
     //PlayerState
     OnGameStateChange,
