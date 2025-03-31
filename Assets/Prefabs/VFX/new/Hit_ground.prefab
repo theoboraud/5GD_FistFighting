@@ -14702,6 +14702,7 @@ GameObject:
   - component: {fileID: 4042247606866038425}
   - component: {fileID: 8030717217360545501}
   - component: {fileID: 5157375476346727238}
+  - component: {fileID: 1856106184998360707}
   m_Layer: 0
   m_Name: Hit_ground
   m_TagString: Untagged
@@ -19585,3 +19586,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1856106184998360707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147151920517733370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e1072831340c84e85ae9a26a4ed506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

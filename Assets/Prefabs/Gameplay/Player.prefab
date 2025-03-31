@@ -894,6 +894,14 @@ MonoBehaviour:
   Plasters: {fileID: 2818663735909605286}
   VoiceController: {fileID: 7652953489558374462}
   LastPlayerHit: {fileID: 0}
+  hitEnvVFX: {fileID: 8147151920517733370, guid: 03efb9344c553cb478490072eb754798, type: 3}
+  airDashVFX: {fileID: 6383959862024415063, guid: a0479664b8e345d4b9fea6240e43afb4, type: 3}
+  playerKilledVFX: {fileID: 5295859907447675650, guid: 90f9f55340b23094b86229cd00849528, type: 3}
+  hitPlayerVFX:
+  - {fileID: 6796215379687016899, guid: 32fd58d85c301154b996358e94e9ca71, type: 3}
+  - {fileID: 5994201097990839300, guid: 36216be1bbf83b848976a3a143716e2a, type: 3}
+  - {fileID: 18227765078161172, guid: 4ea1aa5d525da894aa41eab9bf7999a7, type: 3}
+  chargedHitVFX: {fileID: 5902228076064297953, guid: d36a9dab7ddb2bf4da0bf833b5b192a5, type: 3}
 --- !u!114 &5655228929501688058
 MonoBehaviour:
   m_ObjectHideFlags: 0

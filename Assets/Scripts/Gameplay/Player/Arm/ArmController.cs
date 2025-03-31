@@ -182,7 +182,7 @@ public class ArmController : MonoBehaviour
     }
 
     /// <summary>
-    ///
+    /// Give a back force to player self when he hit Environment
     /// </summary>
     private void LaunchThisAvatarFromGround(int _armIndex)
     {
@@ -199,13 +199,13 @@ public class ArmController : MonoBehaviour
             ForceMode2D.Impulse);
         //Debug.Log(Arms[i].holding_timer);
         RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f);
-        GameManager.Instance.Feedback.SpawnHitVFX
+        _playerFeedbackManager.SpawnEnvHitVFX
             (ray.point,
             Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
         if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
         {
-            GameManager.Instance.Feedback.SpawnChargedHit
+            _playerFeedbackManager.SpawnChargedHit
             (ray.point,
             Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
@@ -214,7 +214,7 @@ public class ArmController : MonoBehaviour
 
 
     /// <summary>
-    ///
+    /// If the player launch arm in air and hit nothing, he will get a small impulse
     /// </summary>
     private void LaunchThisAvatarFromAir(int _armIndex)
     {
@@ -242,13 +242,13 @@ public class ArmController : MonoBehaviour
 
         if (_playerController.AirPushFactor > 0f)
         {
-            GameManager.Instance.Feedback.SpawnHitAvatarVFX
+            _playerFeedbackManager.SpawnAirDashVFX
                 (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
                 Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
                 Vector3.forward));
             if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
             {
-                GameManager.Instance.Feedback.SpawnChargedHit
+                _playerFeedbackManager.SpawnChargedHit
                 (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
                 Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
                 Vector3.forward));
@@ -293,14 +293,14 @@ public class ArmController : MonoBehaviour
 
         int strength = (int)Mathf.Lerp(0, 2, Arms[_armIndex].GetPrioPoints() / (3));
 
-        GameManager.Instance.Feedback.SpawnPlayerHit
+        _playerFeedbackManager.SpawnPlayerHitVFX
             (Mathf.Clamp(strength, 0, 2), Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));
 
         if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
         {
-            GameManager.Instance.Feedback.SpawnChargedHit
+            _playerFeedbackManager.SpawnChargedHit
             (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
             Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
             Vector3.forward));

@@ -18,15 +18,16 @@ public class PlayerFeedbackManager : MonoBehaviour
     private FeedbackFaceController _feedbackFaceController;
     public Player LastPlayerHit;
 
+    [Header ("PlayerVFX")]
+    [SerializeField] GameObject hitEnvVFX;
+    [SerializeField] GameObject airDashVFX;
+    [SerializeField] GameObject playerKilledVFX;
+    [SerializeField] GameObject[] hitPlayerVFX;
+    [SerializeField] GameObject chargedHitVFX;
+
     private float StunAlpha;
 
-    private void OnEnable()
-    {
-	    _player = GetComponent<Player>();
-	    _feedbackFaceController = GetComponentInChildren<FeedbackFaceController>();    
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
 	    RemoveCallBacks();
     }
@@ -48,7 +49,11 @@ public class PlayerFeedbackManager : MonoBehaviour
 
     private void Start()
     {
-	    InitCallBacks();
+        _player = GetComponent<Player>();
+        _feedbackFaceController = GetComponentInChildren<FeedbackFaceController>();
+
+        InitCallBacks();
+
         StunAlpha = StunAccumulation.color.a;
         StunAccumulation.color = new Color(StunAccumulation.color.r, StunAccumulation.color.g, StunAccumulation.color.b, 0.0f);
         StunAccumulationParticles.Stop();
@@ -143,7 +148,7 @@ public class PlayerFeedbackManager : MonoBehaviour
     private void KilledFeedback()
     {
 	    GameManager.Instance.Feedback.ShakeCamera(0.5f, 0.7f);
-	    GameManager.Instance.Feedback.SpawnExpulsionVFX(this.transform.position);
+        SpawnPlayerKilledVFX(this.transform.position);
     }
 
     private void CollisionFeedback()
@@ -158,5 +163,61 @@ public class PlayerFeedbackManager : MonoBehaviour
     private void IsInAir()
     {
 	    _feedbackFaceController.CanShake = true;
+    }
+
+    //VFX Feedbacks
+
+    /// <summary>
+    /// Spawn feed back on arm hit Environment object
+    /// </summary>
+    /// <param name="position">VFX Spawn position</param>
+    /// <param name="rotation">VFX Spawn rotation</param>
+    public void SpawnEnvHitVFX(Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(hitEnvVFX, position, rotation, this.transform);
+    }
+
+
+    /// <summary>
+    /// Spawn feed back on arm hit player/RB objects
+    /// </summary>
+    /// <param name="strength">HitStrength</param>
+    /// <param name="position">VFX Spawn position</param>
+    /// <param name="rotation">VFX Spawn rotation</param>
+    public void SpawnPlayerHitVFX(int strength, Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(hitPlayerVFX[strength], position, rotation, this.transform);
+    }
+
+    /// <summary>
+    /// Spawn VFX of hit after on arm charge max
+    /// </summary>
+    /// <param name="position">VFX Spawn position</param>
+    /// <param name="rotation">VFX Spawn rotation</param>
+    public void SpawnChargedHit(Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(chargedHitVFX, position, rotation, this.transform);
+    }
+
+    /// <summary>
+    /// Spawn feed back on arm hit noting(air impulse)
+    /// </summary>
+    /// <param name="position">VFX Spawn position</param>
+    /// <param name="rotation">VFX Spawn rotation</param>
+    public void SpawnAirDashVFX(Vector3 position, Quaternion rotation)
+    {
+        GameObject _go = Instantiate(airDashVFX, position, rotation, this.transform);
+    }
+
+
+    /// <summary>
+    /// Spawn expulsion effect on player dead
+    /// </summary>
+    public void SpawnPlayerKilledVFX(Vector3 position)
+    {
+        Vector3 centerPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+        Quaternion rotation = Quaternion.AngleAxis(Vector3.Angle(playerKilledVFX.transform.up - position, (centerPos - position).normalized), Vector3.forward);
+        GameObject _go = Instantiate(playerKilledVFX, position, rotation * playerKilledVFX.transform.rotation, this.transform);
+        _go.transform.rotation = Quaternion.LookRotation(centerPos - position);
     }
 }

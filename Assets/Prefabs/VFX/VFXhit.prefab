@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7864977891443810752}
   - component: {fileID: 7864977891443810753}
   - component: {fileID: 7864977891443810782}
-  - component: {fileID: 7864977891443810755}
+  - component: {fileID: 199182935430700741}
   m_Layer: 0
   m_Name: VFXhit
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7864977891443810755
+--- !u!114 &199182935430700741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,4 +123,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e1072831340c84e85ae9a26a4ed506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DestroyAfter: 0.4
