@@ -233,7 +233,7 @@ public class InputReceiver : MonoBehaviour
 
     public void Menu_GoUp(InputAction.CallbackContext _context)
     {
-	    Debug.Log(gameObject.scene.IsValid());
+	    //Debug.Log(gameObject.scene.IsValid());
         if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
         {
             if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)

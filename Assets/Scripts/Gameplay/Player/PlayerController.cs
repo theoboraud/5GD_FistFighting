@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public bool HitObject_bool = false;
     [System.NonSerialized] public bool HoldingTrigger = false;
 
-    [System.NonSerialized] public float StunRecoveryTime;
     [System.NonSerialized] public float StunTimer;
     [System.NonSerialized] public float ForceIncreaseFactor;
 
@@ -52,8 +51,6 @@ public class PlayerController : MonoBehaviour
         _armController = GetComponent<ArmController>();
         // Init parameters
         GlobalSettings.ApplyPhysicsSettings(_rb);
-
-        StunRecoveryTime = GlobalSettings.StunRecoveryTime;
 
         InitCallBacks();
     }
