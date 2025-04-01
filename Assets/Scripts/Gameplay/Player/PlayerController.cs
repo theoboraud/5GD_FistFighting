@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     private Rigidbody2D _rb;       // Player rigidbody ref
     private ArmController _armController;
-    private PlayerFeedbackManager _playerFeedbackManager;
     private Player _player;
 
     private BoxCollider2D _boxCollider;
@@ -30,10 +29,6 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
 
     [Header("Variables")]
-    [System.NonSerialized] public PlayerGameState PlayerGameState;
-    [System.NonSerialized] public PlayerPhysicState PlayerPhysicState;
-    [System.NonSerialized] public PlayerRotateState PlayerRotateState;      // Contain the enum of the rotate state (Ready, RotatingRight, RotatingLeft, or OnCooldown)
-    [System.NonSerialized] public bool IsReady = false;                     // Indicates if the player is ready in the lobby
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
     [System.NonSerialized] public bool HoldingTrigger = false;
@@ -54,8 +49,11 @@ public class PlayerController : MonoBehaviour
         _player = GetComponent<Player>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
+        _armController = GetComponent<ArmController>();
         // Init parameters
         GlobalSettings.ApplyPhysicsSettings(_rb);
+
+        StunRecoveryTime = GlobalSettings.StunRecoveryTime;
 
         InitCallBacks();
     }

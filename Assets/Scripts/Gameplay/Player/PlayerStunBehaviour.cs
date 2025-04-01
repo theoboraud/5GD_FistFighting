@@ -16,7 +16,7 @@ public class PlayerStunBehaviour : MonoBehaviour
 
     private float timer;
 
-    private void Awake()
+    private void OnEnable()
     {
         _player = GetComponent<Player>();
 	    _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
@@ -33,7 +33,7 @@ public class PlayerStunBehaviour : MonoBehaviour
                 StartStunState();
             }
             _playerController.StunTimer += Time.deltaTime;
-            //Debug.Log(player.StunTimer);
+            Debug.Log(_playerController.StunTimer);
             float addedTimeBasedOnStunAccumulation = StunAccumulation * (0.2f * _playerController.StunRecoveryTime);
             //Check if timer has gone above the required stun time
             if (_playerController.StunTimer >= GlobalSettings.StunRecoveryTime + addedTimeBasedOnStunAccumulation)
@@ -60,19 +60,19 @@ public class PlayerStunBehaviour : MonoBehaviour
         StunAccumulation++;
         StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
         _playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
-        Debug.Log(StunAccumulation);
         timer = 0;
         _playerFeedbackManager.StartStunFeedback();
         boxCollider.sharedMaterial = bounce;
-        particleSystemController.StartSystem();
+        //particleSystemController.StartSystem();
     }
 
     //The function that stops the stun state
     private void StopStunState()
     {
-	    _playerFeedbackManager.EndStunFeedback();
-	    _playerController.PlayerPhysicState = PlayerPhysicState.InAir;
+        Debug.Log("StopStun");
+        _playerFeedbackManager.EndStunFeedback();
+        _player.PlayerStates.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
-        particleSystemController.StopSystem();
+        //particleSystemController.StopSystem();
     }
 }
