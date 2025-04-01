@@ -57,6 +57,9 @@ public class Player : MonoBehaviour
         PlayerData = new PlayerData(this);
         PlayerStates = new PlayerStates(this);
 
+        PlayerData.PlayerIndex = _playerIndex;
+        PlayerData.PlayerColor = GlobalSettings.PlayerColors[_playerIndex];
+
         _playerController = GetComponent<PlayerController>();
         _playerController.Init();
 
@@ -64,10 +67,9 @@ public class Player : MonoBehaviour
         _playerFeedbackManager.Init();
 
         _playerUI = GetComponentInChildren<PlayerUI>();
-        Color playerColor = GlobalSettings.PlayerColors[_playerIndex];
 
-        Outline_SpriteRenderer.color = playerColor;
-        _playerUI.AddPlayerUI(_playerIndex, playerColor);
+        Outline_SpriteRenderer.color = PlayerData.PlayerColor;
+        _playerUI.AddPlayerUI(this);
 
         ///This we have to do in PlayerManager, TODO
         if (PlayersManager.Instance.Players.Count < 4)
@@ -85,7 +87,6 @@ public class Player : MonoBehaviour
         }
 
         // Set the layer of the player
-        PlayerData.PlayerIndex = _playerIndex;
         gameObject.layer = LayerMask.NameToLayer($"Player{_playerIndex+1}");
     }
 

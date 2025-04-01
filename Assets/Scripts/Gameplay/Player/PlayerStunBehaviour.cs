@@ -33,8 +33,8 @@ public class PlayerStunBehaviour : MonoBehaviour
                 StartStunState();
             }
             float stunRecoveryTime = GlobalSettings.StunRecoveryTime;
-            //_playerController.StunTimer += Time.deltaTime;
-            Debug.Log(_playerController.StunTimer);
+            _playerController.StunTimer += Time.deltaTime;
+            //Debug.Log(_playerController.StunTimer);
             float addedTimeBasedOnStunAccumulation = StunAccumulation * (0.2f * stunRecoveryTime);
             //Check if timer has gone above the required stun time
             if (_playerController.StunTimer >= stunRecoveryTime + addedTimeBasedOnStunAccumulation)

@@ -21,7 +21,9 @@ public class PlayerUI : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public int PlayerIndex;
-
+    
+    private Color _playerColor;
+    
     private Vector2[] uiPositions = {
         new Vector2(50, 0),   // right up
         new Vector2(-50, 0),  // left up
@@ -42,30 +44,33 @@ public class PlayerUI : MonoBehaviour
     /// <summary>
     /// Add the PlayerUI (with player index, player color, maybe player name in the future)
     /// </summary>
-    public void AddPlayerUI(int _playerIndex, Color _playerColor)
+    public void AddPlayerUI(Player _myPlayer)
     {
+        _player = _myPlayer;
         this.gameObject.SetActive(true);
-        PlayerIndex = _playerIndex;
+        PlayerIndex = _player.PlayerData.PlayerIndex;
 
         //Set player name text
         Text playerNameTxt = this.gameObject.GetComponent<Text>();
-        playerNameTxt.text = "J" + (_playerIndex + 1);
+        playerNameTxt.text = "J" + (PlayerIndex+1);
 
+        _playerColor = _player.PlayerData.PlayerColor;
         //Set indicator color
         PlayerIndicator.GetComponent<Image>().color = _playerColor;
 
-        foreach (GameObject go in GO_Hearts) { 
-        go.GetComponent<Image>().color = _playerColor;
+        foreach (GameObject go in GO_Hearts)
+        {
+            go.GetComponent<Image>().color = _playerColor;
         }
         RectTransform rect = GetComponent<RectTransform>();
 
         // Set anchor
-        rect.anchorMin = anchors[_playerIndex];
-        rect.anchorMax = anchors[_playerIndex];
-        rect.pivot = anchors[_playerIndex];
+        rect.anchorMin = anchors[PlayerIndex];
+        rect.anchorMax = anchors[PlayerIndex];
+        rect.pivot = anchors[PlayerIndex];
 
         // Set rect transform
-        rect.anchoredPosition = uiPositions[_playerIndex];
+        rect.anchoredPosition = uiPositions[PlayerIndex];
 
         Init();
     }
@@ -78,7 +83,6 @@ public class PlayerUI : MonoBehaviour
     {
         InitCallbacks();
 
-        _player = GetComponent<Player>();
         //Disable is ready btn
         GO_IsReady.SetActive(false);
 
@@ -92,7 +96,7 @@ public class PlayerUI : MonoBehaviour
             GO_Cross.SetActive(false);
 
             // Reset the number of lives
-            nbLives.text = GameManager.Instance.ParamData.PARAM_Player_Lives.ToString();
+            nbLives.text = _player.PlayerData.PlayerLives.ToString();
         }
         else
         {
@@ -103,11 +107,11 @@ public class PlayerUI : MonoBehaviour
             GO_Cross.SetActive(false);
         }
 
-        Invoke("UpdateLivesUI", 0.3f);
+        //UpdateLivesUI();
     }
 
-    
-    private void OnDisable()
+
+    private void OnDestroy()
     {
         RemoveCallBacks();
     }
@@ -129,7 +133,7 @@ public class PlayerUI : MonoBehaviour
 
     private void OnNewSceneLoad(GameScene _scene)
     {
-        if (_scene is GameScene.Playable)
+        if (_scene == GameScene.Playable)
         {
             UpdateLivesUI();
         }
@@ -140,38 +144,42 @@ public class PlayerUI : MonoBehaviour
     /// </summary>
     public void UpdateLivesUI()
     {
+        if (_player == null) return;
+        int _playerLives = _player.PlayerData.PlayerLives;
+        Debug.Log("Player" + _player.PlayerData.PlayerIndex + "life:" + _playerLives);
+
+        if (_playerLives > 0)
+        {
+            nbLives.text = _playerLives.ToString();
+            GO_Cross.SetActive(false);
+            if (_playerLives == 3)
+            {
+                SetHeart(GO_Hearts[0], true);
+                SetHeart(GO_Hearts[1], true);
+                SetHeart(GO_Hearts[2], true);
+            }
+            if (_playerLives == 2)
+            {
+                SetHeart(GO_Hearts[0], true);
+                SetHeart(GO_Hearts[1], true);
+                SetHeart(GO_Hearts[2], false);
+            }
+            if (_playerLives == 1)
+            {
+                SetHeart(GO_Hearts[0], true);
+                SetHeart(GO_Hearts[1], false);
+                SetHeart(GO_Hearts[2], false);
+            }
+        }
+        else
+        {
+            //nbLives.text = "";
+            Eliminated();
+        }
+
         if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
         {
-	        if (_player == null) return;
-            int _playerLives = _player.PlayerData.PlayerLives;
 
-            if (_playerLives > 0)
-            {
-                nbLives.text = _playerLives.ToString();
-                if (_playerLives == 3)
-                {
-                    SetHeart(GO_Hearts[0], true);
-                    SetHeart(GO_Hearts[1], true);
-                    SetHeart(GO_Hearts[2], true);
-                }
-                if (_playerLives == 2)
-                {
-                    SetHeart(GO_Hearts[0], true);
-                    SetHeart(GO_Hearts[1], true);
-                    SetHeart(GO_Hearts[2], false);
-                }
-                if (_playerLives == 1)
-                {
-                    SetHeart(GO_Hearts[0], true);
-                    SetHeart(GO_Hearts[1], false);
-                    SetHeart(GO_Hearts[2], false);
-                }
-            }
-            else
-            {
-                //nbLives.text = "";
-                Eliminated();
-            }
 
             // Deprecated
             /*if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1)
@@ -207,13 +215,13 @@ public class PlayerUI : MonoBehaviour
 
         if (isAlive)
         {
-            Color color = Color.white;
+            Color color = _playerColor;
             color.a = 1f;
             img.color = color;
         }
         else
         {
-            Color color = Color.black;
+            Color color = Color.white;
             color.a = 0.3f;
             img.color = color;
         }

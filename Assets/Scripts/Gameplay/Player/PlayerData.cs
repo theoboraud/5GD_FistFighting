@@ -8,6 +8,7 @@ public class PlayerData
 	private int _playerIndex = 1;
     private int _playerLives = 0;
     private int _playerScore = 0;//TODO
+    private Color _playerColor;
 
     public PlayerData(Player _myPlayer)
     {
@@ -37,5 +38,11 @@ public class PlayerData
         {
             _playerScore = value;
         }
+    }
+
+    public Color PlayerColor 
+    { 
+        get => _playerColor; 
+        set => _playerColor = value; 
     }
 }
