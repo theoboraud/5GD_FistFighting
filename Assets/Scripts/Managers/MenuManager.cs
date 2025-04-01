@@ -20,16 +20,13 @@ public class MenuManager : MonoBehaviour
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
     public List<Text> Text_SpawningTimers = new List<Text>();                           // Reference to the Text component of each spawning timers
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
-    public List<Color> PlayerColors;                                                    // Reference to the player colors
-    public List<PlayerUI> PlayersUI = new List<PlayerUI>();                        // Reference to the UI indicating the number of player lives
     public PauseMenu PauseMenu;                                                         // Reference to the PauseMenu script
 
     [Header("Menu Screens")]
     public MainMenu MainMenu;
 
     [Header("Variables")]
-    public List<int> CharacterSkinIndex = new List<int>();
-    private List<bool> playersReady = new List<bool>();
+    private List<Color> _playerColors;                                                    // Reference to the player colors
     private Menu activeMenu;
     private float startingTimer = 0f;                                                   // Contains the general spawn timer when starting a new level
     [System.NonSerialized] public float ReadyTimer = 0f;
@@ -58,6 +55,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        _playerColors = GlobalSettings.PlayerColors;
         // Init the active menu as the main menu
         MainMenu.Activate();
     }
@@ -78,6 +76,7 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
+        GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnPlayerJoin);
     }
 
     private void UnsribeEvents()
@@ -86,6 +85,7 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
+        GEventCenter.Unsubscribe<int>(GameEvent.OnPlayerJoin, OnPlayerJoin);
     }
 
     /// <summary>
@@ -227,7 +227,7 @@ public class MenuManager : MonoBehaviour
         if (_bool)
         {
             WinnerScreen_WinnerName.text = "Player " + (_indexWinner + 1).ToString();
-            WinnerScreen_WinnerName.color = PlayerColors[_indexWinner];
+            WinnerScreen_WinnerName.color = _playerColors[_indexWinner];
         }
     }
 
@@ -238,19 +238,14 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    public void AddPlayer(int _playerIndex)
+    public void OnPlayerJoin(int _playerIndex)
     {
-        UpdateLives();
         PlayerScores[_playerIndex].gameObject.SetActive(true);
-        PlayerScores[_playerIndex].SetColor(PlayerColors[_playerIndex]);
+        PlayerScores[_playerIndex].SetColor(_playerColors[_playerIndex]);
         PlayerScores[_playerIndex].Player = PlayersManager.Instance.Players[_playerIndex];
-        PlayersManager.Instance.Players[_playerIndex].PlayerIndicator.GetComponent<SpriteRenderer>().color = PlayerColors[_playerIndex];
-        PlayersManager.Instance.Players[_playerIndex].Outline_SpriteRenderer.color = PlayerColors[_playerIndex];
-        PlayersUI[_playerIndex].AddPlayerUI(_playerIndex, PlayerColors[_playerIndex]);
-        PlayersManager.Instance.Players[_playerIndex].IsReadyUI(false);
-        Text_SpawningTimers[_playerIndex].GetComponent<Text>().color = PlayerColors[_playerIndex];
-        //UI_PlayersLives[_playerIndex].transform.parent.gameObject.SetActive(true);
-        //UI_PlayersLives[_playerIndex].transform.parent.gameObject.GetComponent<Text>().color = PlayerColors[_playerIndex];
+        Text_SpawningTimers[_playerIndex].GetComponent<Text>().color = _playerColors[_playerIndex];
+        // Add its timer reference to SpawningTimers in MenuManager
+        SpawningTimers.Add(0f);
     }
 
 
@@ -280,18 +275,6 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    ///     Update lives UI
-    /// </summary>
-    public void UpdateLives()
-    {
-        for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
-        {
-            PlayersUI[i].UpdateLivesUI();
-        }
-    }
-
-
     public void Reset()
     {
         PrintScoreScreen(false);
@@ -300,22 +283,10 @@ public class MenuManager : MonoBehaviour
         // For each player
         for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
         {
-            Destroy(PlayersUI[i].gameObject);
             Destroy(UI_SpawningTimers[i]);
         }
 
         Destroy(UI_StartingTimer);
-    }
-
-    /// <summary>
-    /// ??It have not be here //TODO
-    /// </summary>
-    public void ResetPlayersUI()
-    {
-        for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
-        {
-            PlayersUI[i].Init();
-        }
     }
 
     private void OnNewGameRound()
@@ -325,7 +296,6 @@ public class MenuManager : MonoBehaviour
 
     private void OnSceneLoad(GameScene _scene)
     {
-        ResetPlayersUI();
         if (_scene == GameScene.Playable)
         {
             StartTimer();

@@ -155,7 +155,7 @@ public class InputReceiver : MonoBehaviour
         {
             if (LevelManager.Instance.IsLobbyScene())
             {
-	            _player.IsReadyUI(!_player.GO_IsReady.activeSelf);
+	            _player.OnReadyInput();
             }
             else
             {

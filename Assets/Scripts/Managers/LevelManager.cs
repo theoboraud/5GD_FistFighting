@@ -89,7 +89,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {*/
-            // Init scene index and spawn points
+        // Init scene index and spawn points
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         CurrentSceneName = SceneManager.GetActiveScene().name;
 
@@ -106,7 +106,7 @@ public class LevelManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        GEventCenter.Subscribe(GameEvent.OnNewGameRound,LoadNextLevel) ;
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound, LoadNextLevel);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
     }
@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Playable);
         }
-        else if(_sceneName == lobbySceneName)
+        else if (_sceneName == lobbySceneName)
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Lobby);
         }
@@ -177,13 +177,13 @@ public class LevelManager : MonoBehaviour
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Intro);
 
         }
-        else if(_sceneName == outroSceneName)
+        else if (_sceneName == outroSceneName)
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Outro);
         }
 
-            //CurrentSceneIndex = _levelIndex;
-            CurrentSceneName = _sceneName;
+        //CurrentSceneIndex = _levelIndex;
+        CurrentSceneName = _sceneName;
     }
 
 
@@ -220,7 +220,7 @@ public class LevelManager : MonoBehaviour
     {
         string _randomScene = CurrentSceneName;
 
-        while(_randomScene == CurrentSceneName)
+        while (_randomScene == CurrentSceneName)
         {
             _randomScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
         }
@@ -233,44 +233,29 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadNextLevel()
     {
-        if (true)
+        // If playable level, add it to the levels played
+        if (playableSceneNames.Contains(CurrentSceneName))
         {
-            // If playable level, add it to the levels played
-            if (playableSceneNames.Contains(CurrentSceneName))
-            {
-                LevelsPlayed.Add(CurrentSceneName);
-            }
-
-            // If we played every level, empty the list
-            if (LevelsPlayed.Count >= playableSceneNames.Count)
-            {
-                LevelsPlayed.Clear();
-            }
-
-            // Get a random scene index not yet in LevelsPlayed
-            string _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
-
-            if (LevelsPlayed.Count > 0)
-            {
-                while (LevelsPlayed.Contains(_nextScene) || _nextScene == CurrentSceneName)
-                {
-                    _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
-                }
-            }
-            LoadScene(_nextScene);
+            LevelsPlayed.Add(CurrentSceneName);
         }
-        else
+
+        // If we played every level, empty the list
+        if (LevelsPlayed.Count >= playableSceneNames.Count)
         {
-            //PlayersManager.Instance.ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
-
-            //SceneManager.LoadScene(CurrentSceneName);
-
-            //CurrentSceneIndex = SceneManager.sceneCountInBuildSettings;
-
-            //MenuManager.Instance.StartTimer();
-
-            //MenuManager.Instance.ResetPlayersUI();
+            LevelsPlayed.Clear();
         }
+
+        // Get a random scene index not yet in LevelsPlayed
+        string _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
+
+        if (LevelsPlayed.Count > 0)
+        {
+            while (LevelsPlayed.Contains(_nextScene) || _nextScene == CurrentSceneName)
+            {
+                _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
+            }
+        }
+        LoadScene(_nextScene);
     }
 
     public void Reset()

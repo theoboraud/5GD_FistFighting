@@ -12,27 +12,61 @@ using Enums;
 public class PlayerUI : MonoBehaviour
 {
     [Header("References")]
-    //[SerializeField] private GameObject scoreText;                                          // Reference to the player score text game object (J1, J2...)
-    //[SerializeField] private List<GameObject> scoreTokenFillers = new List<GameObject>();   // References to all token fillers game objects
     [SerializeField] private List<GameObject> GO_Hearts = new List<GameObject>();
     [SerializeField] private GameObject GO_NbLives;
     [SerializeField] private Text nbLives;
     [SerializeField] private GameObject GO_Cross;
+    [SerializeField] private GameObject PlayerIndicator;
+    [SerializeField] private GameObject GO_IsReady;
 
     [Header("Variables")]
     [System.NonSerialized] public int PlayerIndex;
+
+    private Vector2[] uiPositions = {
+        new Vector2(50, 0),   // right up
+        new Vector2(-50, 0),  // left up
+        new Vector2(50,50),  // right down
+        new Vector2(-50, 50)  // left down
+    };
+
+    private Vector2[] anchors = {
+        new Vector2(0, 1),  //  left up
+        new Vector2(1, 1),  // right up
+        new Vector2(0, 0), //  left down
+        new Vector2(1, 0),  //  right down
+    };
 
     private Player _player;
 
 
     /// <summary>
-    ///     Add the PlayerUI
+    /// Add the PlayerUI (with player index, player color, maybe player name in the future)
     /// </summary>
     public void AddPlayerUI(int _playerIndex, Color _playerColor)
     {
         this.gameObject.SetActive(true);
         PlayerIndex = _playerIndex;
-        this.gameObject.GetComponent<Text>().color = _playerColor;
+
+        //Set player name text
+        Text playerNameTxt = this.gameObject.GetComponent<Text>();
+        playerNameTxt.text = "J" + (_playerIndex + 1);
+
+        //Set indicator color
+        PlayerIndicator.GetComponent<Image>().color = _playerColor;
+
+        foreach (GameObject go in GO_Hearts) { 
+        go.GetComponent<Image>().color = _playerColor;
+        }
+        RectTransform rect = GetComponent<RectTransform>();
+
+        // Set anchor
+        rect.anchorMin = anchors[_playerIndex];
+        rect.anchorMax = anchors[_playerIndex];
+        rect.pivot = anchors[_playerIndex];
+
+        // Set rect transform
+        rect.anchoredPosition = uiPositions[_playerIndex];
+
         Init();
     }
 
@@ -42,7 +76,12 @@ public class PlayerUI : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        InitCallbacks();
+
         _player = GetComponent<Player>();
+        //Disable is ready btn
+        GO_IsReady.SetActive(false);
+
         if (LevelManager.Instance.CurrentSceneIndex > 0)
         {
             // Set the game objects visibility
@@ -67,6 +106,34 @@ public class PlayerUI : MonoBehaviour
         Invoke("UpdateLivesUI", 0.3f);
     }
 
+    
+    private void OnDisable()
+    {
+        RemoveCallBacks();
+    }
+
+    private void InitCallbacks()
+    {
+        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnNewSceneLoad);
+    }
+    private void RemoveCallBacks()
+    {
+        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnNewSceneLoad);
+    }
+
+    public void GetReady(bool _isReady)
+    {
+        Debug.Log("UI set ready" + _isReady);
+        GO_IsReady.SetActive(_isReady);
+    }
+
+    private void OnNewSceneLoad(GameScene _scene)
+    {
+        if (_scene is GameScene.Playable)
+        {
+            UpdateLivesUI();
+        }
+    }
 
     /// <summary>
     ///     Update the lives on the player UI

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "ParamData", menuName = "Tools/ParamData", order = 1)]
 public class ParamData : ScriptableObject
@@ -89,4 +90,7 @@ public class ParamData : ScriptableObject
     public int PARAM_PRIO_HOLDFORCE;
     public int PARAM_PRIO_AIRSTATE;
     // #endregion
+    
+    [Header("PLAYER COLORS")]
+    public List<Color> PLAYER_COLORS = new List<Color>(); // List of colors for players
 }

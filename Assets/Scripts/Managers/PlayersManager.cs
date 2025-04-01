@@ -30,11 +30,11 @@ public class PlayersManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-	    _playerInputManager = GetComponent<PlayerInputManager>();
+        _playerInputManager = GetComponent<PlayerInputManager>();
 
-	    // Init references
-	    SkinsData = gameObject.GetComponent<SkinsData>();
-	    
+        // Init references
+        SkinsData = gameObject.GetComponent<SkinsData>();
+
         if (Instance == null)
         {
             Instance = this;
@@ -69,13 +69,26 @@ public class PlayersManager : MonoBehaviour
     /// <param name="playerInput"></param>
     private void OnPlayerJoined(PlayerInput playerInput)
     {
+        // Maximum number of players is 4
+        if (Players.Count >= 4) return;
+
         Debug.Log("New Player Joined: " + playerInput.playerIndex);
         Player newPlayer = playerInput.GetComponent<Player>();
+        int playerIndex = playerInput.playerIndex;
 
         if (newPlayer != null)
         {
-            newPlayer.StartInit(playerInput.playerIndex);
+            newPlayer.StartInit(playerIndex);
             Players.Add(newPlayer);
+            GEventCenter.Invoke<int>(GameEvent.OnPlayerJoin, playerIndex);
+            // Spawn the player
+            SpawnPlayer(newPlayer);
+        }
+
+        // Set action map on Gameplay if player is spawning InPlay
+        if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
+        {
+            playerInput.SwitchCurrentActionMap("Gameplay");
         }
     }
 
@@ -107,49 +120,6 @@ public class PlayersManager : MonoBehaviour
 
     // #region ==================== PLAYERS FUNCTIONS ====================
 
-    /// <summary>
-    ///     Add a given player to the game
-    /// </summary>
-    public void AddPlayer(Player _player)
-    {
-        // Maximum number of players is 4
-        if (Players.Count < 4)
-        {
-            // Add the player for every manager and init its values
-            Players.Add(_player);
-
-            MenuManager.Instance.AddPlayer(Players.IndexOf(_player));
-            GameManager.Instance.PlayerScores.Add(0);//TODO
-
-            // Set action map on Gameplay if player is spawning InPlay
-            if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
-            {
-                _player.GetComponent<UnityEngine.InputSystem.PlayerInput>().SwitchCurrentActionMap("Gameplay");
-            }
-
-            // Set the layer of the player
-            int _playerIndex = PlayersManager.Instance.Players.IndexOf(_player) + 1;
-            string _playerLayer = "Player" + _playerIndex.ToString();
-            _player.gameObject.layer = LayerMask.NameToLayer(_playerLayer);
-            _player.PlayerLayer = _playerLayer;
-
-            // Spawn the player
-            SpawnPlayer(_player);
-
-            // Add its timer reference to SpawningTimers in MenuManager
-            MenuManager.Instance.SpawningTimers.Add(0f);
-
-            // Set the player to not ready
-            _player.IsReadyUI(false);
-        }
-        // If the game tries to spawn a 5th player
-        else
-        {
-            Destroy(_player.gameObject);
-        }
-
-    }
-
 
     /// <summary>
     ///     Spawn all players registered by PlayersManager
@@ -177,7 +147,7 @@ public class PlayersManager : MonoBehaviour
             PlayersAlive.Add(_player);
         }
         PlayersSpawned.Add(_player);
-        
+
     }
 
 
@@ -224,10 +194,9 @@ public class PlayersManager : MonoBehaviour
     public void OnPlayerKilled(Player _player)
     {
         // The player loses a life
-        MenuManager.Instance.UpdateLives();
         PlayersSpawned.Remove(_player);
 
-        if (_player.PlayerData.PlayerLives<= 0)
+        if (_player.PlayerData.PlayerLives <= 0)
         {
             PlayersAlive.Remove(_player);
 
@@ -310,7 +279,7 @@ public class PlayersManager : MonoBehaviour
         {
             ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
         }
-        else if(_scene == GameScene.Lobby)
+        else if (_scene == GameScene.Lobby)
         {
             ResetPlayersLives(1);
         }

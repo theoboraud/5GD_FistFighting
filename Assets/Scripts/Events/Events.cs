@@ -15,6 +15,9 @@ public enum GameEvent
 
     //Player
     OnPlayerDead,
+
+    //PlayerManager
+    OnPlayerJoin,
 }
 
 /// <summary>

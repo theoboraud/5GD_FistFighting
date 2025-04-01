@@ -18,6 +18,7 @@ MonoBehaviour:
   PARAM_Player_LinearDrag: 0
   PARAM_Player_AngularDrag: 6
   PARAM_Player_StunRecoveryTime: 0.35
+  PLAYER_INVINCIBILITY: 2
   PARAM_Player_ArmGroundForce: 16
   PARAM_Player_ArmHitForce: 25
   PARAM_Player_ArmCooldown: 0.4
@@ -40,3 +41,8 @@ MonoBehaviour:
   PARAM_PRIO_VELOCITY: 3
   PARAM_PRIO_HOLDFORCE: 2
   PARAM_PRIO_AIRSTATE: 2
+  PLAYER_COLORS:
+  - {r: 1, g: 0.10849059, b: 0.10849059, a: 1}
+  - {r: 0.358553, g: 1, b: 0.08018869, a: 1}
+  - {r: 1, g: 0.8717628, b: 0, a: 1}
+  - {r: 0, g: 0.10735226, b: 1, a: 1}

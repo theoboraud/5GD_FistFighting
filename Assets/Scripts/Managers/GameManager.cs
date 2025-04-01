@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
     private void SubsribeEvents()
     {
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
     }
 
     private void UnsribeEvents()
@@ -246,6 +247,11 @@ public class GameManager : MonoBehaviour
         {
             GlobalGameState = GlobalGameState.Outro;
         }
+    }
+
+    private void OnNewPlayerJoin(int _playerIndex)
+    {
+        PlayerScores.Add(0);
     }
     // #endregion
 }

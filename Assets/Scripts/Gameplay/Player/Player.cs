@@ -17,13 +17,6 @@ using System.Reflection;
 public class Player : MonoBehaviour
 {
     #region EVENTS
-
-    //public event CallBack onInit;
-    //public event CallBack onSpawn;
-    //public event CallBack onHit;
-    //public event CallBack onKilled;
-    //public event CallBack onInvincibilityStart;
-    //public event CallBack onInvincibilityStop;
     public EventCenter<PlayerEvent> EventCenter { get; private set; }
     public PlayerData PlayerData { get ; private set ; }
     public PlayerStates PlayerStates { get ; private set; }
@@ -36,24 +29,18 @@ public class Player : MonoBehaviour
     private PlayerController _playerController;
     private PlayerFeedbackManager _playerFeedbackManager;
     private PlayerUI _playerUI;
-    [SerializeField] private CharacterSkin _skin;
+    [SerializeField] private CharacterSkin Skin;
     private int skinIndex;
 
     [SerializeField] private SpriteRenderer Face_SpriteRenderer;
     [SerializeField] private SpriteRenderer[] Arms_SpriteRenderers;
 
-
     public SpriteRenderer Outline_SpriteRenderer;
-    public GameObject PlayerIndicator;
-    public GameObject GO_IsReady;
     public PlayerVoiceController VoiceController;
-    public FeedbackFaceController FaceController;
 
     public bool isReady = false;
 
     // Contains the index of the current skin
-
-    [System.NonSerialized] public string PlayerLayer;
 
     // #endregion
 
@@ -73,15 +60,20 @@ public class Player : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
         _playerController.Init();
 
+        _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
+        _playerFeedbackManager.Init();
+
+        _playerUI = GetComponentInChildren<PlayerUI>();
+        Color playerColor = GlobalSettings.PlayerColors[_playerIndex];
+
+        Outline_SpriteRenderer.color = playerColor;
+        _playerUI.AddPlayerUI(_playerIndex, playerColor);
+
         ///This we have to do in PlayerManager, TODO
         if (PlayersManager.Instance.Players.Count < 4)
         {
             // Keep the player game object between scenes
             DontDestroyOnLoad(gameObject);
-
-            // Add player to the PlayersManager
-            PlayersManager.Instance.AddPlayer(this);
-
 
             // Get a random skin at start -> TODO: Select skin
             skinIndex = Random.Range(0, PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1);
@@ -92,6 +84,7 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        // Set the layer of the player
         PlayerData.PlayerIndex = _playerIndex;
         gameObject.layer = LayerMask.NameToLayer($"Player{_playerIndex+1}");
     }
@@ -102,12 +95,12 @@ public class Player : MonoBehaviour
     /// </summary>
     private void InitSkin()
     {
-        Face_SpriteRenderer.sprite = _skin.SpriteFace;
-        Outline_SpriteRenderer.sprite = _skin.SpriteFace;
+        Face_SpriteRenderer.sprite = Skin.SpriteFace;
+        Outline_SpriteRenderer.sprite = Skin.SpriteFace;
 
         for (int i = 0; i < Arms_SpriteRenderers.Length; i++)
         {
-            Arms_SpriteRenderers[i].sprite = _skin.SpriteArm;
+            Arms_SpriteRenderers[i].sprite = Skin.SpriteArm;
         }
 
         //MenuManager.Instance.PlayerScores[PlayersManager.Instance.Players.IndexOf(this)].SetFace(this);
@@ -124,7 +117,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void ChangeSkin(CharacterSkin _charSkin)
     {
-        _skin = _charSkin;
+        Skin = _charSkin;
         InitSkin();
     }
 
@@ -139,7 +132,7 @@ public class Player : MonoBehaviour
         {
             skinIndex = 0;
         }
-        _skin = PlayersManager.Instance.SkinsData.GetSkin(skinIndex);
+        Skin = PlayersManager.Instance.SkinsData.GetSkin(skinIndex);
 
         InitSkin();
     }
@@ -155,7 +148,7 @@ public class Player : MonoBehaviour
         {
             skinIndex = PlayersManager.Instance.SkinsData.CharacterSkins.Count - 1;
         }
-        _skin = PlayersManager.Instance.SkinsData.GetSkin(skinIndex);
+        Skin = PlayersManager.Instance.SkinsData.GetSkin(skinIndex);
 
         InitSkin();
     }
@@ -202,12 +195,15 @@ public class Player : MonoBehaviour
 
         PlayerData.PlayerLives -= 1;
 
-        IsReadyUI(false);
-
         PlayerStates.PlayerGameState = PlayerGameState.Dead;
+
+        _playerUI.UpdateLivesUI();
 
         //Broadcast global of player dead
         GEventCenter.Invoke<Player>(GameEvent.OnPlayerDead, this);
+
+        //tmp, to change //TODO
+        OnGameRoundStart();
     }
 
 
@@ -219,14 +215,20 @@ public class Player : MonoBehaviour
         PlayerStates.PlayerPhysicState = PlayerPhysicState.IsHit;
     }
 
+    private void OnGameRoundStart()
+    {
+        isReady = false;
+        _playerUI.GetReady(false);
+    }
+
     /// <summary>
     ///     Indicate if the player is ready in the lobby
     /// </summary>
-    public void IsReadyUI(bool _bool)
+    public void OnReadyInput()
     {
-        GO_IsReady.SetActive(_bool);
+        isReady = !isReady;
 
-        isReady = _bool;
+        _playerUI.GetReady(isReady);
 
         // If all players are ready, end the round
         if (PlayersManager.Instance.AllPlayersReady())
@@ -241,7 +243,7 @@ public class Player : MonoBehaviour
 
     public CharacterSkin GetSkin()
     {
-        return _skin;
+        return Skin;
     }
 
     public PlayerController GetPlayerController()

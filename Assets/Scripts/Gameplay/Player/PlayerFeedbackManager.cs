@@ -47,7 +47,7 @@ public class PlayerFeedbackManager : MonoBehaviour
         _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
-    private void Start()
+    public void Init()
     {
         _player = GetComponent<Player>();
         _feedbackFaceController = GetComponentInChildren<FeedbackFaceController>();

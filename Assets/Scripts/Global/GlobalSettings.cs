@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class GlobalSettings
 {
 	public static readonly float StunRecoveryTime = GameManager.Instance.ParamData.PARAM_Player_StunRecoveryTime;
 	public static readonly float PlayerInvincibility = GameManager.Instance.ParamData.PLAYER_INVINCIBILITY;
+	public static readonly List<Color> PlayerColors = GameManager.Instance.ParamData.PLAYER_COLORS;
 	
 	public static void ApplyPhysicsSettings(Rigidbody2D rb)
 	{
