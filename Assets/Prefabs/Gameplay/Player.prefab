@@ -1293,12 +1293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234e158675484b329386cf11a7368f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnExtendArm:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &435162874383215005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1387,8 +1381,10 @@ PrefabInstance:
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 5486271232133404602}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 6683747768370366081, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 3967738263475186914, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
@@ -1489,8 +1485,10 @@ PrefabInstance:
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 5486271232133404602}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 6683747768370366081, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 3967738263475186914, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
@@ -1875,8 +1873,10 @@ PrefabInstance:
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 826066456709145985}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 6683747768370366081, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 3967738263475186914, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
@@ -1985,8 +1985,10 @@ PrefabInstance:
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 5486271232133404602}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 6683747768370366081, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 3967738263475186914, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d69c1f82cb132ae44a9be5cba8c03668, type: 3}

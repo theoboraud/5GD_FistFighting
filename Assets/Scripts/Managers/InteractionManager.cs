@@ -43,7 +43,7 @@ public class InteractionManager:MonoBehaviour
         int player2Points = 0;
 
         // Compare FrameStack
-        CompareStats(_armPlayer1.FrameStack, _armPlayer2.FrameStack, ref player1Points, ref player2Points, GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK);
+        //CompareStats(_armPlayer1.FrameStack, _armPlayer2.FrameStack, ref player1Points, ref player2Points, GameManager.Instance.ParamData.PARAM_PRIO_FRAMESTACK);
 
         // Compare Velocity
         CompareStats(_armPlayer1.GetRB().linearVelocity.magnitude,

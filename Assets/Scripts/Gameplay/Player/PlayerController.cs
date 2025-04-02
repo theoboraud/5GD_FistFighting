@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D _boxCollider;
 
     [Header("Events for FMOD")]
-    public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
-    public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
+    //public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
+    //public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
 
     [Header("Variables")]
     [System.NonSerialized] public float AirPushFactor = 1f;
