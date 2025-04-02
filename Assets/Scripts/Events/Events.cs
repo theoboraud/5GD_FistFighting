@@ -4,6 +4,7 @@
 public enum GameEvent
 {
     //GameManager
+    OnStartRound,
     OnNewGameRound,
     OnGameReset,
     OnLoadOutro,

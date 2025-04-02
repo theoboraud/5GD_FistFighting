@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Subscribe(GameEvent.OnGameReset, ResetGame);
-        GEventCenter.Subscribe(GameEvent.OnNewGameRound, NewGameRound);
+        GEventCenter.Subscribe(GameEvent.OnStartRound, NewGameRound);
         GEventCenter.Subscribe(GameEvent.OnShowScore, ScoreScreen);
     }
 
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetGame);
-        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, NewGameRound);
+        GEventCenter.Unsubscribe(GameEvent.OnStartRound, NewGameRound);
         GEventCenter.Unsubscribe(GameEvent.OnShowScore, ScoreScreen);
     }
 
@@ -113,8 +113,8 @@ public class GameManager : MonoBehaviour
         // TODO: Implement loading screen...
         if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.IsIntroScene())
         {
-            GEventCenter.Invoke(GameEvent.OnNewGameRound);
             // Change game state
+            GEventCenter.Invoke(GameEvent.OnNewGameRound);
             Invoke("SetStateToInPlay", 0.1f);
         }
     }
