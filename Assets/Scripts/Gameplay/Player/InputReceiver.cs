@@ -1,288 +1,223 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using Enums;
-using System;
-using UnityEngine.UIElements;
 
 /// <summary>
-///     Class Manager player inputs
+/// Manages player input using the Unity Input System.
+/// Dispatches events via EventCenter to decouple input from game logic.
 /// </summary>
-
+[RequireComponent(typeof(Player), typeof(PlayerInput))]
 public class InputReceiver : MonoBehaviour
 {
-    // #region ============== CLASS VARIABLES ==============
+    #region === Fields ===
 
-    private Player _player;                       // Player reference
-    private UnityEngine.InputSystem.PlayerInput playerInput;            // Player Input reference
-    // All input action references
-    private InputAction action_rotate;
+    private Player _player;
+    private PlayerInput _playerInput;
 
-    // #endregion
+    private InputAction _rotateAction;
 
+    #endregion
 
+    #region === Unity Lifecycle ===
 
-    // #region ============== INIT FUNCTIONS ==============
     private void OnEnable()
     {
         Init();
     }
+
     private void OnDisable()
     {
-        RemoveCallBacks();
+        UnregisterCallbacks();
     }
 
+    #endregion
 
-    /// <summary>
-    /// Init references
-    /// </summary>
+    #region === Initialization ===
+
     private void Init()
     {
-	    _player = GetComponent<Player>();
+        _player = GetComponent<Player>();
+        _playerInput = GetComponent<PlayerInput>();
 
-        playerInput = GetComponent<UnityEngine.InputSystem.PlayerInput>();
-
-        action_rotate = playerInput.actions["Rotate"];
-        playerInput.actions["Rotate"].performed += OnRotatePerformed;
-        playerInput.actions["Rotate"].canceled += OnRotateCanceled;
+        _rotateAction = _playerInput.actions["Rotate"];
+        _rotateAction.performed += OnRotatePerformed;
+        _rotateAction.canceled += OnRotateCanceled;
     }
 
-    private void RemoveCallBacks()
+    private void UnregisterCallbacks()
     {
-        playerInput.actions["Rotate"].performed -= OnRotatePerformed;
-        playerInput.actions["Rotate"].canceled -= OnRotateCanceled;
+        if (_rotateAction != null)
+        {
+            _rotateAction.performed -= OnRotatePerformed;
+            _rotateAction.canceled -= OnRotateCanceled;
+        }
     }
 
-    // #endregion
+    #endregion
 
+    #region === Arm Controls ===
 
+    public void Gameplay_NewExtendDown(InputAction.CallbackContext context) => HandleArmInput(context, 0);
+    public void Gameplay_NewExtendLeft(InputAction.CallbackContext context) => HandleArmInput(context, 1);
+    public void Gameplay_NewExtendUp(InputAction.CallbackContext context) => HandleArmInput(context, 2);
+    public void Gameplay_NewExtendRight(InputAction.CallbackContext context) => HandleArmInput(context, 3);
 
-    // #region ============== GAMEPLAY CONTROLS FUNCTIONS ==============
-
-    public void Gameplay_NewExtendDown(InputAction.CallbackContext _context)
+    private void HandleArmInput(InputAction.CallbackContext context, int direction)
     {
-        if (_context.started)
+        if (context.started)
         {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 0);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, direction);
         }
-        if (_context.canceled || _context.interaction is TapInteraction)
+
+        if (context.canceled || context.interaction is TapInteraction)
         {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 0);
+            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, direction);
         }
     }
 
-    public void Gameplay_NewExtendLeft(InputAction.CallbackContext _context)
-    {
-        if (_context.started)
-        {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 1);
-        }
-        if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 1);
-        }
-    }
+    #endregion
 
-    public void Gameplay_NewExtendUp(InputAction.CallbackContext _context)
-    {
-        if (_context.started)
-        {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 2);
-        }
-        if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 2);
-        }
-    }
+    #region === Rotation ===
 
-    public void Gameplay_NewExtendRight(InputAction.CallbackContext _context)
-    {
-        if (_context.started)
-        {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnHoldArm, 3);
-        }
-        if (_context.canceled || _context.interaction is TapInteraction)
-        {
-            _player.EventCenter.Invoke<int>(PlayerEvent.OnExtendArm, 3);
-        }
-    }
-
-    /// <summary>
-    ///     Called for checking sticks value
-    /// </summary>
     private void OnRotatePerformed(InputAction.CallbackContext context)
     {
-        float rotateInput = context.ReadValue<float>();
-        _player.EventCenter.Invoke<float>(PlayerEvent.OnRotate,rotateInput);
+        float value = context.ReadValue<float>();
+        _player.EventCenter.Invoke<float>(PlayerEvent.OnRotate, value);
     }
 
     private void OnRotateCanceled(InputAction.CallbackContext context)
     {
-        _player.EventCenter.Invoke<float>(PlayerEvent.OnRotate, 0);
+        _player.EventCenter.Invoke<float>(PlayerEvent.OnRotate, 0f);
     }
 
+    #endregion
 
-    /// <summary>
-    ///     Called when pressing start to end the round
-    /// </summary>
-    public void Gameplay_Start(InputAction.CallbackContext _context)
+    #region === Gameplay Controls ===
+
+    public void Gameplay_Start(InputAction.CallbackContext context)
     {
-        Debug.Log(GameManager.Instance.GlobalGameState);
-        if (GameManager.Instance.GlobalGameState is GlobalGameState.Outro && _context.canceled)
-        {
-            GameManager.Instance.ResetGame();
-        }
+        if (!context.canceled) return;
 
-        else if (GameManager.Instance.GlobalGameState is GlobalGameState.ScoreScreen && _context.canceled)
-        {
-            if (GameManager.Instance.PlayerHasWon)
-            {
-                LevelManager.Instance.LoadOutroScene();
-            }
-            else
-            {
-                GameManager.Instance.NewGameRound();
-            }
-        }
+        var state = GameManager.Instance.GlobalGameState;
 
-        else if (GameManager.Instance.GlobalGameState is GlobalGameState.WinnerScreen && _context.canceled)
+        switch (state)
         {
-            GameManager.Instance.ScoreScreen();
-        }
-        else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay && _context.canceled)
-        {
-            if (LevelManager.Instance.IsLobbyScene())
-            {
-	            _player.OnReadyInput();
-            }
-            else
-            {
-                MenuManager.Instance.PauseMenu.Activate();
-            }
+            case GlobalGameState.Outro:
+                GEventCenter.Invoke(GameEvent.OnGameReset);
+                break;
+
+            case GlobalGameState.ScoreScreen:
+	            GEventCenter.Invoke(GameManager.Instance.PlayerHasWon
+                    ? (GameEvent.OnLoadOutro)
+                    : GameEvent.OnNewGameRound);
+                break;
+
+            case GlobalGameState.WinnerScreen:
+	            GEventCenter.Invoke(GameEvent.OnShowScore);
+                break;
+
+            case GlobalGameState.InPlay:
+	            if (LevelManager.Instance.IsLobbyScene()) _player.EventCenter.Invoke(PlayerEvent.OnPlayerReady);
+	            else GEventCenter.Invoke(GameEvent.OnPauseGame);
+                break;
         }
     }
 
-
-    /// <summary>
-    ///     Called when using controls for changing characters in the lobby
-    /// </summary>
-    public void Gameplay_NextCharacter(InputAction.CallbackContext _context)
+    public void Gameplay_NextCharacter(InputAction.CallbackContext context)
     {
-        if (LevelManager.Instance.CurrentSceneIndex == 2 && _context.interaction is PressInteraction && _context.started)
+        if (IsLobbyScene() && context.interaction is PressInteraction && context.started)
         {
-	        _player.NextCharacter();
+            _player.EventCenter.Invoke(PlayerEvent.OnNextCharacter);
         }
     }
 
-
-    /// <summary>
-    ///     Called when using controls for changing characters in the lobby
-    /// </summary>
-    public void Gameplay_PreviousCharacter(InputAction.CallbackContext _context)
+    public void Gameplay_PreviousCharacter(InputAction.CallbackContext context)
     {
-        if (LevelManager.Instance.CurrentSceneIndex == 2 && _context.interaction is PressInteraction && _context.started)
+        if (IsLobbyScene() && context.interaction is PressInteraction && context.started)
         {
-	        _player.PreviousCharacter();
+            _player.EventCenter.Invoke(PlayerEvent.OnPreviousCharacter);
         }
     }
 
-
-    /// <summary>
-    ///     Called when using the P key for ending the round (as if someone has won and pressed Start)
-    /// </summary>
-    public void Debug_NewScene(InputAction.CallbackContext _context)
+    public void Gameplay_UseItem(InputAction.CallbackContext context)
     {
-        if (_context.started)
+        if (context.started)
         {
-            GameManager.Instance.NewGameRound();
+            _player.EventCenter.Invoke(PlayerEvent.OnUseItem);
         }
     }
 
-
-    /// <summary>
-    ///     Called when using the player holds any of the Triggers of the controller
-    /// </summary>
-    public void Gameplay_UseItem(InputAction.CallbackContext _context)
+    public void Gameplay_Suicide(InputAction.CallbackContext context)
     {
-        // TODO: add HoldingItem condition
-        if (_context.started)
+#if UNITY_EDITOR
+        if (context.started && !_player.IsDead())
         {
-            // TODO: Add item usage
+            _player.EventCenter.Invoke(PlayerEvent.OnKillSelf);
+        }
+#endif
+    }
+
+    public void Debug_NewScene(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _player.EventCenter.Invoke(PlayerEvent.NewRound);
         }
     }
 
+    private bool IsLobbyScene() => LevelManager.Instance.CurrentSceneIndex == 2;
 
-    public void Gameplay_Suicide(InputAction.CallbackContext _context)
+    #endregion
+
+    #region === Menu Controls ===
+
+    public void Menu_GoUp(InputAction.CallbackContext context)
     {
-        // Allows players to kill themselves if testing in the editor
-        #if UNITY_EDITOR
-        if (_context.started && !_player.IsDead())
+        if (IsMenuInput(context))
         {
-	        _player.Kill();
-        }
-        #endif
-    }
-
-    // #endregion
-
-
-
-    // #region ================ MENU CONTROLS FUNCTIONS ================
-
-    public void Menu_GoUp(InputAction.CallbackContext _context)
-    {
-	    //Debug.Log(gameObject.scene.IsValid());
-        if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
-        {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
-            {
-                MenuManager.Instance.MainMenu.GoUp();
-            }
+            GEventCenter.Invoke(GameEvent.OnMenuUp);
         }
     }
 
-
-    public void Menu_GoDown(InputAction.CallbackContext _context)
+    public void Menu_GoDown(InputAction.CallbackContext context)
     {
-        if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
+        if (IsMenuInput(context))
         {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
-            {
-                MenuManager.Instance.MainMenu.GoDown();
-            }
+	        GEventCenter.Invoke(GameEvent.OnMenuDown);
         }
     }
 
-
-    public void Menu_GoRight(InputAction.CallbackContext _context)
+    public void Menu_GoLeft(InputAction.CallbackContext context)
     {
-
-    }
-
-
-    public void Menu_GoLeft(InputAction.CallbackContext _context)
-    {
-
-    }
-
-
-    public void Menu_Validate(InputAction.CallbackContext _context)
-    {
-        if (gameObject.scene.IsValid() && _context.interaction is PressInteraction && _context.canceled)
+        if (IsMenuInput(context))
         {
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.MainMenu)
-            {
-                MenuManager.Instance.MainMenu.Validate();
-            }
-
-            else if (GameManager.Instance.GlobalGameState == GlobalGameState.InPause)
-            {
-                MenuManager.Instance.PauseMenu.Validate();
-            }
+	        GEventCenter.Invoke(GameEvent.OnMenuLeft);
         }
     }
 
-    // #endregion
+    public void Menu_GoRight(InputAction.CallbackContext context)
+    {
+        if (IsMenuInput(context))
+        {
+	        GEventCenter.Invoke(GameEvent.OnMenuRight);
+        }
+    }
+
+    public void Menu_Validate(InputAction.CallbackContext context)
+    {
+        if (IsMenuInput(context))
+        {
+	        GEventCenter.Invoke(GameEvent.OnMenuValidate);
+        }
+    }
+
+    private bool IsMenuInput(InputAction.CallbackContext context)
+    {
+        return gameObject.scene.IsValid()
+               && context.interaction is PressInteraction
+               && context.canceled;
+    }
+
+    #endregion
 }

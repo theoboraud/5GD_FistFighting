@@ -47,6 +47,32 @@ public class Player : MonoBehaviour
 
     // #region ==================== INIT FUNCTIONS ====================
 
+    private void Awake()
+    {
+	    SubscribeEvents();
+    }
+
+    private void OnDisable()
+    {
+	    UnsubscribeEvents();
+    }
+    
+    private void SubscribeEvents()
+	{
+		EventCenter.Subscribe(PlayerEvent.OnPlayerReady, OnReadyInput);
+		EventCenter.Subscribe(PlayerEvent.OnNextCharacter, NextCharacter);
+		EventCenter.Subscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
+		EventCenter.Subscribe(PlayerEvent.OnKillSelf, Kill);
+	}
+
+	private void UnsubscribeEvents()
+	{
+		EventCenter.Unsubscribe(PlayerEvent.OnPlayerReady, OnReadyInput);
+		EventCenter.Unsubscribe(PlayerEvent.OnNextCharacter, NextCharacter);
+		EventCenter.Unsubscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
+		EventCenter.Unsubscribe(PlayerEvent.OnKillSelf, Kill);
+	}
+
     /// <summary>
     /// Init by Player Manager at Game round Start
     /// </summary>

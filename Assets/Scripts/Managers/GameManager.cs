@@ -85,11 +85,18 @@ public class GameManager : MonoBehaviour
     {
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, ResetGame);
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound, NewGameRound);
+        GEventCenter.Subscribe(GameEvent.OnShowScore, ScoreScreen);
     }
 
     private void UnsribeEvents()
     {
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Unsubscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetGame);
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, NewGameRound);
+        GEventCenter.Unsubscribe(GameEvent.OnShowScore, ScoreScreen);
     }
 
     // #endregion

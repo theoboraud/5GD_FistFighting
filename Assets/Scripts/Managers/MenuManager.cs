@@ -77,6 +77,9 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnPlayerJoin);
+        GEventCenter.Subscribe(GameEvent.OnPauseGame, PauseGame);
+        GEventCenter.Subscribe(GameEvent.OnMenuUp, GoUp);
+        GEventCenter.Subscribe(GameEvent.OnMenuDown, GoDown);
     }
 
     private void UnsribeEvents()
@@ -86,6 +89,9 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Unsubscribe<int>(GameEvent.OnPlayerJoin, OnPlayerJoin);
+        GEventCenter.Unsubscribe(GameEvent.OnPauseGame, PauseGame);
+        GEventCenter.Unsubscribe(GameEvent.OnMenuUp, GoUp);
+        GEventCenter.Unsubscribe(GameEvent.OnMenuDown, GoDown);
     }
 
     /// <summary>
@@ -306,4 +312,18 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    private void PauseGame()
+    {
+	    PauseMenu.Activate();
+    }
+
+    private void GoUp()
+    {
+	    MainMenu.GoUp();
+    }
+
+    private void GoDown()
+    {
+	    MainMenu.GoDown();
+    }
 }

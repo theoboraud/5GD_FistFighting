@@ -108,6 +108,7 @@ public class LevelManager : MonoBehaviour
     {
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, LoadNextLevel);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Subscribe(GameEvent.OnLoadOutro, LoadOutroScene);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
     }
 
@@ -115,6 +116,7 @@ public class LevelManager : MonoBehaviour
     {
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, LoadNextLevel);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
+        GEventCenter.Unsubscribe(GameEvent.OnLoadOutro, LoadOutroScene);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
     }
     // #endregion

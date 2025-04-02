@@ -6,6 +6,7 @@ public enum GameEvent
     //GameManager
     OnNewGameRound,
     OnGameReset,
+    OnLoadOutro,
 
     //LevelManager
     OnLoadScene,
@@ -18,6 +19,18 @@ public enum GameEvent
 
     //PlayerManager
     OnPlayerJoin,
+    
+    OnShowScore,
+    
+    OnPauseGame,
+    OnResumeGame,
+    
+    // Menu
+    OnMenuUp,
+    OnMenuDown,
+    OnMenuLeft,
+    OnMenuRight,
+    OnMenuValidate
 }
 
 /// <summary>
@@ -42,4 +55,16 @@ public enum PlayerEvent
     OnExtendArm,
     OnHoldArm,
     OnRotate,
+    
+    // Game Flow
+    NewRound,
+    OnPlayerReady,
+
+    // Character Select
+    OnNextCharacter,
+    OnPreviousCharacter,
+
+    // Item Usage
+    OnUseItem,
+    OnKillSelf,
 }
