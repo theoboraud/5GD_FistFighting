@@ -342,8 +342,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6070587517832294073}
-  - {fileID: 1092971205295874588}
   - {fileID: 5341769702484928833}
+  - {fileID: 1092971205295874588}
   m_Father: {fileID: 7457634657507086815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1530,7 +1530,7 @@ PrefabInstance:
     - target: {fileID: 2254837008242519668, guid: 479611b869e1c43a982365fb95798e89, type: 3}
       propertyPath: PlayerIndicator
       value: 
-      objectReference: {fileID: 6194109072016227436}
+      objectReference: {fileID: 99847918276832413}
     - target: {fileID: 4467325177279570537, guid: 479611b869e1c43a982365fb95798e89, type: 3}
       propertyPath: m_Name
       value: UI_Player

@@ -22,7 +22,7 @@ public class DeathBall : MonoBehaviour
         m_spriteRenderer = transform.GetComponent<SpriteRenderer>();
         initSprite = m_spriteRenderer.sprite;
 
-        m_PlayersManager = FindObjectOfType<PlayersManager>();
+        m_PlayersManager = FindFirstObjectByType<PlayersManager>();
         m_deathBallController = transform.GetComponentInParent<DeathBallController>();
     }
 
