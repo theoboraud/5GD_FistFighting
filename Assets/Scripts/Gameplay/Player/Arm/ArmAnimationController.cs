@@ -10,7 +10,7 @@ public class ArmAnimationController : MonoBehaviour
     public void PlayAnimation()
     {
         animator.SetBool("Extend", true);
-        Invoke("StopAnimation", 0.25f);
+        Invoke("StopAnimation", GameManager.Instance.ParamData.PARAM_Player_ArmExtendTime);
     }
 
     public void PlayHoldAnimation()

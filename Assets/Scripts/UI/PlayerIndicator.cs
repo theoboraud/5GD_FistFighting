@@ -3,27 +3,26 @@ using UnityEngine.UI;
 
 public class PlayerIndicator : MonoBehaviour
 {
-    private Player _player;    
     public Vector3 offset = new Vector3(0, 1.0f, 0); // offset of this indicator to player
     private RectTransform rectTransform;
+    private Player _player;
 
     private Image _image; 
 
-    void Start()
+    public void Init(Player _myPlayer)
     {
         rectTransform = GetComponent<RectTransform>();
-        _player = GetComponentInParent<Player>();
+        _image = GetComponent<Image>();
+        _player = _myPlayer;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (_player == null) return;
 
-        Vector3 worldPosition = _player.transform.position + offset;
+        Vector3 targetPosition = Camera.main.WorldToScreenPoint(_player.transform.position + offset);
 
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
-
-        rectTransform.position = screenPosition;
+        rectTransform.position = Vector3.Lerp(rectTransform.position, targetPosition, Time.deltaTime*30f);
     }
     public void SetColor(Color color)
     {

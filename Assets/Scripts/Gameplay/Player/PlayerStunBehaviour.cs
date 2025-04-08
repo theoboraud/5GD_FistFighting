@@ -14,55 +14,76 @@ public class PlayerStunBehaviour : MonoBehaviour
     [SerializeField] float timeToReduceStunAccumulation = 2;
     [SerializeField] int StunAccumulation;
 
+    private float stunTimer;
     private float timer;
+    private float stunRecoveryTime;
 
-    private void OnEnable()
+    public void Init()
     {
         _player = GetComponent<Player>();
 	    _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
 	    _playerController = GetComponent<PlayerController>();
+
+        stunRecoveryTime = GlobalSettings.StunRecoveryTime;
+
+        SubscribeEvents();
+    }
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+    private void SubscribeEvents()
+    {
+        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
+    }
+    private void UnsubscribeEvents()
+    {
+        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
     private void Update()
     {
-        if (_player.PlayerStates.PlayerPhysicState == PlayerPhysicState.IsHit)
+        if (_player.IsHit())
         {
-            //Check if material is applied to know whether it's the beginning of the Stun State
-            if (!boxCollider.sharedMaterial)
-            {
-                StartStunState();
-            }
-            float stunRecoveryTime = GlobalSettings.StunRecoveryTime;
-            _playerController.StunTimer += Time.deltaTime;
+            stunTimer += Time.deltaTime;
             //Debug.Log(_playerController.StunTimer);
             float addedTimeBasedOnStunAccumulation = StunAccumulation * (0.2f * stunRecoveryTime);
             //Check if timer has gone above the required stun time
-            if (_playerController.StunTimer >= stunRecoveryTime + addedTimeBasedOnStunAccumulation)
+            if (stunTimer >= stunRecoveryTime + addedTimeBasedOnStunAccumulation)
             {
                 StopStunState();
             }
         }
         else
         {
-            timer += Time.deltaTime;
-            if(timer > timeToReduceStunAccumulation)
+            if (StunAccumulation > 0)
             {
-                timer = 0f;
-                StunAccumulation--;
-                StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
-                _playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
+                timer += Time.deltaTime;
+                if (timer > timeToReduceStunAccumulation)
+                {
+                    timer = 0f;
+                    StunAccumulation = Mathf.Clamp(StunAccumulation - 1, 0, 5);
+                    _playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
+                }
             }
+        }
+    }
+    private void OnPlayerPhysicStateChange(PlayerPhysicState _physicState)
+    {
+        if (_physicState == PlayerPhysicState.IsHit)
+        {
+            StartStunState();
         }
     }
 
     //Initialisation of StunState
     private void StartStunState()
     {
+        stunTimer = 0;
         StunAccumulation++;
         StunAccumulation = Mathf.Clamp(StunAccumulation, 0, 5);
         _playerFeedbackManager.UpdateStunFeedback(StunAccumulation);
         timer = 0;
-        _playerFeedbackManager.StartStunFeedback();
         boxCollider.sharedMaterial = bounce;
         //particleSystemController.StartSystem();
     }
@@ -71,7 +92,6 @@ public class PlayerStunBehaviour : MonoBehaviour
     private void StopStunState()
     {
         Debug.Log("StopStun");
-        _playerFeedbackManager.EndStunFeedback();
         _player.PlayerStates.PlayerPhysicState = PlayerPhysicState.InAir;
         boxCollider.sharedMaterial = null;
         //particleSystemController.StopSystem();

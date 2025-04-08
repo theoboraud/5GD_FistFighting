@@ -8,7 +8,6 @@ using Zenject.SpaceFighter;
 public class ArmController : MonoBehaviour
 {
     private Player _player;
-    private PlayerController _playerController;
     private PlayerFeedbackManager _playerFeedbackManager;
     public List<ArmChecker> Arms = new List<ArmChecker>();
     /// <summary>
@@ -16,13 +15,11 @@ public class ArmController : MonoBehaviour
     /// </summary>
     public List<ArmChecker> ArmsHittingPlayers = new List<ArmChecker>();
 
-    private PlayerPhysicState physicState; //Owner player's physic state
     private bool bIsOnHit; //If owner player is on hit
     public void OnEnable()
     {
-        _player = GetComponentInParent<Player>();
-        _playerController = GetComponentInParent<PlayerController>();
-        _playerFeedbackManager = GetComponentInParent<PlayerFeedbackManager>();
+        _player = GetComponent<Player>();
+        _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
         SubsribeEvents();
         InitArms();
     }
@@ -71,7 +68,6 @@ public class ArmController : MonoBehaviour
     /// </summary>
     private void OnPlayerPhysicStateChange(PlayerPhysicState _newPhysicState)
     {
-        physicState = _newPhysicState;
         if (_newPhysicState == Enums.PlayerPhysicState.IsHit)
         {
             bIsOnHit = true;
@@ -79,11 +75,7 @@ public class ArmController : MonoBehaviour
             {
                 Arms[i].StopEverything();
             }
-            for (int i = 0; i < ArmsHittingPlayers.Count; i++)
-            {
-                ArmChecker _arm = ArmsHittingPlayers[i];
-                _arm.FrameStack = 0;
-            }
+
             ArmsHittingPlayers.Clear();
         }
         else
@@ -111,37 +103,24 @@ public class ArmController : MonoBehaviour
     public void ExtendArm(int _armIndex)
     {
         ArmChecker _arm = Arms[_armIndex];
+        if (bIsOnHit) return;
+        _arm.OnArmExtend();
 
-        if (_arm.Cooldown == false && !bIsOnHit)
-        {
-            //Declenchement animation
-            float ArmScaleFactor = _arm.GetPrioPoints();
-            _arm._renderer.transform.localScale = new Vector3
-                (Mathf.Lerp(1, 1.3f, ArmScaleFactor / (3)),
-                Mathf.Lerp(1, 1.3f, ArmScaleFactor / (3)));
 
-            _arm.anim.PlayAnimation();
-            _arm.Cooldown = true;
-            _player.VoiceController.StopHold();
+        //// If we can hit a player, start the frame stack
+        //if (_arm.GetContactPlayers().Count > 0)
+        //{
 
-            // If we can hit a player, start the frame stack
-            if (_arm.GetContactPlayers().Count > 0)
-            {
+        //    ArmsHittingPlayers.Add(_arm);
 
-                ArmsHittingPlayers.Add(_arm);
-
-                if (_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
-                _arm.CheckArmClash();
-            }
-            else
-            {
-                _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
-            }
-        }
-        else
-        {
-            ExtendedArm(_armIndex);
-        }
+        //    if (_arm.FrameStack == 0) _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+        //    _arm.CheckArmClash();
+        //}
+        //else
+        //{
+        //    _arm.FrameStack = GameManager.Instance.ParamData.PARAM_Player_ArmStartupFrame;
+        //}
+        
 
     }
 
@@ -152,159 +131,28 @@ public class ArmController : MonoBehaviour
     public void ExtendedArm(int _armIndex)
     {
         ArmChecker arm = Arms[_armIndex];
-        arm.FrameStack = 0;
 
-        if (arm.IsRigidbodyInRange() && !arm.IsEnvironmentInRange())
-        {
-            LaunchForeignObject(_armIndex);
-        }
-        else if (arm.IsEnvironmentInRange() && arm.IsRigidbodyInRange())
-        {
-            RaycastHit2D ray = Physics2D.Raycast(arm.transform.position, -arm.transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
-            float nearestDis = arm.GetClosestRigidbodyPosition();
-            if (Vector2.Distance(this.transform.position, ray.point) < nearestDis)
-            {
-                LaunchThisAvatarFromGround(_armIndex);
-            }
-            else
-            {
-                LaunchForeignObject(_armIndex);
-            }
-        }
-        else if (arm.IsEnvironmentInRange())
-        {
-            LaunchThisAvatarFromGround(_armIndex);
-        }
-        else
-        {
-            if (!_player.GetPlayerController().HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
-        }
-    }
-
-    /// <summary>
-    /// Give a back force to player self when he hit Environment
-    /// </summary>
-    private void LaunchThisAvatarFromGround(int _armIndex)
-    {
-        _player.GetPlayerController().AirPushFactor = 1f;
-
-        _player.GetPlayerController().GetRB().linearVelocity = Vector2.zero;
-        _player.GetPlayerController().GetRB().angularVelocity = 0;
-
-        _player.GetPlayerController().GetRB().AddForce
-            (Arms[_armIndex].transform.up *
-            GameManager.Instance.ParamData.PARAM_Player_ArmGroundForce *
-            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
-            (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
-            ForceMode2D.Impulse);
-        //Debug.Log(Arms[i].holding_timer);
-        RaycastHit2D ray = Physics2D.Raycast(Arms[_armIndex].transform.position, -Arms[_armIndex].transform.up, 2.1f);
-        _playerFeedbackManager.SpawnEnvHitVFX
-            (ray.point,
-            Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
-            Vector3.forward));
-        if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
-        {
-            _playerFeedbackManager.SpawnChargedHit
-            (ray.point,
-            Quaternion.AngleAxis(Arms[_armIndex].transform.rotation.eulerAngles.z,
-            Vector3.forward));
-        }
-    }
-
-
-    /// <summary>
-    /// If the player launch arm in air and hit nothing, he will get a small impulse
-    /// </summary>
-    private void LaunchThisAvatarFromAir(int _armIndex)
-    {
-        // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
-        _playerController.AirPushFactor -= 0.01f;
-        float _maxAirPushFactor = 1f - (GameManager.Instance.ParamData.PARAM_Player_AirControlJumpNumber * 0.01f);
-        if (_playerController.AirPushFactor < _maxAirPushFactor)
-        {
-            _playerController.AirPushFactor = 0f;
-        }
-        // Only reset the velocity if the player can jump
-        else
-        {
-            _playerController.GetRB().linearVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
-            _playerController.GetRB().angularVelocity *= GameManager.Instance.ParamData.PARAM_Player_VelocityResetFactor;
-        }
-
-        _playerController.GetRB().AddForce
-            (Arms[_armIndex].transform.up *
-             _playerController.AirPushFactor *
-            GameManager.Instance.ParamData.PARAM_Player_AirControlForce *
-            Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Movement *
-            (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
-            ForceMode2D.Impulse);
-
-        if (_playerController.AirPushFactor > 0f)
-        {
-            _playerFeedbackManager.SpawnAirDashVFX
-                (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
-                Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
-                Vector3.forward));
-            if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
-            {
-                _playerFeedbackManager.SpawnChargedHit
-                (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
-                Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
-                Vector3.forward));
-            }
-        }
-    }
-
-
-    /// <summary>
-    ///Hit arm triggered objects 
-    /// </summary>
-    private void LaunchForeignObject(int _armIndex)
-    {
-        foreach (var item in Arms[_armIndex].GetContactObjects())
-        {
-            if (item != null)
-            {
-                item.AddForce
-                    (-Arms[_armIndex].transform.up *
-                    GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
-                    Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
-                    (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
-                    ForceMode2D.Impulse);
-            }
-        }
-
-        foreach (var item in Arms[_armIndex].GetContactPlayers())
-        {
-            item.GetPlayerController().GetRB().linearVelocity = Vector2.zero;
-            item.GetPlayerController().GetRB().angularVelocity = 0;
-            item.GetPlayerController().GetRB().AddForce
-                (-Arms[_armIndex].transform.up *
-                GameManager.Instance.ParamData.PARAM_Player_ArmHitForce *
-                Mathf.Clamp(GameManager.Instance.ParamData.PARAM_Player_ForceIncreaseFactor_Hit *
-                (Arms[_armIndex].holding_timer / GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime), 1, 2),
-                ForceMode2D.Impulse);
-            item.Hit();
-            _playerFeedbackManager.LastPlayerHit = item;
-        }
-
-        ArmsHittingPlayers.Remove(Arms[_armIndex]);
-
-        int strength = (int)Mathf.Lerp(0, 2, Arms[_armIndex].GetPrioPoints() / (3));
-
-        _playerFeedbackManager.SpawnPlayerHitVFX
-            (Mathf.Clamp(strength, 0, 2), Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
-            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
-            Vector3.forward));
-
-        if (Arms[_armIndex].holding_timer >= GameManager.Instance.ParamData.PARAM_Player_MaxTriggerHoldTime)
-        {
-            _playerFeedbackManager.SpawnChargedHit
-            (Arms[_armIndex].transform.position + Arms[_armIndex].transform.up * -2,
-            Quaternion.AngleAxis(90 + Arms[_armIndex].transform.rotation.eulerAngles.z,
-            Vector3.forward));
-        }
+        //if (arm.IsRigidbodyInRange() && !arm.IsEnvironmentInRange())
+        //{
+        //    LaunchForeignObject(_armIndex);
+        //}
+        //else if (arm.IsEnvironmentInRange() && arm.IsRigidbodyInRange())
+        //{
+        //    RaycastHit2D ray = Physics2D.Raycast(arm.transform.position, -arm.transform.up, 2.1f, LayerMask.GetMask("StaticGround"));
+        //    float nearestDis = arm.GetClosestRigidbodyPosition();
+        //    if (Vector2.Distance(this.transform.position, ray.point) < nearestDis)
+        //    {
+        //        LaunchThisAvatarFromGround(_armIndex);
+        //    }
+        //    else
+        //    {
+        //        LaunchForeignObject(_armIndex);
+        //    }
+        //}
+        //else
+        //{
+        //    if (!_player.GetPlayerController().HoldingTrigger) LaunchThisAvatarFromAir(_armIndex);
+        //}
     }
 
 }

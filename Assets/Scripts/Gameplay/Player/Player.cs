@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private PlayerController _playerController;
     private PlayerFeedbackManager _playerFeedbackManager;
     private PlayerUI _playerUI;
+    private PlayerStunBehaviour _playerStunBehaviour;
     [SerializeField] private CharacterSkin Skin;
     private int skinIndex;
 
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
 
     // #region ==================== INIT FUNCTIONS ====================
 
-    private void Awake()
+    private void OnEnable()
     {
 	    SubscribeEvents();
     }
@@ -91,6 +92,9 @@ public class Player : MonoBehaviour
 
         _playerFeedbackManager = GetComponent<PlayerFeedbackManager>();
         _playerFeedbackManager.Init();
+
+        _playerStunBehaviour = GetComponent<PlayerStunBehaviour>();
+        _playerStunBehaviour.Init();
 
         _playerUI = GetComponentInChildren<PlayerUI>();
 
@@ -305,10 +309,15 @@ public class Player : MonoBehaviour
         return PlayerStates.PlayerPhysicState == PlayerPhysicState.OnGround;
     }
 
+    /// <summary>
+    /// Is hit == Is Stun
+    /// </summary>
+    /// <returns></returns>
     public bool IsHit()
     {
         return PlayerStates.PlayerPhysicState == PlayerPhysicState.IsHit;
     }
+
 
     #endregion
 

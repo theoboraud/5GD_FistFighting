@@ -37,14 +37,17 @@ public class PlayerFeedbackManager : MonoBehaviour
         _player.EventCenter.Subscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
         _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
         _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
+
+        GEventCenter.Subscribe<Player>(GameEvent.OnPlayerDead, OnOtherPlayerDead);
     }
 
     private void RemoveCallBacks()
     {
         _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerCollisionEnter, CollisionFeedback);
-
         _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
         _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
+
+        GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerDead, OnOtherPlayerDead);
     }
 
     public void Init()
@@ -59,16 +62,13 @@ public class PlayerFeedbackManager : MonoBehaviour
         StunAccumulationParticles.Stop();
     }
 
-    private void Update()
+    private void OnOtherPlayerDead(Player _playerDead)
     {
-        //TODO
-        //!!Here we need to check or call by an event, in place of follow in update
-        if(LastPlayerHit != null && LastPlayerHit.IsDead()) 
+        if(LastPlayerHit ==_playerDead) 
         {
             VoiceController.PlayPush();
             LastPlayerHit = null;
         }
-        //!!NeedChange
     }
     private void OnPlayerGameStateChange(PlayerGameState _gameState)
     {
@@ -92,6 +92,15 @@ public class PlayerFeedbackManager : MonoBehaviour
         if (_physicState == PlayerPhysicState.InAir)
         {
             IsInAir();
+        }
+        
+        if(_physicState == PlayerPhysicState.IsHit)
+        {
+            StartInvincibleFeedback();
+        }
+        else
+        {
+            StopInvincibleFeedback();
         }
     }
 

@@ -16,7 +16,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject GO_NbLives;
     [SerializeField] private Text nbLives;
     [SerializeField] private GameObject GO_Cross;
-    [SerializeField] private GameObject PlayerIndicator;
+    [SerializeField] private PlayerIndicator PlayerIndicator;
     [SerializeField] private GameObject GO_IsReady;
 
     [Header("Variables")]
@@ -56,7 +56,8 @@ public class PlayerUI : MonoBehaviour
 
         _playerColor = _player.PlayerData.PlayerColor;
         //Set indicator color
-        PlayerIndicator.GetComponent<Image>().color = _playerColor;
+        PlayerIndicator.Init(_player);
+        PlayerIndicator.SetColor(_playerColor);
 
         foreach (GameObject go in GO_Hearts)
         {

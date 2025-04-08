@@ -25,15 +25,14 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D _boxCollider;
 
     [Header("Events for FMOD")]
-    public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
-    public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
+    //public UnityEvent OnExtendArm;                      // Event called when an arm extends (for FMOD)
+    //public UnityEvent OnCollision;                      // Event called when the player enters a collision (for FMOD)
 
     [Header("Variables")]
     [System.NonSerialized] public float AirPushFactor = 1f;
     [System.NonSerialized] public bool HitObject_bool = false;
     [System.NonSerialized] public bool HoldingTrigger = false;
 
-    [System.NonSerialized] public float StunTimer;
     [System.NonSerialized] public float ForceIncreaseFactor;
 
     private int skinIndex;                         // Contains the index of the current skin
@@ -59,14 +58,12 @@ public class PlayerController : MonoBehaviour
     {
         _player.EventCenter.Subscribe(PlayerEvent.OnPlayerSpawn, Spawn);
         _player.EventCenter.Subscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
-        _player.EventCenter.Subscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
     private void RemoveCallBacks()
     {
         _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerSpawn, Spawn);
         _player.EventCenter.Unsubscribe<PlayerGameState>(PlayerEvent.OnGameStateChange, OnPlayerGameStateChange);
-        _player.EventCenter.Unsubscribe<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, OnPlayerPhysicStateChange);
     }
 
     private void Spawn()
@@ -84,14 +81,6 @@ public class PlayerController : MonoBehaviour
             Kill();
         }
     }
-
-    private void OnPlayerPhysicStateChange(PlayerPhysicState _physicState)
-    {
-        if (_physicState == PlayerPhysicState.IsHit)
-        {
-            Hit();
-        }
-    }
     private void Kill()
     {
         _rb.simulated = false;
@@ -99,10 +88,7 @@ public class PlayerController : MonoBehaviour
         _rb.angularVelocity = 0f;
     }
 
-    private void Hit()
-    {
-        StunTimer = 0;
-    }
+
 
     /// <summary>
     ///     Check if hit a lethal object or an arrival

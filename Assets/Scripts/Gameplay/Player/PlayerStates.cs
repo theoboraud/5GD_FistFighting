@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerStates
 {
     private Player _player;
-    private PlayerGameState _playerGameState;
-    private PlayerPhysicState _playerPhysicState;
+    private PlayerGameState _playerGameState = PlayerGameState.Alive;
+    private PlayerPhysicState _playerPhysicState = PlayerPhysicState.InAir;
     private PlayerRotateState _playerRotateState;
+    private bool _isReady = false;
     //Not In Use
     //private PlayerArmState _playerArmState;
 
@@ -51,11 +52,12 @@ public class PlayerStates
             if (_playerRotateState != value)
             {
 	            _playerRotateState = value;
-                //Broadcast of rotate state change, not in use
-                //_player.EventCenter.Invoke<PlayerRotateState>(PlayerEvent.OnRotateStateChange, _playerRotateState);
+                _player.EventCenter.Invoke<PlayerPhysicState>(PlayerEvent.OnPhysicStateChange, _playerPhysicState);
             }
         }
     }
+
+    public bool IsReady { get => _isReady; set => _isReady = value; }
 
     /// <summary>
     /// TODO
@@ -66,15 +68,10 @@ public class PlayerStates
     //    set
     //    {
     //        if (_playerArmState != value)
-	   //         _playerArmState = value;
+    //         _playerArmState = value;
     //        _player.EventCenter.Invoke<PlayerArmState>(PlayerEvent.OnArmStateChange, _playerArmState);
     //    }
     //}
 
-    public bool IsReady = false;
-	public void Init()
-	{
-		PlayerGameState = PlayerGameState.Alive;
-		PlayerPhysicState = PlayerPhysicState.InAir;
-	}
+
 }
