@@ -1,31 +1,53 @@
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerIndicator : MonoBehaviour
 {
     public Vector3 offset = new Vector3(0, 1.0f, 0); // offset of this indicator to player
-    private RectTransform rectTransform;
     private Player _player;
+    private SpriteRenderer _spriteRenderer;
 
-    private Image _image; 
+    private bool bIsReady = false;
 
-    public void Init(Player _myPlayer)
+    [SerializeField] private Sprite _indicator;
+    [SerializeField] private Sprite _readyIcon;
+
+    public void Init(Player _myPlayer, Color color)
     {
-        rectTransform = GetComponent<RectTransform>();
-        _image = GetComponent<Image>();
         _player = _myPlayer;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.color = color;
+
+        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerReady, OnPlayerReady);
+        Debug.Log("My Player Index in indicator"+_myPlayer.PlayerData.PlayerIndex);
+    }
+    private void OnDestroy()
+    {
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerReady, OnPlayerReady);
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (_player == null) return;
 
-        Vector3 targetPosition = Camera.main.WorldToScreenPoint(_player.transform.position + offset);
-
-        rectTransform.position = Vector3.Lerp(rectTransform.position, targetPosition, Time.deltaTime*30f);
+        transform.position = _player.transform.position + Vector3.up * offset.y;
     }
-    public void SetColor(Color color)
+
+    private void OnPlayerReady()
     {
-        _image.color = color;
+        Debug.Log("Indicator On player Ready");
+        bIsReady = !bIsReady;
+        _spriteRenderer.sprite = bIsReady? _indicator : _readyIcon;
+    }
+
+    //test
+    private void OnPlayerReallyReady(Player player)
+    {
+        Debug.Log("Indicator On player Really really Ready");
+        Debug.Log("Is the same player?::" + (player == _player));
+        bIsReady = !bIsReady;
+        _spriteRenderer.sprite = bIsReady ? _indicator : _readyIcon;
+
     }
 }

@@ -80,9 +80,10 @@ public class PlayersManager : MonoBehaviour
         {
             newPlayer.StartInit(playerIndex);
             Players.Add(newPlayer);
-            GEventCenter.Invoke<int>(GameEvent.OnPlayerJoin, playerIndex);
             // Spawn the player
             SpawnPlayer(newPlayer);
+
+            GEventCenter.Invoke<Player>(GameEvent.OnPlayerJoin, newPlayer);
         }
 
         // Set action map on Gameplay if player is spawning InPlay

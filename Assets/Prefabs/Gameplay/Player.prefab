@@ -1,94 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2013708942065125490
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5341769702484928833}
-  - component: {fileID: 2232339025027007857}
-  - component: {fileID: 5234919888723707731}
-  - component: {fileID: 7158436748666253533}
-  m_Layer: 5
-  m_Name: UI_GetReady
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &5341769702484928833
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013708942065125490}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4205282668513157076}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &2232339025027007857
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013708942065125490}
-  m_CullTransparentMesh: 1
---- !u!114 &5234919888723707731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013708942065125490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fcdd1c15ca3fc234ebe95e5325eadbb4, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &7158436748666253533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013708942065125490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26b63d693e784928bc82ea6025c8027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &2395552445821104293
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,8 +253,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6070587517832294073}
-  - {fileID: 5341769702484928833}
-  - {fileID: 1092971205295874588}
   m_Father: {fileID: 7457634657507086815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -414,95 +323,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &6194109072016227436
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1092971205295874588}
-  - component: {fileID: 4845889312482272511}
-  - component: {fileID: 7223261683225101411}
-  - component: {fileID: 99847918276832413}
-  m_Layer: 5
-  m_Name: PlayerIndicator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1092971205295874588
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6194109072016227436}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4205282668513157076}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4845889312482272511
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6194109072016227436}
-  m_CullTransparentMesh: 1
---- !u!114 &7223261683225101411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6194109072016227436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7817ac53e10f140fb8cf3330dd80781a, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &99847918276832413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6194109072016227436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26b63d693e784928bc82ea6025c8027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &7213282673767643311
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +602,6 @@ GameObject:
   - component: {fileID: 4023946081940462339}
   - component: {fileID: 697154811548519345}
   - component: {fileID: 5655228929501688058}
-  - component: {fileID: 3996649375659255604}
   - component: {fileID: 5796460706983378298}
   - component: {fileID: 3787878368541288305}
   - component: {fileID: 6108265605568746725}
@@ -790,6 +609,7 @@ GameObject:
   - component: {fileID: 8023127552561660906}
   - component: {fileID: 4963761400113064789}
   - component: {fileID: 810358377125494597}
+  - component: {fileID: 3928867191581267653}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -806,7 +626,7 @@ Transform:
   m_GameObject: {fileID: 8638854206922542603}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.42, y: 0.46, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -877,7 +697,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &697154811548519345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,7 +752,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendUp
         m_Mode: 0
@@ -948,7 +768,7 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/UpArm[/Keyboard/w]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendRight
         m_Mode: 0
@@ -964,7 +784,7 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/RightArm[/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendDown
         m_Mode: 0
@@ -980,7 +800,7 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/DownArm[/Keyboard/s]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendLeft
         m_Mode: 0
@@ -996,7 +816,7 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/LeftArm[/Keyboard/a]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Menu_GoUp
         m_Mode: 0
@@ -1016,7 +836,7 @@ MonoBehaviour:
     m_ActionName: 'Menu/Right[/XboxOneGampadMacOSWireless/dpad/right,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Menu_GoDown
         m_Mode: 0
@@ -1040,7 +860,7 @@ MonoBehaviour:
     m_ActionName: 'Menu/Validate[/XboxOneGampadMacOSWireless/start,/XboxOneGampadMacOSWireless/buttonSouth,/Keyboard/enter,/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_Start
         m_Mode: 0
@@ -1060,7 +880,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/RotateStick[/XInputControllerWindows/leftStick]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_NextCharacter
         m_Mode: 0
@@ -1076,7 +896,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/NextCharacter[/XboxOneGampadMacOSWireless/dpad/right,/Keyboard/semicolon]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_PreviousCharacter
         m_Mode: 0
@@ -1092,7 +912,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/PreviousCharacter[/XboxOneGampadMacOSWireless/dpad/left,/Keyboard/l]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_UseItem
         m_Mode: 0
@@ -1108,7 +928,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/UseItem[/Keyboard/q,/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3996649375659255604}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
         m_MethodName: Gameplay_Suicide
         m_Mode: 0
@@ -1127,18 +947,6 @@ MonoBehaviour:
   m_DefaultActionMap: Menu
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &3996649375659255604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638854206922542603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c74c4374fd27499bac5cb4e4d843317, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5796460706983378298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,6 +1099,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 234e158675484b329386cf11a7368f44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3928867191581267653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638854206922542603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832e12c268844dadaac12e5edc75b873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &435162874383215005
@@ -1521,14 +1341,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4205282668513157076}
     m_Modifications:
-    - target: {fileID: 2254837008242519668, guid: 479611b869e1c43a982365fb95798e89, type: 3}
-      propertyPath: GO_IsReady
-      value: 
-      objectReference: {fileID: 2013708942065125490}
-    - target: {fileID: 2254837008242519668, guid: 479611b869e1c43a982365fb95798e89, type: 3}
-      propertyPath: PlayerIndicator
-      value: 
-      objectReference: {fileID: 99847918276832413}
     - target: {fileID: 4467325177279570537, guid: 479611b869e1c43a982365fb95798e89, type: 3}
       propertyPath: m_Name
       value: UI_Player

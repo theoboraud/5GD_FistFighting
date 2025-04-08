@@ -10,6 +10,7 @@ using Enums;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Main class of each player, manager all player's data, game state,and behaviours
@@ -249,7 +250,6 @@ public class Player : MonoBehaviour
     private void OnGameRoundStart()
     {
         isReady = false;
-        _playerUI.GetReady(false);
     }
 
     /// <summary>
@@ -259,8 +259,7 @@ public class Player : MonoBehaviour
     {
         isReady = !isReady;
 
-        _playerUI.GetReady(isReady);
-
+        //TODO Move to player manager and listen directly input event
         // If all players are ready, end the round
         if (PlayersManager.Instance.AllPlayersReady())
         {

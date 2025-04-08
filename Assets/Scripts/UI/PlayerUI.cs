@@ -16,8 +16,6 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject GO_NbLives;
     [SerializeField] private Text nbLives;
     [SerializeField] private GameObject GO_Cross;
-    [SerializeField] private PlayerIndicator PlayerIndicator;
-    [SerializeField] private GameObject GO_IsReady;
 
     [Header("Variables")]
     [System.NonSerialized] public int PlayerIndex;
@@ -55,9 +53,6 @@ public class PlayerUI : MonoBehaviour
         playerNameTxt.text = "J" + (PlayerIndex+1);
 
         _playerColor = _player.PlayerData.PlayerColor;
-        //Set indicator color
-        PlayerIndicator.Init(_player);
-        PlayerIndicator.SetColor(_playerColor);
 
         foreach (GameObject go in GO_Hearts)
         {
@@ -83,9 +78,6 @@ public class PlayerUI : MonoBehaviour
     public void Init()
     {
         InitCallbacks();
-
-        //Disable is ready btn
-        GO_IsReady.SetActive(false);
 
         if (LevelManager.Instance.CurrentSceneIndex > 0)
         {
@@ -124,12 +116,6 @@ public class PlayerUI : MonoBehaviour
     private void RemoveCallBacks()
     {
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnNewSceneLoad);
-    }
-
-    public void GetReady(bool _isReady)
-    {
-        Debug.Log("UI set ready" + _isReady);
-        GO_IsReady.SetActive(_isReady);
     }
 
     private void OnNewSceneLoad(GameScene _scene)

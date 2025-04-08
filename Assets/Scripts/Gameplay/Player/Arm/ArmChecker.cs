@@ -8,10 +8,14 @@ using Zenject.SpaceFighter;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEditor.Progress;
+using UnityEngine.InputSystem;
 
 public class ArmChecker : MonoBehaviour
 {
-    private List<Player> contactPlayers = new List<Player>();
+    /// <summary>
+    /// Dictionary stock hit players during the extend and time hit
+    /// </summary>
+    private Dictionary<Player,float> dicHitPlayers = new Dictionary<Player, float>();
 
     [Header("Reference")]
     private Player _player;
@@ -107,7 +111,11 @@ public class ArmChecker : MonoBehaviour
     {
         bIsExtend = false;
 
-        //Calculation arm clash //TODO
+        //Calculation arm clash at end of extension
+        CheckArmClash();
+
+        //Clear dictionary after arm clash check !!!important!!!
+        dicHitPlayers.Clear();
     }
 
 
@@ -136,19 +144,26 @@ public class ArmChecker : MonoBehaviour
                 string tag = hit.collider.tag;
                 switch (tag)
                 {
+                    //Hitting dynamic object
                     case "DynamicEnvironment":
                         LaunchForeignObject(hit.collider.GetComponent<Rigidbody2D>());
                         OnHitObject(hit.collider);
                         break;
+                    //Hitting other players
                     case "Player":
                         Player hitPlayer = hit.collider.GetComponent<Player>();
                         if (hitPlayer != null && hitPlayer != _player)
                         {
-                            LaunchForeignPlayer(hitPlayer);
+                            if (!dicHitPlayers.ContainsKey(hitPlayer))
+                            {
+                                //Stock player hit and hitting time into dictionary
+                                dicHitPlayers[hitPlayer] = Time.time;
+                            }
                             OnHitObject(hit.collider);
                             //Stock player for arm clash check(TODO)
                         }
                         break;
+                    //Hitting static environment
                     case "StaticGround":
                         LaunchThisAvatarFromGround();
                         OnHitObject(hit.collider);
@@ -250,7 +265,7 @@ public class ArmChecker : MonoBehaviour
     /// Give force to other player hits
     /// </summary>
     /// <param name="_otherPlayer"></param>
-    private void LaunchForeignPlayer(Player _otherPlayer)
+    public void LaunchForeignPlayer(Player _otherPlayer)
     {
         _otherPlayer.GetPlayerController().GetRB().linearVelocity = Vector2.zero;
         _otherPlayer.GetPlayerController().GetRB().angularVelocity = 0;
@@ -332,30 +347,11 @@ public class ArmChecker : MonoBehaviour
     }
 
     /// <summary>
-    /// Add contact players
-    /// </summary>
-    private void AddContactPlayer(Player _otherPlayer)
-    {
-        if (_otherPlayer.IsInvincible()) return;
-        if (!contactPlayers.Contains(_otherPlayer)) contactPlayers.Add(_otherPlayer);
-    }
-
-    /// <summary>
-    /// Remove contact players
-    /// </summary>
-    private void RemoveContactPlayer(Player _otherPlayer)
-    {
-        if (!contactPlayers.Contains(_otherPlayer)) contactPlayers.Remove(_otherPlayer);
-    }
-
-
-
-    /// <summary>
     /// Clear all contact data
     /// </summary>
     private void ClearContactData()
     {
-        contactPlayers.Clear();
+        dicHitPlayers.Clear();
     }
 
     #region Public Functions
@@ -380,9 +376,9 @@ public class ArmChecker : MonoBehaviour
     /// <summary>
     /// Get players in contact
     /// </summary>
-    public List<Player> GetContactPlayers()
+    public Dictionary<Player, float> GetContactPlayers()
     {
-        return contactPlayers;
+        return dicHitPlayers;
     }
 
     /// <summary>
@@ -390,15 +386,19 @@ public class ArmChecker : MonoBehaviour
     /// </summary>
     public void CheckArmClash()
     {
-        foreach (Player otherPlayer in contactPlayers)
+        foreach (Player otherPlayer in dicHitPlayers.Keys)
         {
             foreach (var otherArm in otherPlayer.GetPlayerController().GetArmController().Arms)
             {
-                if (otherArm.contactPlayers.Contains(_player))
+                if (otherArm.dicHitPlayers.Keys.Contains(_player)) //If other player hit my self at the same time(with in 0.1s)
                 {
                     //Debug.Log("On Casse des Gueules !!!");
                     //Invoke Arm Clash
                     InteractionManager.Instance.ArmClash(this, otherArm);
+                }
+                else //Other player didn't hit me
+                {
+                    LaunchForeignPlayer(otherPlayer);
                 }
             }
         }

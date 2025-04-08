@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     private void SubsribeEvents()
     {
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
-        GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
+        GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Subscribe(GameEvent.OnGameReset, ResetGame);
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, NewGameRound);
         GEventCenter.Subscribe(GameEvent.OnShowScore, ScoreScreen);
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     private void UnsribeEvents()
     {
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
-        GEventCenter.Unsubscribe<int>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
+        GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetGame);
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, NewGameRound);
         GEventCenter.Unsubscribe(GameEvent.OnShowScore, ScoreScreen);
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnNewPlayerJoin(int _playerIndex)
+    private void OnNewPlayerJoin(Player _player)
     {
         PlayerScores.Add(0);
     }

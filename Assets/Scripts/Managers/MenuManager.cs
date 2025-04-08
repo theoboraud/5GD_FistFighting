@@ -22,6 +22,8 @@ public class MenuManager : MonoBehaviour
     public List<PlayerScore> PlayerScores = new List<PlayerScore>();                    // Reference to the player score of each player
     public PauseMenu PauseMenu;                                                         // Reference to the PauseMenu script
 
+    [SerializeField] private GameObject _playerIndicator;
+
     [Header("Menu Screens")]
     public MainMenu MainMenu;
 
@@ -76,7 +78,7 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
-        GEventCenter.Subscribe<int>(GameEvent.OnPlayerJoin, OnPlayerJoin);
+        GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
         GEventCenter.Subscribe(GameEvent.OnPauseGame, PauseGame);
         GEventCenter.Subscribe(GameEvent.OnMenuUp, GoUp);
         GEventCenter.Subscribe(GameEvent.OnMenuDown, GoDown);
@@ -88,7 +90,7 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
-        GEventCenter.Unsubscribe<int>(GameEvent.OnPlayerJoin, OnPlayerJoin);
+        GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
         GEventCenter.Unsubscribe(GameEvent.OnPauseGame, PauseGame);
         GEventCenter.Unsubscribe(GameEvent.OnMenuUp, GoUp);
         GEventCenter.Unsubscribe(GameEvent.OnMenuDown, GoDown);
@@ -243,17 +245,33 @@ public class MenuManager : MonoBehaviour
         WinnerScreen_Alone.SetActive(_bool);
     }
 
-
-    public void OnPlayerJoin(int _playerIndex)
+    public void OnPlayerJoin(Player _player)
     {
-        PlayerScores[_playerIndex].gameObject.SetActive(true);
-        PlayerScores[_playerIndex].SetColor(_playerColors[_playerIndex]);
-        PlayerScores[_playerIndex].Player = PlayersManager.Instance.Players[_playerIndex];
-        Text_SpawningTimers[_playerIndex].GetComponent<Text>().color = _playerColors[_playerIndex];
+        int playerIndex = _player.PlayerData.PlayerIndex;
+        Color playerColor = _playerColors[playerIndex];
+        PlayerScores[playerIndex].gameObject.SetActive(true);
+        PlayerScores[playerIndex].SetColor(playerColor);
+        PlayerScores[playerIndex].Player = _player;
+        Text_SpawningTimers[playerIndex].GetComponent<Text>().color = playerColor;
         // Add its timer reference to SpawningTimers in MenuManager
         SpawningTimers.Add(0f);
+        //Spawn player indicator
+        CreatePlayerIndicator(_player, playerColor);
     }
 
+    /// <summary>
+    /// Spawn player indicator
+    /// </summary>
+    /// <param name="_player">player spawned</param>
+    public void CreatePlayerIndicator(Player _player,Color _playerColor)
+    {
+        GameObject indiceIcon = Instantiate(_playerIndicator,this.transform);
+        PlayerIndicator playerIndicator = indiceIcon.GetComponent<PlayerIndicator>();
+        if (playerIndicator)
+        {
+            playerIndicator.Init(_player,_playerColor);
+        }
+    }
 
     public void PrintScoreScreen(bool _bool)
     {
@@ -306,7 +324,7 @@ public class MenuManager : MonoBehaviour
         {
             StartTimer();
         }
-        else if(_scene == GameScene.Outro)
+        else if (_scene == GameScene.Outro)
         {
             ScoreScreen.SetActive(false);
         }
@@ -314,16 +332,16 @@ public class MenuManager : MonoBehaviour
 
     private void PauseGame()
     {
-	    PauseMenu.Activate();
+        PauseMenu.Activate();
     }
 
     private void GoUp()
     {
-	    MainMenu.GoUp();
+        MainMenu.GoUp();
     }
 
     private void GoDown()
     {
-	    MainMenu.GoDown();
+        MainMenu.GoDown();
     }
 }
