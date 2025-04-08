@@ -40,7 +40,6 @@ public enum PlayerEvent
 {
     //Player
     OnPlayerSpawn,
-    OnPlayerHit,
 
     //PlayerController
     OnPlayerCollisionEnter,

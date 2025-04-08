@@ -22,16 +22,16 @@ public class ArmChecker : MonoBehaviour
     public bool Cooldown = false;
     public bool Holding = false;
     private bool bIsExtend = false;
+    private bool bIsHit = false; //Is hit object during extend
     public SpriteRenderer _renderer;
 
     private float cooldown_timer;
     public float holding_timer;
 
     // Duration of collision scan during extend
-    private float scanDuration = 0;
+    private float scanDuration = 0.1f; //Nearly smaller than half of anim extend arm times. for beter simulate hit feedback
     // size of box scan
     private Vector2 scanBoxSize = new Vector2(0.8f, 0.5f);
-
     // Hit colliders
     private HashSet<Collider2D> HitColliders = new HashSet<Collider2D>();
 
@@ -41,8 +41,6 @@ public class ArmChecker : MonoBehaviour
         _armController = GetComponentInParent<ArmController>();
         _playerFeedbackManager = GetComponentInParent<PlayerFeedbackManager>();
         _playerController = GetComponentInParent<PlayerController>();
-
-        scanDuration = GameManager.Instance.ParamData.PARAM_Player_ArmExtendTime;
     }
 
     /// <summary>
@@ -103,6 +101,7 @@ public class ArmChecker : MonoBehaviour
 
     /// <summary>
     /// Call at the end of arm extend, calculation interact between players
+    /// //TODO
     /// </summary>
     private void EndExtension()
     {
@@ -117,15 +116,18 @@ public class ArmChecker : MonoBehaviour
     /// </summary>
     public IEnumerator SweepDetection()
     {
+        float detectDistance = 2f; //Disrance for sweep detection (from arm root to arm end)
         Vector2 startPoint = (Vector2)transform.position;
-        Vector2 endPoint = (Vector2)transform.position - (Vector2)transform.up * 2f;
+        Vector2 endPoint = (Vector2)transform.position - (Vector2)transform.up * detectDistance;
         Vector2 direction = (endPoint - startPoint).normalized;
         float distance = Vector2.Distance(startPoint, endPoint);
         HitColliders.Clear();
         float elapsed = 0f;
+        bIsHit = false;
+
         while (elapsed < scanDuration)
         {
-            if (!bIsExtend) break;
+            if (!bIsExtend) break; //If player get hit we will stop extend arm immediately
             RaycastHit2D[] hits = Physics2D.BoxCastAll(startPoint, scanBoxSize, transform.eulerAngles.z, direction, distance);
             foreach (RaycastHit2D hit in hits)
             {
@@ -156,6 +158,13 @@ public class ArmChecker : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        //If we extend arm in air and hit noting
+        if (!bIsHit)
+        {
+            //Air dash
+            LaunchThisAvatarFromAir();
+        }
+        EndExtension();
     }
 
     /// <summary>
@@ -163,6 +172,7 @@ public class ArmChecker : MonoBehaviour
     /// </summary>
     private void OnHitObject(Collider2D _collider)
     {
+        bIsHit = true;
         HitColliders.Add(_collider);
         Debug.Log("Detected: " + _collider.name + " with tag: " + tag);
     }
@@ -281,7 +291,7 @@ public class ArmChecker : MonoBehaviour
     /// <summary>
     /// If the player launch arm in air and hit nothing, he will get a small impulse(AirDash)
     /// </summary>
-    private void LaunchThisAvatarFromAir(int _armIndex)
+    private void LaunchThisAvatarFromAir()
     {
         // If the player has already reached the maximum number of jumps in the air, he cannot jump anymore until we reaches the ground
         _playerController.AirPushFactor -= 0.01f;

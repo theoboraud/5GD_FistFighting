@@ -93,6 +93,15 @@ public class PlayerFeedbackManager : MonoBehaviour
         {
             IsInAir();
         }
+        
+        if(_physicState == PlayerPhysicState.IsHit)
+        {
+            StartInvincibleFeedback();
+        }
+        else
+        {
+            StopInvincibleFeedback();
+        }
     }
 
     public void StartInvincibleFeedback()
