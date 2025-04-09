@@ -20,7 +20,6 @@ public class PlayerIndicator : MonoBehaviour
         _spriteRenderer.color = color;
 
         _player.EventCenter.Subscribe(PlayerEvent.OnPlayerReady, OnPlayerReady);
-        Debug.Log("My Player Index in indicator"+_myPlayer.PlayerData.PlayerIndex);
     }
     private void OnDestroy()
     {
@@ -33,21 +32,11 @@ public class PlayerIndicator : MonoBehaviour
 
         transform.position = _player.transform.position + Vector3.up * offset.y;
     }
-
     private void OnPlayerReady()
     {
         Debug.Log("Indicator On player Ready");
         bIsReady = !bIsReady;
         _spriteRenderer.sprite = bIsReady? _indicator : _readyIcon;
-    }
-
-    //test
-    private void OnPlayerReallyReady(Player player)
-    {
-        Debug.Log("Indicator On player Really really Ready");
-        Debug.Log("Is the same player?::" + (player == _player));
-        bIsReady = !bIsReady;
-        _spriteRenderer.sprite = bIsReady ? _indicator : _readyIcon;
-
+        //We have to cancle ready once game round start
     }
 }
