@@ -110,7 +110,7 @@ public class InputReceiver : MonoBehaviour
             case GlobalGameState.ScoreScreen:
 	            GEventCenter.Invoke(GameManager.Instance.PlayerHasWon
                     ? (GameEvent.OnLoadOutro)
-                    : GameEvent.OnNewGameRound);
+                    : GameEvent.OnStartRound);
                 break;
 
             case GlobalGameState.WinnerScreen:
