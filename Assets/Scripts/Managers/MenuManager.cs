@@ -338,10 +338,12 @@ public class MenuManager : MonoBehaviour
     private void GoUp()
     {
         MainMenu.GoUp();
+        Debug.Log("MainMenu GoUp");
     }
 
     private void GoDown()
     {
         MainMenu.GoDown();
+        Debug.Log("MainMenu GoDown");
     }
 }

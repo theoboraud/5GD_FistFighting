@@ -752,8 +752,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendUp
         m_Mode: 0
         m_Arguments:
@@ -768,8 +768,8 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/UpArm[/Keyboard/w]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendRight
         m_Mode: 0
         m_Arguments:
@@ -784,8 +784,8 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/RightArm[/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendDown
         m_Mode: 0
         m_Arguments:
@@ -800,8 +800,8 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/DownArm[/Keyboard/s]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_NewExtendLeft
         m_Mode: 0
         m_Arguments:
@@ -816,8 +816,8 @@ MonoBehaviour:
     m_ActionName: 'BaseControls/LeftArm[/Keyboard/a]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Menu_GoUp
         m_Mode: 0
         m_Arguments:
@@ -836,8 +836,8 @@ MonoBehaviour:
     m_ActionName: 'Menu/Right[/XboxOneGampadMacOSWireless/dpad/right,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Menu_GoDown
         m_Mode: 0
         m_Arguments:
@@ -860,8 +860,8 @@ MonoBehaviour:
     m_ActionName: 'Menu/Validate[/XboxOneGampadMacOSWireless/start,/XboxOneGampadMacOSWireless/buttonSouth,/Keyboard/enter,/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_Start
         m_Mode: 0
         m_Arguments:
@@ -880,8 +880,8 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/RotateStick[/XInputControllerWindows/leftStick]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_NextCharacter
         m_Mode: 0
         m_Arguments:
@@ -896,8 +896,8 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/NextCharacter[/XboxOneGampadMacOSWireless/dpad/right,/Keyboard/semicolon]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 3928867191581267653}
+        m_TargetAssemblyTypeName: InputReceiver, Assembly-CSharp
         m_MethodName: Gameplay_PreviousCharacter
         m_Mode: 0
         m_Arguments:

@@ -18,6 +18,8 @@ public class InputReceiver : MonoBehaviour
     private InputAction _rotateAction;
 
     #endregion
+    
+    [SerializeField] private bool printLogs = false;
 
     #region === Unity Lifecycle ===
 
@@ -176,7 +178,8 @@ public class InputReceiver : MonoBehaviour
     {
         if (IsMenuInput(context))
         {
-            GEventCenter.Invoke(GameEvent.OnMenuUp);
+            LogPlayerControls("Menu_GoUp");
+	        GEventCenter.Invoke(GameEvent.OnMenuUp);
         }
     }
 
@@ -184,6 +187,7 @@ public class InputReceiver : MonoBehaviour
     {
         if (IsMenuInput(context))
         {
+	        LogPlayerControls("Menu_GoDown");
 	        GEventCenter.Invoke(GameEvent.OnMenuDown);
         }
     }
@@ -220,4 +224,13 @@ public class InputReceiver : MonoBehaviour
     }
 
     #endregion
+    
+    #region Utils
+    private void LogPlayerControls(string action)
+	{
+		if (printLogs) Debug.Log($"Player {_player.PlayerData.PlayerIndex + 1} is pressing {action}");
+	}
+	
+    #endregion
+    
 }
