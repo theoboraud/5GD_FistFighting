@@ -215,7 +215,7 @@ public class EventCenter<TEvent> where TEvent : struct, IConvertible
         }
         else
         {
-            throw new Exception(string.Format("SendToListener error: the event {0} to be broadcast does not exist", eventType));
+            UnityEngine.Debug.LogWarning(string.Format("SendToListener warning: the event {0} to be broadcast does not exist", eventType));
         }
     }
 
@@ -239,7 +239,7 @@ public class EventCenter<TEvent> where TEvent : struct, IConvertible
         }
         else
         {
-            throw new Exception(string.Format("SendToListener error: the event {0} to be broadcast does not exist", eventType));
+            UnityEngine.Debug.LogWarning(string.Format("SendToListener warning: the event {0} to be broadcast does not exist", eventType));
         }
     }
     #region Broadcast
@@ -263,7 +263,7 @@ public class EventCenter<TEvent> where TEvent : struct, IConvertible
         }
         else
         {
-            throw new Exception(string.Format("SendToListener error: the event {0} to be broadcast does not exist", eventType));
+            UnityEngine.Debug.LogWarning(string.Format("SendToListener warning: the event {0} to be broadcast does not exist", eventType));
         }
     }
     #endregion
@@ -288,7 +288,7 @@ public class EventCenter<TEvent> where TEvent : struct, IConvertible
         }
         else
         {
-            throw new Exception(string.Format("SendToListener error: the event {0} to be broadcast does not exist", eventType));
+            UnityEngine.Debug.LogWarning(string.Format("SendToListener warning: the event {0} to be broadcast does not exist", eventType));
         }
     }
 
@@ -312,7 +312,7 @@ public class EventCenter<TEvent> where TEvent : struct, IConvertible
         }
         else
         {
-            throw new Exception(string.Format("SendToListener error: the event {0} to be broadcast does not exist", eventType));
+            UnityEngine.Debug.LogWarning(string.Format("SendToListener warning: the event {0} to be broadcast does not exist", eventType));
         }
     }
 
@@ -336,7 +336,7 @@ public class EventCenter<TEvent> where TEvent : struct, IConvertible
         }
         else
         {
-            throw new Exception(string.Format("SendToListener error: the event {0} to be broadcast does not exist", eventType));
+            UnityEngine.Debug.LogWarning(string.Format("SendToListener warning: the event {0} to be broadcast does not exist", eventType));
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
+using System;
 
 /// <summary>
 ///     Class used as a game reference : contains game state, game parameters, feedback manager...
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [System.NonSerialized] public static GameManager Instance;      // Singleton reference
-    public GlobalGameState GlobalGameState;                         // Current state of the game (InPlay, WinnerScreen, MainMenu, CharacterSelectMenu, LevelSelectMenu or OptionsMenu)
+    private GameState _gameState;                      //Current state of the  game (MainMenu,lobby, Inplay...)
     public ParamData ParamData;                                     // Game parameters customizable directly via the ParamData file
     public FeedbackManager Feedback;                                // Feedback manager reference, used to instantiate VFX and audio effects
 
@@ -25,14 +26,24 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public int IndexWinner;
     [System.NonSerialized] public Player RoundWinner;                                   // Winning player of the round reference
 
+    Guid taskId; //ID for time task
+
+    /// <summary>
+    /// Actual In-Game Sub State (Send state change event on new value set)
+    /// </summary>
+    public GameState GameState
+    {
+        get { return _gameState; }
+        set
+        {
+            if (_gameState != value)
+            {
+                _gameState = value;
+                GEventCenter.Invoke<GameState>(GameEvent.OnGameStateChange, _gameState);
+            }
+        }
+    }
     // #endregion
-
-
-    // #region ==================== Events ========================
-    //GameEvent.OnNewGameRound
-    //GameEvent.OnGameReset
-
-
 
     //#endregion
 
@@ -54,7 +65,6 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
     private void Start()
     {
         InitGame();
@@ -65,8 +75,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitGame()
     {
-        GlobalGameState = GlobalGameState.MainMenu;
-
+        GameState = GameState.MainMenu;
         PlayersManager.Instance.Init();
         LevelManager.Instance.Init();
         MenuManager.Instance.Init();
@@ -86,8 +95,8 @@ public class GameManager : MonoBehaviour
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Subscribe(GameEvent.OnGameReset, ResetGame);
-        GEventCenter.Subscribe(GameEvent.OnStartRound, NewGameRound);
         GEventCenter.Subscribe(GameEvent.OnShowScore, ScoreScreen);
+        GEventCenter.Subscribe(GameEvent.OnStartInput,OnStartInput);
     }
 
     private void UnsribeEvents()
@@ -95,8 +104,8 @@ public class GameManager : MonoBehaviour
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetGame);
-        GEventCenter.Unsubscribe(GameEvent.OnStartRound, NewGameRound);
         GEventCenter.Unsubscribe(GameEvent.OnShowScore, ScoreScreen);
+        GEventCenter.Unsubscribe(GameEvent.OnStartInput, OnStartInput);
     }
 
     // #endregion
@@ -105,20 +114,83 @@ public class GameManager : MonoBehaviour
 
     // #region ==================== GAME FUNCTIONS ====================
 
-    /// <summary>
-    ///     Starts a new game round
-    /// </summary>
-    public void NewGameRound()
+    #region Game Stats
+    private void EnterIntroScene()
     {
-        // TODO: Implement loading screen...
-        if (GlobalGameState == GlobalGameState.ScoreScreen || LevelManager.Instance.IsIntroScene())
+        GameState = GameState.Intro;
+    }
+    private void EnterMainMenu()
+    {
+        GameState = GameState.MainMenu; //Main menu first, press start to lobby
+        GEventCenter.Invoke<string>(GameEvent.OnInputModeChange, "Menu");
+    }
+    public void EnterLobby()
+    {
+        GameState = GameState.LobbyWaiting;
+        GEventCenter.Invoke(GameEvent.OnEnterLobby);
+        GEventCenter.Invoke<string>(GameEvent.OnInputModeChange, "Gameplay");
+    }
+    private void CheckAllPlayerReady()
+    {
+        if (PlayersManager.Instance.AllPlayersReady()) //If all players are ready
         {
-            // Change game state
-            GEventCenter.Invoke(GameEvent.OnNewGameRound);
-            Invoke("SetStateToInPlay", 0.1f);
+            GameState = GameState.AllReady;
+            taskId = TimerUtility.Invoke(3,StartNewGameRound); //Start a New Game Round In 3 sec
         }
     }
+    private void CancelAllReady()
+    {
+        GameState = GameState.LobbyWaiting;
+        TimerUtility.CancelInvoke(taskId); //Cancel task of start new game round
+    }
+    /// <summary>
+    /// Starts a new game stage
+    /// </summary>
+    private void StartNewGameRound()
+    {
+        GEventCenter.Invoke(GameEvent.OnNewGameRound);
+    }
 
+    /// <summary>
+    /// Start Stage count down once we enter the stage
+    /// </summary>
+    private void StartStageCountDown()
+    {
+        GameState = GameState.PrePlayCountdown; //New game stage
+        TimerUtility.Invoke(3, BeginGameStage);
+    }
+
+    /// <summary>
+    /// Call at Game stage start
+    /// </summary>
+    private void BeginGameStage()
+    {
+        GameState = GameState.InPlay;
+    }
+
+    /// <summary>
+    /// Call to resume gameplay when game paused
+    /// </summary>
+    public void ResumeGameplay()
+    {
+        GameState = GameState.InPlay;
+        Time.timeScale = 1f;
+        GEventCenter.Invoke<string>(GameEvent.OnInputModeChange, "Gameplay");
+    }
+
+    /// <summary>
+    /// Call to pauseGame
+    /// </summary>
+    public void PauseGame()
+    {
+        GameState = GameState.Paused;
+        Time.timeScale = 0f;
+        GEventCenter.Invoke<string>(GameEvent.OnInputModeChange, "Menu");
+    }
+
+    /// <summary>
+    /// Show score screen at the end of each stage
+    /// </summary>
     public void ScoreScreen()
     {
         // Disable the winner screen and reset all players
@@ -128,7 +200,7 @@ public class GameManager : MonoBehaviour
 
         if (LevelManager.Instance.CurrentSceneIndex > 2)
         {
-            GlobalGameState = GlobalGameState.Null;
+            GameState = GameState.EndRound;
 
             int _indexRoundWinner = PlayersManager.Instance.Players.IndexOf(RoundWinner);
             int _winnerIndex = -1;
@@ -145,50 +217,108 @@ public class GameManager : MonoBehaviour
             {
                 IndexWinner = _winnerIndex;
                 PlayerHasWon = true;
-                MenuManager.Instance.UI.SetActive(false);
+                MenuManager.Instance.InGameUI.SetActive(false);
             }
 
             // Print out the score screen
             MenuManager.Instance.PrintScoreScreen(true);
-
-
-            Invoke("SetStateToScoreScreen", 0.1f);
+            Debug.Log("Screen Score");
 
             // Reset the RoundWinner
             RoundWinner = null;
         }
-        else
+        else //???
         {
-            GlobalGameState = GlobalGameState.ScoreScreen;
+            GameState = GameState.EndRound;
 
             for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
             {
                 PlayersManager.Instance.PlayersAlive[i].Kill();
             }
-
-            Invoke("ResetPlayersUI", 0.1f);
         }
     }
 
-
-    private void SetStateToScoreScreen()
+    private void EnterOutroScene()
     {
-        GlobalGameState = GlobalGameState.ScoreScreen;
+        GameState = GameState.Outro;
     }
+    #endregion
 
-
-    private void SetStateToInPlay()
+    #region Global Game Stats
+    /// <summary>
+    /// Whether Actual game state is in lobby
+    /// </summary>
+    public bool IsInLobby()
     {
-        GlobalGameState = GlobalGameState.InPlay;
+        return GameState is GameState.LobbyWaiting || GameState is GameState.AllReady ;
     }
+    /// <summary>
+    /// Whether Actual game state is in Gameplay
+    /// </summary>
+    public bool IsInGameplay( )
+    {
+        return GameState >= GameState.PrePlayCountdown && GameState < GameState.EndRound;
+    }
+    #endregion
 
+    private void OnStartInput()
+    {
+        Debug.Log("Start pressed!!!");
+        switch (GameState)
+        {
+            case GameState.MainMenu:
+                EnterLobby();
+                break;
+            case GameState.LobbyWaiting:
+                CheckAllPlayerReady();
+                break;
+            case GameState.AllReady:
+                CancelAllReady();
+                break;
+            case GameState.InPlay:
+                PauseGame();
+                break;
+            case GameState.Paused:
+                ResumeGameplay();
+                break;
+            case GameState.EndStage:
+                break;
+            case GameState.ScoreScreen:
+                break;
+            case GameState.EndRound:
+                StartNewGameRound();
+                break;
+            default:
+                break;
+        }
+    }
+    private void OnSceneLoad(GameScene _scene)
+    {
+        switch (_scene)
+        {
+            case GameScene.Lobby:
+                EnterMainMenu();
+                break;
+            case GameScene.Playable:
+                StartStageCountDown();
+                break;
+            case GameScene.Intro:
+                EnterIntroScene();
+                break;
+            case GameScene.Outro:
+                EnterOutroScene();
+                break;
+            default:
+                break;
+        }
+    }
 
     /// <summary>
     ///     End the current game round, and prints out the winner screen
     /// </summary>
     public void EndOfRound(Player _winner)
     {
-        GlobalGameState = GlobalGameState.WinnerScreen;
+        GameState = GameState.EndStage;
 
         if (_winner != null)
         {
@@ -209,7 +339,6 @@ public class GameManager : MonoBehaviour
             {
                 PlayersManager.Instance.PlayersAlive[i].Kill();
             }
-
             ScoreScreen();
         }
     }
@@ -221,7 +350,7 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         GEventCenter.Invoke(GameEvent.OnGameReset);
-        GlobalGameState = GlobalGameState.InPlay;
+        GameState = GameState.InPlay;
     }
 
     /// <summary>
@@ -233,27 +362,6 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
         Application.Quit();
-    }
-
-    public void PlayMode()
-    {
-        GlobalGameState = GlobalGameState.InPlay;
-        PlayersManager.Instance.ChangeMode("Gameplay");
-    }
-
-
-    public void MenuMode(GlobalGameState _menuState)
-    {
-        GlobalGameState = _menuState;
-        PlayersManager.Instance.ChangeMode("Menu");
-    }
-
-    private void OnSceneLoad(GameScene _scene)
-    {
-        if (_scene == GameScene.Outro)
-        {
-            GlobalGameState = GlobalGameState.Outro;
-        }
     }
 
     private void OnNewPlayerJoin(Player _player)

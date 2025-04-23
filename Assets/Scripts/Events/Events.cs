@@ -4,10 +4,12 @@
 public enum GameEvent
 {
     //GameManager
-    OnStartRound,
-    OnNewGameRound,
+    OnEnterLobby,
+    OnNewGameRound,//Call on new game round start
+    OnNewStage, //On new game stage loaded
     OnGameReset,
     OnLoadOutro,
+    OnGameStateChange, //On game state change
 
     //LevelManager
     OnLoadScene,
@@ -26,12 +28,15 @@ public enum GameEvent
     OnPauseGame,
     OnResumeGame,
     
+    //Input Receiver
+    OnInputModeChange,
+    OnStartInput, //OnStartInput, global event
+
     // Menu
     OnMenuUp,
     OnMenuDown,
     OnMenuLeft,
     OnMenuRight,
-    OnMenuValidate
 }
 
 /// <summary>
@@ -55,10 +60,10 @@ public enum PlayerEvent
     OnExtendArm,
     OnHoldArm,
     OnRotate,
+    OnStartInput, //On gameplay start input, individual player input
     
     // Game Flow
-    NewRound,
-    OnPlayerReady,
+    NewStage,
 
     // Character Select
     OnNextCharacter,

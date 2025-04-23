@@ -67,14 +67,6 @@ public class PauseMenu : MonoBehaviour
         activeButton.onClick.Invoke();
     }
 
-
-    public void ButtonResume()
-    {
-        Deactivate();
-        GameManager.Instance.PlayMode();
-    }
-
-
     public void ButtonReset()
     {
         //Deactivate();
@@ -92,8 +84,6 @@ public class PauseMenu : MonoBehaviour
     {
         Init();
         this.gameObject.SetActive(true);
-        GameManager.Instance.MenuMode(GlobalGameState.InPause);
-        Time.timeScale = 0f;
     }
 
 
@@ -101,6 +91,5 @@ public class PauseMenu : MonoBehaviour
     {
         UnselectActiveButton();
         this.gameObject.SetActive(false);
-        Time.timeScale = 1f;
     }
 }

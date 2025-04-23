@@ -29,7 +29,7 @@ public class PlayerStates
         }
     }
     public PlayerPhysicState PlayerPhysicState
-	    {
+	{
         get { return _playerPhysicState; }
         set
         {

@@ -111,19 +111,16 @@ public class PlayerUI : MonoBehaviour
 
     private void InitCallbacks()
     {
-        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnNewSceneLoad);
+        GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewStage);
     }
     private void RemoveCallBacks()
     {
-        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnNewSceneLoad);
+        GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewStage);
     }
 
-    private void OnNewSceneLoad(GameScene _scene)
+    private void OnNewStage()
     {
-        if (_scene == GameScene.Playable)
-        {
-            UpdateLivesUI();
-        }
+        UpdateLivesUI();
     }
 
     /// <summary>
@@ -164,20 +161,6 @@ public class PlayerUI : MonoBehaviour
             Eliminated();
         }
 
-        if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
-        {
-
-
-            // Deprecated
-            /*if (_playerLives == 1 && GameManager.Instance.ParamData.PARAM_Player_Lives > 1)
-            {
-                nbLives.color = Color.red;
-            }
-            else
-            {
-                nbLives.color = Color.black;
-            }*/
-        }
     }
 
 

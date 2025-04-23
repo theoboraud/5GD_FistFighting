@@ -79,9 +79,7 @@ public class MainMenu : MonoBehaviour
 
     public void ButtonPlay()
     {
-        Deactivate();
-        GameManager.Instance.PlayMode();
-        LevelManager.Instance.LoadLobbyLevel();
+        GameManager.Instance.EnterLobby();
     }
 
 
@@ -112,8 +110,6 @@ public class MainMenu : MonoBehaviour
     public void Activate()
     {
         this.gameObject.SetActive(true);
-        GameManager.Instance.MenuMode(GlobalGameState.MainMenu);
-        //Invoke("InitArm", 0.5f);
     }
 
 

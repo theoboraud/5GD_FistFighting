@@ -189,7 +189,7 @@ public class ArmChecker : MonoBehaviour
     {
         bIsHit = true;
         HitColliders.Add(_collider);
-        Debug.Log("Detected: " + _collider.name + " with tag: " + tag);
+        //Debug.Log("Detected: " + _collider.name + " with tag: " + tag);
     }
 
     /// <summary>

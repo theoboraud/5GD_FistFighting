@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public EventCenter<PlayerEvent> EventCenter { get; private set; }
     public PlayerData PlayerData { get ; private set ; }
     public PlayerStates PlayerStates { get ; private set; }
+    public bool IsReady { get => isReady; set => isReady = value; }
 
     #endregion
 
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer Outline_SpriteRenderer;
     public PlayerVoiceController VoiceController;
 
-    public bool isReady = false;
+    private bool isReady = false;
 
     // Contains the index of the current skin
 
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour
     
     private void SubscribeEvents()
 	{
-		EventCenter.Subscribe(PlayerEvent.OnPlayerReady, OnReadyInput);
+		EventCenter.Subscribe(PlayerEvent.OnStartInput, OnStartInput);
 		EventCenter.Subscribe(PlayerEvent.OnNextCharacter, NextCharacter);
 		EventCenter.Subscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
 		EventCenter.Subscribe(PlayerEvent.OnKillSelf, Kill);
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
 
 	private void UnsubscribeEvents()
 	{
-		EventCenter.Unsubscribe(PlayerEvent.OnPlayerReady, OnReadyInput);
+		EventCenter.Unsubscribe(PlayerEvent.OnStartInput, OnStartInput);
 		EventCenter.Unsubscribe(PlayerEvent.OnNextCharacter, NextCharacter);
 		EventCenter.Unsubscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
 		EventCenter.Unsubscribe(PlayerEvent.OnKillSelf, Kill);
@@ -199,7 +200,7 @@ public class Player : MonoBehaviour
         Face_SpriteRenderer.enabled = true;
         this.transform.position = _targetPos;
 
-        if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
+        if (GameManager.Instance.IsInGameplay())
         {
             //Set player invincible
             PlayerStates.PlayerGameState = PlayerGameState.Invincible;
@@ -249,26 +250,19 @@ public class Player : MonoBehaviour
 
     private void OnGameRoundStart()
     {
-        isReady = false;
+        IsReady = false;
     }
 
     /// <summary>
-    ///     Indicate if the player is ready in the lobby
+    /// Indicate if the player is ready in the lobby
     /// </summary>
-    public void OnReadyInput()
+    public void OnStartInput()
     {
-        isReady = !isReady;
-
-        //TODO Move to player manager and listen directly input event
-        // If all players are ready, end the round
-        if (PlayersManager.Instance.AllPlayersReady())
+        if(GameManager.Instance.IsInLobby())
         {
-            //GameManager.Instance.EndOfRound(null);
-            MenuManager.Instance.ReadyTimer = 3f;
-            MenuManager.Instance.UI_ReadyTimer.SetActive(true);
+            IsReady = !IsReady;
         }
     }
-
     // #endregion
 
     public CharacterSkin GetSkin()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Enums;
+using System.Linq;
+using System;
 
 public enum GameScene
 {
@@ -110,6 +112,8 @@ public class LevelManager : MonoBehaviour
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe(GameEvent.OnLoadOutro, LoadOutroScene);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void UnsribeEvents()
@@ -118,6 +122,8 @@ public class LevelManager : MonoBehaviour
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe(GameEvent.OnLoadOutro, LoadOutroScene);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     // #endregion
 
@@ -165,27 +171,40 @@ public class LevelManager : MonoBehaviour
     public void LoadScene(string _sceneName)
     {
         SceneManager.LoadScene(_sceneName);
+    }
 
-        if (playableSceneNames.Contains(_sceneName))
+
+    /// <summary>
+    /// Send event on scene loaded
+    /// </summary>
+    /// <param name="scene">Scene loaded</param>
+    /// <param name="mode">load mode</param>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (playableSceneNames.Contains(scene.name))
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Playable);
         }
-        else if (_sceneName == lobbySceneName)
+        else if (scene.name == lobbySceneName)
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Lobby);
         }
-        else if (_sceneName == introSceneName)
+        else if (scene.name == introSceneName)
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Intro);
 
         }
-        else if (_sceneName == outroSceneName)
+        else if (scene.name == outroSceneName)
         {
             GEventCenter.Invoke<GameScene>(GameEvent.OnLoadScene, GameScene.Outro);
         }
+        else
+        {
+            throw new Exception(string.Format("Current Scene loaded {} is not contains in playable scene.", scene.name));
+        }
 
         //CurrentSceneIndex = _levelIndex;
-        CurrentSceneName = _sceneName;
+        CurrentSceneName = scene.name;
     }
 
 
@@ -224,7 +243,7 @@ public class LevelManager : MonoBehaviour
 
         while (_randomScene == CurrentSceneName)
         {
-            _randomScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
+            _randomScene = playableSceneNames[UnityEngine.Random.Range(0, playableSceneNames.Count - 1)];
         }
 
         LoadScene(_randomScene);
@@ -248,13 +267,13 @@ public class LevelManager : MonoBehaviour
         }
 
         // Get a random scene index not yet in LevelsPlayed
-        string _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
+        string _nextScene = playableSceneNames[UnityEngine.Random.Range(0, playableSceneNames.Count - 1)];
 
         if (LevelsPlayed.Count > 0)
         {
             while (LevelsPlayed.Contains(_nextScene) || _nextScene == CurrentSceneName)
             {
-                _nextScene = playableSceneNames[Random.Range(0, playableSceneNames.Count - 1)];
+                _nextScene = playableSceneNames[UnityEngine.Random.Range(0, playableSceneNames.Count - 1)];
             }
         }
         LoadScene(_nextScene);

@@ -14,7 +14,6 @@ public class PlayersManager : MonoBehaviour
 
     [Header("Variables")]
     [System.NonSerialized] public List<Player> Players;                         // All players references
-    [System.NonSerialized] public List<Player> PlayersSpawned;                  // All players spawned currently
     [System.NonSerialized] public List<Player> PlayersAlive;                    // All players alive in the current game
 
 
@@ -54,13 +53,9 @@ public class PlayersManager : MonoBehaviour
     {
         // Init variables
         Players = new List<Player>();
-        PlayersSpawned = new List<Player>();
         PlayersAlive = new List<Player>();
 
         SubsribeEvents();
-
-        // Players have only 1 life in the lobby
-        ResetPlayersLives(1);
     }
 
     /// <summary>
@@ -86,8 +81,8 @@ public class PlayersManager : MonoBehaviour
             GEventCenter.Invoke<Player>(GameEvent.OnPlayerJoin, newPlayer);
         }
 
-        // Set action map on Gameplay if player is spawning InPlay
-        if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
+        // Set action map on Gameplay if player is spawning InPlay or lobby
+        if (GameManager.Instance.IsInGameplay() || GameManager.Instance.IsInLobby())
         {
             playerInput.SwitchCurrentActionMap("Gameplay");
         }
@@ -100,8 +95,8 @@ public class PlayersManager : MonoBehaviour
     private void SubsribeEvents()
     {
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewStage);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
-        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerDead, OnPlayerKilled);
         _playerInputManager.onPlayerJoined += OnPlayerJoined;
     }
@@ -109,8 +104,8 @@ public class PlayersManager : MonoBehaviour
     private void UnsribeEvents()
     {
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewStage);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
-        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerDead, OnPlayerKilled);
         _playerInputManager.onPlayerJoined -= OnPlayerJoined;
     }
@@ -147,8 +142,6 @@ public class PlayersManager : MonoBehaviour
         {
             PlayersAlive.Add(_player);
         }
-        PlayersSpawned.Add(_player);
-
     }
 
 
@@ -160,19 +153,6 @@ public class PlayersManager : MonoBehaviour
         MenuManager.Instance.StartSpawnTimer(Players.IndexOf(_player));
     }
 
-
-    public void ResetSpawnedPlayers()
-    {
-        for (int i = 0; i < Players.Count; i++)
-        {
-            Players[i].Kill();
-        }
-
-        PlayersSpawned.Clear();
-        PlayersAlive.Clear();
-    }
-
-
     /// <summary>
     ///     Returns whether or not all players are ready to play (from menu or score screen)
     /// </summary>
@@ -180,7 +160,7 @@ public class PlayersManager : MonoBehaviour
     {
         for (int i = 0; i < Players.Count; i++)
         {
-            if (!Players[i].isReady)
+            if (!Players[i].IsReady)
             {
                 return false;
             }
@@ -195,13 +175,11 @@ public class PlayersManager : MonoBehaviour
     public void OnPlayerKilled(Player _player)
     {
         // The player loses a life
-        PlayersSpawned.Remove(_player);
-
         if (_player.PlayerData.PlayerLives <= 0)
         {
             PlayersAlive.Remove(_player);
 
-            if (GameManager.Instance.GlobalGameState == GlobalGameState.InPlay)
+            if (GameManager.Instance.IsInGameplay())
             {
                 // If there is a winning player
                 if (PlayersAlive.Count == 1)
@@ -215,7 +193,7 @@ public class PlayersManager : MonoBehaviour
                 }
             }
         }
-        else if (GameManager.Instance.GlobalGameState is GlobalGameState.InPlay)
+        else if (GameManager.Instance.IsInGameplay())
         {
             StartSpawningPlayer(_player);
         }
@@ -236,20 +214,20 @@ public class PlayersManager : MonoBehaviour
         }
     }
 
-
-    public void ChangeMode(string _newMode)
+    /// <summary>
+    /// Kill and reset all players in scene
+    /// Actual function is set all player's live to 1, and then kill all players. Maybe we should only hide all players in scene //TODO
+    /// </summary>
+    public void ResetSpawnedPlayers()
     {
-        if (_newMode == "Gameplay" || _newMode == "Menu")
+        ResetPlayersLives(1);
+
+        for (int i = 0; i < Players.Count; i++)
         {
-            for (int i = 0; i < Players.Count; i++)
-            {
-                Players[i].GetComponent<UnityEngine.InputSystem.PlayerInput>().SwitchCurrentActionMap(_newMode);
-            }
+            Players[i].Kill();
         }
-        else
-        {
-            Debug.Log("ERROR: _newMode has the value " + _newMode.ToString() + " which is not valid. See PlayersManager.ChangeMode()");
-        }
+
+        PlayersAlive.Clear();
     }
 
 
@@ -264,26 +242,21 @@ public class PlayersManager : MonoBehaviour
         }
 
         Players.Clear();
-        PlayersSpawned.Clear();
         PlayersAlive.Clear();
     }
 
     //Call when game manager start a NEW GAME ROUND
     private void OnNewGameRound()
     {
-
+        ResetSpawnedPlayers();
     }
 
-    private void OnSceneLoad(GameScene _scene)
+    /// <summary>
+    /// Call on new stage loaded
+    /// </summary>
+    private void OnNewStage()
     {
-        if (_scene == GameScene.Playable)
-        {
-            ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
-        }
-        else if (_scene == GameScene.Lobby)
-        {
-            ResetPlayersLives(1);
-        }
+        ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
     }
     // #endregion
 

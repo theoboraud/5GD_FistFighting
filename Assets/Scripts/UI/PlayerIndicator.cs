@@ -1,6 +1,7 @@
 using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
+using Enums;
 
 public class PlayerIndicator : MonoBehaviour
 {
@@ -19,11 +20,13 @@ public class PlayerIndicator : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.color = color;
 
-        _player.EventCenter.Subscribe(PlayerEvent.OnPlayerReady, OnPlayerReady);
+        _player.EventCenter.Subscribe(PlayerEvent.OnStartInput, OnStartInput);
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnRoundStart);
     }
     private void OnDestroy()
     {
-        _player.EventCenter.Unsubscribe(PlayerEvent.OnPlayerReady, OnPlayerReady);
+        _player.EventCenter.Unsubscribe(PlayerEvent.OnStartInput, OnStartInput);
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnRoundStart);
     }
 
     void Update()
@@ -32,11 +35,22 @@ public class PlayerIndicator : MonoBehaviour
 
         transform.position = _player.transform.position + Vector3.up * offset.y;
     }
-    private void OnPlayerReady()
+
+    private void OnStartInput()
     {
-        Debug.Log("Indicator On player Ready");
-        bIsReady = !bIsReady;
-        _spriteRenderer.sprite = bIsReady? _indicator : _readyIcon;
-        //We have to cancle ready once game round start
+        if (GameManager.Instance.IsInLobby())
+        {
+            bIsReady = !bIsReady;
+            _spriteRenderer.sprite = bIsReady ? _readyIcon : _indicator;
+        }
+    }
+
+    /// <summary>
+    /// Cancle ready once game round start
+    /// </summary>
+    private void OnRoundStart()
+    {
+        _spriteRenderer.sprite = _indicator;
+        bIsReady = false;
     }
 }

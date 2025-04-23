@@ -104,7 +104,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""name"": ""RightArm"",
                     ""type"": ""Button"",
                     ""id"": ""f5a59a6b-d516-487f-9f63-03abca681aa4"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold,Tap"",
                     ""initialStateCheck"": false

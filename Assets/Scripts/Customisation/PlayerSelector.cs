@@ -12,7 +12,7 @@ public class PlayerSelector : MonoBehaviour
     [System.NonSerialized] public Player player;
     [System.NonSerialized] public bool Validated;
 
-    [Header("UI References")]
+    [Header("InGameUI References")]
     [SerializeField] private SpriteRenderer LeftArrow;
     [SerializeField] private SpriteRenderer RightArrow;
     [SerializeField] private Text SkinName;

@@ -1,8 +1,8 @@
-using System.Collections;
+using Enums;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Enums;
+using Zenject.Asteroids;
 
 public class MenuManager : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject Text_Scoreboard;
     [SerializeField] private GameObject Text_PlayerHasWon;
     public Text WinnerScreen_WinnerName;
-    public GameObject UI;
+    public GameObject InGameUI;
     public GameObject UI_StartingTimer;                                                 // Reference to the starting timer
     public GameObject UI_ReadyTimer;
     public List<GameObject> UI_SpawningTimers = new List<GameObject>();                 // Reference to the spawning timers of each player
@@ -33,7 +33,7 @@ public class MenuManager : MonoBehaviour
     private float startingTimer = 0f;                                                   // Contains the general spawn timer when starting a new level
     [System.NonSerialized] public float ReadyTimer = 0f;
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
-
+    UIController _uIController;
 
     /// <summary>
     ///     Init the singleton reference and the class variables
@@ -58,8 +58,12 @@ public class MenuManager : MonoBehaviour
     public void Init()
     {
         _playerColors = GlobalSettings.PlayerColors;
-        // Init the active menu as the main menu
-        MainMenu.Activate();
+        _uIController = GetComponent<UIController>();
+
+        _uIController.RegisterScreen(MainMenu.gameObject);
+        _uIController.RegisterScreen(WinnerScreen);
+        _uIController.RegisterScreen(WinnerScreen_Alone);
+        _uIController.RegisterScreen(ScoreScreen);
     }
 
 
@@ -74,24 +78,23 @@ public class MenuManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Subscribe<GameState>(GameEvent.OnGameStateChange,OnGameStateChange);
+        GEventCenter.Subscribe(GameEvent.OnEnterLobby, HideMainMenu);
+        GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewGameStage);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
-        GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
-        GEventCenter.Subscribe(GameEvent.OnPauseGame, PauseGame);
         GEventCenter.Subscribe(GameEvent.OnMenuUp, GoUp);
         GEventCenter.Subscribe(GameEvent.OnMenuDown, GoDown);
     }
 
     private void UnsribeEvents()
     {
-        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
+        GEventCenter.Unsubscribe<GameState>(GameEvent.OnGameStateChange, OnGameStateChange);
+        GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewGameStage);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
-        GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
-        GEventCenter.Unsubscribe(GameEvent.OnPauseGame, PauseGame);
         GEventCenter.Unsubscribe(GameEvent.OnMenuUp, GoUp);
         GEventCenter.Unsubscribe(GameEvent.OnMenuDown, GoDown);
     }
@@ -103,22 +106,12 @@ public class MenuManager : MonoBehaviour
     {
         if (ReadyTimer > 0f)
         {
-            if (PlayersManager.Instance.AllPlayersReady())
-            {
-                ReadyTimer = UpdateTimer(ReadyTimer, UI_ReadyTimer.GetComponent<Text>());
+            ReadyTimer = UpdateTimer(ReadyTimer, UI_ReadyTimer.GetComponent<Text>());
 
-                if (ReadyTimer == 0f)
-                {
-                    UI_ReadyTimer.SetActive(false);
-                    GameManager.Instance.EndOfRound(null);
-                }
-            }
-            else
+            if (ReadyTimer == 0f)
             {
-                ReadyTimer = 0f;
                 UI_ReadyTimer.SetActive(false);
             }
-
         }
 
         if (startingTimer > 0f)
@@ -149,10 +142,50 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
+    private void OnGameStateChange(GameState _subState)
+    {
+        switch (_subState)
+        {
+            case GameState.MainMenu:
+                ShowMainMenu();
+                break;
+            case GameState.LobbyWaiting:
+                CancelReadyTimer();
+                break;
+            case GameState.AllReady:
+                StartReadyTimer();
+                break;
+            case GameState.PrePlayCountdown:
+                StartTimer();
+                break;
+            case GameState.InPlay:
+                ResumeGame();
+                break;
+            case GameState.Paused:
+                PauseGame();
+                break;
+            case GameState.EndStage:
+                break;
+            case GameState.ScoreScreen:
+                break;
+            case GameState.EndRound:
+                break;
+            default:
+                break;
+        }
+    }
+    public void ShowMainMenu()
+    {
+        MainMenu.Activate();
+    }
+    private void HideMainMenu()
+    {
+        MainMenu.Deactivate();
+    }
 
 
     /// <summary>
-    ///
+    /// Init Player spawn timer position at stage start
     /// </summary>
     public void InitSpawnTimerPos(List<Transform> _spawnPoints)
     {
@@ -163,9 +196,19 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void StartReadyTimer()
+    {
+        ReadyTimer = 3f;
+        UI_ReadyTimer.SetActive(true);
+    }
+
+    public void CancelReadyTimer()
+    {
+        UI_ReadyTimer.SetActive(false);
+    }
 
     /// <summary>
-    ///
+    ///Active Start Timer at beginning of the stage
     /// </summary>
     public void StartTimer()
     {
@@ -179,9 +222,8 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-
     /// <summary>
-    ///
+    ///Start timer of player spawn
     /// </summary>
     public void StartSpawnTimer(int _playerIndex)
     {
@@ -226,7 +268,7 @@ public class MenuManager : MonoBehaviour
 
 
     /// <summary>
-    ///
+    /// print screen with winner player
     /// </summary>
     public void PrintWinnerScreen(bool _bool, int _indexWinner)
     {
@@ -239,6 +281,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Show winner screen if player play alone
+    /// </summary>
 
     public void PrintWinnerScreen_Alone(bool _bool)
     {
@@ -273,6 +318,10 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Show score screen at end of the stage
+    /// </summary>
+    /// <param name="_bool"></param>
     public void PrintScoreScreen(bool _bool)
     {
         ScoreScreen.SetActive(_bool);
@@ -287,14 +336,14 @@ public class MenuManager : MonoBehaviour
 
         if (GameManager.Instance.PlayerHasWon)
         {
-            /*int _indexWinner = GameManager.Instance.IndexWinner;
+            int _indexWinner = GameManager.Instance.IndexWinner;
             Text_Scoreboard.SetActive(false);
             Text_PlayerHasWon.SetActive(true);
-            Text_PlayerHasWon.GetComponent<Text>().color = PlayerColors[_indexWinner];
+            Text_PlayerHasWon.GetComponent<Text>().color = _playerColors[_indexWinner];
 
             _indexWinner += 1;
             string _playerWon = "J" + _indexWinner.ToString() + " has won!";
-            Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;*/
+            Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;
         }
     }
 
@@ -313,27 +362,24 @@ public class MenuManager : MonoBehaviour
         Destroy(UI_StartingTimer);
     }
 
-    private void OnNewGameRound()
+    /// <summary>
+    /// Call On new game stage start
+    /// </summary>
+    private void OnNewGameStage()
     {
         PrintScoreScreen(false);
-    }
-
-    private void OnSceneLoad(GameScene _scene)
-    {
-        if (_scene == GameScene.Playable)
-        {
-            StartTimer();
-        }
-        else if (_scene == GameScene.Outro)
-        {
-            ScoreScreen.SetActive(false);
-        }
     }
 
     private void PauseGame()
     {
         PauseMenu.Activate();
     }
+
+    public void ResumeGame()
+    {
+        PauseMenu.Deactivate();
+    }
+
 
     private void GoUp()
     {

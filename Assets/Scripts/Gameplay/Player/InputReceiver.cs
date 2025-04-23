@@ -45,6 +45,8 @@ public class InputReceiver : MonoBehaviour
         _rotateAction = _playerInput.actions["Rotate"];
         _rotateAction.performed += OnRotatePerformed;
         _rotateAction.canceled += OnRotateCanceled;
+
+        GEventCenter.Subscribe<string>(GameEvent.OnInputModeChange, ChangeMode);
     }
 
     private void UnregisterCallbacks()
@@ -54,6 +56,7 @@ public class InputReceiver : MonoBehaviour
             _rotateAction.performed -= OnRotatePerformed;
             _rotateAction.canceled -= OnRotateCanceled;
         }
+        GEventCenter.Unsubscribe<string>(GameEvent.OnInputModeChange, ChangeMode);
     }
 
     #endregion
@@ -101,29 +104,33 @@ public class InputReceiver : MonoBehaviour
     {
         if (!context.canceled) return;
 
-        var state = GameManager.Instance.GlobalGameState;
+        _player.EventCenter.Invoke(PlayerEvent.OnStartInput);
 
-        switch (state)
-        {
-            case GlobalGameState.Outro:
-                GEventCenter.Invoke(GameEvent.OnGameReset);
-                break;
+        GEventCenter.Invoke(GameEvent.OnStartInput);
 
-            case GlobalGameState.ScoreScreen:
-	            GEventCenter.Invoke(GameManager.Instance.PlayerHasWon
-                    ? (GameEvent.OnLoadOutro)
-                    : GameEvent.OnStartRound);
-                break;
+        //var state = GameManager.Instance.GlobalGameState;
 
-            case GlobalGameState.WinnerScreen:
-	            GEventCenter.Invoke(GameEvent.OnShowScore);
-                break;
+        //switch (state)
+        //{
+        //    case GlobalGameState.Outro:
+        //        GEventCenter.Invoke(GameEvent.OnGameReset);
+        //        break;
 
-            case GlobalGameState.InPlay:
-	            if (LevelManager.Instance.IsLobbyScene()) _player.EventCenter.Invoke(PlayerEvent.OnPlayerReady);
-	            else GEventCenter.Invoke(GameEvent.OnPauseGame);
-                break;
-        }
+        //    case GlobalGameState.EndRound:
+        //     GEventCenter.Invoke(GameManager.Instance.PlayerHasWon
+        //            ? (GameEvent.OnLoadOutro)
+        //            : GameEvent.OnNewGameRound);
+        //        break;
+
+        //    case GlobalGameState.EndStage:
+        //     GEventCenter.Invoke(GameEvent.OnShowScore);
+        //        break;
+
+        //    case GlobalGameState.InPlay:
+        //     if (LevelManager.Instance.IsLobbyScene()) _player.EventCenter.Invoke(PlayerEvent.OnPlayerReady);
+        //     else GEventCenter.Invoke(GameEvent.OnPauseGame);
+        //        break;
+        //}
     }
 
     public void Gameplay_NextCharacter(InputAction.CallbackContext context)
@@ -164,7 +171,7 @@ public class InputReceiver : MonoBehaviour
     {
         if (context.started)
         {
-            _player.EventCenter.Invoke(PlayerEvent.NewRound);
+            _player.EventCenter.Invoke(PlayerEvent.NewStage);
         }
     }
 
@@ -196,7 +203,7 @@ public class InputReceiver : MonoBehaviour
     {
         if (IsMenuInput(context))
         {
-	        GEventCenter.Invoke(GameEvent.OnMenuLeft);
+	        //GEventCenter.Invoke(GameEvent.OnMenuLeft);
         }
     }
 
@@ -204,7 +211,7 @@ public class InputReceiver : MonoBehaviour
     {
         if (IsMenuInput(context))
         {
-	        GEventCenter.Invoke(GameEvent.OnMenuRight);
+	        //GEventCenter.Invoke(GameEvent.OnMenuRight);
         }
     }
 
@@ -212,7 +219,7 @@ public class InputReceiver : MonoBehaviour
     {
         if (IsMenuInput(context))
         {
-	        GEventCenter.Invoke(GameEvent.OnMenuValidate);
+            //GEventCenter.Invoke(GameEvent.OnStartValidate);
         }
     }
 
@@ -230,7 +237,24 @@ public class InputReceiver : MonoBehaviour
 	{
 		if (printLogs) Debug.Log($"Player {_player.PlayerData.PlayerIndex + 1} is pressing {action}");
 	}
-	
+
+
+    /// <summary>
+    /// Change Mode between gameplay and menu
+    /// </summary>
+    /// <param name="_newMode">Mode to change</param>
+    public void ChangeMode(string _newMode)
+    {
+        if (_newMode == "Gameplay" || _newMode == "Menu")
+        {
+            _playerInput.SwitchCurrentActionMap(_newMode);
+        }
+        else
+        {
+            Debug.Log("ERROR: _newMode has the value " + _newMode.ToString() + " which is not valid. See InputReceiver.ChangeMode()");
+        }
+    }
+
     #endregion
-    
+
 }

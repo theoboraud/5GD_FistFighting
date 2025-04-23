@@ -1,17 +1,18 @@
 namespace Enums
 {
-    public enum GlobalGameState
+    public enum GameState
     {
         Intro,
-        InPlay,
-        InPause,
-        WinnerScreen,
-        ScoreScreen,
-        PlayerWon,
         MainMenu,
-        OptionsMenu,
-        Outro,
-        Null,
+        LobbyWaiting,
+        AllReady,
+        PrePlayCountdown,
+        InPlay,
+        Paused,
+        EndStage,
+        ScoreScreen,
+        EndRound,
+        Outro
     }
 
     public enum GameMode
