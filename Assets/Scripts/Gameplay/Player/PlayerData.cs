@@ -1,4 +1,5 @@
 ﻿
+using Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,7 +29,11 @@ public class PlayerData
         get { return _playerLives; }
         set
         {
-            _playerLives = value;
+            if (_playerLives != value)
+            {
+                _playerLives = value;
+                _player.EventCenter.Invoke<int>(PlayerEvent.OnPlayerLivesChange, _playerLives);
+            }
         }
     }
     public int PlayerScore
@@ -36,7 +41,11 @@ public class PlayerData
         get { return _playerScore; }
         set
         {
-            _playerScore = value;
+            if (_playerScore != value)
+            {
+                _playerScore = value;
+                _player.EventCenter.Invoke<int>(PlayerEvent.OnPlayerScoreChange, _playerScore);
+            }
         }
     }
 

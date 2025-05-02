@@ -235,7 +235,7 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    ///     Load a random level from Build Settings, except the first one
+    ///     Load a random level from Build Settings, can be repeated
     /// </summary>
     public void LoadRandomLevel()
     {
@@ -250,7 +250,7 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    ///     Load the next level of the list, except the first one
+    /// Load the level no repeatable
     /// </summary>
     public void LoadNextLevel()
     {
@@ -264,6 +264,7 @@ public class LevelManager : MonoBehaviour
         if (LevelsPlayed.Count >= playableSceneNames.Count)
         {
             LevelsPlayed.Clear();
+            //Sign of all levels are played once
         }
 
         // Get a random scene index not yet in LevelsPlayed

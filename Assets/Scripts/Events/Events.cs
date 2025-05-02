@@ -7,6 +7,10 @@ public enum GameEvent
     OnEnterLobby,
     OnNewGameRound,//Call on new game round start
     OnNewStage, //On new game stage loaded
+    OnPauseGame,
+    OnResumeGame,
+    OnStageEnd, //On the end of each stage
+    OnShowScore,
     OnGameReset,
     OnLoadOutro,
     OnGameStateChange, //On game state change
@@ -22,11 +26,6 @@ public enum GameEvent
 
     //PlayerManager
     OnPlayerJoin,
-    
-    OnShowScore,
-    
-    OnPauseGame,
-    OnResumeGame,
     
     //Input Receiver
     OnInputModeChange,
@@ -55,6 +54,11 @@ public enum PlayerEvent
     OnPhysicStateChange,
     OnRotateStateChange,
     OnArmStateChange,
+
+    //PlayerData
+    OnPlayerLivesChange,
+    OnPlayerScoreChange,
+
 
     //PlayerInput
     OnExtendArm,

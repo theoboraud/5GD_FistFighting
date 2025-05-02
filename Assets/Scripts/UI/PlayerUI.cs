@@ -111,25 +111,20 @@ public class PlayerUI : MonoBehaviour
 
     private void InitCallbacks()
     {
-        GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewStage);
+        _player.EventCenter.Subscribe<int>(PlayerEvent.OnPlayerLivesChange, UpdateLivesUI);
     }
     private void RemoveCallBacks()
     {
-        GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewStage);
+        _player.EventCenter.Unsubscribe<int>(PlayerEvent.OnPlayerLivesChange, UpdateLivesUI);
     }
 
-    private void OnNewStage()
-    {
-        UpdateLivesUI();
-    }
 
     /// <summary>
     ///     Update the lives on the player UI
     /// </summary>
-    public void UpdateLivesUI()
+    private void UpdateLivesUI(int _playerLives)
     {
         if (_player == null) return;
-        int _playerLives = _player.PlayerData.PlayerLives;
         Debug.Log("Player" + _player.PlayerData.PlayerIndex + "life:" + _playerLives);
 
         if (_playerLives > 0)

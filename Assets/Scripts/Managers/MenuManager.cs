@@ -29,7 +29,6 @@ public class MenuManager : MonoBehaviour
 
     [Header("Variables")]
     private List<Color> _playerColors;                                                    // Reference to the player colors
-    private Menu activeMenu;
     private float startingTimer = 0f;                                                   // Contains the general spawn timer when starting a new level
     [System.NonSerialized] public float ReadyTimer = 0f;
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
@@ -81,6 +80,7 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Subscribe<GameState>(GameEvent.OnGameStateChange,OnGameStateChange);
         GEventCenter.Subscribe(GameEvent.OnEnterLobby, HideMainMenu);
         GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewGameStage);
+        GEventCenter.Subscribe<bool,int>(GameEvent.OnStageEnd, OnStageEnd);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
@@ -91,7 +91,9 @@ public class MenuManager : MonoBehaviour
     private void UnsribeEvents()
     {
         GEventCenter.Unsubscribe<GameState>(GameEvent.OnGameStateChange, OnGameStateChange);
+        GEventCenter.Unsubscribe(GameEvent.OnEnterLobby, HideMainMenu);
         GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewGameStage);
+        GEventCenter.Unsubscribe<bool, int>(GameEvent.OnStageEnd, OnStageEnd);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
@@ -164,8 +166,6 @@ public class MenuManager : MonoBehaviour
             case GameState.Paused:
                 PauseGame();
                 break;
-            case GameState.EndStage:
-                break;
             case GameState.ScoreScreen:
                 break;
             case GameState.EndRound:
@@ -182,7 +182,6 @@ public class MenuManager : MonoBehaviour
     {
         MainMenu.Deactivate();
     }
-
 
     /// <summary>
     /// Init Player spawn timer position at stage start
@@ -238,7 +237,6 @@ public class MenuManager : MonoBehaviour
         SpawningTimers[_playerIndex] = 3f;
     }
 
-
     /// <summary>
     ///     Update the text of the timer UI and returns the timer's updated value
     /// </summary>
@@ -266,28 +264,18 @@ public class MenuManager : MonoBehaviour
         return _timer;
     }
 
-
-    /// <summary>
-    /// print screen with winner player
-    /// </summary>
-    public void PrintWinnerScreen(bool _bool, int _indexWinner)
+    private void OnStageEnd(bool _isPlayAlone, int _winnerIndex)
     {
-        WinnerScreen.SetActive(_bool);
-
-        if (_bool)
+        if (!_isPlayAlone)     // print screen with winner player
         {
-            WinnerScreen_WinnerName.text = "Player " + (_indexWinner + 1).ToString();
-            WinnerScreen_WinnerName.color = _playerColors[_indexWinner];
+            WinnerScreen_WinnerName.text = "Player " + (_winnerIndex + 1).ToString();
+            WinnerScreen_WinnerName.color = _playerColors[_winnerIndex];
+            WinnerScreen.SetActive(true);
         }
-    }
-
-    /// <summary>
-    /// Show winner screen if player play alone
-    /// </summary>
-
-    public void PrintWinnerScreen_Alone(bool _bool)
-    {
-        WinnerScreen_Alone.SetActive(_bool);
+        else      /// Show alone screen if player play alone
+        {
+            WinnerScreen_Alone.SetActive(true);
+        }
     }
 
     public void OnPlayerJoin(Player _player)

@@ -66,7 +66,8 @@ public class Player : MonoBehaviour
 		EventCenter.Subscribe(PlayerEvent.OnNextCharacter, NextCharacter);
 		EventCenter.Subscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
 		EventCenter.Subscribe(PlayerEvent.OnKillSelf, Kill);
-	}
+        GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnGameRoundStart);
+    }
 
 	private void UnsubscribeEvents()
 	{
@@ -74,7 +75,8 @@ public class Player : MonoBehaviour
 		EventCenter.Unsubscribe(PlayerEvent.OnNextCharacter, NextCharacter);
 		EventCenter.Unsubscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
 		EventCenter.Unsubscribe(PlayerEvent.OnKillSelf, Kill);
-	}
+        GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnGameRoundStart);
+    }
 
     /// <summary>
     /// Init by Player Manager at Game round Start
@@ -230,13 +232,8 @@ public class Player : MonoBehaviour
 
         PlayerStates.PlayerGameState = PlayerGameState.Dead;
 
-        _playerUI.UpdateLivesUI();
-
         //Broadcast global of player dead
         GEventCenter.Invoke<Player>(GameEvent.OnPlayerDead, this);
-
-        //tmp, to change //TODO
-        OnGameRoundStart();
     }
 
 

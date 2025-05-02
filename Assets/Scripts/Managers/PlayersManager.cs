@@ -216,7 +216,8 @@ public class PlayersManager : MonoBehaviour
 
     /// <summary>
     /// Kill and reset all players in scene
-    /// Actual function is set all player's live to 1, and then kill all players. Maybe we should only hide all players in scene //TODO
+    /// Use for clean players at end of the stage
+    /// *Actual function is set all player's live to 1, and then kill all players. //Maybe To Change??
     /// </summary>
     public void ResetSpawnedPlayers()
     {

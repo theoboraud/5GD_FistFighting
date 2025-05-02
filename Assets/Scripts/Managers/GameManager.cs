@@ -95,7 +95,6 @@ public class GameManager : MonoBehaviour
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Subscribe(GameEvent.OnGameReset, ResetGame);
-        GEventCenter.Subscribe(GameEvent.OnShowScore, ScoreScreen);
         GEventCenter.Subscribe(GameEvent.OnStartInput,OnStartInput);
     }
 
@@ -104,7 +103,6 @@ public class GameManager : MonoBehaviour
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetGame);
-        GEventCenter.Unsubscribe(GameEvent.OnShowScore, ScoreScreen);
         GEventCenter.Unsubscribe(GameEvent.OnStartInput, OnStartInput);
     }
 
@@ -154,8 +152,10 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Start Stage count down once we enter the stage
     /// </summary>
-    private void StartStageCountDown()
+    private void StartNewStage()
     {
+        GEventCenter.Invoke(GameEvent.OnNewStage);
+        //Start Stage count down
         GameState = GameState.PrePlayCountdown; //New game stage
         TimerUtility.Invoke(3, BeginGameStage);
     }
@@ -188,14 +188,40 @@ public class GameManager : MonoBehaviour
         GEventCenter.Invoke<string>(GameEvent.OnInputModeChange, "Menu");
     }
 
+
+    /// <summary>
+    /// End the current game round, and prints out the winner screen
+    /// </summary>
+    public void EndOfRound(Player _winner)
+    {
+        GameState = GameState.EndStage;
+        bool isPlayAlone = _winner == null;
+        int winnerIndex = 0;
+
+        //Multi player
+        if (isPlayAlone)
+        {
+            RoundWinner = _winner;
+            winnerIndex = _winner.PlayerData.PlayerIndex;
+            PlayersManager.Instance.KillOtherPlayers(_winner);
+        }
+        //Play alone
+        else
+        {
+            RoundWinner = PlayersManager.Instance.Players[0];
+        }
+
+        GEventCenter.Invoke<bool, int>(GameEvent.OnStageEnd, isPlayAlone, winnerIndex);
+    }
+
     /// <summary>
     /// Show score screen at the end of each stage
     /// </summary>
     public void ScoreScreen()
     {
-        // Disable the winner screen and reset all players
-        MenuManager.Instance.PrintWinnerScreen(false, 0);
-        MenuManager.Instance.PrintWinnerScreen_Alone(false);
+        GameState = GameState.ScoreScreen;
+
+        //Clean all players in scene
         PlayersManager.Instance.ResetSpawnedPlayers();
 
         if (LevelManager.Instance.CurrentSceneIndex > 2)
@@ -282,6 +308,7 @@ public class GameManager : MonoBehaviour
                 ResumeGameplay();
                 break;
             case GameState.EndStage:
+                ScoreScreen();
                 break;
             case GameState.ScoreScreen:
                 break;
@@ -300,7 +327,7 @@ public class GameManager : MonoBehaviour
                 EnterMainMenu();
                 break;
             case GameScene.Playable:
-                StartStageCountDown();
+                StartNewStage();
                 break;
             case GameScene.Intro:
                 EnterIntroScene();
@@ -310,36 +337,6 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 break;
-        }
-    }
-
-    /// <summary>
-    ///     End the current game round, and prints out the winner screen
-    /// </summary>
-    public void EndOfRound(Player _winner)
-    {
-        GameState = GameState.EndStage;
-
-        if (_winner != null)
-        {
-            RoundWinner = _winner;
-            MenuManager.Instance.PrintWinnerScreen(true, PlayersManager.Instance.Players.IndexOf(_winner));
-            PlayersManager.Instance.KillOtherPlayers(_winner);
-        }
-        else
-        {
-            RoundWinner = PlayersManager.Instance.Players[0];
-            MenuManager.Instance.PrintWinnerScreen_Alone(true);
-        }
-
-        // TODO: Delete this, and implement a timer "3, 2, 1" when all players are ready to load a new level
-        if (LevelManager.Instance.IsLobbyScene())
-        {
-            for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
-            {
-                PlayersManager.Instance.PlayersAlive[i].Kill();
-            }
-            ScoreScreen();
         }
     }
 
