@@ -10,7 +10,6 @@ public class DeathBall : MonoBehaviour
     private Sprite initSprite;
     private SpriteRenderer m_spriteRenderer;
     private DeathBallController m_deathBallController;
-    private PlayersManager m_PlayersManager;
 
     private bool isUpgradeDiff = false;
     private void Start()
@@ -22,7 +21,6 @@ public class DeathBall : MonoBehaviour
         m_spriteRenderer = transform.GetComponent<SpriteRenderer>();
         initSprite = m_spriteRenderer.sprite;
 
-        m_PlayersManager = FindFirstObjectByType<PlayersManager>();
         m_deathBallController = transform.GetComponentInParent<DeathBallController>();
     }
 
@@ -33,7 +31,7 @@ public class DeathBall : MonoBehaviour
         {
             m_spriteRenderer.sprite = AngrySprite;
             m_deathBallController.MoveSpeed *=3;
-            if (m_PlayersManager.PlayersAlive.Count<=2 && !isUpgradeDiff) //If there is less than 2 players lives in current game
+            if (PlayersManager.Instance.PlayersAlive.Count<=2 && !isUpgradeDiff) //If there is less than 2 players lives in current game
             {
                 m_deathBallController.UnlockDestinations();//We'll unlock all destinations and change ball's track
                 m_deathBallController.MoveSpeed *= 2; //And We'll upgrade move speed to double

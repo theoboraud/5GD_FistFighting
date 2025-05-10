@@ -11,7 +11,6 @@ namespace Enums
         Paused,
         EndStage,
         ScoreScreen,
-        EndRound,
         Outro
     }
 

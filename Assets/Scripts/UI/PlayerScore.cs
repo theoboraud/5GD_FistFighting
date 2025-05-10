@@ -16,6 +16,15 @@ public class PlayerScore : MonoBehaviour
     private int newScore = 0;
     private int playerScoreValue = 0;      // Contains the current score value
 
+    private void OnEnable()
+    {
+        GEventCenter.Subscribe(GameEvent.OnGameReset, ResetScore);
+    }
+
+    private void OnDisable()
+    {
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetScore);
+    }
 
     /// <summary>
     ///     Set the color of the player score text and score token fillers
@@ -51,10 +60,10 @@ public class PlayerScore : MonoBehaviour
     /// <summary>
     ///     Set the score value to _newValue, and adjust the score tokens accordingly
     /// </summary>
-    public void SetScore(int _newValue)
+    public void SetScore()
     {
         SetFace();
-        newScore = Mathf.Clamp(_newValue, 0, 5);
+        newScore = Mathf.Clamp(Player.PlayerData.PlayerScore, 0, 5);
         UpdateScorePos();
     }
 
@@ -64,6 +73,8 @@ public class PlayerScore : MonoBehaviour
     /// </summary>
     private void UpdateScorePos()
     {
+        print("Player:"+ (Player.PlayerData.PlayerIndex+1) +"NewScore:"+ newScore);
+        print("Player:" + (Player.PlayerData.PlayerIndex + 1) + "playerScoreValue:" + playerScoreValue);
         if (newScore != playerScoreValue)
         {
             playerScoreValue = newScore;

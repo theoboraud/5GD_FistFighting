@@ -152,7 +152,7 @@ public class ArmChecker : MonoBehaviour
                     //Hitting other players
                     case "Player":
                         Player hitPlayer = hit.collider.GetComponent<Player>();
-                        if (hitPlayer != null && hitPlayer != _player)
+                        if (hitPlayer != null && hitPlayer != _player && hitPlayer.PlayerStates.PlayerGameState!=PlayerGameState.Invincible)
                         {
                             if (!dicHitPlayers.ContainsKey(hitPlayer))
                             {

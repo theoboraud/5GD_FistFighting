@@ -96,6 +96,7 @@ public class PlayersManager : MonoBehaviour
     {
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnNewGameRound);
         GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewStage);
+        GEventCenter.Subscribe(GameEvent.OnShowScore,OnShowScore);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerDead, OnPlayerKilled);
         _playerInputManager.onPlayerJoined += OnPlayerJoined;
@@ -105,6 +106,7 @@ public class PlayersManager : MonoBehaviour
     {
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnNewGameRound);
         GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewStage);
+        GEventCenter.Unsubscribe(GameEvent.OnShowScore, OnShowScore);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerDead, OnPlayerKilled);
         _playerInputManager.onPlayerJoined -= OnPlayerJoined;
@@ -184,12 +186,12 @@ public class PlayersManager : MonoBehaviour
                 // If there is a winning player
                 if (PlayersAlive.Count == 1)
                 {
-                    GameManager.Instance.EndOfRound(PlayersAlive[0]);
+                    GEventCenter.Invoke<Player>(GameEvent.OnStageEnd, PlayersAlive[0]);
                 }
                 // If there is only one player playing
                 else if (PlayersAlive.Count == 0)
                 {
-                    GameManager.Instance.EndOfRound(null);
+                    GEventCenter.Invoke<Player>(GameEvent.OnStageEnd, Players[0]); 
                 }
             }
         }
@@ -259,6 +261,16 @@ public class PlayersManager : MonoBehaviour
     {
         ResetPlayersLives(GameManager.Instance.ParamData.PARAM_Player_Lives);
     }
+
+    /// <summary>
+    /// Call on show score, clean all players
+    /// </summary>
+    private void OnShowScore()
+    {
+        //Clean all players in scene
+        ResetSpawnedPlayers();
+    }
+
     // #endregion
 
 

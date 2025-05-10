@@ -8,7 +8,6 @@ public class PlayerStates
     private PlayerGameState _playerGameState = PlayerGameState.Alive;
     private PlayerPhysicState _playerPhysicState = PlayerPhysicState.InAir;
     private PlayerRotateState _playerRotateState;
-    private bool _isReady = false;
     //Not In Use
     //private PlayerArmState _playerArmState;
 
@@ -57,7 +56,6 @@ public class PlayerStates
         }
     }
 
-    public bool IsReady { get => _isReady; set => _isReady = value; }
 
     /// <summary>
     /// TODO

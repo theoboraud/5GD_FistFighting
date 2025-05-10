@@ -97,14 +97,14 @@ public class PlayerController : MonoBehaviour
     {
         GameObject _GO = _collision.gameObject;
 
-        if (_GO.CompareTag("Lethal") && _player.PlayerStates.PlayerGameState == PlayerGameState.Alive)
+        if (_GO.CompareTag("Lethal"))
         {
             _player.Kill();
         }
 
         if (_GO.CompareTag("Arrival"))
         {
-            GameManager.Instance.EndOfRound(_player);
+            GameManager.Instance.EndOfStage(_player);
         }
 
         _player.EventCenter.Invoke(PlayerEvent.OnPlayerCollisionEnter);

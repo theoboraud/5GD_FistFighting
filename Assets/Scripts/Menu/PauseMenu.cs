@@ -66,6 +66,10 @@ public class PauseMenu : MonoBehaviour
     {
         activeButton.onClick.Invoke();
     }
+    public void ButtonResume()
+    {
+       GameManager.Instance.ResumeGameplay();
+    }
 
     public void ButtonReset()
     {

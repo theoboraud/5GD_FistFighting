@@ -10,7 +10,7 @@ public class EndScreen : MonoBehaviour
     {
         if (GameManager.Instance != null && PlayersManager.Instance != null)
         {
-            SetFaceForWinner(PlayersManager.Instance.Players[GameManager.Instance.IndexWinner]);
+            SetFaceForWinner(GameManager.Instance.RoundWinner);
         }
     }
 
