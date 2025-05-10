@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
 		EventCenter.Subscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
 		EventCenter.Subscribe(PlayerEvent.OnKillSelf, Kill);
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, OnGameRoundStart);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, OnGameReset);
     }
 
 	private void UnsubscribeEvents()
@@ -76,6 +77,7 @@ public class Player : MonoBehaviour
 		EventCenter.Unsubscribe(PlayerEvent.OnPreviousCharacter, PreviousCharacter);
 		EventCenter.Unsubscribe(PlayerEvent.OnKillSelf, Kill);
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, OnGameRoundStart);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, OnGameReset);
     }
 
     /// <summary>
@@ -90,6 +92,7 @@ public class Player : MonoBehaviour
 
         PlayerData.PlayerIndex = _playerIndex;
         PlayerData.PlayerColor = GlobalSettings.PlayerColors[_playerIndex];
+        PlayerData.PlayerLives = GameManager.Instance.ParamData.PARAM_Player_Lives;
 
         _playerController = GetComponent<PlayerController>();
         _playerController.Init();
@@ -259,6 +262,11 @@ public class Player : MonoBehaviour
         {
             IsReady = !IsReady;
         }
+    }
+
+    private void OnGameReset()
+    {
+        PlayerData.PlayerScore = 0;
     }
     // #endregion
 

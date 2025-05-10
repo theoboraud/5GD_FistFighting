@@ -33,6 +33,8 @@ public class MenuManager : MonoBehaviour
     [System.NonSerialized] public float ReadyTimer = 0f;
     [System.NonSerialized] public List<float> SpawningTimers = new List<float>();       // Contains the spawn timer of each player
     UIController _uIController;
+    Player _stageWinner;                                                                //Win player of each stage
+
 
     /// <summary>
     ///     Init the singleton reference and the class variables
@@ -80,7 +82,8 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Subscribe<GameState>(GameEvent.OnGameStateChange,OnGameStateChange);
         GEventCenter.Subscribe(GameEvent.OnEnterLobby, HideMainMenu);
         GEventCenter.Subscribe(GameEvent.OnNewStage, OnNewGameStage);
-        GEventCenter.Subscribe<bool,int>(GameEvent.OnStageEnd, OnStageEnd);
+        GEventCenter.Subscribe<Player>(GameEvent.OnStageEnd, OnStageEnd);
+        GEventCenter.Subscribe(GameEvent.OnShowScore, PrintScoreScreen);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
@@ -93,7 +96,8 @@ public class MenuManager : MonoBehaviour
         GEventCenter.Unsubscribe<GameState>(GameEvent.OnGameStateChange, OnGameStateChange);
         GEventCenter.Unsubscribe(GameEvent.OnEnterLobby, HideMainMenu);
         GEventCenter.Unsubscribe(GameEvent.OnNewStage, OnNewGameStage);
-        GEventCenter.Unsubscribe<bool, int>(GameEvent.OnStageEnd, OnStageEnd);
+        GEventCenter.Unsubscribe<Player>(GameEvent.OnStageEnd, OnStageEnd);
+        GEventCenter.Unsubscribe(GameEvent.OnShowScore, PrintScoreScreen);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnTimerPos);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnPlayerJoin);
@@ -166,9 +170,8 @@ public class MenuManager : MonoBehaviour
             case GameState.Paused:
                 PauseGame();
                 break;
-            case GameState.ScoreScreen:
-                break;
-            case GameState.EndRound:
+            case GameState.Outro:
+                _uIController.HideAll();
                 break;
             default:
                 break;
@@ -188,6 +191,8 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void InitSpawnTimerPos(List<Transform> _spawnPoints)
     {
+        if(!GameManager.Instance.IsInGameplay()) return;
+
         for (int i = 0; i < UI_SpawningTimers.Count; i++)
         {
             Vector3 _screenPos = Camera.main.WorldToScreenPoint(_spawnPoints[i].position);
@@ -264,20 +269,6 @@ public class MenuManager : MonoBehaviour
         return _timer;
     }
 
-    private void OnStageEnd(bool _isPlayAlone, int _winnerIndex)
-    {
-        if (!_isPlayAlone)     // print screen with winner player
-        {
-            WinnerScreen_WinnerName.text = "Player " + (_winnerIndex + 1).ToString();
-            WinnerScreen_WinnerName.color = _playerColors[_winnerIndex];
-            WinnerScreen.SetActive(true);
-        }
-        else      /// Show alone screen if player play alone
-        {
-            WinnerScreen_Alone.SetActive(true);
-        }
-    }
-
     public void OnPlayerJoin(Player _player)
     {
         int playerIndex = _player.PlayerData.PlayerIndex;
@@ -306,48 +297,57 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    private void OnStageEnd(Player _winner)
+    {
+        int winnerIndex = _winner.PlayerData.PlayerIndex;
+        if (!GameManager.Instance.IsPlayAlone)     // print screen with winner player
+        {
+            WinnerScreen_WinnerName.text = "Player " + (winnerIndex + 1).ToString();
+            WinnerScreen_WinnerName.color = _playerColors[winnerIndex];
+            WinnerScreen.SetActive(true);
+        }
+        else      /// Show alone screen if player play alone
+        {
+            WinnerScreen_Alone.SetActive(true);
+        }
+        _stageWinner = _winner;
+    }
+
     /// <summary>
     /// Show score screen at end of the stage
     /// </summary>
-    /// <param name="_bool"></param>
-    public void PrintScoreScreen(bool _bool)
+    public void PrintScoreScreen()
     {
-        ScoreScreen.SetActive(_bool);
-        AudioManager.Instance.ChangeParam(1);
-        if (_bool)
+        ScoreScreen.SetActive(true);
+        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
         {
-            for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
-            {
-                PlayerScores[i].SetScore(GameManager.Instance.PlayerScores[i]);
-            }
+            PlayerScores[i].SetScore();
         }
 
-        if (GameManager.Instance.PlayerHasWon)
-        {
-            int _indexWinner = GameManager.Instance.IndexWinner;
-            Text_Scoreboard.SetActive(false);
-            Text_PlayerHasWon.SetActive(true);
-            Text_PlayerHasWon.GetComponent<Text>().color = _playerColors[_indexWinner];
+        int _indexWinner = _stageWinner.PlayerData.PlayerIndex;
+        Text_Scoreboard.SetActive(false);
+        Text_PlayerHasWon.SetActive(true);
+        Text_PlayerHasWon.GetComponent<Text>().color = _playerColors[_indexWinner];
 
-            _indexWinner += 1;
-            string _playerWon = "J" + _indexWinner.ToString() + " has won!";
-            Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;
-        }
+        _indexWinner += 1;
+        string _playerWon = "J" + _indexWinner.ToString() + " has won!";
+        Text_PlayerHasWon.GetComponent<Text>().text = _playerWon;
     }
 
 
     public void Reset()
     {
-        PrintScoreScreen(false);
-        MainMenu.Deactivate();
+        MainMenu.Activate();
 
         // For each player
-        for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
-        {
-            Destroy(UI_SpawningTimers[i]);
-        }
+        //for (int i = 0; i < PlayersManager.Instance.Players.Count; i++)
+        //{
+        //    Destroy(UI_SpawningTimers[i]);
+        //}
 
-        Destroy(UI_StartingTimer);
+        //Destroy(UI_StartingTimer);
+
+        Destroy(this);
     }
 
     /// <summary>
@@ -355,7 +355,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     private void OnNewGameStage()
     {
-        PrintScoreScreen(false);
+        _uIController.HideAll();
     }
 
     private void PauseGame()

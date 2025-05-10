@@ -45,6 +45,12 @@ public class LevelManager : MonoBehaviour
     }
 
     public List<GameModeLevel> gameModeLevels = new List<GameModeLevel>();
+
+    /// <summary>
+    /// Has all level played at least once
+    /// </summary>
+    private bool bAllLevelPlayed = false; 
+
     // TODO Implement level classes to load data ?
     //[System.NonSerialized] public List<LevelData> Levels;
     //[System.NonSerialized] public LevelData Level;
@@ -110,7 +116,7 @@ public class LevelManager : MonoBehaviour
     {
         GEventCenter.Subscribe(GameEvent.OnNewGameRound, LoadNextLevel);
         GEventCenter.Subscribe(GameEvent.OnGameReset, Reset);
-        GEventCenter.Subscribe(GameEvent.OnLoadOutro, LoadOutroScene);
+        GEventCenter.Subscribe(GameEvent.OnGameRoundEnd, LoadOutroScene);
         GEventCenter.Subscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -120,7 +126,7 @@ public class LevelManager : MonoBehaviour
     {
         GEventCenter.Unsubscribe(GameEvent.OnNewGameRound, LoadNextLevel);
         GEventCenter.Unsubscribe(GameEvent.OnGameReset, Reset);
-        GEventCenter.Unsubscribe(GameEvent.OnLoadOutro, LoadOutroScene);
+        GEventCenter.Unsubscribe(GameEvent.OnGameRoundEnd, LoadOutroScene);
         GEventCenter.Unsubscribe<List<Transform>>(GameEvent.OnSpawnPointsInit, InitSpawnPoints);
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -265,6 +271,7 @@ public class LevelManager : MonoBehaviour
         {
             LevelsPlayed.Clear();
             //Sign of all levels are played once
+            bAllLevelPlayed = true;
         }
 
         // Get a random scene index not yet in LevelsPlayed
@@ -280,12 +287,19 @@ public class LevelManager : MonoBehaviour
         LoadScene(_nextScene);
     }
 
+    /// <summary>
+    /// Have all levels been played at least once.
+    /// </summary>
+    public bool AllLevelsPlayed()
+    {
+        return bAllLevelPlayed;
+    }
+
     public void Reset()
     {
-        if (CurrentSceneName != lobbySceneName)
-        {
-            Invoke("LoadLobbyLevel", 0.1f);
-        }
+        bAllLevelPlayed = false;
+        LevelsPlayed.Clear();
+        LoadLobbyLevel();
     }
 
     // #endregion

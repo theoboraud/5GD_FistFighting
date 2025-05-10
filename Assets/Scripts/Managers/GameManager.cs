@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Enums;
 using System;
+using System.Linq;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using UnityEditor;
 
 /// <summary>
 ///     Class used as a game reference : contains game state, game parameters, feedback manager...
@@ -21,12 +25,15 @@ public class GameManager : MonoBehaviour
     public GameMode GameMode;
 
     [Header("Variables")]
-    [System.NonSerialized] public List<int> PlayerScores = new List<int>();             // Score value of each player
-    [System.NonSerialized] public bool PlayerHasWon = false;                            // Whether or not a player has won
-    [System.NonSerialized] public int IndexWinner;
-    [System.NonSerialized] public Player RoundWinner;                                   // Winning player of the round reference
+    [System.NonSerialized] public Player StageWinner;                                   // Winning player of the round reference
 
     Guid taskId; //ID for time task
+
+    /// <summary>
+    /// If the player is play alone
+    /// </summary>
+    public bool IsPlayAlone = true;
+    public Player RoundWinner;                                                        //Game round winner
 
     /// <summary>
     /// Actual In-Game Sub State (Send state change event on new value set)
@@ -40,6 +47,7 @@ public class GameManager : MonoBehaviour
             {
                 _gameState = value;
                 GEventCenter.Invoke<GameState>(GameEvent.OnGameStateChange, _gameState);
+                print("Game state change:" + _gameState.ToString());
             }
         }
     }
@@ -94,7 +102,7 @@ public class GameManager : MonoBehaviour
     {
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Subscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
-        GEventCenter.Subscribe(GameEvent.OnGameReset, ResetGame);
+        GEventCenter.Subscribe<Player>(GameEvent.OnStageEnd, EndOfStage);
         GEventCenter.Subscribe(GameEvent.OnStartInput,OnStartInput);
     }
 
@@ -102,7 +110,7 @@ public class GameManager : MonoBehaviour
     {
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
         GEventCenter.Unsubscribe<Player>(GameEvent.OnPlayerJoin, OnNewPlayerJoin);
-        GEventCenter.Unsubscribe(GameEvent.OnGameReset, ResetGame);
+        GEventCenter.Unsubscribe<Player>(GameEvent.OnStageEnd, EndOfStage);
         GEventCenter.Unsubscribe(GameEvent.OnStartInput, OnStartInput);
     }
 
@@ -192,26 +200,10 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// End the current game round, and prints out the winner screen
     /// </summary>
-    public void EndOfRound(Player _winner)
+    public void EndOfStage(Player _winner)
     {
         GameState = GameState.EndStage;
-        bool isPlayAlone = _winner == null;
-        int winnerIndex = 0;
-
-        //Multi player
-        if (isPlayAlone)
-        {
-            RoundWinner = _winner;
-            winnerIndex = _winner.PlayerData.PlayerIndex;
-            PlayersManager.Instance.KillOtherPlayers(_winner);
-        }
-        //Play alone
-        else
-        {
-            RoundWinner = PlayersManager.Instance.Players[0];
-        }
-
-        GEventCenter.Invoke<bool, int>(GameEvent.OnStageEnd, isPlayAlone, winnerIndex);
+        StageWinner = _winner;
     }
 
     /// <summary>
@@ -219,54 +211,87 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ScoreScreen()
     {
+        if (IsPlayAlone) //If player is play alone, we will not show score screen, and check to play next level directly
+        {
+            CheckRoundEnd();
+            return;
+        }
+        StageWinner.PlayerData.PlayerScore += 1;
+
         GameState = GameState.ScoreScreen;
 
-        //Clean all players in scene
-        PlayersManager.Instance.ResetSpawnedPlayers();
+        GEventCenter.Invoke(GameEvent.OnShowScore);
 
-        if (LevelManager.Instance.CurrentSceneIndex > 2)
+        int _indexStageWinner = StageWinner.PlayerData.PlayerIndex;
+
+        StageWinner.VoiceController.PlayVictory();
+    }
+
+    /// <summary>
+    /// Check if there's player win the game round, then end of round
+    /// Actual The rule for ending a game round is: 
+    /// 1.the game ends if a player reaches 5 wins
+    /// or 
+    /// 2. if all the levels (or scenes) have been played.
+    ///However, if all the scenes have been played and two players are tied with the same score, we’ll keep playing random levels until one player has a higher score than the others.
+    /// </summary>
+    private void CheckRoundEnd()
+    {
+        var players = PlayersManager.Instance.Players;
+        bool allLevelsPlayed = LevelManager.Instance.AllLevelsPlayed();
+
+        // Check if any player has reached 5 wins
+        Player winPlayer = players.FirstOrDefault(p => p.PlayerData.PlayerScore >= 5);
+        if (winPlayer != null)
         {
-            GameState = GameState.EndRound;
-
-            int _indexRoundWinner = PlayersManager.Instance.Players.IndexOf(RoundWinner);
-            int _winnerIndex = -1;
-            PlayerScores[_indexRoundWinner] += 1;
-            RoundWinner.VoiceController.PlayVictory();
-            AudioManager.Instance.PlayWinSound();
-
-            if (PlayerScores[_indexRoundWinner] >= 5)
-            {
-                _winnerIndex = _indexRoundWinner;
-            }
-
-            if (_winnerIndex > -1)
-            {
-                IndexWinner = _winnerIndex;
-                PlayerHasWon = true;
-                MenuManager.Instance.InGameUI.SetActive(false);
-            }
-
-            // Print out the score screen
-            MenuManager.Instance.PrintScoreScreen(true);
-            Debug.Log("Screen Score");
-
-            // Reset the RoundWinner
-            RoundWinner = null;
+            GEventCenter.Invoke(GameEvent.OnGameRoundEnd);
+            RoundWinner = winPlayer;
+            return;
         }
-        else //???
-        {
-            GameState = GameState.EndRound;
 
-            for (int i = 0; i < PlayersManager.Instance.PlayersAlive.Count; i++)
+        // Determine highest score and who has it
+        int highestScore = players.Max(p => p.PlayerData.PlayerScore);
+        List<Player> topPlayers = players
+            .Where(p => p.PlayerData.PlayerScore == highestScore)
+            .ToList();
+
+        if (allLevelsPlayed)
+        {
+            if (topPlayers.Count == 1)
             {
-                PlayersManager.Instance.PlayersAlive[i].Kill();
+                // Only one top scorer and levels done => end game
+                GEventCenter.Invoke(GameEvent.OnGameRoundEnd, topPlayers[0]);
+                RoundWinner = topPlayers[0];
             }
+            else
+            {
+                // Tie and all levels played => keep playing
+                LevelManager.Instance.LoadNextLevel();
+            }
+        }
+        else
+        {
+            // Still levels left => keep playing
+            LevelManager.Instance.LoadNextLevel();
         }
     }
 
     private void EnterOutroScene()
     {
         GameState = GameState.Outro;
+    }
+
+    /// <summary>
+    ///     Reset the game
+    ///     Reset game logic need to be cleaned. 
+    ///     Actual we use a cheat way to restart game totally
+    /// </summary>
+    public void ResetGame()
+    {
+        //GEventCenter.Invoke(GameEvent.OnGameReset);
+        //GameState = GameState.MainMenu;
+
+        RestartGameInEditor();
     }
     #endregion
 
@@ -281,10 +306,20 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Whether Actual game state is in Gameplay
     /// </summary>
-    public bool IsInGameplay( )
+    public bool IsInGameplay()
     {
-        return GameState >= GameState.PrePlayCountdown && GameState < GameState.EndRound;
+        return GameState >= GameState.PrePlayCountdown && GameState < GameState.EndStage;
     }
+
+    /// <summary>
+    /// Whether Actual game state is in menu screen
+    /// </summary>
+    /// <returns></returns>
+    public bool IsInMenu()
+    {
+        return GameState == GameState.MainMenu && GameState == GameState.Paused && GameState == GameState.ScoreScreen;
+    }
+
     #endregion
 
     private void OnStartInput()
@@ -311,9 +346,10 @@ public class GameManager : MonoBehaviour
                 ScoreScreen();
                 break;
             case GameState.ScoreScreen:
+                CheckRoundEnd();
                 break;
-            case GameState.EndRound:
-                StartNewGameRound();
+            case GameState.Outro:
+                ResetGame();
                 break;
             default:
                 break;
@@ -340,14 +376,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    ///     Reset the game
-    /// </summary>
-    public void ResetGame()
+    private void OnNewPlayerJoin(Player newPlayer)
     {
-        GEventCenter.Invoke(GameEvent.OnGameReset);
-        GameState = GameState.InPlay;
+        if (PlayersManager.Instance.Players.Count > 1)
+        {
+            IsPlayAlone = false;
+        }
     }
 
     /// <summary>
@@ -361,9 +395,47 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    private void OnNewPlayerJoin(Player _player)
+    [MenuItem("GameTools/Restart Game (Editor) %#r")] // Ctrl+Shift+R 快捷键
+    public static void RestartGameInEditor()
     {
-        PlayerScores.Add(0);
+        // 获取初始场景名（你可以写死或从配置里拿）
+        string startupScene = "Lobby_HUB_DA"; // 替换成你的启动场景名
+
+        // 停止游戏后执行以下逻辑
+        EditorApplication.playModeStateChanged += RestartAfterStop;
+
+        void RestartAfterStop(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.EnteredEditMode)
+            {
+                EditorApplication.playModeStateChanged -= RestartAfterStop;
+
+                // 加载初始场景
+                EditorSceneManager.OpenScene($"Assets/Scenes/MainLevels/{startupScene}.unity");
+
+                // 清除所有 DontDestroyOnLoad 对象
+                ClearDontDestroyOnLoadObjects();
+
+                // 再次进入 Play 模式
+                EditorApplication.isPlaying = true;
+            }
+        }
+
+        // 退出当前 Play 模式
+        EditorApplication.isPlaying = false;
+    }
+
+    private static void ClearDontDestroyOnLoadObjects()
+    {
+        // 找到所有的根对象中属于隐藏场景的（即 DontDestroyOnLoad）
+        var allGameObjects = GameObject.FindObjectsOfType<GameObject>()
+            .Where(go => go.scene.name == null)
+            .ToList();
+
+        foreach (var go in allGameObjects)
+        {
+            GameObject.DestroyImmediate(go);
+        }
     }
     // #endregion
 }

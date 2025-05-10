@@ -38,31 +38,31 @@ public class AudioManager : MonoBehaviour
 
     private void SubsribeEvents()
     {
-        GEventCenter.Subscribe(GameEvent.OnGameReset, StopMusic);
-        GEventCenter.Subscribe(GameEvent.OnGameReset, StopWinSound);
+        GEventCenter.Subscribe(GameEvent.OnGameReset, OnGameReset);
         GEventCenter.Subscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Subscribe(GameEvent.OnShowScore, OnShowScore);
     }
 
     private void UnsribeEvents()
     {
-        GEventCenter.Unsubscribe(GameEvent.OnGameReset, StopMusic);
-        GEventCenter.Unsubscribe(GameEvent.OnGameReset, StopWinSound);
+        GEventCenter.Unsubscribe(GameEvent.OnGameReset, OnGameReset);
         GEventCenter.Unsubscribe<GameScene>(GameEvent.OnLoadScene, OnSceneLoad);
+        GEventCenter.Unsubscribe(GameEvent.OnShowScore, OnShowScore);
     }
 
     public void PlayMusic()
     {
-       // musicRef.Play();
+        // musicRef.Play();
     }
 
     public void StopMusic()
     {
-       // musicRef.Stop();
+        // musicRef.Stop();
     }
 
     public void PlayWinSound()
     {
-      //  WinSound.Play();
+        //  WinSound.Play();
     }
 
     public void StopWinSound()
@@ -81,6 +81,17 @@ public class AudioManager : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot(eventPath, position);
     }
 
+    private void OnShowScore()
+    {
+        PlayWinSound();
+        ChangeParam(1);
+    }
+
+    private void OnGameReset()
+    {
+        StopWinSound();
+        StopMusic();
+    }
     private void OnSceneLoad(GameScene _scene)
     {
         switch (_scene)

@@ -11,6 +11,7 @@ public enum GameEvent
     OnResumeGame,
     OnStageEnd, //On the end of each stage
     OnShowScore,
+    OnGameRoundEnd, //On the end of game round
     OnGameReset,
     OnLoadOutro,
     OnGameStateChange, //On game state change
