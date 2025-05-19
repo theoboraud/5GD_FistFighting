@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FMODUnity
 {
@@ -10,35 +11,53 @@ namespace FMODUnity
     {
         public EventReference EventReference;
 
-        [Obsolete("Use the EventReference field instead")]
+        [Obsolete("Use the EventReference field instead.")]
         public string Event = "";
 
-        public EmitterGameEvent PlayEvent = EmitterGameEvent.None;
-        public EmitterGameEvent StopEvent = EmitterGameEvent.None;
+        [FormerlySerializedAs("PlayEvent")]
+        public EmitterGameEvent EventPlayTrigger = EmitterGameEvent.None;
+        public EmitterGameEvent PlayEvent
+        {
+            get { return EventPlayTrigger; }
+            set { EventPlayTrigger = value; }
+        }
+        [FormerlySerializedAs("StopEvent")]
+        public EmitterGameEvent EventStopTrigger = EmitterGameEvent.None;
+        public EmitterGameEvent StopEvent
+        {
+            get { return EventStopTrigger; }
+            set { EventStopTrigger = value; }
+        }
         public bool AllowFadeout = true;
         public bool TriggerOnce = false;
         public bool Preload = false;
+        [FormerlySerializedAs("AllowNonRigidbodyDoppler")]
+        public bool NonRigidbodyVelocity = false;
         public ParamRef[] Params = new ParamRef[0];
         public bool OverrideAttenuation = false;
         public float OverrideMinDistance = -1.0f;
         public float OverrideMaxDistance = -1.0f;
 
         protected FMOD.Studio.EventDescription eventDescription;
-        public  FMOD.Studio.EventDescription EventDescription { get { return eventDescription; } }
 
         protected FMOD.Studio.EventInstance instance;
-        public  FMOD.Studio.EventInstance EventInstance { get { return instance; } }
 
         private bool hasTriggered = false;
         private bool isQuitting = false;
         private bool isOneshot = false;
         private List<ParamRef> cachedParams = new List<ParamRef>();
 
+        private static List<StudioEventEmitter> activeEmitters = new List<StudioEventEmitter>();
+
         private const string SnapshotString = "snapshot";
+
+        public FMOD.Studio.EventDescription EventDescription { get { return eventDescription; } }
+
+        public FMOD.Studio.EventInstance EventInstance { get { return instance; } }
 
         public bool IsActive { get; private set; }
 
-        public float MaxDistance
+        private float MaxDistance
         {
             get
             {
@@ -58,7 +77,46 @@ namespace FMODUnity
             }
         }
 
-        protected override void Start() 
+        public static void UpdateActiveEmitters()
+        {
+            foreach (StudioEventEmitter emitter in activeEmitters)
+            {
+                emitter.UpdatePlayingStatus();
+            }
+        }
+
+        private static void RegisterActiveEmitter(StudioEventEmitter emitter)
+        {
+            if (!activeEmitters.Contains(emitter))
+            {
+                activeEmitters.Add(emitter);
+            }
+        }
+
+        private static void DeregisterActiveEmitter(StudioEventEmitter emitter)
+        {
+            activeEmitters.Remove(emitter);
+        }
+
+        private void UpdatePlayingStatus(bool force = false)
+        {
+            // If at least one listener is within the max distance, ensure an event instance is playing
+            bool playInstance = StudioListener.DistanceSquaredToNearestListener(transform.position) <= (MaxDistance * MaxDistance);
+
+            if (force || playInstance != IsPlaying())
+            {
+                if (playInstance)
+                {
+                    PlayInstance();
+                }
+                else
+                {
+                    StopInstance();
+                }
+            }
+        }
+
+        protected override void Start()
         {
             RuntimeUtils.EnforceLibraryOrder();
             if (Preload)
@@ -68,9 +126,25 @@ namespace FMODUnity
             }
 
             HandleGameEvent(EmitterGameEvent.ObjectStart);
+
+            // If a Rigidbody or Rigidbody2D is present on this GameObject, turn off "NonRigidbodyVelocity"
+#if UNITY_PHYSICS_EXIST
+            if (NonRigidbodyVelocity && GetComponent<Rigidbody>())
+            {
+                Debug.LogWarning(string.Format("[FMOD] Non-Rigidbody Velocity is enabled on Emitter attached to GameObject \"{0}\", which also has a Rigidbody component attached - this will be disabled in favor of velocity from Rigidbody component.", this.name));
+                NonRigidbodyVelocity = false;
+            }
+#endif
+#if UNITY_PHYSICS2D_EXIST
+            if (NonRigidbodyVelocity && GetComponent<Rigidbody2D>())
+            {
+                Debug.LogWarning(string.Format("[FMOD] Non-Rigidbody Velocity is enabled on Emitter attached to GameObject \"{0}\", which also has a Rigidbody2D component attached - this will be disabled in favor of velocity from Rigidbody2D component.", this.name));
+                NonRigidbodyVelocity = false;
+            }
+#endif
         }
 
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             isQuitting = true;
         }
@@ -91,7 +165,7 @@ namespace FMODUnity
                     }
                 }
 
-                RuntimeManager.DeregisterActiveEmitter(this);
+                DeregisterActiveEmitter(this);
 
                 if (Preload)
                 {
@@ -102,17 +176,17 @@ namespace FMODUnity
 
         protected override void HandleGameEvent(EmitterGameEvent gameEvent)
         {
-            if (PlayEvent == gameEvent)
+            if (EventPlayTrigger == gameEvent)
             {
                 Play();
             }
-            if (StopEvent == gameEvent)
+            if (EventStopTrigger == gameEvent)
             {
                 Stop();
             }
         }
 
-        void Lookup()
+        private void Lookup()
         {
             eventDescription = RuntimeManager.GetEventDescription(EventReference);
 
@@ -161,16 +235,16 @@ namespace FMODUnity
 
             if (is3D && !isOneshot && Settings.Instance.StopEventsOutsideMaxDistance)
             {
-                RuntimeManager.RegisterActiveEmitter(this);
-                RuntimeManager.UpdateActiveEmitter(this, true);
+                RegisterActiveEmitter(this);
+                UpdatePlayingStatus(true);
             }
             else
             {
                 PlayInstance();
             }
         }
-        
-        public void PlayInstance()
+
+        private void PlayInstance()
         {
             if (!instance.isValid())
             {
@@ -200,7 +274,7 @@ namespace FMODUnity
                     {
                         Rigidbody rigidBody = GetComponent<Rigidbody>();
                         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject, rigidBody));
-                        RuntimeManager.AttachInstanceToGameObject(instance, transform, rigidBody);
+                        RuntimeManager.AttachInstanceToGameObject(instance, gameObject, rigidBody);
                     }
                     else
 #endif
@@ -209,13 +283,13 @@ namespace FMODUnity
                     {
                         var rigidBody2D = GetComponent<Rigidbody2D>();
                         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject, rigidBody2D));
-                        RuntimeManager.AttachInstanceToGameObject(instance, transform, rigidBody2D);
+                        RuntimeManager.AttachInstanceToGameObject(instance, gameObject, rigidBody2D);
                     }
                     else
 #endif
                     {
                         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-                        RuntimeManager.AttachInstanceToGameObject(instance, transform);
+                        RuntimeManager.AttachInstanceToGameObject(instance, gameObject, NonRigidbodyVelocity);
                     }
                 }
             }
@@ -243,24 +317,27 @@ namespace FMODUnity
 
         public void Stop()
         {
-            RuntimeManager.DeregisterActiveEmitter(this);
+            DeregisterActiveEmitter(this);
             IsActive = false;
             cachedParams.Clear();
             StopInstance();
         }
 
-        public void StopInstance()
+        private void StopInstance()
         {
             if (TriggerOnce && hasTriggered)
             {
-                RuntimeManager.DeregisterActiveEmitter(this);
+                DeregisterActiveEmitter(this);
             }
 
             if (instance.isValid())
             {
                 instance.stop(AllowFadeout ? FMOD.Studio.STOP_MODE.ALLOWFADEOUT : FMOD.Studio.STOP_MODE.IMMEDIATE);
                 instance.release();
-                instance.clearHandle();
+                if (!AllowFadeout)
+                {
+                    instance.clearHandle();
+                }
             }
         }
 
@@ -268,7 +345,8 @@ namespace FMODUnity
         {
             if (Settings.Instance.StopEventsOutsideMaxDistance && IsActive)
             {
-                ParamRef cachedParam = cachedParams.Find(x => x.Name == name);
+                string findName = name;
+                ParamRef cachedParam = cachedParams.Find(x => x.Name == findName);
 
                 if (cachedParam == null)
                 {
@@ -294,7 +372,8 @@ namespace FMODUnity
         {
             if (Settings.Instance.StopEventsOutsideMaxDistance && IsActive)
             {
-                ParamRef cachedParam = cachedParams.Find(x => x.ID.Equals(id));
+                FMOD.Studio.PARAMETER_ID findId = id;
+                ParamRef cachedParam = cachedParams.Find(x => x.ID.Equals(findId));
 
                 if (cachedParam == null)
                 {

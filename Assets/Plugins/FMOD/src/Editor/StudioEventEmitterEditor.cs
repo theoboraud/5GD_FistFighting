@@ -10,7 +10,7 @@ namespace FMODUnity
     [CanEditMultipleObjects]
     public class StudioEventEmitterEditor : Editor
     {
-        ParameterValueView parameterValueView;
+        private ParameterValueView parameterValueView;
 
         public void OnEnable()
         {
@@ -40,20 +40,21 @@ namespace FMODUnity
 
         public override void OnInspectorGUI()
         {
-            var begin = serializedObject.FindProperty("PlayEvent");
-            var end = serializedObject.FindProperty("StopEvent");
+            var begin = serializedObject.FindProperty("EventPlayTrigger");
+            var end = serializedObject.FindProperty("EventStopTrigger");
             var tag = serializedObject.FindProperty("CollisionTag");
             var eventReference = serializedObject.FindProperty("EventReference");
             var eventPath = eventReference.FindPropertyRelative("Path");
             var fadeout = serializedObject.FindProperty("AllowFadeout");
             var once = serializedObject.FindProperty("TriggerOnce");
             var preload = serializedObject.FindProperty("Preload");
+            var nonRigidbodyVelocity = serializedObject.FindProperty("NonRigidbodyVelocity");
             var overrideAtt = serializedObject.FindProperty("OverrideAttenuation");
             var minDistance = serializedObject.FindProperty("OverrideMinDistance");
             var maxDistance = serializedObject.FindProperty("OverrideMaxDistance");
 
-            EditorGUILayout.PropertyField(begin, new GUIContent("Play Event"));
-            EditorGUILayout.PropertyField(end, new GUIContent("Stop Event"));
+            EditorGUILayout.PropertyField(begin, new GUIContent("Event Play Trigger"));
+            EditorGUILayout.PropertyField(end, new GUIContent("Event Stop Trigger"));
 
             if ((begin.enumValueIndex >= (int)EmitterGameEvent.TriggerEnter && begin.enumValueIndex <= (int)EmitterGameEvent.TriggerExit2D) ||
             (end.enumValueIndex >= (int)EmitterGameEvent.TriggerEnter && end.enumValueIndex <= (int)EmitterGameEvent.TriggerExit2D))
@@ -74,12 +75,6 @@ namespace FMODUnity
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtils.UpdateParamsOnEmitter(serializedObject, eventPath.stringValue);
-                if (editorEvent != null)
-                {
-                    overrideAtt.boolValue = false;
-                    minDistance.floatValue = editorEvent.MinDistance;
-                    maxDistance.floatValue = editorEvent.MaxDistance;
-                }
             }
 
             // Attenuation
@@ -91,7 +86,9 @@ namespace FMODUnity
                     EditorGUI.BeginChangeCheck();
                     EditorGUILayout.PropertyField(overrideAtt);
                     if (EditorGUI.EndChangeCheck() ||
-                        (minDistance.floatValue == -1 && maxDistance.floatValue == -1) // never been initialiased
+                        (minDistance.floatValue == -1 && maxDistance.floatValue == -1) || // never been initialiased
+                            !overrideAtt.boolValue &&
+                            (minDistance.floatValue != editorEvent.MinDistance || maxDistance.floatValue != editorEvent.MaxDistance)
                         )
                     {
                         minDistance.floatValue = editorEvent.MinDistance;
@@ -125,6 +122,7 @@ namespace FMODUnity
                     EditorGUILayout.PropertyField(preload, new GUIContent("Preload Sample Data"));
                     EditorGUILayout.PropertyField(fadeout, new GUIContent("Allow Fadeout When Stopping"));
                     EditorGUILayout.PropertyField(once, new GUIContent("Trigger Once"));
+                    EditorGUILayout.PropertyField(nonRigidbodyVelocity, new GUIContent("Non-Rigidbody Velocity"));
                 }
             }
 
@@ -140,6 +138,14 @@ namespace FMODUnity
             // This holds one SerializedObject for each object in the current selection.
             private List<SerializedObject> serializedTargets = new List<SerializedObject>();
 
+            // Mappings from EditorParamRef to initial parameter value property for all properties
+            // found in the current selection.
+            private List<PropertyRecord> propertyRecords = new List<PropertyRecord>();
+
+            // Any parameters that are in the current event but are missing from some objects in
+            // the current selection, so we can put them in the "Add" menu.
+            private List<EditorParamRef> missingParameters = new List<EditorParamRef>();
+
             // A mapping from EditorParamRef to the initial parameter value properties in the
             // current selection that have the same name.
             // We need this because some objects may be missing some properties, and properties with
@@ -150,14 +156,6 @@ namespace FMODUnity
                 public EditorParamRef paramRef;
                 public List<SerializedProperty> valueProperties;
             }
-
-            // Mappings from EditorParamRef to initial parameter value property for all properties
-            // found in the current selection.
-            private List<PropertyRecord> propertyRecords = new List<PropertyRecord>();
-
-            // Any parameters that are in the current event but are missing from some objects in
-            // the current selection, so we can put them in the "Add" menu.
-            private List<EditorParamRef> missingParameters = new List<EditorParamRef>();
 
             public ParameterValueView(SerializedObject serializedObject)
             {

@@ -6,8 +6,6 @@ using Unity.Burst.Intrinsics;
 using System.Linq;
 using Zenject.SpaceFighter;
 using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.Progress;
 using UnityEngine.InputSystem;
 
 public class ArmChecker : MonoBehaviour

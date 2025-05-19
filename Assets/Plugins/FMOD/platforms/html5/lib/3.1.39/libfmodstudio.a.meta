@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: c74d44e6ba102764fb85c6dc1e6d4168
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161631
+  packageName: FMOD for Unity (2.02)
+  packageVersion: 2.02.28
+  assetPath: Assets/Plugins/FMOD/platforms/html5/lib/3.1.39/libfmodstudio.a
+  uploadId: 745941
+PluginImporter:
+  externalObjects: {}
+  serializedVersion: 3
+  iconMap: {}
+  executionOrder: {}
+  defineConstraints: []
+  isPreloaded: 0
+  isOverridable: 0
+  isExplicitlyReferenced: 0
+  validateReferences: 1
+  platformData:
+    Any:
+      enabled: 0
+      settings: {}
+    Editor:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
+    WebGL:
+      enabled: 0
+      settings: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

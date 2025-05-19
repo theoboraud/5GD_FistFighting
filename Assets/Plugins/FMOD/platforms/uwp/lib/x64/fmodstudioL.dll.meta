@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 813ca429588de5d40b5c8a184a15bcd9
 timeCreated: 1457408139
-licenseType: Free
+licenseType: Store
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -56,3 +56,10 @@ PluginImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161631
+  packageName: FMOD for Unity (2.02)
+  packageVersion: 2.02.28
+  assetPath: Assets/Plugins/FMOD/platforms/uwp/lib/x64/fmodstudioL.dll
+  uploadId: 745941

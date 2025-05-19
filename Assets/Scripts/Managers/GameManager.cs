@@ -4,8 +4,6 @@ using UnityEngine;
 using Enums;
 using System;
 using System.Linq;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 using UnityEditor;
 
 /// <summary>
@@ -395,9 +393,10 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    [MenuItem("GameTools/Restart Game (Editor) %#r")] // Ctrl+Shift+R 快捷键
+    //[MenuItem("GameTools/Restart Game (Editor) %#r")] // Ctrl+Shift+R 快捷键
     public static void RestartGameInEditor()
     {
+		#if UNITY_EDITOR
         // 获取初始场景名（你可以写死或从配置里拿）
         string startupScene = "Lobby_HUB_DA"; // 替换成你的启动场景名
 
@@ -411,7 +410,7 @@ public class GameManager : MonoBehaviour
                 EditorApplication.playModeStateChanged -= RestartAfterStop;
 
                 // 加载初始场景
-                EditorSceneManager.OpenScene($"Assets/Scenes/MainLevels/{startupScene}.unity");
+                UnityEditor.SceneManagement.EditorSceneManager.OpenScene($"Assets/Scenes/MainLevels/{startupScene}.unity");
 
                 // 清除所有 DontDestroyOnLoad 对象
                 ClearDontDestroyOnLoadObjects();
@@ -423,6 +422,7 @@ public class GameManager : MonoBehaviour
 
         // 退出当前 Play 模式
         EditorApplication.isPlaying = false;
+        #endif
     }
 
     private static void ClearDontDestroyOnLoadObjects()
