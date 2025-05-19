@@ -485,11 +485,12 @@ MonoBehaviour:
       Data4: -236250370
     Path: event:/Voices/Hurt
   Event: 
-  PlayEvent: 0
-  StopEvent: 0
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
+  NonRigidbodyVelocity: 0
   Params:
   - Name: Character
     Value: 0
@@ -517,11 +518,12 @@ MonoBehaviour:
       Data4: -1057815692
     Path: event:/Voices/Push
   Event: 
-  PlayEvent: 0
-  StopEvent: 0
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
+  NonRigidbodyVelocity: 0
   Params:
   - Name: Character
     Value: 0
@@ -549,11 +551,12 @@ MonoBehaviour:
       Data4: -747004410
     Path: event:/Voices/Victory
   Event: 
-  PlayEvent: 0
-  StopEvent: 0
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
+  NonRigidbodyVelocity: 0
   Params:
   - Name: Character
     Value: 0
@@ -581,11 +584,12 @@ MonoBehaviour:
       Data4: -1455408538
     Path: event:/Actions/HoldArm
   Event: 
-  PlayEvent: 0
-  StopEvent: 0
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
+  NonRigidbodyVelocity: 0
   Params: []
   OverrideAttenuation: 0
   OverrideMinDistance: 1
@@ -968,7 +972,6 @@ MonoBehaviour:
   - {fileID: 5486271232133404602}
   Outline_SpriteRenderer: {fileID: 6499214333109951097}
   VoiceController: {fileID: 7652953489558374462}
-  isReady: 0
 --- !u!114 &3787878368541288305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,6 +1116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832e12c268844dadaac12e5edc75b873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  printLogs: 0
 --- !u!1001 &435162874383215005
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,7 +33,8 @@ public class PlayerIndicator : MonoBehaviour
     {
         if (_player == null) return;
 
-        transform.position = _player.transform.position + Vector3.up * offset.y;
+        transform.position = _player.transform.position + _player.transform.up * offset.y;
+        transform.rotation = Quaternion.Euler(0, 0, _player.transform.rotation.eulerAngles.z);
     }
 
     private void OnStartInput()
