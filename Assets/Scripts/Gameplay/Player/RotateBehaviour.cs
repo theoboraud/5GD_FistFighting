@@ -95,7 +95,7 @@ public class RotateBehaviour : MonoBehaviour
         {
             if (useFactorForRotation)
             {
-                rotationFactor = Mathf.Abs(_inputValue);
+                rotationFactor = Mathf.Clamp(Mathf.Abs(_inputValue) * 2f, 0f, 1f);
             }
 
             // If the stick is pushed to the right side, then the player will rotate to the right
